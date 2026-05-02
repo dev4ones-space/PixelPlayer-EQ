@@ -1,35 +1,9 @@
-# PixelPlayer 🎵
+# PixelPlayer Fork
 
-<p align="center">
-  <img src="assets/icon.png" alt="App Icon" width="128"/>
-</p>
+## Original repo: 
+- https://github.com/theovilardo/PixelPlayer
 
-<p align="center">
-  <strong>A beautiful, feature-rich music player for Android</strong><br>
-  Built with Jetpack Compose and Material Design 3
-</p>
-
-<p align="center">
-  <img src="assets/screenshot1.jpg" alt="Screenshot 1" width="200" style="border-radius:26px;"/>
-  <img src="assets/screenshot2.jpg" alt="Screenshot 2" width="200" style="border-radius:26px;"/>
-  <img src="assets/screenshot3.jpg" alt="Screenshot 3" width="200" style="border-radius:26px;"/>
-  <img src="assets/screenshot4.jpg" alt="Screenshot 4" width="200" style="border-radius:26px;"/>
-</p>
-
-<p align="center">
-    <a href="https://github.com/theovilardo/PixelPlayer/releases/latest">
-        <img src="https://img.shields.io/github/v/release/theovilardo/PixelPlayer?include_prereleases&logo=github&style=for-the-badge&label=Latest%20Release" alt="Latest Release">
-    </a>
-    <a href="https://github.com/theovilardo/PixelPlayer/releases">
-        <img src="https://img.shields.io/github/downloads/theovilardo/PixelPlayer/total?logo=github&style=for-the-badge" alt="Total Downloads">
-    </a>
-    <img src="https://img.shields.io/badge/Android-10%2B-green?style=for-the-badge&logo=android" alt="Android 11+">
-    <img src="https://img.shields.io/badge/Kotlin-100%25-purple?style=for-the-badge&logo=kotlin" alt="Kotlin">
-</p>
-
----
-
-## ‼️ DISCLAIMER
+# ‼️ DISCLAIMER
 - No fork of this project will recieve support, if you use a fork, ask the forker to support you.
 
 ---
@@ -205,3 +179,7 @@ This project is licensed under a Proprietary License - see the [LICENSE](LICENSE
 <p align="center">
   Made with ❤️ by <a href="https://github.com/theovilardo">theovilardo</a>
 </p>
+
+# New features (this fork presents from original):
+- Support for external EQs, like ViperFX (by removing part with bypassing AudioFlinger)
+- Out-of-box build (just run ./build.sh)
