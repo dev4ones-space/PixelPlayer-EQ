@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ServiceInfo
 import android.graphics.Bitmap
+import android.media.audiofx.AudioEffect
 import android.media.AudioDeviceCallback
 import android.media.AudioDeviceInfo
 import android.media.AudioManager
@@ -361,12 +362,14 @@ class MusicService : MediaLibraryService() {
             val sessionId = engine.getAudioSessionId()
             if (sessionId != 0) {
                 equalizerManager.attachToAudioSessionIfNeeded(sessionId)
+                broadcastAudioSessionOpen(sessionId)
             }
 
             // Re-attach equalizer whenever the active audio session changes (e.g. crossfade)
             engine.activeAudioSessionId.collect { newSessionId ->
                 if (newSessionId != 0) {
                     equalizerManager.attachToAudioSessionIfNeeded(newSessionId)
+                    broadcastAudioSessionOpen(newSessionId)
                 }
             }
         }
@@ -1462,12 +1465,29 @@ class MusicService : MediaLibraryService() {
             release()
             mediaSession = null
         }
+        broadcastAudioSessionClose(engine.getAudioSessionId())
         engine.release()
         controller.release()
         serviceScope.cancel()
         Thread.currentThread().setUncaughtExceptionHandler(previousMainThreadExceptionHandler)
         previousMainThreadExceptionHandler = null
         super.onDestroy()
+    }
+
+    private fun broadcastAudioSessionOpen(sessionId: Int) {
+        sendBroadcast(Intent(AudioEffect.ACTION_OPEN_AUDIO_EFFECT_CONTROL_SESSION).apply {
+            putExtra(AudioEffect.EXTRA_AUDIO_SESSION, sessionId)
+            putExtra(AudioEffect.EXTRA_PACKAGE_NAME, packageName)
+            putExtra(AudioEffect.EXTRA_CONTENT_TYPE, AudioEffect.CONTENT_TYPE_MUSIC)
+        })
+    }
+
+    private fun broadcastAudioSessionClose(sessionId: Int) {
+        if (sessionId == 0) return
+        sendBroadcast(Intent(AudioEffect.ACTION_CLOSE_AUDIO_EFFECT_CONTROL_SESSION).apply {
+            putExtra(AudioEffect.EXTRA_AUDIO_SESSION, sessionId)
+            putExtra(AudioEffect.EXTRA_PACKAGE_NAME, packageName)
+        })
     }
 
     private fun registerHeadsetReconnectMonitor() {

@@ -78,7 +78,9 @@ class DualPlayerEngine @Inject constructor(
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
     var hiFiModeEnabled: Boolean = false
         private set
-    private var audioOffloadEnabled = !shouldDisableAudioOffloadByDefault()
+    // Always disabled: offload routes compressed audio to hardware DSP, bypassing the
+    // Android audio mixer entirely — system-wide DSP (ViperFX) cannot attach to offloaded streams.
+    private var audioOffloadEnabled = false
     private var transitionJob: Job? = null
     private var bufferingFallbackJob: Job? = null
     private var transitionRunning = false
