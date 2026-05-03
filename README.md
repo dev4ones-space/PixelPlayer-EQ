@@ -13,8 +13,14 @@
 ## Original repo: 
 - https://github.com/theovilardo/PixelPlayer
 
-# ‼️ DISCLAIMER
-- No fork of this project will recieve support, if you use a fork, ask the forker to support you.
+# Notice: 
+- This a fork of theovilardo/PixelPlayer.
+- Any issues should be reported to this repo, and not original.
+- Original author does not support this version (any updates will be delayed)
+- 
+# New features:
+- Support for external EQs, like ViperFX
+- Out-of-box build
 
 ---
 
@@ -193,3 +199,7 @@ This project is licensed under a Proprietary License - see the [LICENSE](LICENSE
 # New features (this fork presents from original):
 - Support for external EQs, like ViperFX (by removing part with bypassing AudioFlinger)
 - Out-of-box build (just run ./build.sh)
+
+## To build:
+1. Make sure you have Android studio/developer tools installed
+2. Run `./build.sh` to build the app
