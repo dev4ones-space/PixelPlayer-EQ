@@ -19,7 +19,7 @@ import androidx.glance.ImageProvider
 import androidx.glance.LocalContext
 import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.height
-import com.theveloper.pixelplay.R
+import com.theovilardo.pixelplay.R
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin

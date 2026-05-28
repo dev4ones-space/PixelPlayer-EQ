@@ -132,7 +132,7 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
-import com.theveloper.pixelplay.R
+import com.theovilardo.pixelplay.R
 import com.theveloper.pixelplay.data.backup.model.BackupSection
 import com.theveloper.pixelplay.data.backup.model.BackupTransferProgressUpdate
 import com.theveloper.pixelplay.data.backup.model.RestorePlan

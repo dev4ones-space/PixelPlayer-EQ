@@ -52,7 +52,7 @@ import androidx.media3.common.util.UnstableApi
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemContentType
-import com.theveloper.pixelplay.R
+import com.theovilardo.pixelplay.R
 import com.theveloper.pixelplay.data.model.LibraryTabId
 import com.theveloper.pixelplay.data.model.Song
 import com.theveloper.pixelplay.data.model.SortOption

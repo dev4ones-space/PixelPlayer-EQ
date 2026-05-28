@@ -104,7 +104,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.media3.common.util.UnstableApi
 import androidx.navigation.NavHostController
-import com.theveloper.pixelplay.R
+import com.theovilardo.pixelplay.R
 import com.theveloper.pixelplay.data.repository.MusicRepository
 import com.theveloper.pixelplay.presentation.components.MiniPlayerHeight
 import com.theveloper.pixelplay.presentation.components.PlaylistBottomSheet

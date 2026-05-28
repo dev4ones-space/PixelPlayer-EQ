@@ -52,7 +52,7 @@ import androidx.paging.compose.LazyPagingItems
 import coil.imageLoader
 import coil.request.ImageRequest
 import coil.size.Size
-import com.theveloper.pixelplay.R
+import com.theovilardo.pixelplay.R
 import com.theveloper.pixelplay.data.model.Album
 import com.theveloper.pixelplay.data.model.Artist
 import com.theveloper.pixelplay.data.model.LibraryTabId

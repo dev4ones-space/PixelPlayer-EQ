@@ -1,7 +1,7 @@
 package com.theveloper.pixelplay.presentation.stats
 
 import androidx.annotation.StringRes
-import com.theveloper.pixelplay.R
+import com.theovilardo.pixelplay.R
 import com.theveloper.pixelplay.data.stats.StatsTimeRange
 
 @StringRes

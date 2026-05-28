@@ -98,7 +98,7 @@ import coil.request.ImageRequest
 import coil.size.Size
 import racra.compose.smooth_corner_rect_library.AbsoluteSmoothCornerShape
 import androidx.compose.ui.res.stringResource
-import com.theveloper.pixelplay.R
+import com.theovilardo.pixelplay.R
 
 private const val UseSharedCollapsibleTopBarProbe = true
 

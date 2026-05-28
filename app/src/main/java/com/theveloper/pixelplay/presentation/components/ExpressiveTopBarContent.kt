@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.lerp
 import androidx.compose.ui.util.lerp
 import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.style.TextOverflow
-import com.theveloper.pixelplay.R
+import com.theovilardo.pixelplay.R
 import kotlin.math.roundToInt
 
 private const val DefaultTopBarTitleWidthAxis = 100f

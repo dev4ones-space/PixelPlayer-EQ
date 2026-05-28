@@ -10,7 +10,7 @@ import androidx.compose.material.icons.rounded.LibraryMusic
 import androidx.compose.material.icons.rounded.MusicNote
 import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.theveloper.pixelplay.R
+import com.theovilardo.pixelplay.R
 
 enum class SettingsCategory(
     val id: String,

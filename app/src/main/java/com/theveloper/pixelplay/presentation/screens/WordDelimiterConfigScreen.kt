@@ -2,7 +2,7 @@ package com.theveloper.pixelplay.presentation.screens
 
 import android.widget.Toast
 import androidx.compose.ui.res.stringResource
-import com.theveloper.pixelplay.R
+import com.theovilardo.pixelplay.R
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring

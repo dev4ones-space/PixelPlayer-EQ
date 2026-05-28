@@ -89,7 +89,7 @@ import androidx.compose.ui.zIndex
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.platform.LocalContext
-import com.theveloper.pixelplay.R
+import com.theovilardo.pixelplay.R
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.theveloper.pixelplay.data.database.TelegramChannelEntity

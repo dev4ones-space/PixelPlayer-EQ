@@ -35,7 +35,7 @@ val enableComposeCompilerReports = providers.gradleProperty("pixelplay.enableCom
 
 @Suppress("DEPRECATION")
 android {
-    namespace = "com.theveloper.pixelplay"
+    namespace = "com.theovilardo.pixelplay"
     compileSdk = 37
 
     sourceSets {
@@ -66,7 +66,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.theveloper.pixelplay"
+        applicationId = "com.dev4ones_space_fork.pixelplay_fx"
         minSdk = 30
         targetSdk = 37
         versionCode = (project.findProperty("APP_VERSION_CODE") as? String)?.toInt() ?: 1
@@ -84,10 +84,10 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file("$rootDir/vz-pixelplay.jks")
-            storePassword = keystoreProperties.getProperty("storePassword") ?: "dummyPassword"
-            keyAlias = keystoreProperties.getProperty("keyAlias") ?: "dummyAlias"
-            keyPassword = keystoreProperties.getProperty("keyPassword") ?: "dummyPassword"
+            storeFile = file(localProperties.getProperty("STORE_FILE") ?: "dev4ones-space.jks")
+            storePassword = localProperties.getProperty("STORE_PASSWORD") ?: ""
+            keyAlias = localProperties.getProperty("KEY_ALIAS") ?: ""
+            keyPassword = localProperties.getProperty("KEY_PASSWORD") ?: ""
         }
     }
 

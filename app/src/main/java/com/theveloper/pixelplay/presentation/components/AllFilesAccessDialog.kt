@@ -5,7 +5,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.theveloper.pixelplay.R
+import com.theovilardo.pixelplay.R
 import androidx.compose.ui.text.style.TextOverflow
 
 @Composable

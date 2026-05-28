@@ -54,7 +54,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-import com.theveloper.pixelplay.R
+import com.theovilardo.pixelplay.R
 import com.theveloper.pixelplay.data.model.Lyrics
 import com.theveloper.pixelplay.presentation.components.ToggleSegmentButton
 import com.theveloper.pixelplay.presentation.components.player.BottomToggleRow

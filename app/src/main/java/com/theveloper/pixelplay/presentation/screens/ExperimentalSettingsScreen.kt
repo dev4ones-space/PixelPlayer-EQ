@@ -78,7 +78,7 @@ import com.theveloper.pixelplay.presentation.viewmodel.SettingsViewModel
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 import androidx.compose.ui.res.stringResource
-import com.theveloper.pixelplay.R
+import com.theovilardo.pixelplay.R
 import com.theveloper.pixelplay.data.preferences.AlbumArtQuality
 
 @OptIn(UnstableApi::class)

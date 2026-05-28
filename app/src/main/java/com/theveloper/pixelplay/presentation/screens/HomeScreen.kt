@@ -81,7 +81,7 @@ import androidx.navigation.NavController
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import com.theveloper.pixelplay.R
+import com.theovilardo.pixelplay.R
 import com.theveloper.pixelplay.data.model.Song
 import com.theveloper.pixelplay.data.preferences.CollagePattern
 import com.theveloper.pixelplay.presentation.components.AlbumArtCollage

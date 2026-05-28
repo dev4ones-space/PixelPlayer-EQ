@@ -13,7 +13,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.theveloper.pixelplay.R
+import com.theovilardo.pixelplay.R
 
 @Composable
 fun HomeOptionsBottomSheet(

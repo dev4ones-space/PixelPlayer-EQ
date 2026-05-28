@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.theveloper.pixelplay.data.model.Album
 import com.theveloper.pixelplay.data.model.Song
 import com.theveloper.pixelplay.data.repository.MusicRepository // Importar MusicRepository
-import com.theveloper.pixelplay.R
+import com.theovilardo.pixelplay.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow

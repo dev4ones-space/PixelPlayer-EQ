@@ -3,7 +3,7 @@ package com.theveloper.pixelplay.presentation.components
 import android.widget.Toast
 import com.theveloper.pixelplay.data.model.Song
 import com.theveloper.pixelplay.data.model.Lyrics
-import com.theveloper.pixelplay.R
+import com.theovilardo.pixelplay.R
 import androidx.activity.compose.BackHandler
 import com.theveloper.pixelplay.presentation.components.scoped.LyricsPredictiveBackHandler
 import androidx.compose.animation.AnimatedContent

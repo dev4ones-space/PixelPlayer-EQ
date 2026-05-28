@@ -139,7 +139,7 @@ import androidx.core.view.HapticFeedbackConstantsCompat
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
-import com.theveloper.pixelplay.R
+import com.theovilardo.pixelplay.R
 import com.theveloper.pixelplay.data.model.Song
 import com.theveloper.pixelplay.presentation.components.AutoScrollingText
 import com.theveloper.pixelplay.presentation.components.SmartImage

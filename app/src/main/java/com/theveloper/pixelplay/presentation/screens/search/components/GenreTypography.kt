@@ -12,7 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.sp
-import com.theveloper.pixelplay.R
+import com.theovilardo.pixelplay.R
 import kotlin.math.absoluteValue
 import kotlin.math.roundToInt
 

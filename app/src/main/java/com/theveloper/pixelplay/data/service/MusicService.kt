@@ -49,7 +49,7 @@ import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.SettableFuture
 import com.theveloper.pixelplay.PixelPlayApplication
 import com.theveloper.pixelplay.MainActivity
-import com.theveloper.pixelplay.R
+import com.theovilardo.pixelplay.R
 import com.theveloper.pixelplay.data.model.PlayerInfo
 import com.theveloper.pixelplay.data.model.PlaybackQueueItemSnapshot
 import com.theveloper.pixelplay.data.model.PlaybackQueueSnapshot

@@ -24,7 +24,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.theveloper.pixelplay.R
+import com.theovilardo.pixelplay.R
 import androidx.compose.ui.text.style.TextOverflow
 
 @Composable

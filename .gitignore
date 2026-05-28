@@ -40,3 +40,5 @@ CLAUDE.md
 markdown.xml
 .vscode/
 .agents/
+
+*.jks

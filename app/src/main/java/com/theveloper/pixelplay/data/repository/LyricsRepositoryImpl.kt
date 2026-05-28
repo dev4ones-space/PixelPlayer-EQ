@@ -10,7 +10,7 @@ import android.util.LruCache
 import androidx.core.net.toUri
 import com.google.gson.Gson
 import com.kyant.taglib.TagLib
-import com.theveloper.pixelplay.R
+import com.theovilardo.pixelplay.R
 import com.theveloper.pixelplay.data.database.MusicDao
 import com.theveloper.pixelplay.data.model.Lyrics
 import com.theveloper.pixelplay.data.model.SyncedLine

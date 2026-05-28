@@ -63,7 +63,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.theveloper.pixelplay.R
+import com.theovilardo.pixelplay.R
 import com.theveloper.pixelplay.data.preferences.MAX_NAV_BAR_CORNER_RADIUS
 import com.theveloper.pixelplay.data.preferences.MIN_NAV_BAR_CORNER_RADIUS
 import com.theveloper.pixelplay.presentation.viewmodel.SettingsViewModel

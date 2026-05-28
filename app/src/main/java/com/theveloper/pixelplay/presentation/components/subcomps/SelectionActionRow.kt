@@ -43,7 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.theveloper.pixelplay.ui.theme.GoogleSansRounded
 import androidx.compose.ui.res.stringResource
-import com.theveloper.pixelplay.R
+import com.theovilardo.pixelplay.R
 import racra.compose.smooth_corner_rect_library.AbsoluteSmoothCornerShape
 
 private val buttonHeight = 44.dp

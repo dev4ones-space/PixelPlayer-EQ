@@ -1,5 +1,6 @@
 package com.theveloper.pixelplay
 
+import com.theovilardo.pixelplay.R
 import com.theveloper.pixelplay.presentation.navigation.navigateSafely
 
 // import androidx.compose.ui.platform.LocalView // No longer needed for this

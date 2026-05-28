@@ -31,7 +31,7 @@ import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import androidx.media3.common.Player
 import com.theveloper.pixelplay.MainActivity
-import com.theveloper.pixelplay.R
+import com.theovilardo.pixelplay.R
 import com.theveloper.pixelplay.data.model.PlayerInfo
 import kotlin.text.ifEmpty
 

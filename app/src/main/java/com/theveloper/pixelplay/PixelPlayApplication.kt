@@ -1,5 +1,6 @@
 package com.theveloper.pixelplay
 
+import com.theovilardo.pixelplay.BuildConfig
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager

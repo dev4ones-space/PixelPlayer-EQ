@@ -42,7 +42,7 @@ import com.theveloper.pixelplay.presentation.utils.GenreIconProvider
 import com.theveloper.pixelplay.ui.theme.GoogleSansRounded
 import racra.compose.smooth_corner_rect_library.AbsoluteSmoothCornerShape
 import androidx.compose.ui.res.stringResource
-import com.theveloper.pixelplay.R
+import com.theovilardo.pixelplay.R
 
 @Composable
 fun QuickFillDialog(

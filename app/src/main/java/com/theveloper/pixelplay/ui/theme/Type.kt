@@ -12,7 +12,7 @@ import androidx.compose.ui.text.googlefonts.GoogleFont
 import androidx.compose.ui.text.style.TextGeometricTransform
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
-import com.theveloper.pixelplay.R
+import com.theovilardo.pixelplay.R
 
 
 private val montserrat = GoogleFont("Montserrat")

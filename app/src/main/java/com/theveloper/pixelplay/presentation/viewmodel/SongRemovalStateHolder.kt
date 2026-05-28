@@ -2,7 +2,7 @@ package com.theveloper.pixelplay.presentation.viewmodel
 
 import android.app.Activity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.theveloper.pixelplay.R
+import com.theovilardo.pixelplay.R
 import com.theveloper.pixelplay.data.model.Song
 import com.theveloper.pixelplay.data.preferences.PlaylistPreferencesRepository
 import com.theveloper.pixelplay.data.repository.MusicRepository

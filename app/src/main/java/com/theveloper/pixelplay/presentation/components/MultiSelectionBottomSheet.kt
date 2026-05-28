@@ -87,7 +87,7 @@ import racra.compose.smooth_corner_rect_library.AbsoluteSmoothCornerShape
  */
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import com.theveloper.pixelplay.R
+import com.theovilardo.pixelplay.R
 import com.theveloper.pixelplay.presentation.components.subcomps.AutoSizingTextToFill
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)

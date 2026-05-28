@@ -32,7 +32,7 @@ import coil.request.CachePolicy
 import coil.request.ImageRequest
 import coil.size.Dimension
 import coil.size.Size
-import com.theveloper.pixelplay.R
+import com.theovilardo.pixelplay.R
 import com.theveloper.pixelplay.utils.LocalArtworkUri
 
 internal const val MaxSafeAlbumArtDimensionPx = 2048

@@ -148,7 +148,7 @@ import kotlin.math.roundToInt
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import com.theveloper.pixelplay.R
+import com.theovilardo.pixelplay.R
 import com.theveloper.pixelplay.data.backup.model.BackupHistoryEntry
 import com.theveloper.pixelplay.data.backup.model.BackupOperationType
 import com.theveloper.pixelplay.data.backup.model.BackupSection
