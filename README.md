@@ -8,6 +8,7 @@
   <img src="assets/screenshot1.png" alt="Screenshot 1" width="200" style="border-radius:26px;"/>
   <img src="assets/screenshot2.png" alt="Screenshot 2" width="200" style="border-radius:26px;"/>
   <img src="assets/screenshot3.png" alt="Screenshot 3" width="200" style="border-radius:26px;"/>
+  <img src="assets/screenshot4.png" alt="Screenshot 4" width="200" style="border-radius:26px;"/>
 </p>
 
 ## Original repo: 
