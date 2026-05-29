@@ -1,48 +1,103 @@
 #!/usr/bin/env bash
+# build.sh — PixelPlayer-EQ fork build helper
+#
+# Usage:
+#   bash build.sh                  # release build, sign with local.properties keys
+#   bash build.sh --easy-build     # debug build, no keys needed — installs directly
+#   bash build.sh --help
+
 set -euo pipefail
 
-KEYSTORE="${KEYSTORE:-$HOME/.android/pixelplayer-release.jks}"
-KEY_ALIAS="${KEY_ALIAS:-pixelplayer}"
-STORE_PASS="${STORE_PASS:-android}"
-KEY_PASS="${KEY_PASS:-android}"
-BUILD_TYPE="${BUILD_TYPE:-release}"
+EASY_BUILD=false
+for arg in "$@"; do
+  case "$arg" in
+    --easy-build) EASY_BUILD=true ;;
+    --help|-h)
+      echo "Usage: bash build.sh [--easy-build]"
+      echo ""
+      echo "  (no flags)      Release build signed with keys from local.properties"
+      echo "  --easy-build    Debug build — no keystore required, installs via adb if a device is connected"
+      exit 0
+      ;;
+    *) echo "Unknown argument: $arg" >&2; exit 1 ;;
+  esac
+done
 
-APKSIGNER="$(ls "$HOME/Library/Android/sdk/build-tools"/*/apksigner 2>/dev/null | sort -V | tail -1)"
-APK_OUT="app/build/outputs/apk/$BUILD_TYPE"
+# ── Resolve JAVA_HOME ────────────────────────────────────────────────────────
+if [ -z "${JAVA_HOME:-}" ]; then
+  if command -v /usr/libexec/java_home &>/dev/null; then
+    export JAVA_HOME="$(/usr/libexec/java_home 2>/dev/null)"
+  elif command -v java &>/dev/null; then
+    export JAVA_HOME="$(java -XshowSettings:property -version 2>&1 | awk -F'= ' '/java.home/{print $2}')"
+  fi
+fi
 
-if [ -z "$APKSIGNER" ]; then
-  echo "ERROR: apksigner not found — install Android build-tools via SDK Manager" >&2
+# ── Easy build (debug, no keys) ──────────────────────────────────────────────
+if $EASY_BUILD; then
+  echo "==> Easy build: assembling debug APK (no keystore required)..."
+  ./gradlew app:assembleDebug
+
+  APK="app/build/outputs/apk/debug/app-arm64-v8a-debug.apk"
+  [ -f "$APK" ] || APK="$(find app/build/outputs/apk/debug -name '*.apk' | head -1)"
+
+  echo ""
+  echo "==> Build complete: $APK"
+
+  if adb get-state &>/dev/null 2>&1; then
+    echo "==> Device detected — installing..."
+    adb install -r "$APK"
+    echo "==> Installed. Launch with:"
+    echo "    adb shell am start -n com.dev4ones_space_fork.pixelplay_fx/com.theveloper.pixelplay.MainActivity"
+  else
+    echo "==> No ADB device connected. To install manually:"
+    echo "    adb install -r \"$APK\""
+  fi
+  exit 0
+fi
+
+# ── Release build ────────────────────────────────────────────────────────────
+LOCAL_PROPS="local.properties"
+if [ ! -f "$LOCAL_PROPS" ]; then
+  echo "ERROR: local.properties not found." >&2
+  echo "Create it with:" >&2
+  echo "  STORE_FILE=<path-to.jks>" >&2
+  echo "  STORE_PASSWORD=<password>" >&2
+  echo "  KEY_ALIAS=<alias>" >&2
+  echo "  KEY_PASSWORD=<password>" >&2
   exit 1
 fi
 
-export JAVA_HOME="${JAVA_HOME:-$(/usr/libexec/java_home 2>/dev/null)}"
+# Read signing values from local.properties
+read_prop() { grep "^$1=" "$LOCAL_PROPS" | cut -d'=' -f2-; }
+STORE_FILE="$(read_prop STORE_FILE)"
+STORE_PASS="$(read_prop STORE_PASSWORD)"
+KEY_ALIAS="$(read_prop KEY_ALIAS)"
+KEY_PASS="$(read_prop KEY_PASSWORD)"
 
-# Generate keystore if missing
-if [ ! -f "$KEYSTORE" ]; then
-  mkdir -p "$(dirname "$KEYSTORE")"
-  echo "Generating keystore at $KEYSTORE ..."
-  keytool -genkeypair -v \
-    -keystore "$KEYSTORE" \
-    -alias "$KEY_ALIAS" \
-    -keyalg RSA -keysize 2048 -validity 10000 \
-    -storepass "$STORE_PASS" -keypass "$KEY_PASS" \
-    -dname "CN=PixelPlayer,O=Debug,C=US"
+if [ -z "$STORE_FILE" ] || [ -z "$STORE_PASS" ] || [ -z "$KEY_ALIAS" ] || [ -z "$KEY_PASS" ]; then
+  echo "ERROR: local.properties is missing one or more signing fields:" >&2
+  echo "  STORE_FILE, STORE_PASSWORD, KEY_ALIAS, KEY_PASSWORD" >&2
+  exit 1
 fi
 
-echo "Building $BUILD_TYPE APK..."
-./gradlew "app:assemble$(tr '[:lower:]' '[:upper:]' <<< "${BUILD_TYPE:0:1}")${BUILD_TYPE:1}"
+# Resolve keystore path relative to app/ if it's not absolute
+KEYSTORE="$STORE_FILE"
+[ -f "$KEYSTORE" ] || KEYSTORE="app/$STORE_FILE"
+if [ ! -f "$KEYSTORE" ]; then
+  echo "ERROR: Keystore not found at '$STORE_FILE' or 'app/$STORE_FILE'" >&2
+  exit 1
+fi
 
+echo "==> Building release APK..."
+./gradlew app:assembleRelease
+
+APK_DIR="app/build/outputs/apk/release"
 echo ""
-echo "Signing APKs..."
-for apk in "$APK_OUT"/app-*-"$BUILD_TYPE".apk; do
+echo "==> Release APKs:"
+for apk in "$APK_DIR"/app-*-release.apk; do
   [ -f "$apk" ] || continue
-  out="${apk/-$BUILD_TYPE.apk/-$BUILD_TYPE-signed.apk}"
-  "$APKSIGNER" sign \
-    --ks "$KEYSTORE" --ks-key-alias "$KEY_ALIAS" \
-    --ks-pass "pass:$STORE_PASS" --key-pass "pass:$KEY_PASS" \
-    --out "$out" "$apk" 2>/dev/null
-  echo "  $out"
+  echo "    $apk"
 done
 
 echo ""
-echo "Done."
+echo "==> Done."
