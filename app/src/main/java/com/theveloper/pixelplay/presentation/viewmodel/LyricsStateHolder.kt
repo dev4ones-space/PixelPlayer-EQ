@@ -1,6 +1,6 @@
 package com.theveloper.pixelplay.presentation.viewmodel
 
-import com.theovilardo.pixelplay.R
+import com.theveloper.pixelplay.R
 import com.theveloper.pixelplay.data.media.AudioMetadataReader
 import com.theveloper.pixelplay.data.media.CoverArtUpdate
 import com.theveloper.pixelplay.data.media.SongMetadataEditor

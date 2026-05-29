@@ -14,7 +14,7 @@ import android.text.format.Formatter
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.theveloper.pixelplay.MainActivity
-import com.theovilardo.pixelplay.R
+import com.theveloper.pixelplay.R
 import com.theveloper.pixelplay.shared.WearTransferProgress
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

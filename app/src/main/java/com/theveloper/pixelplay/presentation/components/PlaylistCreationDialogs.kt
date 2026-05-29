@@ -101,7 +101,7 @@ import kotlin.math.min
 import racra.compose.smooth_corner_rect_library.AbsoluteSmoothCornerShape
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
-import com.theovilardo.pixelplay.R
+import com.theveloper.pixelplay.R
 import androidx.compose.ui.text.style.TextOverflow
 
 @Composable

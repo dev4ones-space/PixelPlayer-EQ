@@ -20,7 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.stringResource
-import com.theovilardo.pixelplay.R
+import com.theveloper.pixelplay.R
 import androidx.compose.ui.unit.sp
 
 @Composable

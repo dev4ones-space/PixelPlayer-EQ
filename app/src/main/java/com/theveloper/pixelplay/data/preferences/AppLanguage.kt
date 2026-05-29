@@ -2,7 +2,7 @@ package com.theveloper.pixelplay.data.preferences
 
 import android.content.Context
 import androidx.annotation.StringRes
-import com.theovilardo.pixelplay.R
+import com.theveloper.pixelplay.R
 
 enum class AppLanguage(val tag: String, @StringRes val labelRes: Int) {
     SYSTEM("", R.string.setcat_language_system),

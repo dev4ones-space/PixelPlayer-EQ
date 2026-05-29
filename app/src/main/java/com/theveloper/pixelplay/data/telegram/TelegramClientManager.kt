@@ -1,7 +1,7 @@
 package com.theveloper.pixelplay.data.telegram
 
 import android.content.Context
-import com.theovilardo.pixelplay.BuildConfig
+import com.theveloper.pixelplay.BuildConfig
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -61,7 +61,7 @@ import com.theveloper.pixelplay.ui.theme.GoogleSansRounded
 import com.theveloper.pixelplay.utils.resolvePlaylistCoverContentColor
 import racra.compose.smooth_corner_rect_library.AbsoluteSmoothCornerShape
 import androidx.compose.ui.res.stringResource
-import com.theovilardo.pixelplay.R
+import com.theveloper.pixelplay.R
 
 /**
  * Bottom sheet for batch operations on multiple selected playlists.

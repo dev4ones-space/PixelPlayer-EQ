@@ -2,7 +2,7 @@ package com.theveloper.pixelplay.presentation.viewmodel
 
 
 import android.content.Context
-import com.theovilardo.pixelplay.R
+import com.theveloper.pixelplay.R
 import com.theveloper.pixelplay.data.DailyMixManager
 import com.theveloper.pixelplay.data.ai.AiMetadataGenerator
 import com.theveloper.pixelplay.data.ai.AiNotificationManager

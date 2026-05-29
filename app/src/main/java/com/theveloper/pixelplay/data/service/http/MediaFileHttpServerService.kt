@@ -28,7 +28,7 @@ import androidx.media3.decoder.Decoder
 import androidx.media3.decoder.DecoderInputBuffer
 import androidx.media3.decoder.SimpleDecoderOutputBuffer
 import androidx.media3.decoder.ffmpeg.FfmpegLibrary
-import com.theovilardo.pixelplay.R
+import com.theveloper.pixelplay.R
 import com.theveloper.pixelplay.data.model.Song
 import com.theveloper.pixelplay.data.repository.MusicRepository
 import com.theveloper.pixelplay.data.service.cast.CastAudioMimeUtils

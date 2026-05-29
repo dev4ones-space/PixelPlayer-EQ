@@ -1,7 +1,7 @@
 package com.theveloper.pixelplay.presentation.viewmodel
 
 import android.content.Context
-import com.theovilardo.pixelplay.R
+import com.theveloper.pixelplay.R
 import com.theveloper.pixelplay.data.model.Song
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ViewModelScoped

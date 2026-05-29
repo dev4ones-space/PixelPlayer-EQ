@@ -12,7 +12,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.annotation.DrawableRes
 import androidx.appcompat.content.res.AppCompatResources
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
-import com.theovilardo.pixelplay.R
+import com.theveloper.pixelplay.R
 import com.theveloper.pixelplay.ui.theme.LocalPixelPlayDarkTheme
 
 /**

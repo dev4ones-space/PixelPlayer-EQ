@@ -1,6 +1,6 @@
 package com.theveloper.pixelplay.data.backup.model
 
-import com.theovilardo.pixelplay.R
+import com.theveloper.pixelplay.R
 
 enum class BackupSection(
     val key: String,

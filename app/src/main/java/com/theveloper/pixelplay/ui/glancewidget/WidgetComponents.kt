@@ -24,7 +24,7 @@ import androidx.glance.layout.ContentScale
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.size
 import androidx.glance.unit.ColorProvider
-import com.theovilardo.pixelplay.R
+import com.theveloper.pixelplay.R
 import timber.log.Timber
 
 @Composable

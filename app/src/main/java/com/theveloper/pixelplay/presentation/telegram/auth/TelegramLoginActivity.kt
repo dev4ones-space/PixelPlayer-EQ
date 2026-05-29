@@ -103,7 +103,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.theveloper.pixelplay.MainActivity
-import com.theovilardo.pixelplay.R
+import com.theveloper.pixelplay.R
 import com.theveloper.pixelplay.presentation.telegram.channel.TelegramChannelSearchSheet
 import com.theveloper.pixelplay.presentation.telegram.dashboard.TelegramDashboardScreen
 import com.theveloper.pixelplay.ui.theme.GoogleSansRounded

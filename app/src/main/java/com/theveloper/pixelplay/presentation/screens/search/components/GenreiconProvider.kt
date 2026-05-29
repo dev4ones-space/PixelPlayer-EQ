@@ -1,6 +1,6 @@
 package com.theveloper.pixelplay.presentation.screens.search.components
 
-import com.theovilardo.pixelplay.R
+import com.theveloper.pixelplay.R
 import androidx.annotation.DrawableRes
 import java.text.Normalizer
 import java.util.Locale

@@ -36,7 +36,7 @@ import coil.request.ImageRequest
 import coil.size.Size // Import Coil's Size
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
-import com.theovilardo.pixelplay.R
+import com.theveloper.pixelplay.R
 
 val SmartImageCompactListTargetSize = Size(96, 96)
 val SmartImageListTargetSize = Size(128, 128)

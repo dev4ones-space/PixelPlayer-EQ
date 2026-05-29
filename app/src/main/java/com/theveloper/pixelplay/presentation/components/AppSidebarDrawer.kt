@@ -28,7 +28,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.theovilardo.pixelplay.R
+import com.theveloper.pixelplay.R
 
 sealed class DrawerDestination(val route: String) {
     object Home : DrawerDestination("home")

@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.theveloper.pixelplay.MainActivity
 import com.theveloper.pixelplay.MainActivityIntentContract
-import com.theovilardo.pixelplay.R
+import com.theveloper.pixelplay.R
 import com.theveloper.pixelplay.data.model.MusicFolder
 import com.theveloper.pixelplay.data.preferences.PlaylistPreferencesRepository
 import com.theveloper.pixelplay.data.preferences.UserPreferencesRepository

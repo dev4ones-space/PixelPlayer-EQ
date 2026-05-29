@@ -1,6 +1,6 @@
 package com.theveloper.pixelplay.presentation.utils
 
-import com.theovilardo.pixelplay.R
+import com.theveloper.pixelplay.R
 
 object GenreIconProvider {
 
