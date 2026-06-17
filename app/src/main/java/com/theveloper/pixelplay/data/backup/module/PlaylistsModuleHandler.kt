@@ -15,12 +15,17 @@ import com.theveloper.pixelplay.data.preferences.PlaylistPreferencesRepository
 import com.theveloper.pixelplay.data.preferences.PreferenceBackupEntry
 import com.theveloper.pixelplay.data.preferences.UserPreferencesRepository
 import com.theveloper.pixelplay.di.BackupGson
+import com.theveloper.pixelplay.data.worker.SyncManager
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 import javax.inject.Inject
+import javax.inject.Provider
 import javax.inject.Singleton
 
 @Singleton
@@ -29,8 +34,92 @@ class PlaylistsModuleHandler @Inject constructor(
     private val playlistPreferencesRepository: PlaylistPreferencesRepository,
     private val userPreferencesRepository: UserPreferencesRepository,
     private val musicDao: MusicDao,
-    @BackupGson private val gson: Gson
+    @BackupGson private val gson: Gson,
+    private val syncManagerProvider: Provider<SyncManager>
 ) : BackupModuleHandler {
+
+    private val handlerScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+
+    init {
+        resolvePendingPlaylists()
+        observeSyncProgress()
+    }
+
+    private fun observeSyncProgress() {
+        handlerScope.launch {
+            val syncManager = syncManagerProvider.get()
+            var wasRunning = false
+            syncManager.syncProgress.collect { progress ->
+                val isRunning = progress.isRunning
+                if (wasRunning && !isRunning) {
+                    resolvePendingPlaylists()
+                }
+                wasRunning = isRunning
+            }
+        }
+    }
+
+    private fun resolvePendingPlaylists() {
+        handlerScope.launch {
+            val pendingFile = File(context.filesDir, "pending_playlists_restore.json")
+            if (!pendingFile.exists()) return@launch
+
+            Log.i(TAG, "Found pending playlist restore file, attempting resolution...")
+            val payload = try {
+                pendingFile.readText()
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to read pending playlist restore file", e)
+                return@launch
+            }
+
+            val parsed = runCatching {
+                gson.fromJson(payload, PlaylistsBackupPayload::class.java)
+            }.getOrNull() ?: return@launch
+
+            val backupPlaylists = parsed.playlists.orEmpty()
+            val songMetadata = parsed.songMetadata
+
+            if (songMetadata == null || songMetadata.isEmpty()) {
+                pendingFile.delete()
+                return@launch
+            }
+
+            val resolutionResult = resolvePlaylists(backupPlaylists, songMetadata)
+            val resolvedPlaylists = resolutionResult.playlists
+            val unresolvedCount = resolutionResult.unresolvedCount
+
+            val currentPlaylists = playlistPreferencesRepository.getPlaylistsOnce()
+
+            var databaseUpdated = false
+            val updatedPlaylists = currentPlaylists.map { currentPlaylist ->
+                val backupPlaylist = backupPlaylists.find { it.id == currentPlaylist.id }
+                val resolvedPlaylist = resolvedPlaylists.find { it.id == currentPlaylist.id }
+
+                if (backupPlaylist != null && resolvedPlaylist != null) {
+                    if (currentPlaylist.songIds.size < resolvedPlaylist.songIds.size) {
+                        databaseUpdated = true
+                        currentPlaylist.copy(songIds = resolvedPlaylist.songIds)
+                    } else {
+                        currentPlaylist
+                    }
+                } else {
+                    currentPlaylist
+                }
+            }
+
+            if (databaseUpdated) {
+                playlistPreferencesRepository.replaceAllPlaylists(updatedPlaylists)
+                Log.i(TAG, "Successfully updated database playlists with resolved songs. Remaining unresolved: $unresolvedCount")
+            }
+
+            if (unresolvedCount == 0) {
+                pendingFile.delete()
+                Log.i(TAG, "All pending playlist songs resolved, deleted pending file.")
+            } else {
+                Log.i(TAG, "Some playlist songs remain unresolved ($unresolvedCount). Keeping pending file for next sync completion.")
+            }
+        }
+    }
 
     override val section = BackupSection.PLAYLISTS
 
@@ -119,11 +208,27 @@ class PlaylistsModuleHandler @Inject constructor(
         val coverImages = parsed.coverImages
 
         // Resolve song IDs against the current device library
-        val resolvedPlaylists = if (songMetadata != null && songMetadata.isNotEmpty()) {
+        val resolutionResult = if (songMetadata != null && songMetadata.isNotEmpty()) {
             resolvePlaylists(backupPlaylists, songMetadata)
         } else {
-            // No metadata available (legacy backup or snapshot rollback) — keep IDs as-is
-            backupPlaylists
+            PlaylistsResolutionResult(backupPlaylists, 0)
+        }
+        val resolvedPlaylists = resolutionResult.playlists
+        val unresolvedCount = resolutionResult.unresolvedCount
+
+        // Save pending restore payload if there are unresolved songs
+        val pendingFile = File(context.filesDir, "pending_playlists_restore.json")
+        if (unresolvedCount > 0) {
+            try {
+                pendingFile.writeText(payload)
+                Log.i(TAG, "Saved pending playlist restore file: ${pendingFile.absolutePath}")
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to save pending playlist restore file", e)
+            }
+        } else {
+            if (pendingFile.exists()) {
+                pendingFile.delete()
+            }
         }
 
         // Restore cover images and update playlist URIs
@@ -191,7 +296,7 @@ class PlaylistsModuleHandler @Inject constructor(
     private suspend fun resolvePlaylists(
         playlists: List<Playlist>,
         songMetadata: Map<String, SongMetadataEntry>
-    ): List<Playlist> {
+    ): PlaylistsResolutionResult {
         val localSummaries = musicDao.getAllLocalSongSummaries()
         val currentSongsById = localSummaries.associateBy { it.id.toString() }
 
@@ -224,13 +329,20 @@ class PlaylistsModuleHandler @Inject constructor(
         }
 
         // Apply resolution to playlists, dropping unresolved songs
-        return playlists.map { playlist ->
+        val resolvedPlaylists = playlists.map { playlist ->
             val resolvedSongIds = playlist.songIds.mapNotNull { songId ->
                 resolutionCache[songId]
             }
             playlist.copy(songIds = resolvedSongIds)
         }
+
+        return PlaylistsResolutionResult(resolvedPlaylists, unresolvedCount)
     }
+
+    private data class PlaylistsResolutionResult(
+        val playlists: List<Playlist>,
+        val unresolvedCount: Int
+    )
 
     private fun resolveSongId(
         backupSongId: String,

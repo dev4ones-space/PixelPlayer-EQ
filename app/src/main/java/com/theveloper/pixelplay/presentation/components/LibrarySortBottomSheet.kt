@@ -138,16 +138,16 @@ fun LibrarySortBottomSheet(
 
             if (shouldShowDirectionToggle && resolvedSelectedOption != null) {
                 val directionLabel = when (selectedDirection) {
-                    SortDirection.Descending -> stringResource(R.string.presentation_batch_g_sort_descending)
-                    SortDirection.Ascending -> stringResource(R.string.presentation_batch_g_sort_ascending)
-                    null -> stringResource(R.string.presentation_batch_g_sort_original_order)
+                    SortDirection.Descending -> stringResource(R.string.library_sort_descending)
+                    SortDirection.Ascending -> stringResource(R.string.library_sort_ascending)
+                    null -> stringResource(R.string.library_sort_original_order)
                 }
                 val directionHint = when {
                     resolvedSelectedOption.canFlipDirection && selectedDirection == SortDirection.Descending ->
-                        stringResource(R.string.presentation_batch_g_sort_tap_ascending)
+                        stringResource(R.string.library_sort_tap_ascending)
                     resolvedSelectedOption.canFlipDirection && selectedDirection == SortDirection.Ascending ->
-                        stringResource(R.string.presentation_batch_g_sort_tap_descending)
-                    else -> stringResource(R.string.presentation_batch_g_sort_keeps_order)
+                        stringResource(R.string.library_sort_tap_descending)
+                    else -> stringResource(R.string.library_sort_keeps_order)
                 }
                 val isDescending = selectedDirection == SortDirection.Descending
 
@@ -212,7 +212,7 @@ fun LibrarySortBottomSheet(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(
-                                text = option.methodLabel,
+                                text = stringResource(option.methodLabelRes),
                                 style = MaterialTheme.typography.bodyLarge,
                                 color = if (isSelected) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onSurface
                             )
@@ -251,7 +251,7 @@ fun LibrarySortBottomSheet(
             if (sourceToggleContent != null) {
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(
-                    text = stringResource(R.string.presentation_batch_g_sort_source),
+                    text = stringResource(R.string.library_sort_source),
                     style = MaterialTheme.typography.headlineSmall,
                     fontFamily = GoogleSansRounded,
                     fontWeight = FontWeight.Bold,
@@ -375,7 +375,7 @@ private fun LibrarySheetSortDirectionCard(
 
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = stringResource(R.string.presentation_batch_g_sort_order),
+                    text = stringResource(R.string.library_sort_order),
                     style = MaterialTheme.typography.labelLarge,
                     color = contentColor.copy(alpha = 0.82f)
                 )
@@ -450,7 +450,7 @@ internal fun LibrarySheetToggleCard(
                     {
                         Icon(
                             imageVector = Icons.Rounded.Check,
-                            contentDescription = stringResource(R.string.presentation_batch_g_cd_switch_on),
+                            contentDescription = stringResource(R.string.library_sort_cd_switch_on),
                             //tint = MaterialTheme.colorScheme.onTertiaryContainer,
                             modifier = Modifier.size(SwitchDefaults.IconSize),
                         )

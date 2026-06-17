@@ -38,13 +38,36 @@ data class DirectoryEntry(
     val isBlocked: Boolean = false
 )
 
-private data class RawDirectoryEntry(
+internal data class RawDirectoryEntry(
     val file: File,
     val directAudioCount: Int,
     val totalAudioCount: Int,
     val canonicalPath: String,
     val displayName: String? = null
 )
+
+internal fun mergeDirectoryEntryLists(
+    filesystemEntries: List<RawDirectoryEntry>,
+    mediaStoreEntries: List<RawDirectoryEntry>
+): List<RawDirectoryEntry> {
+    val merged = linkedMapOf<String, RawDirectoryEntry>()
+
+    filesystemEntries.forEach { entry ->
+        merged[entry.canonicalPath] = entry
+    }
+
+    mediaStoreEntries.forEach { mediaEntry ->
+        val existing = merged[mediaEntry.canonicalPath]
+        merged[mediaEntry.canonicalPath] =
+            if (existing == null) {
+                mediaEntry
+            } else {
+                mediaEntry.copy(displayName = mediaEntry.displayName ?: existing.displayName)
+            }
+    }
+
+    return merged.values.sortedWith(compareBy({ it.file.name.lowercase() }))
+}
 
 private data class MediaStoreDirectoryIndex(
     val childrenByParent: Map<String, Set<String>>,
@@ -332,38 +355,55 @@ class FileExplorerStateHolder(
         _isCurrentDirectoryResolved.value = false
         _rawCurrentDirectoryChildren.value = emptyList()
 
-        val immediateEntries = listImmediateDirectoryEntries(target)
-        val resultEntries = if (immediateEntries.isNotEmpty()) {
-            immediateEntries
-        } else {
-            computeDirectoryEntriesFromMediaStore(target, forceRefresh).also {
-                resolvedDirectoryKeys.add(targetKey)
-            }
+        // Build (or reuse) the MediaStore audio index up front so the list only ever
+        // contains directories that actually hold audio at some level. The plain
+        // filesystem listing would otherwise surface every folder, including ones
+        // without any audio. This index is the authoritative source of "music folders".
+        val index = getOrBuildMediaStoreDirectoryIndex(forceRefresh)
+        val immediateEntries = listImmediateDirectoryEntries(target, index)
+        val resultEntries = immediateEntries.ifEmpty {
+            computeDirectoryEntriesFromMediaStore(target, index)
         }
+        resolvedDirectoryKeys.add(targetKey)
         directoryChildrenCache[targetKey] = resultEntries
 
         _rawCurrentDirectoryChildren.value = resultEntries
         _isLoading.value = false
         _isExplorerReady.value = true
-        _isCurrentDirectoryResolved.value = resolvedDirectoryKeys.contains(targetKey)
-        enrichDirectoryEntries(target, resultEntries, forceRefresh)
+        _isCurrentDirectoryResolved.value = true
+        // The index is already fresh, so enrichment only needs to merge in any audio
+        // folders the filesystem listing could not enumerate (no forced rebuild needed).
+        enrichDirectoryEntries(target, resultEntries, forceRefresh = false)
         prefetchChildDirectories(resultEntries)
     }
 
-    private suspend fun listImmediateDirectoryEntries(target: File): List<RawDirectoryEntry> =
+    private suspend fun listImmediateDirectoryEntries(
+        target: File,
+        index: MediaStoreDirectoryIndex?
+    ): List<RawDirectoryEntry> =
         withContext(Dispatchers.IO) {
-            val cachedIndex = mediaStoreDirectoryIndex
+            val resolvedIndex = index ?: mediaStoreDirectoryIndex
             runCatching {
                 target.listFiles()
                     ?.asSequence()
                     ?.filter { it.isDirectory && !it.isHidden }
-                    ?.map { child ->
+                    ?.mapNotNull { child ->
                         val childKey = normalizePath(child)
+                        // Keep only folders that contain audio (directly or in any
+                        // descendant). A directory present in the index always has at
+                        // least one audio file somewhere below it. When the index isn't
+                        // available yet we can't decide, so we keep the entry and let
+                        // enrichment prune it once the index is ready.
+                        if (resolvedIndex != null &&
+                            !resolvedIndex.totalAudioCountByPath.containsKey(childKey)
+                        ) {
+                            return@mapNotNull null
+                        }
                         RawDirectoryEntry(
                             file = child,
-                            directAudioCount = cachedIndex?.directAudioCountByPath?.get(childKey)
+                            directAudioCount = resolvedIndex?.directAudioCountByPath?.get(childKey)
                                 ?: UNKNOWN_AUDIO_COUNT,
-                            totalAudioCount = cachedIndex?.totalAudioCountByPath?.get(childKey)
+                            totalAudioCount = resolvedIndex?.totalAudioCountByPath?.get(childKey)
                                 ?: UNKNOWN_AUDIO_COUNT,
                             canonicalPath = childKey
                         )
@@ -374,11 +414,10 @@ class FileExplorerStateHolder(
             }.getOrElse { emptyList() }
         }
 
-    private suspend fun computeDirectoryEntriesFromMediaStore(
+    private fun computeDirectoryEntriesFromMediaStore(
         target: File,
-        forceRefresh: Boolean
+        index: MediaStoreDirectoryIndex
     ): List<RawDirectoryEntry> {
-        val index = getOrBuildMediaStoreDirectoryIndex(forceRefresh)
         val targetKey = normalizePath(target)
         val childPaths = index.childrenByParent[targetKey].orEmpty()
 
@@ -417,7 +456,10 @@ class FileExplorerStateHolder(
                         )
                     }
                     .sortedWith(compareBy({ it.file.name.lowercase() }))
-                val enrichedEntries = mediaStoreEntries
+                val enrichedEntries = mergeDirectoryEntryLists(
+                    filesystemEntries = currentEntries,
+                    mediaStoreEntries = mediaStoreEntries
+                )
 
                 directoryChildrenCache[targetKey] = enrichedEntries
                 resolvedDirectoryKeys.add(targetKey)
@@ -523,7 +565,8 @@ class FileExplorerStateHolder(
 
                 scope.launch(prefetchDispatcher) {
                     try {
-                        val prefetchedEntries = listImmediateDirectoryEntries(entry.file)
+                        val index = getOrBuildMediaStoreDirectoryIndex(forceRefresh = false)
+                        val prefetchedEntries = listImmediateDirectoryEntries(entry.file, index)
                         directoryChildrenCache[targetKey] = prefetchedEntries
                         enrichDirectoryEntries(
                             target = entry.file,

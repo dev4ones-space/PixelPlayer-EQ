@@ -3,8 +3,6 @@ package com.theveloper.pixelplay.data.worker
 import android.content.ContentResolver
 import android.content.ContentUris
 import android.content.Context
-import android.media.MediaScannerConnection
-import android.os.Environment
 import android.os.Build
 import android.os.Trace // Import Trace
 import android.provider.MediaStore
@@ -12,7 +10,10 @@ import android.util.Log
 import androidx.hilt.work.HiltWorker
 import androidx.work.Constraints
 import androidx.work.CoroutineWorker
+import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequest
+import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.theveloper.pixelplay.data.database.AlbumEntity
@@ -25,6 +26,8 @@ import com.theveloper.pixelplay.data.database.SourceType
 import com.theveloper.pixelplay.data.database.TelegramDao // Added
 import com.theveloper.pixelplay.data.database.resolveAlbumArtUri
 import com.theveloper.pixelplay.data.database.serializeArtistRefs
+import com.theveloper.pixelplay.data.diagnostics.AdvancedPerformanceDiagnostics
+import com.theveloper.pixelplay.data.diagnostics.PerformanceMetrics
 import com.theveloper.pixelplay.data.model.ArtistRef
 import com.theveloper.pixelplay.data.navidrome.NavidromeRepository
 import com.theveloper.pixelplay.data.media.AudioMetadataReader
@@ -36,7 +39,6 @@ import com.theveloper.pixelplay.utils.AlbumArtCacheManager
 import com.theveloper.pixelplay.utils.AlbumArtUtils
 import com.theveloper.pixelplay.utils.AudioMetaUtils.getAudioMetadata
 import com.theveloper.pixelplay.utils.DirectoryRuleResolver
-import com.theveloper.pixelplay.utils.LocalArtworkUri
 import com.theveloper.pixelplay.utils.buildLocalAudioSelection
 import com.theveloper.pixelplay.utils.normalizeMetadataTextOrEmpty
 import com.theveloper.pixelplay.utils.splitArtistsByDelimiters
@@ -44,7 +46,6 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import java.io.File
 import java.util.concurrent.ConcurrentHashMap
-import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicLong
@@ -91,6 +92,19 @@ constructor(
                             inputData.getString(INPUT_SYNC_MODE) ?: SyncMode.INCREMENTAL.name
                     val syncMode = SyncMode.valueOf(syncModeName)
                     val forceMetadata = inputData.getBoolean(INPUT_FORCE_METADATA, false)
+                    val runMaintenance = inputData.getBoolean(INPUT_RUN_MAINTENANCE, true)
+                    val workerStartedAt = System.currentTimeMillis()
+                    AdvancedPerformanceDiagnostics.recordEventIfEnabled(
+                        type = AdvancedPerformanceDiagnostics.EventTypes.WORKER,
+                        name = "sync_worker_start"
+                    ) {
+                        mapOf(
+                            "mode" to syncMode.name,
+                            "forceMetadata" to forceMetadata.toString(),
+                            "runMaintenance" to runMaintenance.toString(),
+                            "attempt" to runAttemptCount.toString()
+                        )
+                    }
 
                     // Battery / thermal: defer background INCREMENTAL syncs while
                     // music is playing. FULL and REBUILD are skipped from this
@@ -106,12 +120,22 @@ constructor(
                         Timber.tag(TAG).d(
                             "SyncWorker deferring INCREMENTAL sync (playback active, attempt=$runAttemptCount)"
                         )
+                        AdvancedPerformanceDiagnostics.recordEventIfEnabled(
+                            type = AdvancedPerformanceDiagnostics.EventTypes.WORKER,
+                            name = "sync_worker_deferred"
+                        ) {
+                            mapOf(
+                                "mode" to syncMode.name,
+                                "reason" to "playback_active",
+                                "attempt" to runAttemptCount.toString()
+                            )
+                        }
                         return@withContext Result.retry()
                     }
 
                     Timber.tag(TAG)
                         .i("Starting MediaStore synchronization (Mode: $syncMode, ForceMetadata: $forceMetadata)...")
-                    val startTime = System.currentTimeMillis()
+                    val startTime = workerStartedAt
 
                     val artistDelimiters = userPreferencesRepository.artistDelimitersFlow.first()
                     val artistWordDelimiters = userPreferencesRepository.artistWordDelimitersFlow.first()
@@ -144,27 +168,6 @@ constructor(
                                 "rescanRequired=$rescanRequired, directoryRulesChanged=$directoryRulesChanged " +
                                 "(current=$directoryRulesVersion, applied=$lastAppliedDirectoryRulesVersion)"
                         )
-
-                    // --- MEDIA SCAN PHASE ---
-                    // OPT #8: Filesystem walk cooldown.
-                    // triggerMediaScanForNewFiles() calls File.walkTopDown() on the external storage
-                    // root, which can touch thousands of inodes and cause noticeable I/O.
-                    // For INCREMENTAL syncs we skip it if we already ran within the last hour
-                    // (the MediaStore daemon itself picks up new files quickly via inotify).
-                    // FULL and REBUILD always run it unconditionally.
-                    // Media scan for un-indexed files is slow. Run only if forced, or once every 12 hours.
-                    val mediaScanCooldownMs = 12L * 60L * 60L * 1000L // 12 hours
-                    val timeSinceLastScan = System.currentTimeMillis() - lastSyncTimestamp
-                    val forceFilesystemScan = forceMetadata
-                    val shouldRunMediaScan = forceFilesystemScan || 
-                            (lastSyncTimestamp > 0L && timeSinceLastScan >= mediaScanCooldownMs)
-                    if (shouldRunMediaScan) {
-                        triggerMediaScanForNewFiles(directoryResolver)
-                    } else {
-                        Timber.tag(TAG).d(
-                            "Skipping filesystem walk — forceMetadata=$forceMetadata, lastSyncTimestamp=${lastSyncTimestamp}"
-                        )
-                    }
 
                     // --- DELETION PHASE ---
                     // Detect and remove deleted songs efficiently using ID comparison
@@ -307,17 +310,47 @@ constructor(
                         )
                     }
 
-                    // Always update last sync timestamp if we reached this point successfully,
-                    // even if no new songs were found in MediaStore. This prevents the sync
-                    // from being re-triggered on every app launch when the library is already up to date.
-                    userPreferencesRepository.setLastSyncTimestamp(System.currentTimeMillis())
+                    // Persist the timestamp captured at the START of this run (not "now"): any file
+                    // MediaStore indexes while the worker is still running is then re-detected by the
+                    // next incremental query instead of being skipped. Always updated on success, even
+                    // with no new songs, so we don't re-sync on every launch.
+                    userPreferencesRepository.setLastSyncTimestamp(startTime)
 
                     val endTime = System.currentTimeMillis()
                     Timber.tag(TAG)
                         .i("Synchronization finished successfully in ${endTime - startTime}ms.")
 
+                    // Diagnostics: record scan duration + how many songs were processed this run,
+                    // so the performance report can attribute lag to scanning.
+                    PerformanceMetrics.recordTiming(
+                        PerformanceMetrics.Timings.FULL_SCAN,
+                        endTime - startTime
+                    )
+                    PerformanceMetrics.increment(PerformanceMetrics.Counters.SCAN_RUNS)
+                    PerformanceMetrics.increment(
+                        PerformanceMetrics.Counters.SONGS_SCANNED,
+                        songsToInsert.size.toLong()
+                    )
+
                     // Count total songs for the output
                     val totalSongs = musicDao.getSongCount().first()
+                    if (!runMaintenance) {
+                        Timber.tag(TAG).d("Skipping library maintenance phases for local-only sync.")
+                        AdvancedPerformanceDiagnostics.recordEventIfEnabled(
+                            type = AdvancedPerformanceDiagnostics.EventTypes.WORKER,
+                            name = "sync_worker_success"
+                        ) {
+                            mapOf(
+                                "mode" to syncMode.name,
+                                "durationMs" to (endTime - startTime).toString(),
+                                "totalSongs" to totalSongs.toString(),
+                                "runMaintenance" to "false"
+                            )
+                        }
+                        return@withContext Result.success(
+                            workDataOf(OUTPUT_TOTAL_SONGS to totalSongs.toLong())
+                        )
+                    }
 
                     // --- LRC SCANNING PHASE ---
                     val autoScanLrc = userPreferencesRepository.autoScanLrcFilesFlow.first()
@@ -434,9 +467,26 @@ constructor(
                     // Recalculate total
                     val finalTotalSongs = musicDao.getSongCount().first()
 
+                    AdvancedPerformanceDiagnostics.recordEventIfEnabled(
+                        type = AdvancedPerformanceDiagnostics.EventTypes.WORKER,
+                        name = "sync_worker_success"
+                    ) {
+                        mapOf(
+                            "mode" to syncMode.name,
+                            "durationMs" to (System.currentTimeMillis() - startTime).toString(),
+                            "totalSongs" to finalTotalSongs.toString(),
+                            "runMaintenance" to runMaintenance.toString()
+                        )
+                    }
                     Result.success(workDataOf(OUTPUT_TOTAL_SONGS to finalTotalSongs.toLong()))
                 } catch (e: Exception) {
                     Log.e(TAG, "Error during MediaStore synchronization", e)
+                    AdvancedPerformanceDiagnostics.recordEventIfEnabled(
+                        type = AdvancedPerformanceDiagnostics.EventTypes.WORKER,
+                        name = "sync_worker_failure"
+                    ) {
+                        mapOf("error" to (e.message ?: e.javaClass.simpleName))
+                    }
                     Result.failure()
                 } finally {
                     Trace.endSection() // End SyncWorker.doWork
@@ -1030,9 +1080,8 @@ constructor(
                         .toString()
 
         var albumArtUriString =
-                AlbumArtUtils.getAlbumArtUri(
+                AlbumArtUtils.getAlbumArtUriForLibraryScan(
                         applicationContext,
-                        raw.filePath,
                         raw.id,
                         forceAlbumArtRefresh
                 )
@@ -1069,7 +1118,7 @@ constructor(
             val file = java.io.File(raw.filePath)
             if (file.exists()) {
                 try {
-                    AudioMetadataReader.read(file)?.let { meta ->
+                    AudioMetadataReader.read(file, readArtwork = false)?.let { meta ->
                         if (!meta.title.isNullOrBlank()) title = meta.title
                         if (!meta.artist.isNullOrBlank()) artist = meta.artist
                         if (!meta.album.isNullOrBlank()) album = meta.album
@@ -1082,9 +1131,6 @@ constructor(
                         if (meta.discNumber != null) discNumber = meta.discNumber
                         if (meta.year != null) year = meta.year
 
-                        meta.artwork?.let { art ->
-                            albumArtUriString = LocalArtworkUri.buildSongUri(raw.id)
-                        }
                     }
                 } catch (e: Exception) {
                     Log.w(TAG, "Failed to read metadata via TagLib for ${raw.filePath}", e)
@@ -1122,180 +1168,6 @@ constructor(
     }
 
     /**
-     * Triggers a media scan ONLY for new files that are not yet in MediaStore.
-     * This is a fast, incremental scan optimized for pull-to-refresh.
-     * It compares filesystem files with MediaStore entries and only scans the difference.
-     */
-    private suspend fun triggerMediaScanForNewFiles(directoryResolver: DirectoryRuleResolver) {
-        withContext(Dispatchers.IO) {
-            val externalRoot = Environment.getExternalStorageDirectory()
-            val allowedSet =
-                userPreferencesRepository.allowedDirectoriesFlow.first().map { File(it) }.toSet()
-            Log.i(TAG, "Starting media scan for new files. Explicit includes: ${allowedSet.size}")
-
-            // Get all file paths currently in MediaStore
-            val mediaStorePaths = fetchMediaStoreFilePaths()
-            Log.d(TAG, "MediaStore has ${mediaStorePaths.size} known files")
-
-            val scanRoots =
-                collectPreferredScanRoots(
-                    externalRoot = externalRoot,
-                    mediaStorePaths = mediaStorePaths,
-                    explicitAllowedRoots = allowedSet,
-                    directoryResolver = directoryResolver
-                )
-
-            if (scanRoots.isEmpty()) {
-                Log.d(TAG, "No eligible roots found for media scan")
-                return@withContext
-            }
-
-            // Collect audio files from filesystem that are NOT in MediaStore
-            val audioExtensions =
-                    setOf("mp3", "flac", "m4a", "wav", "ogg", "opus", "aac", "wma", "aiff")
-            val newFilesToScan = linkedSetOf<String>()
-
-            scanRoots.forEach { root ->
-                root.walkTopDown()
-                    .onEnter { dir ->
-                        val name = dir.name
-                        if (dir.isHidden || name.startsWith(".")) return@onEnter false
-                        val path = dir.absolutePath
-                        if (directoryResolver.isBlocked(path)) return@onEnter false
-
-                        if (File(dir, ".nomedia").exists()) {
-                            val isAllowed = allowedSet.any { allowed -> 
-                                allowed.absolutePath == path || allowed.absolutePath.startsWith("$path/")
-                            }
-                            if (!isAllowed) return@onEnter false
-                        }
-
-                        // Default Skip Rules (System Folders)
-                        val isSystemFolder = (name == "Android" || name == "data" || name == "obb")
-                        if (isSystemFolder) {
-                            // Check if this specific folder is Explicitly Allowed or is a Parent of an allowed folder
-                            // e.g. if Allowed is "Android/media", we MUST enter "Android".
-                            // e.g. if Allowed is "Android" (root), we MUST enter "Android".
-                            val isAllowed = allowedSet.any { allowed -> 
-                                allowed.absolutePath == path || allowed.absolutePath.startsWith("$path/")
-                            }
-                            
-                            if (!isAllowed) {
-                                // Apply strict skipping for Android/data and Android/obb if not allowed
-                                val parent = dir.parentFile
-                                if (name == "Android" && parent?.absolutePath == Environment.getExternalStorageDirectory().absolutePath) return@onEnter false
-                                if (parent?.name == "Android" && (name == "data" || name == "obb")) return@onEnter false
-                            }
-                        }
-                        true
-                    }
-                    .filter { it.isFile && it.extension.lowercase() in audioExtensions }
-                    .filter { it.absolutePath !in mediaStorePaths } // Only new files
-                    .forEach { newFilesToScan.add(it.absolutePath) }
-            }
-
-            if (newFilesToScan.isEmpty()) {
-                Log.d(TAG, "No new audio files found - MediaStore is up to date")
-                return@withContext
-            }
-
-            Log.i(TAG, "Found ${newFilesToScan.size} NEW audio files to scan")
-
-            // Scan only the new files
-            val latch = CountDownLatch(1)
-            var scannedCount = 0
-
-            MediaScannerConnection.scanFile(
-                applicationContext, 
-                newFilesToScan.toTypedArray(),
-                null
-            ) { _, _ ->
-                scannedCount++
-                if (scannedCount >= newFilesToScan.size) {
-                    latch.countDown()
-                }
-            }
-
-            // Wait for scan to complete (max 15 seconds)
-            val completed = latch.await(15, TimeUnit.SECONDS)
-            if (!completed) {
-                Log.w(TAG, "Media scan timeout after scanning $scannedCount/${newFilesToScan.size} files")
-            } else {
-                Log.i(TAG, "Media scan completed for ${newFilesToScan.size} new files")
-            }
-        }
-    }
-
-    private fun collectPreferredScanRoots(
-        externalRoot: File,
-        mediaStorePaths: Set<String>,
-        explicitAllowedRoots: Set<File>,
-        directoryResolver: DirectoryRuleResolver
-    ): List<File> {
-        val candidates = linkedSetOf<File>()
-
-        // 1) Explicitly allowed roots always get priority.
-        explicitAllowedRoots.forEach { candidates.add(it) }
-
-        // 2) Common user-facing media directories.
-        listOf(
-            Environment.DIRECTORY_MUSIC,
-            Environment.DIRECTORY_DOWNLOADS,
-            Environment.DIRECTORY_PODCASTS,
-            Environment.DIRECTORY_AUDIOBOOKS,
-            Environment.DIRECTORY_RINGTONES,
-            Environment.DIRECTORY_NOTIFICATIONS
-        ).forEach { dirName ->
-            candidates.add(Environment.getExternalStoragePublicDirectory(dirName))
-        }
-
-        // 3) Top-level buckets already used by current MediaStore entries.
-        mediaStorePaths.forEach { mediaPath ->
-            val parent = File(mediaPath).parentFile ?: return@forEach
-            val parentPath = parent.absolutePath
-            if (parentPath.startsWith("${externalRoot.absolutePath}/")) {
-                val relative = parentPath.removePrefix(externalRoot.absolutePath).trimStart('/')
-                if (relative.isNotEmpty()) {
-                    val topLevel = relative.substringBefore('/')
-                    if (topLevel.isNotEmpty()) {
-                        candidates.add(File(externalRoot, topLevel))
-                    }
-                }
-            } else {
-                candidates.add(parent)
-            }
-        }
-
-        val existingRoots =
-            candidates
-                .map { it.absoluteFile }
-                .distinctBy { it.absolutePath }
-                .filter { it.exists() && it.isDirectory }
-                .filterNot { directoryResolver.isBlocked(it.absolutePath) }
-
-        if (existingRoots.isEmpty()) return emptyList()
-        return pruneNestedRoots(existingRoots)
-    }
-
-    private fun pruneNestedRoots(roots: List<File>): List<File> {
-        val normalizedRoots = roots.distinctBy { it.absolutePath.trimEnd('/') }
-        val kept = mutableListOf<File>()
-        normalizedRoots
-            .sortedBy { it.absolutePath.length }
-            .forEach { candidate ->
-                val candidatePath = candidate.absolutePath.trimEnd('/')
-                val coveredByParent = kept.any { root ->
-                    val rootPath = root.absolutePath.trimEnd('/')
-                    candidatePath == rootPath || candidatePath.startsWith("$rootPath/")
-                }
-                if (!coveredByParent) {
-                    kept.add(candidate)
-                }
-            }
-        return kept
-    }
-
-    /**
      * Fetches all IDs currently available in MediaStore to identify deleted songs.
      */
     private fun fetchMediaStoreIds(directoryResolver: DirectoryRuleResolver): Set<Long> {
@@ -1326,36 +1198,15 @@ constructor(
         return ids
     }
 
-    /**
-     * Fetches all file paths currently known to MediaStore.
-     * Used to identify new files that need scanning.
-     */
-    private fun fetchMediaStoreFilePaths(): Set<String> {
-        val paths = HashSet<String>()
-        val projection = arrayOf(MediaStore.Audio.Media.DATA)
-        val (selection, selectionArgs) = buildLocalAudioSelection(minSongDurationMs)
-        
-        contentResolver.query(
-            MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-            projection,
-            selection,
-            selectionArgs,
-            null
-        )?.use { cursor ->
-            val dataCol = cursor.getColumnIndex(MediaStore.Audio.Media.DATA)
-            if (dataCol >= 0) {
-                while (cursor.moveToNext()) {
-                    cursor.getString(dataCol)?.let { paths.add(it) }
-                }
-            }
-        }
-        return paths
-    }
-
     companion object {
         const val WORK_NAME = "com.theveloper.pixelplay.data.worker.SyncWorker"
+        // Distinct unique name so background maintenance never feeds the WORK_NAME-bound
+        // isSyncing/syncProgress flows — the loading indicator stays silent for it.
+        const val PERIODIC_MAINTENANCE_WORK_NAME =
+            "com.theveloper.pixelplay.data.worker.SyncWorker.PeriodicMaintenance"
         private const val TAG = "SyncWorker"
         const val INPUT_FORCE_METADATA = "input_force_metadata"
+        const val INPUT_RUN_MAINTENANCE = "input_run_maintenance"
         const val INPUT_SYNC_MODE = "input_sync_mode"
         // INCREMENTAL syncs back off this many times while playback is active
         // before running anyway. With WorkManager's exponential backoff
@@ -1389,14 +1240,22 @@ constructor(
                         .setInputData(
                                 workDataOf(
                                         INPUT_FORCE_METADATA to deepScan,
+                                        INPUT_RUN_MAINTENANCE to true,
                                         INPUT_SYNC_MODE to SyncMode.INCREMENTAL.name
                                 )
                         )
                         .build()
 
-        fun incrementalSyncWork() =
+        fun incrementalSyncWork(
+            runMaintenance: Boolean = true
+        ) =
                 OneTimeWorkRequestBuilder<SyncWorker>()
-                        .setInputData(workDataOf(INPUT_SYNC_MODE to SyncMode.INCREMENTAL.name))
+                        .setInputData(
+                                workDataOf(
+                                        INPUT_SYNC_MODE to SyncMode.INCREMENTAL.name,
+                                        INPUT_RUN_MAINTENANCE to runMaintenance
+                                )
+                        )
                         .build()
 
         // Full rescans and rebuilds do heavy bulk writes to Room + the album art cache.
@@ -1408,12 +1267,15 @@ constructor(
                         .setRequiresStorageNotLow(true)
                         .build()
 
-        fun fullSyncWork(deepScan: Boolean = false) =
+        fun fullSyncWork(
+            deepScan: Boolean = false
+        ) =
                 OneTimeWorkRequestBuilder<SyncWorker>()
                         .setInputData(
                                 workDataOf(
                                         INPUT_SYNC_MODE to SyncMode.FULL.name,
-                                        INPUT_FORCE_METADATA to deepScan
+                                        INPUT_FORCE_METADATA to deepScan,
+                                        INPUT_RUN_MAINTENANCE to true
                                 )
                         )
                         .setConstraints(heavySyncConstraints)
@@ -1421,9 +1283,34 @@ constructor(
 
         fun rebuildDatabaseWork() =
                 OneTimeWorkRequestBuilder<SyncWorker>()
-                        .setInputData(workDataOf(INPUT_SYNC_MODE to SyncMode.REBUILD.name))
+                        .setInputData(
+                                workDataOf(
+                                        INPUT_SYNC_MODE to SyncMode.REBUILD.name,
+                                        INPUT_RUN_MAINTENANCE to true
+                                )
+                        )
                         .setConstraints(heavySyncConstraints)
                         .build()
+
+        // Daily "heavy cleanup" (LRC scan, album-art cache, cloud sync). Runs a FULL sync
+        // with maintenance on, but only while charging on an unmetered network so it stays
+        // invisible to the user.
+        fun periodicMaintenanceWork(): PeriodicWorkRequest {
+            val constraints = Constraints.Builder()
+                .setRequiresCharging(true)
+                .setRequiredNetworkType(NetworkType.UNMETERED)
+                .setRequiresStorageNotLow(true)
+                .build()
+            return PeriodicWorkRequestBuilder<SyncWorker>(24, TimeUnit.HOURS)
+                .setInputData(
+                    workDataOf(
+                        INPUT_SYNC_MODE to SyncMode.FULL.name,
+                        INPUT_RUN_MAINTENANCE to true
+                    )
+                )
+                .setConstraints(constraints)
+                .build()
+        }
     }
     
     // Logic to sync Telegram songs into main DB with Unified Library Support

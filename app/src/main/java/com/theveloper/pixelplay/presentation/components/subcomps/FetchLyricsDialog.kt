@@ -196,7 +196,7 @@ private fun IdleContent(
     Spacer(modifier = Modifier.height(12.dp))
 
     Text(
-        text = stringResource(R.string.search_lyrics_online_prompt),
+        text = stringResource(R.string.lyrics_search_online_prompt),
         style = MaterialTheme.typography.bodyMedium,
         textAlign = TextAlign.Center,
         color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -220,12 +220,12 @@ private fun IdleContent(
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = stringResource(R.string.fetch_lyrics_show_options_title),
+                    text = stringResource(R.string.lyrics_fetch_show_options_title),
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onSecondaryContainer
                 )
                 Text(
-                    text = stringResource(R.string.fetch_lyrics_show_options_subtitle),
+                    text = stringResource(R.string.lyrics_fetch_show_options_subtitle),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.75f)
                 )
@@ -255,7 +255,7 @@ private fun IdleContent(
         ) {
             Icon(Icons.Rounded.Search, contentDescription = null, modifier = Modifier.size(20.dp))
             Spacer(modifier = Modifier.width(8.dp))
-            Text(stringResource(R.string.search), maxLines = 1, overflow = TextOverflow.Ellipsis)
+            Text(stringResource(R.string.common_search), maxLines = 1, overflow = TextOverflow.Ellipsis)
         }
 
         Button(
@@ -269,7 +269,7 @@ private fun IdleContent(
         ) {
             Icon(Icons.Rounded.CloudUpload, contentDescription = null, modifier = Modifier.size(20.dp))
             Spacer(modifier = Modifier.width(8.dp))
-            Text(stringResource(R.string.import_file))
+            Text(stringResource(R.string.common_import))
         }
 
         // Botón Cancelar (Reemplaza a la X)
@@ -278,7 +278,7 @@ private fun IdleContent(
             modifier = Modifier.fillMaxWidth().height(52.dp),
             shape = RoundedCornerShape(18.dp)
         ) {
-            Text(stringResource(R.string.cancel), maxLines = 1, overflow = TextOverflow.Ellipsis)
+            Text(stringResource(R.string.common_cancel), maxLines = 1, overflow = TextOverflow.Ellipsis)
         }
     }
 }
@@ -294,7 +294,7 @@ private fun LoadingContent() {
         )
         Spacer(modifier = Modifier.height(24.dp))
         Text(
-            text = stringResource(R.string.searching_lyrics),
+            text = stringResource(R.string.lyrics_searching),
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onSurface
         )
@@ -308,7 +308,7 @@ private fun PickResultContent(
     onCancel: () -> Unit
 ) {
     Text(
-        text = stringResource(R.string.found_n_matches_format).format(results.size),
+        text = stringResource(R.string.lyrics_found_n_matches_format).format(results.size),
         style = MaterialTheme.typography.headlineSmall,
         textAlign = TextAlign.Center,
         modifier = Modifier.fillMaxWidth()
@@ -329,7 +329,7 @@ private fun PickResultContent(
         item {
             ProviderText(
                 providerText = stringResource(R.string.lyrics_provided_by),
-                uri = stringResource(R.string.lrclib_uri),
+                uri = stringResource(R.string.lyrics_lrclib_uri),
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth().padding(top = 16.dp, bottom = 8.dp)
             )
@@ -344,7 +344,7 @@ private fun PickResultContent(
         modifier = Modifier.fillMaxWidth(),
         colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurfaceVariant)
     ) {
-        Text(stringResource(R.string.cancel), maxLines = 1, overflow = TextOverflow.Ellipsis)
+        Text(stringResource(R.string.common_cancel), maxLines = 1, overflow = TextOverflow.Ellipsis)
     }
 }
 
@@ -418,7 +418,7 @@ private fun ResultItemCard(
                 }
                 Text(
                     text = stringResource(
-                        R.string.presentation_batch_g_list_song_artist_album,
+                        R.string.lyrics_artist_album_line,
                         result.record.artistName,
                         result.record.albumName
                     ),
@@ -488,14 +488,14 @@ fun NotFoundContent(
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Text(
-            text = stringResource(R.string.song_field_title),
+            text = stringResource(R.string.lyrics_custom_search_field_title),
             color = MaterialTheme.colorScheme.primary,
             style = MaterialTheme.typography.labelLarge
         )
         OutlinedTextField(
             value = title,
             onValueChange = { title = it },
-            placeholder = { Text(stringResource(R.string.song_field_title)) },
+            placeholder = { Text(stringResource(R.string.lyrics_custom_search_field_title)) },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true
         )
@@ -508,14 +508,14 @@ fun NotFoundContent(
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Text(
-            text = stringResource(R.string.song_field_artist_optional),
+            text = stringResource(R.string.lyrics_custom_search_field_artist),
             color = MaterialTheme.colorScheme.primary,
             style = MaterialTheme.typography.labelLarge
         )
         OutlinedTextField(
             value = artist,
             onValueChange = { artist = it },
-            placeholder = { Text(stringResource(R.string.song_field_artist_optional)) },
+            placeholder = { Text(stringResource(R.string.lyrics_custom_search_field_artist)) },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true
         )
@@ -542,7 +542,7 @@ fun NotFoundContent(
         ) {
             Icon(Icons.Rounded.Search, null)
             Spacer(Modifier.width(8.dp))
-            Text(stringResource(R.string.search))
+            Text(stringResource(R.string.common_search))
         }
 
         TextButton(
@@ -550,7 +550,7 @@ fun NotFoundContent(
             modifier = Modifier.fillMaxWidth().height(52.dp),
             shape = RoundedCornerShape(18.dp)
         ) {
-            Text(stringResource(R.string.cancel), maxLines = 1, overflow = TextOverflow.Ellipsis)
+            Text(stringResource(R.string.common_cancel), maxLines = 1, overflow = TextOverflow.Ellipsis)
         }
     }
 }
@@ -578,7 +578,7 @@ private fun ErrorContent(
     Spacer(modifier = Modifier.height(24.dp))
 
     Text(
-        text = stringResource(R.string.error),
+        text = stringResource(R.string.common_error),
         style = MaterialTheme.typography.headlineSmall,
         color = MaterialTheme.colorScheme.error
     )
@@ -603,7 +603,7 @@ private fun ErrorContent(
         ),
         shape = RoundedCornerShape(18.dp)
     ) {
-        Text(stringResource(R.string.ok), maxLines = 1, overflow = TextOverflow.Ellipsis)
+        Text(stringResource(R.string.common_ok), maxLines = 1, overflow = TextOverflow.Ellipsis)
     }
 }
 
@@ -647,7 +647,7 @@ private fun ErrorContent(
 //                            )
 //                            Spacer(modifier = Modifier.height(16.dp))
 //                            Text(
-//                                text = stringResource(R.string.search_lyrics_online_prompt),
+//                                text = stringResource(R.string.common_search_lyrics_online_prompt),
 //                                style = MaterialTheme.typography.bodyMedium,
 //                                textAlign = TextAlign.Center,
 //                                color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -663,7 +663,7 @@ private fun ErrorContent(
 //                                ) {
 //                                    Icon(painter = painterResource(R.drawable.rounded_upload_file_24), contentDescription = null, modifier = Modifier.size(18.dp))
 //                                    Spacer(modifier = Modifier.width(8.dp))
-//                                    Text(stringResource(R.string.import_file), maxLines = 1, overflow = TextOverflow.Ellipsis)
+//                                    Text(stringResource(R.string.common_import), maxLines = 1, overflow = TextOverflow.Ellipsis)
 //                                }
 //                                Button(
 //                                    onClick = onConfirm,
@@ -671,7 +671,7 @@ private fun ErrorContent(
 //                                ) {
 //                                    Icon(painter = painterResource(R.drawable.rounded_manage_search_24), contentDescription = null, modifier = Modifier.size(18.dp))
 //                                    Spacer(modifier = Modifier.width(8.dp))
-//                                    Text(stringResource(R.string.search), maxLines = 1, overflow = TextOverflow.Ellipsis)
+//                                    Text(stringResource(R.string.common_search), maxLines = 1, overflow = TextOverflow.Ellipsis)
 //                                }
 //                            }
 //                        }
@@ -687,7 +687,7 @@ private fun ErrorContent(
 //                            CircularProgressIndicator()
 //                            Spacer(modifier = Modifier.height(16.dp))
 //                            Text(
-//                                text = stringResource(R.string.searching_lyrics),
+//                                text = stringResource(R.string.common_searching_lyrics),
 //                                style = MaterialTheme.typography.bodyMedium,
 //                                color = MaterialTheme.colorScheme.onSurfaceVariant
 //                            )
@@ -769,7 +769,7 @@ private fun ErrorContent(
 //                            )
 //                            Spacer(modifier = Modifier.height(16.dp))
 //                            Text(
-//                                text = stringResource(R.string.error),
+//                                text = stringResource(R.string.common_error),
 //                                style = MaterialTheme.typography.headlineSmall
 //                            )
 //                            Spacer(modifier = Modifier.height(16.dp))
@@ -782,7 +782,7 @@ private fun ErrorContent(
 //                            if (uiState.query != null) {
 //                                Spacer(modifier = Modifier.height(16.dp))
 //                                Text(
-//                                    text = stringResource(R.string.searched_for_x_format).format(uiState.query),
+//                                    text = stringResource(R.string.common_searched_for_x_format).format(uiState.query),
 //                                    style = MaterialTheme.typography.bodyMedium,
 //                                    textAlign = TextAlign.Center,
 //                                    color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -794,7 +794,7 @@ private fun ErrorContent(
 //                                horizontalArrangement = Arrangement.End
 //                            ) {
 //                                TextButton(onClick = onDismiss) {
-//                                    Text(stringResource(R.string.ok), maxLines = 1, overflow = TextOverflow.Ellipsis)
+//                                    Text(stringResource(R.string.common_ok), maxLines = 1, overflow = TextOverflow.Ellipsis)
 //                                }
 //                            }
 //                        }
@@ -814,7 +814,7 @@ private fun ErrorContent(
 //                     ) {
 //                         Icon(
 //                             imageVector = Icons.Rounded.Close,
-//                             contentDescription = stringResource(R.string.cancel)
+//                             contentDescription = stringResource(R.string.common_cancel)
 //                         )
 //                     }
 //                }
@@ -825,9 +825,9 @@ private fun ErrorContent(
 //
 //@Composable
 //private fun DialogHeader(currentSong: Song?) {
-//    val title = currentSong?.title.takeUnless { it.isNullOrBlank() } ?: stringResource(R.string.unknown_song_title)
-//    val artist = currentSong?.displayArtist.takeUnless { it.isNullOrBlank() } ?: stringResource(R.string.unknown_artist)
-//    val album = currentSong?.album.takeUnless { it.isNullOrBlank() } ?: stringResource(R.string.unknown_album)
+//    val title = currentSong?.title.takeUnless { it.isNullOrBlank() } ?: stringResource(R.string.common_unknown_track)
+//    val artist = currentSong?.displayArtist.takeUnless { it.isNullOrBlank() } ?: stringResource(R.string.common_unknown_artist)
+//    val album = currentSong?.album.takeUnless { it.isNullOrBlank() } ?: stringResource(R.string.common_unknown_album)
 //
 //    Row(
 //        modifier = Modifier

@@ -24,6 +24,7 @@ import com.theveloper.pixelplay.data.preferences.UserPreferencesRepository
 import com.theveloper.pixelplay.data.worker.collectArtistNames
 import com.theveloper.pixelplay.utils.AlbumArtUtils
 import com.theveloper.pixelplay.utils.LocalArtworkUri
+import com.theveloper.pixelplay.utils.MediaStorePermissionHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first // Added
 import kotlinx.coroutines.withContext
@@ -422,10 +423,60 @@ class SongMetadataEditor(
                     Timber.tag(TAG).e("METADATA_EDIT: File does not exist: $finalFilePath")
                     false
                 }
-            } else if (needsExtensionSwap) {
-                writeMetadataViaExtensionSwap(finalFilePath, effectiveExtension, runPipeline)
             } else {
-                runPipeline(finalFilePath)
+                val tempFile = File(
+                    context.cacheDir,
+                    "metadata_edit_${System.nanoTime()}.$effectiveExtension"
+                )
+                try {
+                    File(finalFilePath).inputStream().use { input ->
+                        FileOutputStream(tempFile).use { out -> input.copyTo(out) }
+                    }
+                    val writeOk = runPipeline(tempFile.absolutePath)
+                    if (writeOk) {
+                        var writeBackSuccess = false
+                        try {
+                            val originalFile = File(finalFilePath)
+                            if (originalFile.canWrite()) {
+                                tempFile.inputStream().use { input ->
+                                    FileOutputStream(originalFile, false).use { out ->
+                                        input.copyTo(out)
+                                        out.fd.sync()
+                                    }
+                                }
+                                writeBackSuccess = true
+                                Timber.tag(TAG).d("Successfully wrote metadata directly to raw file path")
+                            } else {
+                                val uri = if (!isTelegramSong) MediaStorePermissionHelper.getMediaStoreUri(context, songId) else null
+                                if (uri != null) {
+                                    context.contentResolver.openFileDescriptor(uri, "rwt")?.use { pfd ->
+                                        FileOutputStream(pfd.fileDescriptor).use { output ->
+                                            tempFile.inputStream().use { input ->
+                                                input.copyTo(output)
+                                            }
+                                        }
+                                    }
+                                    writeBackSuccess = true
+                                    Timber.tag(TAG).d("Successfully wrote metadata via ContentResolver (rwt)")
+                                } else {
+                                    Timber.tag(TAG).e("Cannot write back: file is not writeable and no MediaStore URI resolved")
+                                }
+                            }
+                        } catch (e: Exception) {
+                            Timber.tag(TAG).e(e, "Failed to write edited bytes back to destination")
+                        }
+                        writeBackSuccess
+                    } else {
+                        false
+                    }
+                } catch (e: Exception) {
+                    Timber.tag(TAG).e(e, "Error processing file metadata via temp file")
+                    false
+                } finally {
+                    if (tempFile.exists()) {
+                        tempFile.delete()
+                    }
+                }
             }
 
             if (!fileUpdateSuccess) {
@@ -531,51 +582,6 @@ class SongMetadataEditor(
         }
     }
 
-    /**
-     * Copies [originalPath] to a temp file with [correctExtension], runs [writer] on the temp
-     * path (so JAudioTagger/TagLib pick the correct parser by extension), and streams the edited
-     * bytes back into the original location. The original filename/extension are preserved so
-     * MediaStore URIs stay valid; only the file's byte content is replaced.
-     */
-    private fun writeMetadataViaExtensionSwap(
-        originalPath: String,
-        correctExtension: String,
-        writer: (String) -> Boolean
-    ): Boolean {
-        val originalFile = File(originalPath)
-        val tempFile = File(
-            context.cacheDir,
-            "metadata_edit_${System.nanoTime()}.$correctExtension"
-        )
-        return try {
-            originalFile.inputStream().use { input ->
-                FileOutputStream(tempFile).use { out -> input.copyTo(out) }
-            }
-            Timber.tag(TAG).d(
-                "METADATA_EDIT: Copied ${originalFile.length()} bytes to temp ${tempFile.name} for extension-corrected write"
-            )
-            val writeOk = writer(tempFile.absolutePath)
-            if (!writeOk) {
-                Timber.tag(TAG).e("METADATA_EDIT: Writer failed on temp file ${tempFile.absolutePath}")
-                return false
-            }
-            // Stream edited bytes back to the original path (truncate + overwrite).
-            tempFile.inputStream().use { input ->
-                FileOutputStream(originalFile, false).use { out -> input.copyTo(out) }
-            }
-            Timber.tag(TAG).d(
-                "METADATA_EDIT: Restored ${tempFile.length()} edited bytes back to $originalPath"
-            )
-            true
-        } catch (e: Exception) {
-            Timber.tag(TAG).e(e, "METADATA_EDIT: Extension-swap pipeline failed for $originalPath")
-            false
-        } finally {
-            if (tempFile.exists() && !tempFile.delete()) {
-                Timber.tag(TAG).w("METADATA_EDIT: Could not delete temp file ${tempFile.absolutePath}")
-            }
-        }
-    }
 
     /**
      * FLAC files with high sample rates (>96kHz) or bit depths (>24bit) can cause issues with TagLib.

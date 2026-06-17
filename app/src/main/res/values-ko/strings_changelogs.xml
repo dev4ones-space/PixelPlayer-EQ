@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="changelog_title">변경 사항</string>
+    <string name="changelog_view_github">GitHub에서 보기</string>
+    <string name="changelog_sec_improvements">개선 사항</string>
+    <string name="changelog_sec_fixes">수정 사항</string>
+    <string name="changelog_sec_whats_new">새로운 기능</string>
+    <string name="changelog_sec_added">추가됨</string>
+    <string-array name="changelog_020_added">
+        <item>기기에서 오디오를 전송하기 위한 Chromecast 지원.</item>
+        <item>최신 기능을 확인할 수 있는 앱 내 변경 사항 안내.</item>
+        <item>내장 및 외장 .LRC 파일 지원.</item>
+        <item>오프라인 가사 지원.</item>
+        <item>동기화된 가사 (노래와 동기화됨).</item>
+        <item>전체 대기열을 볼 수 있는 새 화면.</item>
+        <item>대기열에서 곡 순서 변경 및 제거.</item>
+        <item>Mini 플레이어 제스처 (아래로 쓸어넘겨 닫기).</item>
+        <item>Material 애니메이션 추가.</item>
+        <item>모양과 느낌을 맞춤 설정할 수 있는 새로운 설정.</item>
+        <item>캐시를 지울 수 있는 새로운 설정.</item>
+    </string-array>
+    <string-array name="changelog_020_improvements">
+        <item>사용자 인터페이스 전면 재설계.</item>
+        <item>플레이어 전면 재설계.</item>
+        <item>라이브러리 성능 개선.</item>
+        <item>애플리케이션 시작 속도 향상.</item>
+        <item>AI가 이제 더 나은 결과를 제공합니다.</item>
+    </string-array>
+    <string-array name="changelog_020_fixes">
+        <item>태그 편집기의 다양한 버그를 수정했습니다.</item>
+        <item>재생 알림이 지워지지 않던 버그를 수정했습니다.</item>
+        <item>앱 크래시를 유발하던 몇 가지 버그를 수정했습니다.</item>
+    </string-array>
+    <string-array name="changelog_030_whats_new">
+        <item>감상 세션에 대한 더 깊은 통찰력을 제공하는 더 풍부한 청취 통계 허브를 도입했습니다.</item>
+        <item>로컬 파일을 즉시 열고 미리 볼 수 있는 플로팅 빠른 플레이어를 출시했습니다.</item>
+        <item>트리 스타일 탐색기와 플레이리스트 바로 사용할 수 있는 보기가 포함된 폴더 탭을 추가했습니다.</item>
+    </string-array>
+    <string-array name="changelog_030_improvements">
+        <item>더 깔끔하고 일관된 경험을 위해 전체 Material 3 UI를 개선했습니다.</item>
+        <item>메타데이터 편집에서 커버 아트 변경을 지원합니다.</item>
+        <item>더 부드러운 화면 이동을 위해 앱 전반의 애니메이션과 전환 효과를 부드럽게 조정했습니다.</item>
+        <item>더 풍부한 디테일과 세련미로 아티스트 화면 레이아웃을 개선했습니다.</item>
+        <item>더 스마트하고 다양하게 선정되도록 DailyMix 및 YourMix 생성을 업그레이드했습니다.</item>
+        <item>AI 플레이리스트 생성 기능을 강화했습니다.</item>
+        <item>더 빠른 발견을 위해 검색 관련성 및 표시 방식을 개선했습니다.</item>
+        <item>더 광범위한 오디오 파일 형식 지원을 확장했습니다.</item>
+    </string-array>
+    <string-array name="changelog_030_fixes">
+        <item>곡 세부 정보가 어디서나 정확하게 유지되도록 메타데이터 오동작을 해결했습니다.</item>
+        <item>재생으로 확실하게 돌아갈 수 있도록 알림 바로가기를 복원했습니다.</item>
+    </string-array>
+    <string-array name="changelog_040_improvements">
+        <item>주요 탐색 내비게이션 재설계</item>
+        <item>소스 디렉토리 선택을 위한 새로운 파일 탐색기</item>
+        <item>새로운 연결 및 캐스팅 기능</item>
+        <item>원격 기기 간의 원활한 연결성</item>
+        <item>곡 간의 끊김 없는 전환 (Gapless)</item>
+        <item>크로스페이드 제어</item>
+        <item>새로운 사용자 지정 전환 기능 (플레이리스트 전용)</item>
+        <item>앱을 종료한 후에도 계속 재생</item>
+        <item>UI 최적화</item>
+        <item>개선된 통계 기능</item>
+        <item>더 많은 기능으로 재설계된 대기열 제어</item>
+        <item>재생 및 메타데이터 편집을 위한 다양한 파일 형식 지원 개선</item>
+        <item>개선된 권한 제어</item>
+        <item>기타 마이너 버그 수정</item>
+    </string-array>
+    <string-array name="changelog_050_improvements">
+        <item>Material 3 Expressive UI 업데이트</item>
+        <item>10밴드 이퀄라이저 및 효과</item>
+        <item>새로운 라이브러리 동기화 흐름</item>
+        <item>AI 통합 (Gemini 모델)</item>
+        <item>M3U 플레이리스트 가져오기/내보내기</item>
+        <item>Deezer 아티스트 아트워크 통합</item>
+        <item>사용자 지정 플레이리스트 커버</item>
+        <item>설정 아키텍처 리팩토링</item>
+        <item>대기열 및 플레이어 애니메이션</item>
+        <item>Baseline 프로필 및 성능 개선</item>
+        <item>동기화 오프셋이 포함된 개선된 가사 시스템</item>
+    </string-array>
+    <string-array name="changelog_050_fixes">
+        <item>캐스팅 안정성 향상</item>
+        <item>플레이어 시트 안정성 향상</item>
+        <item>일반 버그 수정 및 코드 정리</item>
+    </string-array>
+    <string-array name="changelog_060_whats_new">
+        <item>차량 내 재생을 위한 Android Auto 지원이 시작되었습니다.</item>
+        <item>워치와 폰 간의 향상된 재생 제어 기능이 포함된 Wear OS 지원이 시작되었습니다.</item>
+        <item>Telegram, NetEase, QQ Music 및 Google Drive 개선 사항을 통해 클라우드 연동이 확장되었습니다.</item>
+        <item>최근 재생 곡 및 영구 대기열 복구 기능으로 감상 세션을 항상 준비된 상태로 유지합니다.</item>
+        <item>백그라운드 및 복구 v3와 계정 관리 도구가 이제 포함됩니다.</item>
+        <item>수동 검색 대체 동작 및 저장 공간 개선을 통해 가사 기능이 더 스마트해졌습니다.</item>
+    </string-array>
+    <string-array name="changelog_060_improvements">
+        <item>시작, 라이브러리, 대기열 및 플레이어 조작 전반에 걸친 주요 성능 개선이 적용되었습니다.</item>
+        <item>더욱 원활한 사용을 위해 플레이어, Cast, 가사, 아티스트 및 장르 화면이 새롭게 디자인되었습니다.</item>
+        <item>더 안전한 경로 처리를 통해 내비게이션 및 검색 흐름이 더 안정적입니다.</item>
+        <item>더 많은 기기 및 형식에 대한 오디오 재생 호환성이 향상되었습니다.</item>
+        <item>곡, 앨범 및 플레이리스트 전반에 걸쳐 다중 선택 워크플로가 확장되었습니다.</item>
+    </string-array>
+    <string-array name="changelog_060_fixes">
+        <item>대기열 및 셔플 동작이 더 안정적이고 예측 가능해졌습니다.</item>
+        <item>몇 가지 백그라운드 재생 및 캐스팅 시의 예외 상황이 수정되었습니다.</item>
+        <item>취침 타이머, 파일 탭 탐색 및 앨범 아티스트 관련 크래시 문제가 수정되었습니다.</item>
+        <item>발열 및 메모리 문제를 줄이기 위해 위젯 로딩 및 서비스 안정성이 향상되었습니다.</item>
+        <item>앱 전반의 일반적인 버그 수정 및 UI 세부 조정이 이루어졌습니다.</item>
+    </string-array>
+    <string-array name="changelog_070_whats_new">
+        <item>Wear OS: 워치에서의 음악 전송, 로컬 재생, 대기열 동기화 및 원격 제어.</item>
+        <item>AI: 토큰 최적화가 포함된 Groq AI 및 OpenRouter(실험적 기능) 연동.</item>
+        <item>클라우드: Jellyfin 지원 추가.</item>
+        <item>가사: 전용 토글을 통한 동기화 번역, Kugou LRC 형식 지원, 텍스트 정렬 맞춤 설정 및 개선된 원격 로딩.</item>
+        <item>UI/UX: 컴팩트 내비게이션 바 모드, 앨범 아트 팔레트의 동적 테마, 긴 제목을 위한 흐르는 텍스트(Marquee) 효과 및 새로운 정렬 옵션.</item>
+        <item>Telegram: 네이티브 주제(Topics) 지원 및 개선된 표시 모드.</item>
+    </string-array>
+    <string-array name="changelog_070_improvements">
+        <item>오디오 엔진: 더 많은 형식(MIDI, ALAC, M4A) 지원 및 디코더 최적화를 포함한 전면 개편.</item>
+        <item>효율성: 전력 소비의 획기적인 감소, 발열 수정 및 백그라운드 작업 최적화(SyncWorker).</item>
+        <item>데이터베이스: 대규모 쿼리 최적화 및 데이터 손실 방지를 위한 앨범 아트 캐시 재설계.</item>
+        <item>시작 속도: Baseline 프로필 최적화를 통한 로딩 시간 개선.</item>
+    </string-array>
+    <string-array name="changelog_070_fixes">
+        <item>재생: Opus/MP3 끊김 현상, 크로스페이드 중 ReplayGain 오류 및 Samsung 디코더에서의 시작 문제 수정.</item>
+        <item>안정성: 앱 시작 시, 아티스트 탐색 시 및 Android 12 이상 기기에서의 크래시 제거.</item>
+        <item>UI: 앨범 아트 깜빡임, 비라틴 문자 텍스트 넘침 및 내비게이션 바/미니 플레이어 동작 수정.</item>
+        <item>보안: 계정 정보 처리 보안 강화, 저장소 권한 및 미디어 서버 통신 강화.</item>
+    </string-array>
+    <string-array name="changelog_070_added">
+        <item>현지화: 스페인어, 프랑스어, 러시아어, 중국어(간체), 인도네시아어, 이탈리아어</item>
+    </string-array>
+</resources>

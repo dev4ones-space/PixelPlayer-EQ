@@ -130,7 +130,7 @@ fun TimerOptionsBottomSheet(
             ) {
                 Text(
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                    text = stringResource(R.string.sleep_timer_ui_title),
+                    text = stringResource(R.string.sleep_timer_title),
                     fontFamily = GoogleSansRounded,
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.primary
@@ -146,7 +146,7 @@ fun TimerOptionsBottomSheet(
                     timerSliderPosition.roundToInt().coerceIn(0, predefinedTimes.size - 1)
                 val currentMinutes = predefinedTimes[currentIndex]
                 val timerDisplayText = if (currentMinutes == 0) {
-                    stringResource(R.string.sleep_timer_ui_slider_label_timer)
+                    stringResource(R.string.sleep_timer_zero_minutes_format)
                 } else {
                     stringResource(R.string.sleep_timer_n_minutes_format, currentMinutes)
                 }
@@ -227,15 +227,15 @@ fun TimerOptionsBottomSheet(
 
                 val currentPlayCount = counterSliderPosition.toInt()
                 val timesPart = if (currentPlayCount == 1) {
-                    stringResource(R.string.sleep_timer_ui_play_count_one_time)
+                    stringResource(R.string.sleep_timer_play_count_one_time)
                 } else {
                     pluralStringResource(
-                        R.plurals.sleep_timer_play_count_times,
+                        R.plurals.sleep_timer_play_count_n_times,
                         currentPlayCount,
                         currentPlayCount
                     )
                 }
-                val counterDisplayText = stringResource(R.string.sleep_timer_ui_play_count_label, timesPart)
+                val counterDisplayText = stringResource(R.string.sleep_timer_play_count_label, timesPart)
                 Text(
                     text = counterDisplayText,
                     style = MaterialTheme.typography.labelMedium,
@@ -313,7 +313,7 @@ fun TimerOptionsBottomSheet(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = stringResource(R.string.sleep_timer_ui_end_of_current_track),
+                        text = stringResource(R.string.sleep_timer_end_of_current_track),
                         modifier = Modifier
                             .weight(1f)
                             .padding(end = 8.dp),
@@ -335,7 +335,7 @@ fun TimerOptionsBottomSheet(
                             {
                                 Icon(
                                     imageVector = Icons.Rounded.Check,
-                                    contentDescription = stringResource(R.string.cd_switch_on),
+                                    contentDescription = stringResource(R.string.sleep_timer_cd_switch_on),
                                     tint = MaterialTheme.colorScheme.tertiaryContainer,
                                     modifier = Modifier.size(SwitchDefaults.IconSize),
                                 )
@@ -370,7 +370,7 @@ fun TimerOptionsBottomSheet(
                         .weight(1f) // Give buttons equal space if desired
                         .height(buttonHeight)
                 ) {
-                    Text(stringResource(R.string.sleep_timer_ui_custom_time))
+                    Text(stringResource(R.string.sleep_timer_custom_time))
                 }
                 Button(
                     onClick = {
@@ -393,7 +393,7 @@ fun TimerOptionsBottomSheet(
                         .weight(1f)
                         .height(buttonHeight)
                 ) {
-                    Text(stringResource(R.string.sleep_timer_ui_cancel_timer))
+                    Text(stringResource(R.string.sleep_timer_cancel_timer))
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
@@ -434,7 +434,7 @@ fun TimerOptionsBottomSheet(
                         onDismiss() // Dismiss the bottom sheet after setting time, as per original logic
                     }
                 ) {
-                    Text(stringResource(R.string.ok))
+                    Text(stringResource(R.string.common_ok))
                 }
             },
             dismissButton = {
@@ -443,7 +443,7 @@ fun TimerOptionsBottomSheet(
                         showCustomTimePicker = false // Dismiss the M3 dialog
                     }
                 ) {
-                    Text(stringResource(R.string.cancel), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Text(stringResource(R.string.common_cancel), maxLines = 1, overflow = TextOverflow.Ellipsis)
                 }
             }
         )

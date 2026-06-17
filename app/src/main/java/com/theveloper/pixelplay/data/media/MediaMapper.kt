@@ -28,12 +28,12 @@ class MediaMapper @Inject constructor(
             ?: return null
 
         val title = metadata.title?.toString()?.takeIf { it.isNotBlank() }
-            ?: context.getString(R.string.unknown_song_title)
+            ?: context.getString(R.string.common_unknown_track)
         val artist = metadata.artist?.toString()?.takeIf { it.isNotBlank() }
-            ?: context.getString(R.string.unknown_artist)
+            ?: context.getString(R.string.common_unknown_artist)
         val album = extras?.getString(MediaItemBuilder.EXTERNAL_EXTRA_ALBUM)?.takeIf { it.isNotBlank() }
             ?: metadata.albumTitle?.toString()?.takeIf { it.isNotBlank() }
-            ?: context.getString(R.string.unknown_album)
+            ?: context.getString(R.string.common_unknown_album)
         val albumId = -1L
         val duration = extras?.getLong(MediaItemBuilder.EXTERNAL_EXTRA_DURATION) ?: 0L
         val dateAdded = extras?.getLong(MediaItemBuilder.EXTERNAL_EXTRA_DATE_ADDED) ?: System.currentTimeMillis()

@@ -1,0 +1,566 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Library Screen -->
+    <string name="library_screen_title">Bibliothèque</string>
+    <string name="library_tabs_sheet_title">Onglets de la bibliothèque</string>
+    <string name="library_tabs_sheet_subtitle">Accédez directement à n\'importe quel onglet ou réorganisez-les.</string>
+    <string name="library_reorder_tabs_label">Réorganiser les onglets</string>
+
+    <!-- Library Tab Names -->
+    <string name="library_tab_songs">Chansons</string>
+    <string name="library_tab_albums">Albums</string>
+    <string name="library_tab_artists">Artistes</string>
+    <string name="library_tab_playlists">Playlists</string>
+    <string name="library_tab_folders">Dossiers</string>
+    <string name="library_tab_liked">Favoris</string>
+
+    <!-- Library Toasts -->
+    <string name="library_toast_playlist_created">Playlist créée avec succès</string>
+    <string name="library_toast_set_ai_provider_api_key_first">Configurez d\'abord votre clé API de fournisseur d\'IA</string>
+    <string name="library_toast_set_gemini_api_key_first">Configurez d\'abord votre clé API Gemini</string>
+    <string name="library_toast_added_to_queue">Ajouté à la file d\'attente</string>
+    <string name="library_toast_playing_next">Passera ensuite</string>
+
+    <!-- Library Toolbar & Navigation -->
+    <string name="library_cd_watch_transfer">Transfert vers la montre</string>
+    <string name="library_cd_open_settings">Paramètres</string>
+    <string name="library_tab_edit">Modifier</string>
+    <string name="library_cd_reorder_tabs">Réorganiser les onglets</string>
+    <string name="library_cd_expand_tab_menu">Développer le menu</string>
+
+    <!-- Library Multi-Selection & Folders -->
+    <string name="library_toast_max_albums_selection">Vous pouvez sélectionner jusqu\'à %1$d albums</string>
+    <string name="library_folder_name_fallback">Dossier</string>
+    <string name="library_cd_folder">Dossier</string>
+
+    <!-- Library Sort & View Bottom Sheet -->
+    <string name="library_sort_by_title">Trier par</string>
+    <string name="library_sort_section_view">Affichage</string>
+    <string name="library_sort_toggle_playlist_view">Affichage des listes de lecture</string>
+    <string name="library_view_mode_grid">Grille</string>
+    <string name="library_view_mode_list">Liste</string>
+    <string name="library_storage_internal">Interne</string>
+    <string name="library_storage_sd_card">Carte SD</string>
+    <string name="library_storage_sd_card_unavailable">La carte SD n\'est pas disponible actuellement.</string>
+    <string name="library_sort_section_cloud">Cloud</string>
+    <string name="library_sort_toggle_telegram_channels">Canaux Cloud Telegram</string>
+    <string name="library_telegram_topics_display_title">Affichage des sujets</string>
+    <string name="library_telegram_topic_mode_channels">Canaux</string>
+    <string name="library_telegram_topic_mode_topics">Sujets</string>
+    <string name="library_telegram_topic_mode_both">Les deux</string>
+    <string name="library_cloud_sources_heading">Cloud</string>
+    <string name="library_cloud_only_label">Uniquement Cloud</string>
+
+    <!-- Library AI Metadata Processing -->
+    <string name="library_generating_ai_metadata">Génération des métadonnées avec l\'IA…</string>
+
+    <!-- Library list errors -->
+    <string name="library_error_loading_songs">Erreur lors du chargement des titres</string>
+    <string name="library_album_detail_error_loading_albums">Erreur lors du chargement des albums</string>
+    <string name="library_artist_error_loading_artists">Erreur lors du chargement des artistes</string>
+    <string name="library_action_retry">Réessayer</string>
+
+    <!-- Library empty (paginated) -->
+    <string name="library_no_songs_in_library_message">Aucun titre trouvé dans votre bibliothèque.</string>
+    <string name="library_no_songs_rescan_hint">Essayez de réanalyser votre bibliothèque dans les paramètres si vous avez de la musique sur votre appareil.</string>
+    <string name="library_cd_no_songs_in_library">Aucun titre trouvé</string>
+
+    <!-- Library action row -->
+    <string name="library_action_new">Nouveau</string>
+    <string name="library_cd_create_new_playlist">Créer une nouvelle playlist</string>
+    <string name="library_cd_import_m3u_playlist">Importer une playlist M3U</string>
+    <string name="library_cd_locate_current_song">Localiser le titre en cours</string>
+    <string name="library_storage_filter_all_songs">Tous les titres</string>
+    <string name="library_storage_filter_online">En ligne</string>
+    <string name="library_storage_filter_offline">Hors ligne</string>
+    <string name="library_cd_sort_options">Options de tri</string>
+
+    <!-- Library selection action row -->
+    <string name="library_selection_all">Tout</string>
+    <string name="library_selection_deselect">Désélectionner</string>
+    <string name="library_selection_more_options">Plus d\'options</string>
+
+    <!-- Library Syncing -->
+    <string name="library_sync_scanning">Analyse des fichiers musicaux…</string>
+    <string name="library_sync_processing">Traitement des fichiers…</string>
+    <string name="library_sync_files_progress">%1$d sur %2$d fichiers</string>
+    <string name="library_sync_in_progress">Synchronisation de la bibliothèque…</string>
+    <string name="library_sync_complete">Synchronisation terminée</string>
+    <string name="library_sync_pending">En attente…</string>
+    <string name="library_syncing">Synchronisation de la bibliothèque…</string>
+    <string name="library_sync_cache">Nettoyage du cache des pochettes d\'album…</string>
+    <string name="library_sync_cloud">Synchronisation des sources cloud…</string>
+    <string name="library_sync_lyrics">Analyse des paroles…</string>
+
+    <!-- Library Empty State -->
+    <string name="library_empty_songs_all_title">Aucun titre pour le moment</string>
+    <string name="library_empty_songs_all_subtitle">Ajoutez de la musique à votre appareil ou synchronisez une source cloud pour commencer l\'écoute.</string>
+    <string name="library_empty_songs_offline_title">Aucun titre local trouvé</string>
+    <string name="library_empty_songs_offline_subtitle">Essayez un autre filtre de source ou réanalysez la bibliothèque de votre appareil.</string>
+    <string name="library_empty_songs_online_title">Aucun titre cloud trouvé</string>
+    <string name="library_empty_songs_online_subtitle">Synchronisez les titres de Telegram ou NetEase, ou basculez vers la source locale.</string>
+    <string name="library_empty_albums_all_title">Aucun album disponible</string>
+    <string name="library_empty_albums_all_subtitle">Les albums apparaîtront ici dès que votre bibliothèque aura des pistes regroupées.</string>
+    <string name="library_empty_albums_offline_title">Aucun album local trouvé</string>
+    <string name="library_empty_albums_offline_subtitle">Des titres locaux sont requis pour créer des groupes d\'albums locaux.</string>
+    <string name="library_empty_albums_online_title">Aucun album cloud trouvé</string>
+    <string name="library_empty_albums_online_subtitle">Les titres cloud avec des données d\'album apparaîtront ici après la synchronisation.</string>
+    <string name="library_empty_artists_all_title">Aucun artiste disponible</string>
+    <string name="library_empty_artists_all_subtitle">Les artistes s\'affichent après l\'indexation des titres de n\'importe quelle source.</string>
+    <string name="library_empty_artists_offline_title">Aucun artiste local trouvé</string>
+    <string name="library_empty_artists_offline_subtitle">Aucune métadonnée d\'artiste n\'est disponible pour les titres locaux pour le moment.</string>
+    <string name="library_empty_artists_online_title">Aucun artiste cloud trouvé</string>
+    <string name="library_empty_artists_online_subtitle">Les entrées d\'artistes cloud apparaissent lorsque les titres distants sont synchronisés.</string>
+    <string name="library_empty_liked_all_title">Aucun titre favori pour le moment</string>
+    <string name="library_empty_liked_all_subtitle">Appuyez sur l\'icône de cœur pendant la lecture d\'un titre pour l\'enregistrer ici.</string>
+    <string name="library_empty_liked_offline_title">Aucun titre favori local</string>
+    <string name="library_empty_liked_offline_subtitle">Basculez le filtre de source ou aimez des titres sur votre appareil.</string>
+    <string name="library_empty_liked_online_title">Aucun titre favori cloud</string>
+    <string name="library_empty_liked_online_subtitle">Aimez des pistes Telegram ou NetEase pour les voir dans cet affichage.</string>
+    <string name="library_empty_folders_title">Aucun dossier trouvé</string>
+    <string name="library_empty_folders_subtitle">Les dossiers de stockage interne contenant de la musique apparaîtront ici.</string>
+    <string name="library_empty_playlists_title">Aucune playlist pour le moment</string>
+    <string name="library_empty_playlists_subtitle">Créez votre première playlist pour organiser votre bibliothèque.</string>
+
+    <!-- SongInfoBottomSheet, MultiSelectionBottomSheet, PlaylistMultiSelectionBottomSheet -->
+    <string name="song_info_cd_edit_metadata">Modifier les métadonnées de la chanson</string>
+    <string name="song_info_action_play">Lire</string>
+    <string name="song_info_cd_play">Lire la chanson</string>
+    <string name="song_info_action_play_all">Tout lire</string>
+    <string name="song_info_cd_play_all">Tout lire</string>
+    <string name="song_info_cd_add_to_favorites">Ajouter aux favoris</string>
+    <string name="song_info_cd_add_to_favorites_all">Tout ajouter aux favoris</string>
+    <string name="song_info_cd_remove_from_favorites">Retirer des favoris</string>
+    <string name="song_info_cd_remove_from_favorites_all">Tout retirer des favoris</string>
+    <string name="song_info_share_chooser_title">Partager le fichier de la chanson via</string>
+    <string name="song_info_cd_share_song_file">Partager le fichier de la chanson</string>
+    <string name="song_info_cd_share_all_as_zip">Tout partager sous forme de fichier ZIP</string>
+    <string name="song_info_error_share_song">Impossible de partager la chanson : %1$s</string>
+    <string name="song_info_action_add_to_queue">Ajouter à la file d\'attente</string>
+    <string name="song_info_cd_add_to_queue">Ajouter à la file d\'attente</string>
+    <string name="song_info_action_queue_next">Suivant</string>
+    <string name="song_info_cd_queue_next">Lire ensuite dans la file d\'attente</string>
+    <string name="song_info_cd_add_to_playlist">Ajouter à la playlist</string>
+    <string name="song_info_action_delete">Supprimer</string>
+    <string name="song_info_action_delete_all">Tout supprimer</string>
+    <string name="song_info_checking_watch">Vérification de la montre</string>
+    <string name="song_info_transferring_percent">Transfert %1$d%%</string>
+    <string name="song_info_transferring_to_watch">Transfert vers la montre</string>
+    <string name="song_info_transfer_in_progress">Transfert en cours</string>
+    <string name="song_info_send_to_watch">Envoyer vers la montre</string>
+    <string name="song_info_watch_unavailable">Montre indisponible</string>
+    <string name="song_info_cd_send_to_watch">Envoyer la chanson vers la montre</string>
+    <string name="song_info_cd_watch_unavailable">Montre indisponible</string>
+    <string name="song_info_set_sound_as_short">Définir comme</string>
+    <string name="song_info_set_sound_as_long">Définir comme sonnerie/alarme</string>
+    <string name="song_info_cd_set_sound_as">Choisissez comment utiliser cette chanson comme son système</string>
+    <string name="song_info_tone_picker_title">Utiliser cette chanson comme</string>
+    <string name="song_info_tone_picker_body">Choisissez où PixelPlayer doit installer ce son.</string>
+    <string name="song_info_tone_ringtone_title">Sonnerie du téléphone</string>
+    <string name="song_info_tone_ringtone_subtitle">Appels entrants</string>
+    <string name="song_info_tone_notification_title">Son de notification</string>
+    <string name="song_info_tone_notification_subtitle">Messages et alertes d\'application</string>
+    <string name="song_info_tone_alarm_title">Son d\'alarme</string>
+    <string name="song_info_tone_alarm_subtitle">Alarmes d\'horloge</string>
+    <string name="song_info_tone_confirm_title">Confirmer le changement de son</string>
+    <string name="song_info_tone_confirm_body">Définir « %1$s » comme votre %2$s ?</string>
+    <string name="song_info_tone_confirm_action">Définir le son</string>
+    <string name="song_info_tone_success">« %1$s » a été défini comme votre %2$s</string>
+    <string name="song_info_tone_ringtone_label">sonnerie</string>
+    <string name="song_info_tone_notification_label">son de notification</string>
+    <string name="song_info_tone_alarm_label">son d\'alarme</string>
+    <string name="song_info_ringtone_permission_prompt">Activez la modification des paramètres système, puis revenez à PixelPlayer to finish automatically.</string>
+    <string name="song_info_ringtone_permission_missing">La modification des paramètres système n\'a pas été activée.</string>
+    <string name="song_info_ringtone_success">« %1$s » a été défini comme votre sonnerie</string>
+    <string name="song_info_ringtone_local_only">Seules les chansons locales peuvent être utilisées comme sonneries.</string>
+    <string name="song_info_ringtone_missing_file">Impossible de préparer ce fichier audio pour la sonnerie.</string>
+    <string name="song_info_ringtone_failed">Impossible de définir la sonnerie : %1$s</string>
+    <string name="song_info_tab_options">Options</string>
+    <string name="song_info_tab_options_badge">OPTIONS</string>
+    <string name="song_info_tab_info">Infos</string>
+    <string name="song_info_tab_info_badge">INFOS</string>
+    <string name="song_info_duration_label">Durée</string>
+    <string name="song_info_genre_label">Genre</string>
+    <string name="song_info_album_label">Album</string>
+    <string name="song_info_artist_label">Artiste</string>
+    <string name="song_info_audio_format_label">Infos chanson</string>
+    <string name="song_info_cd_provider">Fournisseur</string>
+    <string name="song_info_cd_file">Fichier</string>
+    <string name="multi_selection_songs_count_upper">%1$d CHANSONS</string>
+    <string name="multi_selection_songs_selected">sélectionnées</string>
+    <string name="multi_selection_playlists_count_upper">%1$d PLAYLISTS</string>
+    <string name="multi_selection_albums_count_upper">%1$d ALBUMS</string>
+    <string name="multi_selection_albums_selected">sélectionné(s)</string>
+    <string name="multi_selection_albums_selected_limit">Limite : %1$d albums par sélection.</string>
+    <string name="multi_selection_albums_queue_hint">La file d\'attente + lecture respecte l\'ordre de votre sélection.</string>
+    <string name="multi_selection_genres_count_upper">%1$d GENRES</string>
+    <string name="multi_selection_genres_selected">sélectionnés</string>
+    <string name="multi_selection_genres_queue_hint">Effectuer des opérations par lots sur toutes les chansons de ces genres.</string>
+
+    <!-- Sort Option Display Names -->
+    <string name="sort_display_default_order">Ordre par défaut</string>
+    <string name="sort_display_title_az">Titre (A-Z)</string>
+    <string name="sort_display_title_za">Titre (Z-A)</string>
+    <string name="sort_display_artist">Artiste</string>
+    <string name="sort_display_artist_za">Artiste (Z-A)</string>
+    <string name="sort_display_album">Album</string>
+    <string name="sort_display_album_za">Album (Z-A)</string>
+    <string name="sort_display_date_added">Date d\'ajout</string>
+    <string name="sort_display_date_added_oldest">Date d\'ajout (la plus ancienne en premier)</string>
+    <string name="sort_display_duration">Durée</string>
+    <string name="sort_display_duration_shortest">Durée (la plus courte en premier)</string>
+    <string name="sort_display_release_year">Année de sortie</string>
+    <string name="sort_display_release_year_oldest">Année de sortie (la plus ancienne en premier)</string>
+    <string name="sort_display_fewest_songs">Moins de chansons</string>
+    <string name="sort_display_most_songs">Plus de chansons</string>
+    <string name="sort_display_name_az">Nom (A-Z)</string>
+    <string name="sort_display_name_za">Nom (Z-A)</string>
+    <string name="sort_display_num_songs_most">Nombre de chansons (le plus élevé)</string>
+    <string name="sort_display_num_songs_fewest">Nombre de chansons (le moins élevé)</string>
+    <string name="sort_display_date_created">Date de création</string>
+    <string name="sort_display_date_created_oldest">Date de création (la plus ancienne en premier)</string>
+    <string name="sort_display_date_liked">Date d\'ajout aux favoris</string>
+    <string name="sort_display_date_liked_oldest">Date d\'ajout aux favoris (la plus ancienne en premier)</string>
+    <string name="sort_display_fewest_subfolders">Moins de sous-dossiers</string>
+    <string name="sort_display_most_subfolders">Plus de sous-dossiers</string>
+
+    <!-- Sort Option Method Labels -->
+    <string name="sort_method_title">Titre</string>
+    <string name="sort_method_artist">Artiste</string>
+    <string name="sort_method_album">Album</string>
+    <string name="sort_method_date_added">Date d\'ajout</string>
+    <string name="sort_method_duration">Durée</string>
+    <string name="sort_method_release_year">Année de sortie</string>
+    <string name="sort_method_song_count">Nombre de chansons</string>
+    <string name="sort_method_name">Nom</string>
+    <string name="sort_method_num_songs">Nombre de chansons</string>
+    <string name="sort_method_date_created">Date de création</string>
+    <string name="sort_method_date_liked">Date d\'ajout aux favoris</string>
+    <string name="sort_method_subfolder_count">Nombre de sous-dossiers</string>
+
+    <!-- LibrarySortBottomSheet-->
+    <string name="library_sort_source">Source</string>
+    <string name="library_sort_order">Ordre</string>
+    <string name="library_sort_descending">Décroissant</string>
+    <string name="library_sort_ascending">Croissant</string>
+    <string name="library_sort_original_order">Ordre d\'origine</string>
+    <string name="library_sort_tap_ascending">Appuyer pour passer en ordre croissant</string>
+    <string name="library_sort_tap_descending">Appuyer pour passer en ordre décroissant</string>
+    <string name="library_sort_keeps_order">Ce tri conserve son ordre d\'origine</string>
+    <string name="library_sort_cd_switch_on">Le commutateur est activé</string>
+
+    <!-- ReorderTabsSheet-->
+    <string name="reorder_tabs_sheet_title">Réorganiser les onglets de la bibliothèque</string>
+    <string name="reorder_tabs_reset_dialog_title">Réinitialiser l\'ordre</string>
+    <string name="reorder_tabs_reset_dialog_body">Réinitialiser l\'ordre des onglets par défaut ?</string>
+    <string name="reorder_tabs_reordering">Réorganisation des onglets…</string>
+    <string name="reorder_tabs_cd_drag_handle">Poignée de glissement</string>
+
+    <!-- PlayerArtistPickerBottomSheet -->
+    <string name="artist_picker_title">Choisir un artiste</string>
+    <string name="artist_picker_count_single">1 artiste</string>
+    <string name="artist_picker_count_multiple">%1$d artistes</string>
+    <string name="artist_picker_primary_label">Artiste principal</string>
+    <string name="artist_picker_shortcut_label">Page de l\'artiste</string>
+
+    <!-- Watch Transfer Dialog + Foreground Service -->
+    <string name="watch_transfer_action_cancel">Annuler le transfert</string>
+    <string name="watch_transfer_bytes_progress">%1$s / %2$s</string>
+    <string name="watch_transfer_channel_description">Affiche la progression en direct des transferts de musique du téléphone vers la montre</string>
+    <string name="watch_transfer_channel_name">Transferts vers la montre</string>
+    <string name="watch_transfer_dialog_title">Envoi vers la montre</string>
+    <string name="watch_transfer_status_cancelled">Annulé</string>
+    <string name="watch_transfer_status_cancelled_service">Transfert annulé</string>
+    <string name="watch_transfer_status_complete_service">Transfert terminé</string>
+    <string name="watch_transfer_status_completed">Terminé</string>
+    <string name="watch_transfer_status_failed">Échoué</string>
+    <string name="watch_transfer_status_failed_service">Échec du transfert</string>
+    <string name="watch_transfer_status_multiple_active">Plusieurs transferts actifs</string>
+    <string name="watch_transfer_bullet_step">%1$s • %2$s</string>
+    <string name="watch_transfer_status_preparing">Préparation</string>
+    <string name="watch_transfer_status_preparing_service">Préparation du transfert vers la montre</string>
+    <string name="watch_transfer_status_preparing_transfer">Préparation du transfert…</string>
+    <string name="watch_transfer_status_sending_n_to_watch">Envoi de %1$d chansons vers la montre</string>
+    <string name="watch_transfer_status_sending_to_watch">Envoi vers la montre</string>
+    <string name="watch_transfer_status_starting">Démarrage du transfert…</string>
+    <string name="watch_transfer_status_starting_short">Démarrage</string>
+    <string name="watch_transfer_status_transferring">Transfert en cours</string>
+    <string name="watch_transfer_summary_n">%1$d transferts</string>
+
+    <!-- EditSongSheet -->
+    <string name="edit_song_toolbar_title">Modifier la chanson</string>
+    <string name="edit_song_cd_show_metadata_info">Afficher les informations</string>
+    <string name="edit_song_dialog_title">Édition des métadonnées de la chanson</string>
+    <string name="edit_song_dialog_body">L\'édition des métadonnées d\'une chanson peut affecter la façon dont elle est affichée et organisée dans votre bibliothèque. Les changements sont permanents et peuvent être irréversibles.</string>
+    <string name="edit_song_dialog_got_it">Compris</string>
+    <string name="edit_song_cd_info_icon">Information</string>
+    <string name="edit_song_cover_art_heading">Pochette</string>
+    <string name="edit_song_cover_art_hint">Sélectionnez une image carrée et ajustez-la pour que votre pochette soit superbe dans toute l\'application.</string>
+    <string name="edit_song_action_change_cover">Changer la pochette</string>
+    <string name="edit_song_action_delete_cover">Supprimer la pochette</string>
+    <string name="edit_song_field_title">Titre</string>
+    <string name="edit_song_field_artist">Artiste</string>
+    <string name="edit_song_field_album">Album</string>
+    <string name="edit_song_field_album_artist">Artiste de l\'album</string>
+    <string name="edit_song_field_genre">Genre</string>
+    <string name="edit_song_field_composer">Compositeur</string>
+    <string name="edit_song_field_track_number">Numéro de piste</string>
+    <string name="edit_song_field_disc_number">Numéro de disque</string>
+    <string name="edit_song_field_replaygain_track">ReplayGain piste (dB)</string>
+    <string name="edit_song_field_replaygain_album">ReplayGain album (dB)</string>
+    <string name="edit_song_replaygain_track_placeholder">-6.50</string>
+    <string name="edit_song_replaygain_album_placeholder">-8.20</string>
+    <string name="edit_song_cd_cover_preview">Aperçu de la nouvelle pochette</string>
+    <string name="edit_song_cd_current_cover">Pochette actuelle de la chanson</string>
+    <string name="edit_song_crop_dialog_title">Ajuster votre pochette</string>
+    <string name="edit_song_crop_dialog_hint">Pincez et glissez pour trouver le cadrage parfait.</string>
+    <string name="edit_song_action_apply_cover">Appliquer la pochette</string>
+    <string name="edit_song_unable_to_load_image">Impossible de charger l\'image sélectionnée</string>
+    <string name="edit_song_cd_search_lyrics_lrclib">Rechercher les paroles sur lrclib.net</string>
+
+    <!-- EditMultipleSongsSheet -->
+    <string name="batch_edit_toolbar_title">Modifier %d chansons</string>
+    <string name="batch_edit_info_message">Seuls les champs modifiés seront mis à jour. Laissez les champs vides pour conserver les valeurs existantes.</string>
+    <string name="batch_edit_mixed_values">(Valeurs mixtes)</string>
+    <string name="batch_edit_optional">(Facultatif - laisser vide pour ignorer)</string>
+    <string name="batch_edit_success">Mise à jour réussie de %d chansons</string>
+    <string name="batch_edit_partial_success">Mise à jour de %1$d sur %2$d chansons. Certains fichiers n\'ont pas pu être modifiés.</string>
+    <string name="batch_edit_failed">Échec de la mise à jour des chansons</string>
+    <string name="batch_edit_cover_art_heading">Pochette par lot</string>
+    <string name="batch_edit_cover_art_hint">Cela remplacera la pochette pour les %d chansons sélectionnées</string>
+    <string name="batch_edit_set_cover_art">Définir la pochette pour tous</string>
+    <string name="batch_edit_remove_all_art">Supprimer toutes les pochettes</string>
+    <string name="batch_edit_multiple_covers">(Plusieurs pochettes différentes)</string>
+
+    <!-- Playlist dismissed message -->
+    <string name="playlist_dismissed_message">Playlist ignorée</string>
+
+    <!-- PlaylistCreationDialogs -->
+    <string name="playlist_creation_create_playlist_title">Créer une liste de lecture</string>
+    <string name="playlist_creation_create_playlist_subtitle">Choisissez le mode de création.</string>
+    <string name="playlist_creation_mode_manual_title">Manuel</string>
+    <string name="playlist_creation_mode_manual_subtitle">Concevez l\'illustration, l\'icône, la forme et choisissez les chansons vous-même.</string>
+    <string name="playlist_creation_mode_ai_title">Avec l\'IA</string>
+    <string name="playlist_creation_mode_ai_subtitle_enabled">Générez une liste de lecture personnalisée avec des contrôles avancés.</string>
+    <string name="playlist_creation_mode_ai_subtitle_disabled">Nécessite une clé API Gemini configurée dans les paramètres.</string>
+    <string name="playlist_creation_setup_api_key">Configurer la clé API</string>
+
+    <!-- AI playlist lab -->
+    <string name="playlist_creation_ai_lab_title">Labo de listes de lecture IA</string>
+    <string name="playlist_creation_ai_reset">Réinitialiser</string>
+    <string name="playlist_creation_ai_generating">Génération en cours…</string>
+    <string name="playlist_creation_ai_generate">Générer</string>
+    <string name="playlist_creation_ai_section_intent">Intention</string>
+    <string name="playlist_creation_ai_name_optional">Nom de la liste de lecture (facultatif)</string>
+    <string name="playlist_creation_ai_feel_label">Quelle ambiance doit avoir cette liste de lecture ?</string>
+    <string name="playlist_creation_ai_feel_placeholder">Exemple : balade au coucher du soleil avec des synthés chaleureux</string>
+    <string name="playlist_creation_ai_section_direction">Direction</string>
+    <string name="playlist_creation_ai_mood_label">Humeur</string>
+    <string name="playlist_creation_ai_activity_label">Activité</string>
+    <string name="playlist_creation_ai_era_label">Époque</string>
+    <string name="playlist_creation_ai_section_curation">Moteur de sélection</string>
+    <string name="playlist_creation_ai_energy_label">Énergie</string>
+    <string name="playlist_creation_ai_energy_desc">Contrôle l\'intensité et le tempo des chansons. 1 = calme/lent, 5 = énergique/rapide.</string>
+    <string name="playlist_creation_ai_discovery_label">Découverte</string>
+    <string name="playlist_creation_ai_discovery_desc">Contrôle le niveau de familiarité des sélections. 1 = vos favoris les plus écoutés, 5 = pépites rarement écoutées.</string>
+    <string name="playlist_creation_ai_min_songs">Min chansons</string>
+    <string name="playlist_creation_ai_max_songs">Max chansons</string>
+    <string name="playlist_creation_ai_section_filters">Filtres</string>
+    <string name="playlist_creation_ai_prioritize_genres">Prioriser les genres (facultatif)</string>
+    <string name="playlist_creation_ai_prioritize_genres_placeholder">ex: synthwave, indie pop</string>
+    <string name="playlist_creation_ai_avoid_genres">Éviter les genres (facultatif)</string>
+    <string name="playlist_creation_ai_avoid_genres_placeholder">ex: metal, hard trap</string>
+    <string name="playlist_creation_ai_preferred_language">Langue préférée (facultatif)</string>
+    <string name="playlist_creation_ai_preferred_language_placeholder">ex: anglais, français, instrumental</string>
+    <string name="playlist_creation_ai_prioritize_favorites">Prioriser les favoris</string>
+    <string name="playlist_creation_ai_avoid_explicit">Éviter les paroles explicites</string>
+    <string name="playlist_creation_ai_section_prompt_preview">Aperçu de l\'instruction</string>
+    <string name="playlist_creation_ai_prompt_preview_empty">Votre instruction finale apparaîtra ici une fois vos préférences ajoutées.</string>
+    <string name="playlist_creation_ai_hero_title">Sélectionnez avec précision</string>
+    <string name="playlist_creation_ai_hero_subtitle">Définissez l\'humeur, l\'activité, les contraintes et la profondeur.</string>
+    <string name="playlist_creation_ai_hero_library_note">L\'IA utilisera uniquement les chansons de votre bibliothèque locale.</string>
+    <string name="playlist_creation_ai_error_add_instruction">Ajoutez au moins une instruction pour l\'IA.</string>
+    <string name="playlist_creation_ai_error_song_range">Définissez une plage de chansons valide.</string>
+    <string name="playlist_creation_ai_level_out_of_five">%1$d/5</string>
+    <string name="playlist_creation_ai_custom_chip">Personnalisé…</string>
+    <string name="playlist_creation_ai_enter_custom_title">Entrer une valeur personnalisée</string>
+    <string name="playlist_creation_ai_enter_custom_label">Entrez votre valeur personnalisée</string>
+
+    <!-- AI prompt -->
+    <string name="playlist_creation_ai_era_any">Toutes époques</string>
+    <string name="playlist_creation_ai_prompt_core_request">Requête principale : %1$s.</string>
+    <string name="playlist_creation_ai_prompt_mood">Cible d\'humeur : %1$s.</string>
+    <string name="playlist_creation_ai_prompt_activity">Contexte d\'activité : %1$s.</string>
+    <string name="playlist_creation_ai_prompt_era">Focus époque : %1$s.</string>
+    <string name="playlist_creation_ai_prompt_prioritize_genres">Prioriser les genres : %1$s.</string>
+    <string name="playlist_creation_ai_prompt_avoid_genres">Éviter les genres : %1$s.</string>
+    <string name="playlist_creation_ai_prompt_preferred_language">Langue préférée : %1$s.</string>
+    <string name="playlist_creation_ai_prompt_energy">Cible de niveau d\'énergie : %1$d/5.</string>
+    <string name="playlist_creation_ai_prompt_discovery">Cible de découverte : %1$d/5 où 1 est familier et 5 est composé de pépites méconnues.</string>
+    <string name="playlist_creation_ai_prompt_prioritize_favorites">Prioriser les chansons proches des favoris de l\'auditeur si possible.</string>
+    <string name="playlist_creation_ai_prompt_avoid_explicit">Éviter les paroles explicites lorsque des alternatives existent.</string>
+    <string name="playlist_creation_ai_prompt_smooth_transitions">Garder des transitions fluides et éviter le regroupement répétitif d\'artistes.</string>
+    <string-array name="playlist_creation_ai_mood_options">
+        <item>Détendu</item>
+        <item>Énergique</item>
+        <item>Joyeux</item>
+        <item>Sombre</item>
+        <item>Romantique</item>
+        <item>Mélancolique</item>
+    </string-array>
+    <string-array name="playlist_creation_ai_activity_options">
+        <item>Sport</item>
+        <item>Concentration</item>
+        <item>Voyage</item>
+        <item>Fête</item>
+        <item>Étude</item>
+        <item>Tard dans la nuit</item>
+    </string-array>
+    <string-array name="playlist_creation_ai_era_options">
+        <item>@string/playlist_creation_ai_era_any</item>
+        <item>Années 70</item>
+        <item>Années 80</item>
+        <item>Années 90</item>
+        <item>Années 2000</item>
+        <item>Années 2010</item>
+        <item>Années 2020</item>
+    </string-array>
+
+    <!-- PlaylistContainer -->
+    <string name="playlist_container_no_playlist_created">Aucune playlist n\'a été créée.</string>
+    <string name="playlist_container_new_playlist_hint">Appuyez sur le bouton « Nouvelle playlist » pour commencer.</string>
+    <string name="playlist_container_create_playlist_title">Nouvelle playlist</string>
+    <string name="playlist_container_create_playlist_name_label">Nom de la playlist</string>
+    <string name="playlist_container_create_playlist_name_placeholder">Ma playlist</string>
+
+    <!-- PlaylistBottomSheet -->
+    <string name="playlist_sheet_add_songs_title">Ajouter %1$d chansons à…</string>
+    <string name="playlist_sheet_select_playlists">Sélectionner des playlists</string>
+    <string name="playlist_sheet_search_playlists_hint">Rechercher des playlists…</string>
+    <string name="playlist_sheet_song_added_to_playlists">Chansons ajoutées aux playlists</string>
+    <string name="playlist_sheet_created_and_songs_added">Playlist créée et chansons ajoutées</string>
+    <string name="playlist_sheet_internal_storage">Stockage interne</string>
+
+    <!-- SongPickerBottomSheet -->
+    <string name="song_picker_title">Ajouter des titres</string>
+    <string name="song_picker_cd_confirm_add_songs">Ajouter les titres sélectionnés</string>
+    <string name="song_picker_action_add">Ajouter</string>
+    <string name="song_picker_search_label">Rechercher ou filtrer des titres…</string>
+    <string name="song_picker_filter_favorites">Aidé</string>
+    <string name="song_picker_error_load_failed">Échec du chargement des titres</string>
+    <string name="song_picker_load_more">Charger plus</string>
+
+    <!-- Merge Playlists Dialog -->
+    <string name="merge_playlists_dialog_title">Fusionner les listes de lecture</string>
+    <string name="merge_playlists_dialog_prompt">Entrez un nom pour la liste de lecture fusionnée :</string>
+    <string name="merge_playlists_dialog_placeholder">Liste de lecture fusionnée</string>
+    <string name="merge_playlists_dialog_body">Ceci fusionnera %1$d listes de lecture sélectionnées en une seule.</string>
+
+    <!-- PlayerViewModel -->
+    <string name="player_view_model_no_valid_songs">Aucune chanson valide trouvée à lire</string>
+    <string name="player_view_model_song_not_found_in_list">Chanson non trouvée dans la liste actuelle</string>
+    <string name="player_view_model_could_not_locate_song">Impossible de localiser la chanson</string>
+    <string name="player_view_model_no_songs_in_library_toast">Aucune chanson trouvée dans la bibliothèque</string>
+    <string name="player_view_model_playback_stopped_eot">Lecture arrêtée : %1$s terminée (Fin de piste).</string>
+    <string name="player_view_model_default_track_title">Piste</string>
+    <string name="player_view_model_no_songs_to_shuffle">Aucune chanson à lire en mode aléatoire.</string>
+    <string name="player_view_model_queue_name_selected_albums">Albums sélectionnés</string>
+    <string name="player_view_model_no_playable_songs_in_albums">Aucune chanson lisible trouvée dans les albums sélectionnés</string>
+    <string name="player_view_model_no_playable_songs_in_genres">Aucune chanson lisible trouvée dans les genres sélectionnés</string>
+    <string name="player_view_model_only_first_n_albums_queued">Seuls les %1$d premiers albums ont été mis en file d\'attente</string>
+    <string name="player_view_model_albums_queued_format">%1$d albums mis en file d\'attente (%2$d chansons)</string>
+    <string name="player_view_model_could_not_queue_albums">Impossible de mettre en file d\'attente les albums sélectionnés</string>
+    <string name="player_view_model_all_songs_already_in_favorites">Toutes les chansons sont déjà dans les favoris</string>
+    <string name="player_view_model_no_songs_were_in_favorites">Aucune chanson n\'était dans les favoris</string>
+    <string name="player_view_model_creating_zip">Création du fichier ZIP…</string>
+    <string name="player_view_model_share_zip_failed_format">Échec du partage : %1$s</string>
+    <plurals name="player_view_model_n_songs_added_to_queue">
+        <item quantity="one">%d chanson ajoutée à la file d\'attente</item>
+        <item quantity="other">%d chansons ajoutées à la file d\'attente</item>
+    </plurals>
+    <plurals name="player_view_model_n_songs_will_play_next">
+        <item quantity="one">%d chanson sera lue ensuite</item>
+        <item quantity="other">%d chansons seront lues ensuite</item>
+    </plurals>
+    <plurals name="player_view_model_n_songs_added_to_favorites">
+        <item quantity="one">%d chanson ajoutée aux favoris</item>
+        <item quantity="other">%d chansons ajoutées aux favoris</item>
+    </plurals>
+    <plurals name="player_view_model_n_songs_removed_from_favorites">
+        <item quantity="one">%d chanson retirée des favoris</item>
+        <item quantity="other">%d chansons retirées des favoris</item>
+    </plurals>
+
+    <!-- PlaylistViewModel -->
+    <string name="playlist_view_model_none_to_share">Aucune playlist à partager</string>
+    <string name="playlist_view_model_share_chooser_title">Partager les playlists</string>
+    <string name="playlist_view_model_share_failed">Échec du partage : %1$s</string>
+    <string name="playlist_view_model_none_to_export">Aucune playlist à exporter</string>
+    <string name="playlist_view_model_export_failed">Export failed: %1$s</string>
+    <string name="playlist_view_model_export_folder_display">Music/PixelPlayer Exports</string>
+    <string name="playlist_view_model_ai_gemini_key_required">Veuillez configurer votre clé API Gemini dans les paramètres.</string>
+    <string name="playlist_view_model_restored_toast">Playlist restaurée</string>
+    <plurals name="playlist_view_model_sharing_message">
+        <item quantity="one">Partage de %d playlist</item>
+        <item quantity="other">Partage de %d playlists</item>
+    </plurals>
+    <plurals name="playlist_view_model_exported_message">
+        <item quantity="one">Exporté %1$d playlist vers %2$s</item>
+        <item quantity="other">Exporté %1$d playlists vers %2$s</item>
+    </plurals>
+
+    <!-- AlbumDetailViewModel -->
+    <string name="album_detail_invalid_id">ID d\'album non valide</string>
+    <string name="album_detail_id_not_found">ID d\'album non trouvé</string>
+    <string name="album_detail_error_loading_album">Erreur lors du chargement des données de l\'album : %s</string>
+    <string name="album_detail_not_found">Album non trouvé</string>
+
+    <!-- ArtistDetailViewModel -->
+    <string name="artist_detail_invalid_id">ID d\'artiste non valide</string>
+    <string name="artist_detail_id_not_found">ID d\'artiste non trouvé</string>
+    <string name="artist_error_loading_artist">Erreur lors du chargement des données de l\'artiste : %s</string>
+    <string name="artist_detail_not_found">Impossible de trouver l\'artiste</string>
+
+    <!-- SongRemovalStateHolder -->
+    <string name="song_removal_cannot_delete_currently_playing">Impossible de supprimer la chanson en cours de lecture</string>
+    <string name="song_removal_batch_delete_files_deleted_skipped_format">%1$d fichiers supprimés (%2$d ignorés - en cours de lecture)</string>
+    <string name="song_removal_batch_delete_partial_format">%1$d sur %2$d fichiers supprimés</string>
+    <string name="song_removal_delete_files_failed">Échec de la suppression des fichiers</string>
+    <string name="song_removal_file_deleted">Fichier supprimé</string>
+    <string name="song_removal_delete_file_not_found">Impossible de supprimer le fichier ou fichier non trouvé</string>
+    <string name="song_removal_deletion_cancelled">Suppression annulée</string>
+    <string name="song_removal_dialog_delete_song_title">Supprimer la chanson ?</string>
+    <string name="song_removal_dialog_delete_song_message">« %1$s » par %2$s\n\nCette chanson sera définitivement supprimée de votre appareil et ne pourra pas être récupérée.</string>
+    <string name="song_removal_delete_songs_permanent_message">Ces chansons seront définitivement supprimées de votre appareil et ne pourront pas être récupérées.</string>
+    <plurals name="song_removal_n_files_deleted">
+        <item quantity="one">%d fichier supprimé</item>
+        <item quantity="other">%d fichiers supprimés</item>
+    </plurals>
+    <plurals name="song_removal_delete_songs_confirmation_title">
+        <item quantity="one">Supprimer %d chanson ?</item>
+        <item quantity="other">Supprimer %d chansons ?</item>
+    </plurals>
+
+    <!-- MetadataEditStateHolder -->
+    <string name="metadata_edit_updated_successfully">Métadonnées mises à jour avec succès</string>
+    <string name="metadata_edit_updating_n_songs">Mise à jour de %1$d chansons…</string>
+    <string name="metadata_edit_batch_genre_updated_all">Mise à jour réussie de %1$d chansons !</string>
+    <string name="metadata_edit_batch_genre_updated_partial">Mise à jour de %1$d chansons. Échec : %2$d</string>
+    <string name="metadata_edit_lyrics_saved_successfully">Paroles enregistrées avec succès</string>
+    <string name="metadata_edit_lyrics_save_failed">Échec de l\'enregistrement des paroles</string>
+    <string name="metadata_edit_lyrics_none_to_save">Aucune parole disponible à enregistrer</string>
+    <string name="metadata_edit_permission_denied_edit_files">Autorisation refusée – impossible de modifier les fichiers</string>
+    <string name="metadata_edit_permission_denied_save_lyrics">Autorisation refusée – impossible d\'enregistrer les paroles</string>
+    <string name="metadata_edit_permission_denied_edit_this_file">Autorisation refusée – impossible de modifier ce fichier</string>
+
+    <!-- AiStateHolder -->
+    <string name="ai_state_error_api_key">Veuillez configurer une clé API valide pour le fournisseur d\'IA sélectionné dans les paramètres.</string>
+    <string name="ai_state_error_generic">Erreur d\'IA : %s</string>
+    <string name="ai_state_error_quota">Le fournisseur d\'IA sélectionné a rejeté la requête car le compte n\'a plus de crédits ou de quota disponible.</string>
+    <string name="ai_state_error_model_unavailable">Le modèle d\'IA sélectionné n\'est plus disponible. PixelPlayer a tenté de basculer automatiquement vers un modèle pris en charge.</string>
+    <string name="ai_state_no_songs_found">L\'IA n\'a trouvé aucune chanson pour votre demande.</string>
+    <string name="ai_state_prompt_empty">Écrivez une idée pour votre Daily Mix</string>
+    <string name="ai_state_daily_mix_updated">Daily Mix mis à jour avec l\'IA</string>
+    <string name="ai_state_could_not_update">Impossible de mettre à jour : %s</string>
+    <string name="ai_state_no_songs_for_mix">L\'IA n\'a pas trouvé de chansons pour ce mix</string>
+</resources>

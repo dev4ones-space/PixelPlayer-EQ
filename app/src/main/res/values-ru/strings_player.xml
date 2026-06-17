@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+    <!-- Player UI & Playback Controls -->
+    <string name="player_cd_collapse">Свернуть плеер</string>
+    <string name="player_now_playing">Сейчас играет</string>
+    <string name="player_cd_cloud_stream">Облачный поток</string>
+    <string name="player_cd_cast">Трансляция</string>
+    <string name="player_cd_bluetooth">Bluetooth</string>
+    <string name="player_cd_local_playback">Локальное воспроизведение</string>
+    <string name="player_connecting">Подключение…</string>
+    <string name="player_cd_open_queue">Открыть очередь</string>
+
+    <!-- CastBottomSheet -->
+    <string name="cast_perm_title">Подготовьтесь к подключению</string>
+    <string name="cast_perm_body">Разрешите PixelPlayer видеть ближайшие устройства и текущую сеть Wi-Fi, чтобы синхронизировать трансляцию, Bluetooth-аудио и колонки.</string>
+    <string name="cast_perm_nearby_title">Ближайшие устройства</string>
+    <string name="cast_perm_nearby_desc">Требуется для обнаружения и управления подключёнными Bluetooth-аудиоустройствами.</string>
+    <string name="cast_perm_location_title">Геолокация для Wi-Fi</string>
+    <string name="cast_perm_location_desc">Android требует доступ к геолокации, чтобы определить сеть Wi-Fi (SSID) и найти совместимые устройства для трансляции.</string>
+    <string name="cast_allow_access">Разрешить доступ</string>
+    <string name="cast_perm_footer">Эти разрешения используются только для подключения устройств, трансляции, управления ближайшими колонками и синхронизации звука.</string>
+    <string name="cast_title_connect">Подключить устройство</string>
+    <string name="cast_scanning_nearby">Поиск поблизости</string>
+    <string name="cast_subtitle_session">Сеанс трансляции</string>
+    <string name="cast_connecting">Подключение</string>
+    <string name="cast_connected">Подключено</string>
+    <string name="cast_this_phone">Этот телефон</string>
+    <string name="cast_bluetooth_audio">Bluetooth-аудио</string>
+    <string name="cast_local_playback">Локальное воспроизведение</string>
+    <string name="cast_playing">Воспроизведение</string>
+    <string name="cast_paused">Пауза</string>
+    <string name="cast_volume_device">Громкость устройства</string>
+    <string name="cast_volume_phone">Громкость телефона</string>
+    <string name="cast_volume_levels">%1$d/%2$d</string>
+    <string name="cast_cd_battery">Уровень заряда</string>
+    <string name="cast_cd_volume_level">Уровень громкости</string>
+    <string name="cast_disconnect">Отключить</string>
+    <string name="cast_connectivity">Подключения</string>
+    <string name="cast_turn_on_wifi_bt">Включите Wi-Fi или Bluetooth</string>
+    <string name="cast_cd_refresh_connections">Обновить подключения</string>
+    <string name="cast_wifi">Wi-Fi</string>
+    <string name="cast_wifi_off">Выкл.</string>
+    <string name="cast_wifi_on">Вкл.</string>
+    <string name="cast_wifi_connected">Подключено</string>
+    <string name="cast_bluetooth">Bluetooth</string>
+    <string name="cast_bt_off">Выкл.</string>
+    <string name="cast_bt_on">Вкл.</string>
+    <string name="cast_bt_connected">Подключено</string>
+    <string name="cast_nearby_devices">Ближайшие устройства</string>
+    <string name="cast_cd_refresh_devices">Обновить устройства</string>
+    <string name="cast_status_connected">Подключено</string>
+    <string name="cast_status_connecting">Подключение</string>
+    <string name="cast_status_available_connect">Доступно для подключения</string>
+    <string name="cast_status_available">Доступно</string>
+    <string name="cast_connecting_ellipsis">Подключение...</string>
+    <string name="cast_searching">Поиск устройств…</string>
+    <string name="cast_searching_hint">Убедитесь, что телевизор или колонка включены и подключены к той же сети Wi-Fi.</string>
+    <string name="cast_tab_controls">Управление</string>
+    <string name="cast_tab_devices">Устройства</string>
+
+    <!-- Casting & Remote Playback -->
+    <string name="cast_server_channel_name">Сервер трансляции</string>
+    <string name="cast_server_notification_title">Трансляция на устройство</string>
+    <string name="cast_server_notification_text">Передача медиа на устройство Cast</string>
+    <string name="cast_server_foreground_error">%1$s: %2$s</string>
+    <string name="cast_seek_unavailable_for_format">Перемотка временно недоступна для этого аудиоформата при трансляции, так как может привести к сбою сеанса Cast.</string>
+
+    <!-- Sleep Timer -->
+    <string name="sleep_timer_title">Таймер сна</string>
+    <string name="sleep_timer_zero_minutes_format">Таймер</string>
+    <string name="sleep_timer_n_minutes_format">%1$d минут</string>
+    <string name="sleep_timer_set_for_minutes_toast">Таймер установлен на %1$d мин.</string>
+    <string name="sleep_timer_play_count_one_time">1 раз</string>
+    <plurals name="sleep_timer_play_count_n_times">
+        <item quantity="one">%d раз</item>
+        <item quantity="other">%d раз</item>
+    </plurals>
+    <string name="sleep_timer_play_count_label">Количество повторов: %1$s</string>
+    <string name="sleep_timer_end_of_current_track">После текущего трека</string>
+    <string name="sleep_timer_eot_toast">Воспроизведение остановится после окончания трека.</string>
+    <string name="sleep_timer_cd_switch_on">Включить</string>
+    <string name="sleep_timer_custom_time">Свое время</string>
+    <string name="sleep_timer_cancel_timer">Отменить таймер</string>
+    <string name="sleep_timer_display_eot">Конец трека</string>
+    <string name="sleep_timer_cancelled_toast">Таймер отменён.</string>
+    <string name="sleep_timer_eot_no_song_toast">Невозможно включить режим окончания трека: нет активного трека.</string>
+    <string name="sleep_timer_eot_song_changed_toast">Таймер окончания трека отключён: трек изменился с %1$s на %2$s.</string>
+    <string name="sleep_timer_label_previous_track">Предыдущий трек</string>
+    <string name="sleep_timer_label_current_track">Текущий трек</string>
+    <string name="sleep_timer_ui_set_custom_duration">Задать своё время</string>
+
+    <!-- QueueBottomSheet -->
+    <string name="queue_next_up_label">Далее</string>
+    <string name="queue_tracks_empty">Очередь пока пуста.</string>
+    <plurals name="queue_tracks_lined_up">
+        <item quantity="one">Добавлен 1 трек.</item>
+        <item quantity="other">Добавлено %d треков.</item>
+    </plurals>
+    <string name="queue_source_fallback_label">Очередь</string>
+    <string name="queue_empty_label">Очередь пуста.</string>
+    <string name="queue_cd_reorder_song">Изменить порядок трека</string>
+    <string name="queue_cd_toggle_shuffle_action">Переключить перемешивание</string>
+    <string name="queue_cd_toggle_repeat_action">Переключить повтор</string>
+    <string name="queue_cd_sleep_timer_action">Таймер сна</string>
+    <string name="queue_cd_more_action">Другие действия</string>
+    <string name="queue_action_locate_current_song">Найти текущий трек</string>
+    <string name="queue_action_clear_queue">Очистить очередь</string>
+    <string name="queue_dialog_clear_queue_title">Очистить очередь</string>
+    <string name="queue_dialog_clear_queue_message">Вы уверены, что хотите удалить из очереди все треки, кроме текущего?</string>
+    <string name="queue_action_save_as_playlist">Сохранить как плейлист</string>
+    <string name="queue_save_playlist_named">Очередь %1$s</string>
+    <string name="queue_save_playlist_current">Текущая очередь</string>
+    <string name="queue_cd_dismiss_song">Убрать трек</string>
+    <string name="queue_song_removed">удалён</string>
+    <string name="queue_save_as_playlist_sheet_title">Сохранить как плейлист</string>
+    <string name="queue_save_as_playlist_deselect_all">Снять выделение</string>
+    <string name="queue_save_as_playlist_name_label">Название плейлиста</string>
+    <string name="queue_save_as_playlist_search_placeholder">Поиск треков для добавления…</string>
+    <string name="queue_save_as_playlist_search_no_match">Нет совпадений для «%1$s»</string>
+    <plurals name="queue_save_as_playlist_n_songs_selected">
+        <item quantity="one">Выбран %d трек</item>
+        <item quantity="other">Выбрано %d треков</item>
+    </plurals>
+    <string name="queue_save_as_playlist_format">Сохранить как: %1$s</string>
+    <string name="queue_save_as_playlist_name_placeholder">Введите название плейлиста</string>
+    <string name="queue_cd_remove_from_playlist">Удалить из плейлиста</string>
+    <string name="queue_more_options_for_song">Другие действия для %1$s</string>
+
+    <!-- LyricsSheet -->
+    <string name="lyrics_title">Текст песни</string>
+    <string name="lyrics_loading">Загрузка текста песни…</string>
+    <string name="lyrics_mode_synced">Синхронизированный</string>
+    <string name="lyrics_mode_static">Статический</string>
+    <string name="lyrics_options">Параметры текста песни</string>
+    <string name="lyrics_offset_minus_half">−.5</string>
+    <string name="lyrics_offset_minus_point_one">−.1</string>
+    <string name="lyrics_offset_plus_point_one">+.1</string>
+    <string name="lyrics_offset_plus_half">+.5</string>
+    <string name="lyrics_offset_zero">0с</string>
+    <string name="lyrics_offset_seconds_fmt">%1$+.1fс</string>
+
+    <!-- LyricsRepository -->
+    <string name="lyrics_failed_to_search">Не удалось найти текст песни</string>
+    <string name="lyrics_failed_to_fetch_from_remote">Не удалось загрузить текст песни из сети</string>
+    <string name="lyrics_fetch_timeout">Время ожидания истекло. Проверьте подключение к интернету.</string>
+    <string name="lyrics_network_error">Ошибка сети. Проверьте подключение к интернету.</string>
+    <string name="lyrics_server_error">Ошибка сервера (код %d). Повторите попытку позже.</string>
+
+    <!-- LyricsStateHolder -->
+    <string name="lyrics_already_available">Текст песни уже доступен. Онлайн-поиск пропущен.</string>
+    <string name="lyrics_embedded_already_available">Встроенный текст песни уже найден. Онлайн-поиск пропущен.</string>
+    <string name="lyrics_local_lrc_already_available">Локальный файл текста (.lrc) уже найден. Онлайн-поиск пропущен.</string>
+
+    <!-- LyricsMoreBottomSheet -->
+    <string name="lyrics_save_title">Сохранить текст песни</string>
+    <string name="lyrics_translate_via_ai">Перевести через ИИ</string>
+    <string name="lyrics_translate_already_translated">Для этого текста уже существует перевод</string>
+    <string name="lyrics_translate_already_in_target_language">Этот текст уже на выбранном языке</string>
+    <string name="lyrics_translate_api_not_configured">API не настроен</string>
+    <string name="lyrics_translate_success">Текст песни успешно переведён!</string>
+    <string name="lyrics_translate_progress">Перевод текста песни...</string>
+    <string name="lyrics_reset_imported">Сбросить импортированный текст</string>
+    <string name="lyrics_reset_dialog_title">Сбросить текст песни?</string>
+    <string name="lyrics_reset_dialog_message">Вы уверены, что хотите сбросить текст песни для этого трека?</string>
+    <string name="lyrics_appearance_section">Внешний вид</string>
+    <string name="lyrics_appearance_alignment">Выравнивание</string>
+    <string name="lyrics_appearance_align_left">Выровнять текст по левому краю</string>
+    <string name="lyrics_appearance_align_center">Выровнять текст по центру</string>
+    <string name="lyrics_appearance_align_right">Выровнять текст по правому краю</string>
+    <string name="lyrics_controls_section">Управление</string>
+    <string name="lyrics_controls_adjust_sync">Настроить синхронизацию</string>
+    <string name="lyrics_controls_hide_sync">Скрыть элементы синхронизации</string>
+    <string name="lyrics_controls_show_romanization">Показать романизацию</string>
+    <string name="lyrics_controls_show_translations">Показать переводы</string>
+    <string name="lyrics_controls_disable_immersive_once">Отключить иммерсивный режим (один раз)</string>
+    <string name="lyrics_controls_keep_screen_on">Не выключать экран</string>
+
+    <!-- LyricsSheet save dialog -->
+    <string name="lyrics_save_dialog_title">Сохранить текст песни</string>
+    <string name="lyrics_save_dialog_message">Выберите версию для сохранения:</string>
+    <string name="lyrics_save_synced">Синхронизированный (с таймкодами)</string>
+    <string name="lyrics_save_plain">Обычный текст</string>
+
+    <!-- FetchLyricsDialog -->
+    <string name="lyrics_search_online_prompt">Хотите выполнить поиск текста песни в интернете?</string>
+    <string name="lyrics_fetch_show_options_title">Показывать варианты текста</string>
+    <string name="lyrics_fetch_show_options_subtitle">Всегда открывать список вариантов вместо автоматического выбора первого совпадения</string>
+    <string name="lyrics_searching">Поиск текста песни…</string>
+    <string name="lyrics_not_found">Текст песни не найден</string>
+    <string name="lyrics_custom_search_hint">Не удалось автоматически найти текст песни. Вы можете изменить название трека или исполнителя и выполнить поиск вручную.</string>
+    <string name="lyrics_custom_search_field_title">Название трека</string>
+    <string name="lyrics_custom_search_field_artist">Исполнитель (необязательно)</string>
+    <string name="lyrics_found_n_matches_format">Найдено совпадений: %d</string>
+    <string name="lyrics_synced_badge">СИНХР.</string>
+    <string name="lyrics_artist_album_line">%1$s • %2$s</string>
+    <string name="lyrics_provided_by">Текст предоставлен</string>
+    <string name="lyrics_lrclib_uri">https://lrclib.net/</string>
+</resources>

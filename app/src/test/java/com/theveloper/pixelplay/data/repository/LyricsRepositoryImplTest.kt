@@ -21,6 +21,21 @@ import org.junit.jupiter.api.Test
 class LyricsRepositoryImplTest {
 
     @Test
+    fun parseBestEmbeddedLyricsField_prefersSyncedLyricsWhenLyricsFieldIsPlain() {
+        val result = parseBestEmbeddedLyricsField(
+            mapOf(
+                "LYRICS" to arrayOf("plain lyrics only"),
+                "SYNCEDLYRICS" to arrayOf("[00:01.00]Synced lyrics")
+            )
+        )
+
+        assertThat(result).isNotNull()
+        assertThat(result!!.synced).hasSize(1)
+        assertThat(result.synced!!.first().line).isEqualTo("Synced lyrics")
+        assertThat(result.areFromRemote).isFalse()
+    }
+
+    @Test
     fun getLyrics_returnsSongLyricsBeforeNeedingStorageRead() = runTest {
         val repository = LyricsRepositoryImpl(
             context = mockk<Context>(relaxed = true),

@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
  * via the Wear Data Layer API.
  *
  * This is intentionally a subset of the full PlayerInfo. Heavy fields like queue
- * and lyrics are excluded. Album art is sent separately as an Asset.
+ * are excluded. Album art is sent separately as an Asset.
  *
  * Optional [themePalette] allows the phone to push a ready-to-use palette so
  * watch and phone can stay visually aligned without recomputing colors on-watch.
@@ -33,6 +33,10 @@ data class WearPlayerState(
     val themePalette: WearThemePalette? = null,
     /** Changes whenever the active phone queue or current queue position changes. */
     val queueRevision: String = "",
+    /** Current song lyrics synced from phone when already available locally. */
+    val lyrics: WearLyrics? = null,
+    /** Local Wear elapsedRealtime when [currentPositionMs] was anchored. Not sent by phone. */
+    val positionUpdatedElapsedRealtimeMs: Long = 0L,
 ) {
     val isEmpty: Boolean
         get() = songId.isEmpty()

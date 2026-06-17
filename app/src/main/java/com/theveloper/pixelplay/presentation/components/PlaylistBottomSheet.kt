@@ -62,6 +62,13 @@ fun PlaylistBottomSheet(
     playlistViewModel: PlaylistViewModel = hiltViewModel(),
     currentPlaylistId: String? = null
 ) {
+    val playlistCreatedAndSongsAddedMessage = stringResource(R.string.playlist_sheet_created_and_songs_added)
+    val setGeminiApiKeyFirstMessage = stringResource(R.string.library_toast_set_gemini_api_key_first)
+    val songAddedToPlaylistsMessage = stringResource(R.string.playlist_sheet_song_added_to_playlists)
+    val commonSavedMessage = stringResource(R.string.common_saved)
+    val saveActionText = stringResource(R.string.common_save)
+    val internalStorageText = stringResource(R.string.playlist_sheet_internal_storage)
+
     var showCreatePlaylistDialog by remember { mutableStateOf(false) }
 
     val sheetState = rememberModalBottomSheetState(
@@ -115,11 +122,11 @@ fun PlaylistBottomSheet(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text(
+                     Text(
                         if (songs.size > 1) {
-                            stringResource(R.string.playlist_picker_add_songs_title, songs.size)
+                            stringResource(R.string.playlist_sheet_add_songs_title, songs.size)
                         } else {
-                            stringResource(R.string.playlist_picker_select_playlists)
+                            stringResource(R.string.playlist_sheet_select_playlists)
                         },
                         style = MaterialTheme.typography.displaySmall,
                         fontFamily = GoogleSansRounded
@@ -138,7 +145,7 @@ fun PlaylistBottomSheet(
                         focusedSupportingTextColor = Color.Transparent,
                     ),
                     onValueChange = { searchQuery = it },
-                    label = { Text(stringResource(R.string.search_playlists_hint)) },
+                    label = { Text(stringResource(R.string.playlist_sheet_search_playlists_hint)) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 8.dp),
@@ -172,7 +179,7 @@ fun PlaylistBottomSheet(
                     isFoldersTab = false,
                     currentFolder = null,
                     folderRootPath = "",
-                    folderRootLabel = "Internal Storage",
+                    folderRootLabel = internalStorageText,
                     onFolderClick = { },
                     onNavigateBack = { }
                 )
@@ -200,14 +207,14 @@ fun PlaylistBottomSheet(
                             playlistViewModel.createPlaylist(name, songIds = songs.map { it.id })
                             showCreatePlaylistDialog = false
                             onDismiss() // Close sheet after creation + add
-                            playerViewModel.sendToast("Playlist created and songs added")
+                            playerViewModel.sendToast(playlistCreatedAndSongsAddedMessage)
                         },
                         onGenerateClick = {
                             showCreatePlaylistDialog = false
                             if (hasActiveAiProviderApiKey) {
                                 playerViewModel.showAiPlaylistSheet()
                             } else {
-                                playerViewModel.sendToast("Set your Gemini API key first")
+                                playerViewModel.sendToast(setGeminiApiKeyFirstMessage)
                             }
                         }
                     )
@@ -242,11 +249,11 @@ fun PlaylistBottomSheet(
                          }
                     }
                     onDismiss()
-                    playerViewModel.sendToast(if (songs.size > 1) "Songs added to playlists" else "Saved")
+                    playerViewModel.sendToast(if (songs.size > 1) songAddedToPlaylistsMessage else commonSavedMessage)
                     playerViewModel.multiSelectionStateHolder.clearSelection()
                 },
-                icon = { Icon(Icons.Rounded.Save, "Save") },
-                text = { Text(if (songs.size > 1) "Add" else "Save") },
+                icon = { Icon(Icons.Rounded.Save, saveActionText) },
+                text = { Text(if (songs.size > 1) stringResource(R.string.common_add) else saveActionText) },
             )
         }
     }

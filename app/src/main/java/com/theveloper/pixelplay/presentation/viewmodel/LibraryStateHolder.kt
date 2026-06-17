@@ -168,6 +168,9 @@ class LibraryStateHolder @Inject constructor(
                 )
             }
         }
+        // First distinctUntilChanged: skip the theme-color map entirely when the
+        // set of genre seeds hasn't changed (e.g. Room re-emitting after an
+        // unrelated songs table write).
         .distinctUntilChanged()
         .map { seeds ->
             seeds.map { seed ->
@@ -185,6 +188,9 @@ class LibraryStateHolder @Inject constructor(
             }
                 .toImmutableList()
         }
+        // Second distinctUntilChanged: suppress downstream recomposition when the
+        // fully-resolved Genre list is structurally identical (theme colors unchanged).
+        .distinctUntilChanged()
         .flowOn(Dispatchers.Default)
 
 

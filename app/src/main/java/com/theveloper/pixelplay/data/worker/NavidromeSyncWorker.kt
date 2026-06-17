@@ -6,6 +6,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
+import com.theveloper.pixelplay.data.diagnostics.AdvancedPerformanceDiagnostics
 import com.theveloper.pixelplay.data.navidrome.NavidromeRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -23,6 +24,16 @@ class NavidromeSyncWorker @AssistedInject constructor(
         val playlistId = inputData.getString(KEY_PLAYLIST_ID)
 
         Timber.d("NavidromeSyncWorker: Starting sync (type=$syncType, playlistId=$playlistId)")
+        val startedAt = if (AdvancedPerformanceDiagnostics.isEnabled) System.currentTimeMillis() else 0L
+        AdvancedPerformanceDiagnostics.recordEventIfEnabled(
+            type = AdvancedPerformanceDiagnostics.EventTypes.WORKER,
+            name = "navidrome_sync_start"
+        ) {
+            mapOf(
+                "syncType" to syncType,
+                "playlistScoped" to (playlistId != null).toString()
+            )
+        }
 
         return try {
             when (syncType) {
@@ -46,9 +57,28 @@ class NavidromeSyncWorker @AssistedInject constructor(
                     }
                 }
             }
+            AdvancedPerformanceDiagnostics.recordEventIfEnabled(
+                type = AdvancedPerformanceDiagnostics.EventTypes.WORKER,
+                name = "navidrome_sync_success"
+            ) {
+                mapOf(
+                    "syncType" to syncType,
+                    "durationMs" to (System.currentTimeMillis() - startedAt).toString()
+                )
+            }
             Result.success()
         } catch (e: Exception) {
             Timber.e(e, "NavidromeSyncWorker: Sync failed")
+            AdvancedPerformanceDiagnostics.recordEventIfEnabled(
+                type = AdvancedPerformanceDiagnostics.EventTypes.WORKER,
+                name = "navidrome_sync_failure"
+            ) {
+                mapOf(
+                    "syncType" to syncType,
+                    "durationMs" to (System.currentTimeMillis() - startedAt).toString(),
+                    "error" to (e.message ?: e.javaClass.simpleName)
+                )
+            }
             Result.failure(workDataOf(ERROR_MESSAGE to e.message))
         }
     }

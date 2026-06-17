@@ -845,7 +845,7 @@ class PixelPlayGlanceWidget : GlanceAppWidget() {
                     Spacer(GlanceModifier.width(4.dp))
                     Image(
                         provider = ImageProvider(if (isFavorite) R.drawable.round_favorite_24 else R.drawable.rounded_favorite_24),
-                        contentDescription = context.getString(R.string.cd_favorite),
+                        contentDescription = context.getString(R.string.common_favorite),
                         modifier = GlanceModifier
                             .size(28.dp)
                             .clickable(actionRunCallback<PlayerControlActionCallback>(actionParametersOf(PlayerActions.key to PlayerActions.FAVORITE)))
@@ -1261,7 +1261,7 @@ class PixelPlayGlanceWidget : GlanceAppWidget() {
         ) {
             Image(
                 provider = ImageProvider(if (isPlaying) R.drawable.rounded_pause_24 else R.drawable.rounded_play_arrow_24),
-                contentDescription = context.getString(if (isPlaying) R.string.cd_pause else R.string.cd_play),
+                contentDescription = context.getString(if (isPlaying) R.string.common_pause else R.string.common_play),
                 modifier = GlanceModifier.size(iconSize),
                 colorFilter = ColorFilter.tint(iconColor)
             )
@@ -1314,7 +1314,7 @@ class PixelPlayGlanceWidget : GlanceAppWidget() {
         ) {
             Image(
                 provider = iconProvider,
-                contentDescription = context.getString(R.string.next_track),
+                contentDescription = context.getString(R.string.common_next_track),
                 modifier = GlanceModifier.size(iconSize),
                 colorFilter = ColorFilter.tint(iconColor)
             )
@@ -1340,7 +1340,7 @@ class PixelPlayGlanceWidget : GlanceAppWidget() {
         ) {
             Image(
                 provider = ImageProvider(R.drawable.rounded_skip_next_24),
-                contentDescription = context.getString(R.string.next_track),
+                contentDescription = context.getString(R.string.common_next_track),
                 modifier = GlanceModifier.size(iconSize),
                 colorFilter = ColorFilter.tint(iconColor)
             )
@@ -1366,7 +1366,7 @@ class PixelPlayGlanceWidget : GlanceAppWidget() {
         ) {
             Image(
                 provider = ImageProvider(R.drawable.rounded_skip_previous_24),
-                contentDescription = context.getString(R.string.previous_track),
+                contentDescription = context.getString(R.string.common_previous_track),
                 modifier = GlanceModifier.size(iconSize),
                 colorFilter = ColorFilter.tint(iconColor)
             )

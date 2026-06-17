@@ -1,3 +1,4 @@
+import java.io.File
 import java.util.Properties
 
 plugins {
@@ -97,7 +98,12 @@ android {
         }
 
         release {
-            signingConfig = signingConfigs.getByName("release")
+            val keystoreFile = file("$rootDir/vz-pixelplay.jks")
+            signingConfig = if (keystoreFile.exists()) {
+                signingConfigs.getByName("release")
+            } else {
+                signingConfigs.getByName("debug")
+            }
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
@@ -172,7 +178,6 @@ ksp {
 kotlin {
     compilerOptions {
         jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
-        freeCompilerArgs.add("-Xannotation-default-target=param-property")
 
         if (enableComposeCompilerReports) {
             val buildDir = project.layout.buildDirectory.get().asFile.absolutePath

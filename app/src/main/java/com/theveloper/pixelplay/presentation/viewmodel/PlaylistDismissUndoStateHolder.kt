@@ -150,7 +150,7 @@ class PlaylistDismissUndoStateHolder @Inject constructor(
                 }
                 setSheetVisible(true)
                 setSheetCollapsed()
-                emitToast(context.getString(R.string.playlist_restored_toast))
+                emitToast(context.getString(R.string.playlist_view_model_restored_toast))
             } else {
                 updateUiState { it.copy(showDismissUndoBar = false) }
             }

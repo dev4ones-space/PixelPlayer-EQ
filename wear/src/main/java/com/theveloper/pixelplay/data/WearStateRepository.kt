@@ -1,6 +1,7 @@
 package com.theveloper.pixelplay.data
 
 import android.graphics.Bitmap
+import android.os.SystemClock
 import com.theveloper.pixelplay.shared.WearPlaybackResult
 import com.theveloper.pixelplay.shared.WearPlayerState
 import com.theveloper.pixelplay.shared.WearVolumeState
@@ -47,7 +48,9 @@ class WearStateRepository @Inject constructor() {
     val playbackResults: SharedFlow<WearPlaybackResult> = _playbackResults.asSharedFlow()
 
     fun updatePlayerState(state: WearPlayerState) {
-        _playerState.value = state
+        _playerState.value = state.copy(
+            positionUpdatedElapsedRealtimeMs = SystemClock.elapsedRealtime(),
+        )
         if (state.volumeMax > 0) {
             updateVolumeState(
                 level = state.volumeLevel,

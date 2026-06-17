@@ -244,7 +244,7 @@ class SleepTimerStateHolder @Inject constructor(
             }
 
             scope.launch {
-                toastEmitter?.invoke(context.getString(R.string.sleep_timer_eot_stop_at_end_toast))
+                toastEmitter?.invoke(context.getString(R.string.sleep_timer_eot_toast))
             }
         } else {
             eotSongMonitorJob?.cancel()

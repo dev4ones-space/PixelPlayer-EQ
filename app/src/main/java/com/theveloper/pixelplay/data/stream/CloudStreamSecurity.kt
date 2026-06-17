@@ -20,6 +20,11 @@ object CloudStreamSecurity {
     private val NAVIDROME_SONG_ID_REGEX = Regex("^[A-Za-z0-9_-]{1,100}$")
     private val JELLYFIN_ITEM_ID_REGEX = Regex("^[A-Za-z0-9]{1,100}$")
     private val FORBIDDEN_HOSTS = setOf("localhost", "127.0.0.1", "0.0.0.0", "::1", "[::1]")
+
+    // DNS suffixes that only resolve on a local network: mDNS (.local), common
+    // router defaults (.lan, .home), ICANN private-use (.internal), and the
+    // RFC 8375 home network domain (.home.arpa).
+    private val LOCAL_DNS_SUFFIXES = listOf(".local", ".lan", ".home", ".internal", ".home.arpa")
     private val EXTRA_ALLOWED_AUDIO_TYPES = setOf(
         "application/octet-stream",
         "binary/octet-stream",
@@ -171,6 +176,28 @@ object CloudStreamSecurity {
         }
     }
 
+    /**
+     * Returns true when [host] points at a local network or private address,
+     * where cleartext HTTP is acceptable for self-hosted media servers
+     * (Navidrome/Subsonic, Jellyfin).
+     *
+     * Covers loopback names, local-only DNS suffixes, single-label LAN
+     * hostnames, private and carrier-grade-NAT IPv4 ranges (the latter used by
+     * Tailscale-style VPNs), and loopback/link-local/unique-local IPv6 literals.
+     */
+    internal fun isLocalOrPrivateHost(host: String): Boolean {
+        val normalized = host.lowercase().removePrefix("[").removeSuffix("]")
+        if (normalized.isEmpty()) return false
+        if (normalized == "localhost") return true
+        if (LOCAL_DNS_SUFFIXES.any { normalized.endsWith(it) }) return true
+        if (isPrivateIpv4Literal(normalized)) return true
+        if (isCgnatIpv4Literal(normalized)) return true
+        if (normalized.contains(':')) return isPrivateIpv6Literal(normalized)
+        // Single-label hostnames have no public DNS meaning; they only resolve
+        // via the local resolver (router DNS, hosts file, NetBIOS).
+        return !normalized.contains('.')
+    }
+
     internal fun isPrivateIpv4Literal(host: String): Boolean {
         val parts = host.split('.')
         if (parts.size != 4) return false
@@ -187,5 +214,28 @@ object CloudStreamSecurity {
             (first == 169 && second == 254) ||
             (first == 172 && second in 16..31) ||
             (first == 192 && second == 168)
+    }
+
+    // 100.64.0.0/10 — carrier-grade NAT space (RFC 6598), assigned to clients
+    // by Tailscale and similar overlay VPNs.
+    private fun isCgnatIpv4Literal(host: String): Boolean {
+        val parts = host.split('.')
+        if (parts.size != 4) return false
+
+        val octets = parts.map { it.toIntOrNull() ?: return false }
+        if (octets.any { it !in 0..255 }) return false
+
+        return octets[0] == 100 && octets[1] in 64..127
+    }
+
+    // ::1 loopback, fe80::/10 link-local, fc00::/7 unique-local.
+    private fun isPrivateIpv6Literal(host: String): Boolean {
+        if (host == "::1" || host == "0:0:0:0:0:0:0:1") return true
+        if (host.startsWith("fe8") || host.startsWith("fe9") ||
+            host.startsWith("fea") || host.startsWith("feb")
+        ) {
+            return true
+        }
+        return host.startsWith("fc") || host.startsWith("fd")
     }
 }

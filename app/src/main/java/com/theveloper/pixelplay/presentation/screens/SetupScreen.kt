@@ -263,7 +263,7 @@ fun SetupScreen(
                 setupViewModel.checkPermissions(context)
                 pagerState.scrollToPage(blockedPageIndex)
                 previousPageIndex = blockedPageIndex
-                Toast.makeText(context, context.getString(R.string.toast_grant_permission_first), Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, context.getString(R.string.setup_toast_grant_permission_first), Toast.LENGTH_SHORT).show()
                 return@LaunchedEffect
             }
         }
@@ -291,7 +291,7 @@ fun SetupScreen(
                         navigateToPage(pagerState.currentPage + 1)
                     } else {
                         setupViewModel.checkPermissions(context)
-                        Toast.makeText(context, context.getString(R.string.toast_grant_permission_first), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, context.getString(R.string.setup_toast_grant_permission_first), Toast.LENGTH_SHORT).show()
                     }
                 },
                 onFinishClicked = {
@@ -300,7 +300,7 @@ fun SetupScreen(
                         onSetupComplete()
                     } else {
                         setupViewModel.checkPermissions(context)
-                        Toast.makeText(context, context.getString(R.string.toast_grant_all_permissions), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, context.getString(R.string.setup_toast_grant_all_permissions), Toast.LENGTH_SHORT).show()
                     }
                 }
             )
@@ -491,7 +491,7 @@ fun DirectorySelectionPage(
                 showDirectoryPicker = true
                 onOpenExplorer()
             } else {
-                Toast.makeText(context, context.getString(R.string.toast_grant_storage_first), Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, context.getString(R.string.setup_toast_grant_storage_first), Toast.LENGTH_SHORT).show()
             }
         },
         icons = persistentListOf(
@@ -503,7 +503,7 @@ fun DirectorySelectionPage(
         )
     ) {
         TextButton(onClick = onSkip) {
-            Text(stringResource(R.string.skip_for_now), maxLines = 1, overflow = TextOverflow.Ellipsis)
+            Text(stringResource(R.string.setup_skip_for_now), maxLines = 1, overflow = TextOverflow.Ellipsis)
         }
     }
 
@@ -874,7 +874,7 @@ fun AlarmsPermissionPage(
     ) {
         if (!isGranted) {
             TextButton(onClick = onSkip) {
-                Text(stringResource(R.string.skip_for_now), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Text(stringResource(R.string.setup_skip_for_now), maxLines = 1, overflow = TextOverflow.Ellipsis)
             }
         }
     }
@@ -960,7 +960,7 @@ fun BackupRestorePage(
             onClick = onSkip,
             enabled = !uiState.isRestoringBackup
         ) {
-            Text(stringResource(R.string.skip_not_now), maxLines = 1, overflow = TextOverflow.Ellipsis)
+            Text(stringResource(R.string.setup_skip_for_now), maxLines = 1, overflow = TextOverflow.Ellipsis)
         }
     }
 }
@@ -1340,7 +1340,7 @@ fun LibraryHeaderPreview(isCompact: Boolean) {
                             .padding(top = 24.dp, start = 20.dp, end = 20.dp)
                     ) {
                         Text(
-                            text = stringResource(R.string.tab_library),
+                            text = stringResource(R.string.settings_default_tab_library),
                             fontFamily = GoogleSansRounded,
                             fontWeight = FontWeight.ExtraBold,
                             color = MaterialTheme.colorScheme.primary,
@@ -1363,7 +1363,7 @@ fun LibraryHeaderPreview(isCompact: Boolean) {
                                 ) {
                                     Text(
                                         modifier = Modifier.padding(vertical = 10.dp, horizontal = 14.dp),
-                                        text = stringResource(R.string.tab_songs),
+                                        text = stringResource(R.string.setup_tab_songs),
                                         style = MaterialTheme.typography.titleMedium.copy(fontSize = 13.sp),
                                         fontWeight = FontWeight.Bold,
                                         color = MaterialTheme.colorScheme.primary
@@ -1391,7 +1391,7 @@ fun LibraryHeaderPreview(isCompact: Boolean) {
                                 ) {
                                     Text(
                                         modifier = Modifier.padding(vertical = 10.dp, horizontal = 14.dp),
-                                        text = stringResource(R.string.tab_albums),
+                                        text = stringResource(R.string.setup_tab_albums),
                                         style = MaterialTheme.typography.titleMedium.copy(fontSize = 13.sp),
                                         fontWeight = FontWeight.Medium,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -1419,7 +1419,7 @@ fun LibraryHeaderPreview(isCompact: Boolean) {
                                 ) {
                                     Text(
                                         modifier = Modifier.padding(vertical = 10.dp, horizontal = 14.dp),
-                                        text = stringResource(R.string.tab_artists),
+                                        text = stringResource(R.string.setup_tab_artists),
                                         style = MaterialTheme.typography.titleMedium.copy(fontSize = 13.sp),
                                         fontWeight = FontWeight.Medium,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -1499,7 +1499,7 @@ fun BatteryOptimizationPage(
                         val fallbackIntent = Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
                         context.startActivity(fallbackIntent)
                     } catch (e2: Exception) {
-                        Toast.makeText(context, context.getString(R.string.toast_battery_settings_unavailable), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, context.getString(R.string.settings_toast_battery_settings_unavailable), Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -1507,7 +1507,7 @@ fun BatteryOptimizationPage(
     ) {
         if (!isIgnoringBatteryOptimizations) {
             TextButton(onClick = onSkip) {
-                Text(stringResource(R.string.skip_for_now), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Text(stringResource(R.string.setup_skip_for_now), maxLines = 1, overflow = TextOverflow.Ellipsis)
             }
         }
     }
@@ -1632,6 +1632,7 @@ private fun SetupRestoreDialog(
     onConfirm: () -> Unit
 ) {
     val context = LocalContext.current
+    val unknownVersion = stringResource(R.string.setup_backup_unknown_version)
     val dateText = remember(plan.manifest.createdAt) {
         SimpleDateFormat("MMM d, yyyy 'at' h:mm a", Locale.getDefault())
             .format(Date(plan.manifest.createdAt))
@@ -1675,7 +1676,7 @@ private fun SetupRestoreDialog(
                                 enabled = !inProgress,
                                 modifier = Modifier.height(52.dp)
                             ) {
-                                Text(stringResource(R.string.cancel), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                                Text(stringResource(R.string.common_cancel), maxLines = 1, overflow = TextOverflow.Ellipsis)
                             }
                             Button(
                                 onClick = onConfirm,
@@ -1687,11 +1688,11 @@ private fun SetupRestoreDialog(
                                 if (inProgress) {
                                     LoadingIndicator(modifier = Modifier.size(18.dp))
                                     Spacer(modifier = Modifier.width(8.dp))
-                                    Text(stringResource(R.string.restoring))
+                                    Text(stringResource(R.string.setup_restoring))
                                 } else {
                                     Icon(Icons.Rounded.Restore, contentDescription = null)
                                     Spacer(modifier = Modifier.width(8.dp))
-                                    Text(stringResource(R.string.restore_selected))
+                                    Text(stringResource(R.string.setup_restore_selected))
                                 }
                             }
                         }
@@ -1745,7 +1746,7 @@ private fun SetupRestoreDialog(
                             Text(
                                 text = stringResource(
                                     R.string.setup_backup_from_version,
-                                    plan.manifest.appVersion.ifEmpty { context.getString(R.string.unknown_version) }
+                                    plan.manifest.appVersion.ifEmpty { unknownVersion }
                                 ),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -2019,7 +2020,7 @@ fun LibraryNavigationPillSetupShow(
                 Icon(
                     modifier = Modifier.rotate(arrowRotation),
                     imageVector = Icons.Rounded.KeyboardArrowDown,
-                    contentDescription = stringResource(R.string.cd_expand_menu),
+                    contentDescription = stringResource(R.string.common_expand_menu),
                     tint = MaterialTheme.colorScheme.onPrimaryContainer
                 )
             }
@@ -2189,12 +2190,12 @@ fun SetupBottomBar(
                         label = "AnimatedFabIcon"
                     ) { isNextPage ->
                         if (isNextPage) {
-                            Icon(Icons.AutoMirrored.Rounded.ArrowForward, contentDescription = stringResource(R.string.cd_next_step))
+                            Icon(Icons.AutoMirrored.Rounded.ArrowForward, contentDescription = stringResource(R.string.common_next))
                         } else {
                             if (isFinishButtonEnabled) {
-                                Icon(Icons.Rounded.Check, contentDescription = stringResource(R.string.cd_finish))
+                                Icon(Icons.Rounded.Check, contentDescription = stringResource(R.string.common_finish))
                             } else {
-                                Icon(Icons.Rounded.Close, contentDescription = stringResource(R.string.cd_close))
+                                Icon(Icons.Rounded.Close, contentDescription = stringResource(R.string.common_close))
                             }
                         }
                     }
@@ -2311,7 +2312,7 @@ fun NavBarLayoutPage(
                              ) {
                                  Icon(Icons.Rounded.RoundedCorner, contentDescription = null, modifier = Modifier.size(18.dp))
                                  Spacer(modifier = Modifier.width(8.dp))
-                                 Text(stringResource(R.string.customize_corner_radius))
+                                 Text(stringResource(R.string.setup_customize_corner_radius))
                              }
                          }
                     }

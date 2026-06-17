@@ -221,7 +221,7 @@ class AiStateHolder @Inject constructor(
                         }
                     } else {
                         _aiStatus.value = null
-                        _aiError.value = context.getString(R.string.ai_no_songs_found)
+                        _aiError.value = context.getString(R.string.ai_state_no_songs_found)
                         notificationManager.hideProgress()
                     }
                 }.onFailure { error ->
@@ -255,7 +255,7 @@ class AiStateHolder @Inject constructor(
             val allSongs = allSongsProvider?.invoke() ?: emptyList()
             val favoriteIds = favoriteSongIdsProvider?.invoke() ?: emptySet()
             if (prompt.isBlank()) {
-                toastEmitter?.invoke(context.getString(R.string.ai_prompt_empty))
+                toastEmitter?.invoke(context.getString(R.string.ai_state_prompt_empty))
                 return@launch
             }
 
@@ -287,20 +287,20 @@ class AiStateHolder @Inject constructor(
                 result.onSuccess { generatedSongs ->
                     if (generatedSongs.isNotEmpty()) {
                         dailyMixStateHolder.setDailyMixSongs(generatedSongs)
-                        toastEmitter?.invoke(context.getString(R.string.ai_daily_mix_updated))
+                        toastEmitter?.invoke(context.getString(R.string.ai_state_daily_mix_updated))
                     } else {
-                        toastEmitter?.invoke(context.getString(R.string.ai_no_songs_for_mix))
+                        toastEmitter?.invoke(context.getString(R.string.ai_state_no_songs_for_mix))
                     }
                 }.onFailure { error ->
                     Timber.tag("AiPlaylist").e(error, "Daily Mix refinement failed")
                     val detail = extractAiErrorDetail(error)
                     _aiError.value = resolveAiErrorMessage(error)
-                    toastEmitter?.invoke(context.getString(R.string.could_not_update, detail))
+                    toastEmitter?.invoke(context.getString(R.string.ai_state_could_not_update, detail))
                 }
             } catch (e: Exception) {
                 Timber.tag("AiPlaylist").e(e, "Daily Mix refinement threw unhandled exception")
                 _aiError.value = resolveAiErrorMessage(e)
-                toastEmitter?.invoke(context.getString(R.string.could_not_update, extractAiErrorDetail(e)))
+                toastEmitter?.invoke(context.getString(R.string.ai_state_could_not_update, extractAiErrorDetail(e)))
             } finally {
                 _isGeneratingAiPlaylist.value = false
                 _aiStatus.value = null
@@ -393,13 +393,13 @@ $lyricsText
                 detail.contains("invalid api key", ignoreCase = true) ||
                 detail.contains("incorrect api key", ignoreCase = true) ||
                 detail.contains("invalid key", ignoreCase = true) ->
-                context.getString(R.string.ai_error_api_key)
+                context.getString(R.string.ai_state_error_api_key)
 
             providerFailure?.isBillingIssue() == true ->
-                context.getString(R.string.ai_error_quota)
+                context.getString(R.string.ai_state_error_quota)
 
             providerFailure?.isModelUnavailable() == true ->
-                context.getString(R.string.ai_error_model_unavailable)
+                context.getString(R.string.ai_state_error_model_unavailable)
 
             // Timeout errors
             detail.contains("timed out", ignoreCase = true) || 
@@ -429,7 +429,7 @@ $lyricsText
 
             detail.contains("unauthorized", ignoreCase = true) ||
             detail.contains("401", ignoreCase = true) ->
-                context.getString(R.string.ai_error_api_key)
+                context.getString(R.string.ai_state_error_api_key)
 
             // Rate limiting
             detail.contains("rate limit", ignoreCase = true) ||
@@ -452,7 +452,7 @@ $lyricsText
             // No API key configured
             detail.contains("No API key", ignoreCase = true) ||
             detail.contains("not configured", ignoreCase = true) ->
-                context.getString(R.string.ai_error_api_key)
+                context.getString(R.string.ai_state_error_api_key)
 
             // Cooldown
             detail.contains("cooldown", ignoreCase = true) ->
@@ -463,7 +463,7 @@ $lyricsText
                 "The AI returned an empty response. This typically means the model filtered the content. Try a different prompt."
 
             else ->
-                context.getString(R.string.ai_error_generic, detail)
+                context.getString(R.string.ai_state_error_generic, detail)
         }
     }
 

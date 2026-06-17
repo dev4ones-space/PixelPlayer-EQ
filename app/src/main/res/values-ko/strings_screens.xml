@@ -1,100 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Navigation / misc -->
+    <!-- Navigation -->
     <string name="nav_error_genre_id_missing">오류: 장르 ID 누락</string>
-    <string name="easter_egg_thank_you">PixelPlayer를 이용해 주셔서 감사합니다!</string>
 
-    <!-- Word delimiter config -->
-    <string name="word_delimiter_section_title">현재 단어 구분 기호</string>
-    <string name="word_delimiter_section_subtitle">이 키워드들은 공백으로 둘러싸여 있을 때 아티스트 이름을 분리합니다. 대소문자를 구분하지 않습니다. 제거하려면 누르세요.</string>
-    <string name="word_delimiter_empty">구성된 단어 구분 기호 없음</string>
-    <string name="word_delimiter_add_title">새 단어 구분 기호 추가</string>
-    <string name="word_delimiter_hint">예: feat. 또는 ft.</string>
-    <string name="word_delimiter_help_title">단어 구분 기호 작동 방식</string>
-    <string name="word_delimiter_help_body">단어 구분 기호는 주변에 공백이 있는 상태에서 대소문자 구분 없이 매칭됩니다.\n\n단일 문자 구분 기호(\"x\" 등)는 잘못된 매칭을 방지하기 위해 양쪽에 공백이 필요합니다.\n\n예시:\n  \"Drake feat. Rihanna\" -&gt; Drake, Rihanna\n  \"Marshmello x Bastille\" -&gt; Marshmello, Bastille\n  \"A vs. B\" -&gt; A, B</string>
-    <string name="word_delimiters_screen_title">단어 구분 기호</string>
-    <string name="word_delimiter_reset_title">단어 구분 기호를 초기화하시겠습니까?</string>
-    <string name="word_delimiter_reset_message">모든 사용자 지정 단어 구분 기호가 삭제되고 기본 키워드로 복원됩니다. 이 작업은 취소할 수 없습니다.</string>
-    <string name="word_delimiter_toast_added">단어 구분 기호 추가됨</string>
-    <string name="word_delimiter_toast_invalid">이미 존재하거나 유효하지 않음</string>
-    <string name="word_delimiter_toast_reset">단어 구분 기호가 기본값으로 초기화됨</string>
-    <string name="action_reset">초기화</string>
-
-    <!-- Delimiter config (path separators) -->
-    <string name="delimiter_section_title">현재 구분 기호</string>
-    <string name="delimiter_section_subtitle">제거하려면 구분 기호를 누르세요. 하나 이상의 구분 기호가 필요합니다.</string>
-    <string name="delimiter_add_title">새 구분 기호 추가</string>
-    <string name="delimiter_hint">예: / 또는 ;</string>
-    <string name="delimiter_defaults_title">기본 구분 기호</string>
-    <string name="delimiter_reset_title">구분 기호를 초기화하시겠습니까?</string>
-    <string name="delimiter_reset_message">모든 사용자 지정 구분 기호가 삭제되고 기본값으로 복원됩니다. 이 작업은 취소할 수 없습니다.</string>
-    <string name="delimiter_toast_reset">구분 기호가 기본값으로 초기화됨</string>
-    <string name="delimiter_toast_at_least_one">최소 하나의 구분 기호가 필요합니다</string>
-    <string name="delimiter_toast_added">구분 기호 추가됨</string>
-    <string name="delimiter_toast_invalid">구분 기호가 이미 존재하거나 유효하지 않습니다</string>
-    <string name="path_delimiters_toolbar_title">구분 기호</string>
-    <string name="delimiter_label_space">공백</string>
-    <string name="cd_add_path_delimiter">구분 기호 추가</string>
-
-    <!-- Accounts -->
-    <string name="accounts_google_drive_soon">Google Drive 기능이 곧 제공될 예정입니다.</string>
-    <string name="accounts_unable_open_screen">현재 이 화면을 열 수 없습니다.</string>
-
-    <!-- Setup (subset; more keys follow in same file) -->
+    <!-- SetupScreen -->
+    <string name="setup_lets_go">시작하기!</string>
+    <string name="setup_step_format">%2$d단계 중 %1$d단계</string>
+    <string name="setup_toast_grant_permission_first">먼저 필요한 권한을 허용해 주세요.</string>
+    <string name="setup_toast_grant_all_permissions">모든 필수 권한을 허용해 주세요.</string>
     <string name="setup_welcome_prefix">환영합니다! </string>
     <string name="setup_beta_symbol">β</string>
     <string name="setup_beta_label">베타</string>
     <string name="setup_intro_body">모든 설정을 완료해 보겠습니다.</string>
-    <string name="setup_checking_backup">백업 패키지 확인 중…</string>
-    <string name="setup_theme_title">앱 테마</string>
-    <string name="setup_theme_subtitle">라이브러리를 탐색하기 전에 원하는 스타일을 선택하세요.</string>
-    <string name="setup_theme_footer">나중에 설정 &gt; 디자인 &gt; 앱 테마에서 변경할 수 있습니다.</string>
-    <string name="setup_recommended">권장</string>
-    <string name="setup_library_layout_title">라이브러리 레이아웃</string>
-    <string name="setup_library_layout_subtitle">선호하는 라이브러리 탐색 방식을 선택하세요.</string>
-    <string name="setup_compact_mode">컴팩트 모드</string>
-    <string name="setup_library_layout_footer">나중에 설정 &gt; 디자인 &gt; 라이브러리 내비게이션에서 변경할 수 있습니다.</string>
-    <string name="tab_library">라이브러리</string>
-    <string name="tab_songs">곡</string>
-    <string name="tab_albums">앨범</string>
-    <string name="tab_artists">아티스트</string>
-    <string name="setup_all_set_title">준비 완료!</string>
-    <string name="setup_all_set_body">이제 음악을 즐길 준비가 되었습니다.</string>
-    <string name="setup_restore_backup_title">백업 복구</string>
-    <string name="setup_restore_backup_subtitle">설정을 마치기 전에 가져올 항목을 검토하세요.</string>
-    <string name="setup_modules_selected_format">%2$개 중 %1$개 모듈 선택됨</string>
-    <string name="setup_backup_created_format">생성일: %1$s</string>
-    <string name="setup_backup_from_version">버전 %1$s의 백업</string>
-    <string name="unknown_version">알 수 없는 버전</string>
-    <string name="setup_lets_go">시작하기!</string>
-    <string name="setup_step_format">%2$단계 중 %1$단계</string>
-    <string name="setup_app_navigation_title">앱 내비게이션</string>
-    <string name="setup_app_navigation_subtitle">하단 내비게이션 바의 스타일을 선택하세요.</string>
-    <string name="setup_navbar_default_style">기본 스타일</string>
-    <string name="setup_navbar_footer">나중에 설정 &gt; 디자인 &gt; 내비게이션 바 스타일에서 변경할 수 있습니다.</string>
-    <string name="skip_for_now">건너뛰기</string>
-    <string name="skip_not_now">나중에 하기</string>
-    <string name="restoring">복구 중</string>
-    <string name="restore_selected">선택 항목 복구</string>
-    <string name="customize_corner_radius">모서리 반경 사용자 지정</string>
-    <string name="toast_grant_permission_first">먼저 필요한 권한을 허용해 주세요.</string>
-    <string name="toast_grant_all_permissions">모든 필수 권한을 허용해 주세요.</string>
-    <string name="toast_grant_storage_first">먼저 저장공간 권한을 허용해 주세요</string>
-    <string name="toast_battery_settings_unavailable">배터리 설정을 열 수 없습니다</string>
-
-    <!-- Content descriptions -->
-    <string name="cd_expand_menu">메뉴 확장</string>
-    <string name="cd_next_step">다음</string>
-    <string name="cd_finish">완료</string>
-    <string name="cd_close">닫기</string>
-    <string name="cd_remove">제거</string>
-    <string name="cd_add_word_delimiter">단어 구분 기호 추가</string>
-    <string name="cd_reset_defaults">기본값으로 초기화</string>
-
-    <!-- Setup (additional literals) -->
-    <string name="setup_excluded_folders_title">제외된 폴더</string>
-    <string name="setup_excluded_folders_description">기본적으로 모든 폴더가 스캔됩니다. 라이브러리 구축 시 무시할 위치를 선택하세요.</string>
-    <string name="setup_choose_folders_ignore">무시할 폴더 선택</string>
     <string name="setup_permission_media_title">미디어 권한</string>
     <string name="setup_permission_media_description">PixelPlayer가 음악 라이브러리를 구축하려면 오디오 파일에 대한 액세스 권한이 필요합니다.</string>
     <string name="setup_permission_granted">권한 허용됨</string>
@@ -102,138 +19,226 @@
     <string name="setup_permission_notifications_title">알림</string>
     <string name="setup_permission_notifications_description">잠금 화면 및 알림창에서 음악을 제어하려면 알림을 활성화하세요.</string>
     <string name="setup_enable_notifications">알림 활성화</string>
-    <string name="setup_permission_alarms_title">알람 및 리마인더</string>
-    <string name="setup_permission_alarms_description">취침 타이머 사용 시 정확한 시간에 재생을 중지하려면 권장됩니다.</string>
-    <string name="setup_grant_permission_generic">권한 허용</string>
     <string name="setup_backup_have_title">백업 파일이 있나요?</string>
     <string name="setup_backup_have_description">이미 PixelPlayer 백업이 있는 경우, 지금 복구하여 나머지 설정 과정을 건너뛸 수 있습니다.</string>
-    <string name="setup_inspecting_backup">백업 검사 중</string>
-    <string name="setup_restoring_backup">백업 복구 중</string>
     <string name="setup_import_backup">백업 가져오기</string>
+    <string name="setup_inspecting_backup">백업 검사 중</string>
+    <string name="setup_checking_backup">백업 패키지 확인 중…</string>
+    <string name="setup_restoring_backup">백업 복구 중</string>
+    <string name="setup_skip_for_now">건너뛰기</string>
+    <string name="setup_restore_backup_title">백업 복구</string>
+    <string name="setup_restore_backup_subtitle">설정을 마치기 전에 가져올 항목을 검토하세요.</string>
+    <string name="setup_modules_selected_format">%2$d개 중 %1$d개 모듈 선택됨</string>
+    <string name="setup_backup_created_format">생성일: %1$s</string>
+    <string name="setup_backup_from_version">버전 %1$s의 백업</string>
+    <string name="setup_backup_unknown_version">알 수 없는 버전</string>
+    <string name="setup_restore_selected">선택 항목 복구</string>
+    <string name="setup_restoring">복구 중</string>
+    <string name="setup_excluded_folders_title">제외된 폴더</string>
+    <string name="setup_excluded_folders_description">기본적으로 모든 폴더가 스캔됩니다. 라이브러리 구축 시 무시할 위치를 선택하세요.</string>
+    <string name="setup_choose_folders_ignore">무시할 폴더 선택</string>
+    <string name="setup_toast_grant_storage_first">먼저 저장공간 권한을 허용해 주세요</string>
+    <string name="setup_theme_title">앱 테마</string>
+    <string name="setup_theme_subtitle">라이브러리를 탐색하기 전에 원하는 스타일을 선택하세요.</string>
     <string name="setup_theme_dark_title">어두운 테마</string>
     <string name="setup_theme_dark_description">PixelPlayer의 기본 Material 3 어두운 디자인입니다.</string>
     <string name="setup_theme_light_title">밝은 테마</string>
     <string name="setup_theme_light_description">앱 전체에 적용되는 밝은 Material 3 디자인입니다.</string>
     <string name="setup_theme_follow_title">시스템 설정 따르기</string>
     <string name="setup_theme_follow_description">휴대전화의 현재 디자인 설정에 맞춥니다.</string>
+    <string name="setup_recommended">권장</string>
+    <string name="setup_theme_footer">나중에 설정 &gt; 디자인 &gt; 앱 테마에서 변경할 수 있습니다.</string>
+    <string name="setup_library_layout_title">라이브러리 레이아웃</string>
+    <string name="setup_library_layout_subtitle">선호하는 라이브러리 탐색 방식을 선택하세요.</string>
+    <string name="setup_preview_songs_label">곡</string>
+    <string name="setup_compact_mode">컴팩트 모드</string>
     <string name="setup_compact_mode_pill_hint">최소 알약 내비게이션 사용 중</string>
     <string name="setup_compact_mode_tab_hint">표준 탭 행 사용 중</string>
-    <string name="setup_preview_songs_label">곡</string>
+    <string name="setup_tab_songs">곡</string>
+    <string name="setup_tab_albums">앨범</string>
+    <string name="setup_tab_artists">아티스트</string>
+    <string name="setup_library_layout_footer">나중에 설정 &gt; 디자인 &gt; 라이브러리 내비게이션에서 변경할 수 있습니다.</string>
+    <string name="setup_app_navigation_title">앱 내비게이션</string>
+    <string name="setup_app_navigation_subtitle">하단 내비게이션 바의 스타일을 선택하세요.</string>
+    <string name="setup_navbar_default_style">기본 스타일</string>
+    <string name="setup_nav_floating_pill_description">둥근 모서리의 플로팅 알약 스타일</string>
+    <string name="setup_nav_full_width_description">표준 전체 너비 바 스타일</string>
+    <string name="setup_customize_corner_radius">모서리 반경 사용자 지정</string>
+    <string name="setup_navbar_footer">나중에 설정 &gt; 디자인 &gt; 내비게이션 바 스타일에서 변경할 수 있습니다.</string>
+    <string name="setup_permission_alarms_title">알람 및 리마인더</string>
+    <string name="setup_permission_alarms_description">취침 타이머 사용 시 정확한 시간에 재생을 중지하려면 권장됩니다.</string>
+    <string name="setup_grant_permission_generic">권한 허용</string>
     <string name="setup_battery_optimization_title">배터리 최적화</string>
     <string name="setup_battery_optimization_description">일부 Android 기기는 백그라운드 앱을 강제로 종료합니다. 예기치 않은 재생 중단을 방지하려면 배터리 최적화를 비활성화하세요.</string>
     <string name="setup_disable_battery_optimization">최적화 비활성화</string>
-    <string name="setup_nav_floating_pill_description">둥근 모서리의 플로팅 알약 스타일</string>
-    <string name="setup_nav_full_width_description">표준 전체 너비 바 스타일</string>
+    <string name="setup_all_set_title">준비 완료!</string>
+    <string name="setup_all_set_body">이제 음악을 즐길 준비가 되었습니다.</string>
 
-    <!-- Delete song (Material dialog from ViewModel) -->
-    <string name="dialog_delete_song_title">곡을 삭제하시겠습니까?</string>
-    <string name="dialog_delete_song_message">아티스트 %2$s의 \"%1$s\"\n\n이 곡은 기기에서 영구적으로 삭제되며 복구할 수 없습니다.</string>
-
-    <!-- Home / detail shared -->
-    <string name="home_your_mix_title">나의\n믹스</string>
-    <string name="cd_shuffle_play">셔플 재생</string>
-    <string name="cd_album_art_for_title">%1$s 앨범 아트</string>
-    <string name="cd_options">옵션</string>
-    <string name="genre_quick_fill">장르 빠른 채우기</string>
-    <string name="cd_generic_artist">일반 아티스트</string>
-    <string name="cd_play_album">앨범 재생</string>
-    <string name="cd_shuffle_play_album">앨범 셔플 재생</string>
-    <string name="album_cover_for">%1$s 커버</string>
-    <string name="album_detail_meta_line">%1$s • %2$s</string>
-    <string name="mashup_cd_play_pause">재생/일시정지</string>
-    <string name="cd_song_cover">곡 커버</string>
-
-    <!-- Crash report dialog -->
-    <string name="crash_report_title">문제가 발생했습니다</string>
-    <string name="crash_report_subtitle">지난 세션 중에 앱이 종료되었습니다. 문제 해결을 위해 크래시 보고서를 공유해 주세요.</string>
-    <string name="crash_report_date_line">날짜: %1$s</string>
-    <string name="crash_report_error_label">오류:</string>
-    <string name="crash_report_stack_preview_label">스택 트레이스(미리보기):</string>
-    <string name="crash_report_clipboard_label">크래시 로그</string>
-    <string name="toast_crash_log_copied">크래시 로그가 클립보드에 복사되었습니다</string>
-    <string name="crash_report_share_subject">PixelPlayer 크래시 보고서</string>
-    <string name="crash_report_share_chooser">크래시 보고서 공유</string>
-    <string name="action_copy">복사</string>
-    <string name="action_share">공유</string>
-
-    <!-- Search screen -->
+    <!-- SearchScreen -->
     <string name="search_placeholder">검색…</string>
-    <string name="cd_search_icon">검색</string>
-    <string name="cd_clear_search_query">검색어 지우기</string>
-    <string name="recent_searches">최근 검색어</string>
-    <string name="clear_all">모두 지우기</string>
-    <string name="cd_search_history_icon">기록</string>
-    <string name="cd_delete_search_history_item">검색 기록 항목 삭제</string>
-    <string name="cd_no_search_results">결과 없음</string>
+    <string name="search_cd_search_icon">검색</string>
+    <string name="search_cd_clear_search_query">검색어 지우기</string>
+    <string name="search_recent_searches">최근 검색어</string>
+    <string name="search_action_clear_all">모두 지우기</string>
+    <string name="search_cd_search_history_icon">기록</string>
+    <string name="search_cd_delete_search_history_item">검색 기록 항목 삭제</string>
+    <string name="search_cd_no_results">결과 없음</string>
     <string name="search_no_results_for_query">\"%1$s\"에 대한 결과가 없습니다</string>
     <string name="search_nothing_found">검색 결과가 없습니다</string>
     <string name="search_try_different_or_filters">다른 검색어를 입력하거나 필터를 확인해 보세요.</string>
     <string name="search_no_results_found">검색 결과가 없습니다.</string>
-
-    <!-- Genre browse -->
     <string name="browse_by_genre">장르별 찾아보기</string>
     <string name="no_genres_available">사용 가능한 장르가 없습니다.</string>
 
-    <!-- About -->
-    <string name="about_no_contributors">현재 기여자를 찾을 수 없습니다. 나중에 다시 시도해 주세요.</string>
-    <string name="about_app_name">PixelPlayer</string>
-    <string name="about_tagline">커뮤니티와 함께 만드는 오픈 소스 뮤직 플레이어입니다.</string>
-    <string name="about_version_format">버전 v%1$s</string>
-    <string name="about_contributions_format">기여 %1$d회</string>
-    <string name="screen_about">정보</string>
-    <string name="about_maintainer_title">유지 관리자</string>
-    <string name="about_maintainer_subtitle">PixelPlayer를 만드는 사람입니다.</string>
-    <string name="about_spotlight_title">커뮤니티 스포트라이트</string>
-    <string name="about_spotlight_subtitle">큰 영향력을 미친 기여자들에 대한 감사의 표시입니다.</string>
-    <string name="about_contributors_section_title">오픈 소스 기여자</string>
-    <string name="about_contributors_section_subtitle">GitHub의 실시간 기여자 목록입니다.</string>
-    <string name="about_signal_open_source">오픈 소스</string>
-    <string name="about_signal_community_first">커뮤니티 중심</string>
-    <string name="about_signal_material3">Material 3 디자인</string>
-    <string name="cd_open_github_profile">GitHub 프로필 열기</string>
-    <string name="cd_open_telegram">Telegram 열기</string>
-    <string name="cd_contributor_avatar">%1$s 아바타</string>
-    <string name="cd_contributor_icon">%1$s 아이콘</string>
+    <!-- ArtistDetailScreen -->
+    <string name="artist_cd_play_title">%1$s 재생</string>
+    <string name="artist_cd_collapse_title">%1$s 접기</string>
+    <string name="artist_cd_expand_title">%1$s 펼치기</string>
+    <string name="artist_cd_edit_image">아티스트 이미지 수정</string>
+    <string name="artist_action_change_photo">사진 변경</string>
+    <string name="artist_action_reset_to_default">기본값으로 초기화</string>
+    <string name="artist_cd_shuffle_play">아티스트 셔플 재생</string>
 
-    <!-- Streaming / cloud dashboards -->
-    <string name="screen_subsonic_dashboard_title">Subsonic</string>
-    <string name="dash_playlists_synced_count">플레이리스트 %1$d개 동기화됨</string>
-    <string name="dash_folders_synced_count">폴더 %1$d개 동기화됨</string>
-    <string name="dash_title_playlists">플레이리스트</string>
-    <string name="dash_music_folders">음악 폴더</string>
-    <string name="dash_action_sync">동기화</string>
-    <string name="dash_playlists_empty_title">동기화된 플레이리스트 없음</string>
-    <string name="dash_playlists_empty_hint_subsonic">동기화를 눌러 플레이리스트를 가져오세요</string>
-    <string name="dash_playlists_empty_hint_jellyfin">동기화를 눌러 Jellyfin 플레이리스트를 가져오세요</string>
-    <string name="dash_no_folders_yet">추가된 폴더가 없습니다</string>
-    <string name="dash_tap_plus_add_drive_folder">+를 눌러 Drive 폴더를 추가하세요</string>
-    <string name="dash_quick_actions">빠른 작업</string>
-    <string name="dash_quick_actions_subsonic_subtitle">Navidrome, Airsonic 및 기타 Subsonic 호환 서버를 관리하세요.</string>
-    <string name="dash_quick_actions_jellyfin_subtitle">Jellyfin 서버 연결을 관리하세요.</string>
-    <string name="dash_status_syncing">동기화 중</string>
-    <string name="dash_action_sync_library">라이브러리 동기화</string>
-    <string name="dash_action_disconnect">연결 해제</string>
-    <string name="dash_song_count">곡 %1$d개</string>
-    <string name="cd_sync">동기화</string>
-    <string name="cd_sync_all">모두 동기화</string>
-    <string name="cd_add_drive_folder">폴더 추가</string>
-    <string name="cd_logout">로그아웃</string>
-    <string name="screen_netease_dashboard_title">NetEase Music</string>
-    <string name="screen_qq_music_dashboard_title">QQ Music</string>
-    <string name="cd_sync_all_playlists">모든 플레이리스트 동기화</string>
-    <string name="error_with_message_format">오류: %1$s</string>
-    <string name="sync_status_syncing_ellipsis">동기화 중…</string>
-    <string name="qq_select_playlist_type_title">플레이리스트 유형 선택</string>
-    <string name="qq_choose_playlists_to_sync">동기화할 플레이리스트 선택:</string>
-    <string name="qq_all_playlists">모든 플레이리스트</string>
-    <string name="qq_created_and_collected">생성 및 수집됨</string>
-    <string name="qq_created_playlists">생성한 플레이리스트</string>
-    <string name="qq_collected_playlists">수집한 플레이리스트</string>
-    <string name="cd_user_avatar">사용자 아바타</string>
-    <string name="toast_playlist_created">플레이리스트가 생성되었습니다</string>
-    <string name="toast_set_ai_provider_api_key_first">먼저 AI 제공업체 API 키를 설정하세요</string>
-    <string name="toast_set_gemini_api_key_first">먼저 Gemini API 키를 설정하세요</string>
-    <string name="toast_added_to_queue">대기열에 추가됨</string>
-    <string name="toast_playing_next">다음에 재생됨</string>
-    <string name="error_share_song_format">곡을 공유할 수 없습니다: %1$s</string>
+    <!-- AlbumDetailScreen -->
+    <string name="album_disc_number_header">디스크 %d</string>
+    <string name="album_cover_for">%1$s 커버</string>
+    <string name="album_detail_meta_line">%1$s • %2$s</string>
+
+    <!-- PlaylistDetailScreen -->
+    <string name="playlist_not_found">플레이리스트를 찾을 수 없습니다.</string>
+    <string name="playlist_empty_title">이 플레이리스트는 비어 있습니다.</string>
+    <string name="playlist_empty_add_hint">시작하려면 \'곡 추가\'를 누르세요.</string>
+    <string name="playlist_empty_folder_label">이 폴더에는 곡이 포함되어 있지 않습니다.</string>
+    <string name="playlist_sort_songs_title">곡 정렬</string>
+    <string name="playlist_more_options_title">더 많은 옵션</string>
+    <string name="playlist_options_title">플레이리스트 옵션</string>
+    <string name="playlist_action_edit_playlist">플레이리스트 편집</string>
+    <string name="playlist_action_delete_playlist">플레이리스트 삭제</string>
+    <string name="playlist_dialog_delete_title">플레이리스트를 삭제하시겠습니까?</string>
+    <string name="playlist_dialog_delete_body">이 플레이리스트를 삭제하시겠습니까?</string>
+    <string name="playlist_action_set_default_transition">기본 전환 설정</string>
+    <string name="playlist_action_export_playlist">플레이리스트 내보내기</string>
+    <string name="playlist_song_duration_line">%1$s • %2$s</string>
+    <string name="playlist_action_play_it">재생</string>
+    <string name="playlist_action_add_songs">추가</string>
+    <string name="playlist_cd_add_songs">곡 추가</string>
+    <string name="playlist_action_remove_songs">제거</string>
+    <string name="playlist_cd_remove_songs">곡 제거</string>
+    <string name="playlist_action_reorder_songs">순서 변경</string>
+    <string name="playlist_cd_reorder_songs">곡 순서 변경</string>
+
+    <!-- EditTransitionScreen -->
+    <string name="transition_title_global">글로벌 전환</string>
+    <string name="transition_title_playlist_rules">플레이리스트 규칙</string>
+    <string name="transition_intro_global">이 구성은 별도로 설정하지 않는 한 모든 재생 소스에 적용됩니다.</string>
+    <string name="transition_intro_playlist">이 플레이리스트의 기본 동작을 구성합니다.</string>
+    <string name="transition_active_status">활성 상태</string>
+    <string name="transition_status_global_default">글로벌 기본값</string>
+    <string name="transition_status_playlist_default">플레이리스트 기본값</string>
+    <string name="transition_status_following_global">글로벌 설정 따름</string>
+    <string name="transition_status_custom_override">사용자 지정 재정의</string>
+    <string name="transition_custom_override_title">사용자 지정 재정의</string>
+    <string name="transition_custom_override_body">이 플레이리스트에 대해 특정 규칙을 설정하려면 활성화하세요.</string>
+    <string name="transition_snackbar_using_global">글로벌 기본값 사용 중</string>
+    <string name="transition_snackbar_saved">변경 사항이 저장되었습니다</string>
+    <string name="transition_style_title">전환 스타일</string>
+    <string name="transition_style_subtitle">트랙이 섞이는 방식</string>
+    <string name="transition_mode_none">없음</string>
+    <string name="transition_mode_crossfade">크로스페이드</string>
+    <string name="transition_duration_title">전환 지속 시간</string>
+    <string name="transition_duration_subtitle_format">총 %1$d초 겹침</string>
+    <string name="transition_reset_cd">초기화</string>
+    <string name="transition_visualizer_current">현재 곡</string>
+    <string name="transition_visualizer_next">다음 곡</string>
+    <string name="transition_overlap_explanation_format">트랙이 %1$d초 동안 겹칩니다</string>
+    <string name="transition_curves_title">볼륨 곡선</string>
+    <string name="transition_curves_subtitle">오디오 슬로프 미세 조정</string>
+    <string name="transition_fade_out">페이드 아웃</string>
+    <string name="transition_fade_in">페이드 인</string>
+
+    <!-- CreatePlaylistScreen -->
+    <string name="playlist_creation_new_smart">새 스마트 플레이리스트</string>
+    <string name="playlist_creation_new">새 플레이리스트</string>
+    <string name="playlist_creation_add_songs">곡 추가</string>
+    <string name="playlist_creation_cd_back_or_cancel">뒤로 또는 취소</string>
+    <string name="playlist_creation_next">다음</string>
+    <string name="playlist_creation_create">생성</string>
+    <string name="playlist_creation_edit">플레이리스트 편집</string>
+    <string name="playlist_creation_auto_collage">자동 생성된 콜라주</string>
+    <string name="playlist_creation_cd_add_photo">사진 추가</string>
+    <string name="playlist_creation_pick_image">이미지 선택</string>
+    <string name="playlist_creation_change">변경</string>
+    <string name="playlist_creation_remove">제거</string>
+    <string name="playlist_creation_name_label">플레이리스트 이름</string>
+    <string name="playlist_creation_name_placeholder">나만의 멋진 믹스</string>
+    <string name="playlist_creation_edit_cover">커버 편집</string>
+    <string name="playlist_creation_adjust_cover_title">커버 아트 조정</string>
+    <string name="playlist_creation_adjust_cover_hint">완벽한 구도를 잡으려면 두 손가락으로 벌리거나 드래그하세요</string>
+    <string name="playlist_creation_mode_manual">수동</string>
+    <string name="playlist_creation_mode_smart">스마트</string>
+    <string name="playlist_creation_generate_with_ai">AI로 생성</string>
+    <string name="playlist_creation_smart_rule">스마트 규칙</string>
+    <string name="playlist_creation_tab_default">기본</string>
+    <string name="playlist_creation_tab_image">이미지</string>
+    <string name="playlist_creation_tab_icon">아이콘</string>
+    <string name="playlist_creation_bg_color">배경색</string>
+    <string name="playlist_creation_icon_symbol">아이콘 기호</string>
+    <string name="playlist_creation_shape_style">모양 스타일</string>
+    <string name="playlist_creation_shape_params">모양 매개변수</string>
+    <string name="playlist_creation_corner_radius">모서리 반경</string>
+    <string name="playlist_creation_smoothness">부드러움</string>
+    <string name="playlist_creation_sides">변의 수</string>
+    <string name="playlist_creation_curve">곡률</string>
+    <string name="playlist_creation_rotation">회전</string>
+    <string name="playlist_creation_scale">비율</string>
+    <string name="playlist_creation_rule_top_played_title">많이 재생함</string>
+    <string name="playlist_creation_rule_top_played_sub">가장 많이 재생한 트랙입니다.</string>
+    <string name="playlist_creation_rule_recently_played_title">최근 재생함</string>
+    <string name="playlist_creation_rule_recently_played_sub">가장 최근에 감상한 곡입니다.</string>
+    <string name="playlist_creation_rule_forgotten_title">잊혀진 즐겨찾기</string>
+    <string name="playlist_creation_rule_forgotten_sub">한동안 재생하지 않은 즐겨찾기 트랙입니다.</string>
+    <string name="playlist_creation_rule_new_gems_title">새로운 보석</string>
+    <string name="playlist_creation_rule_new_gems_sub">최근에 추가되었지만 재생 횟수가 적은 트랙입니다.</string>
+
+    <!-- GenreDetailScreen -->
+    <string name="genre_quick_fill">장르 빠른 채우기</string>
+    <string name="genre_sort_title">정렬 및 재생</string>
+    <string name="genre_sort_action_shuffle">셔플</string>
+    <string name="genre_sort_by_title">정렬 기준</string>
+    <string name="genre_sort_artist_option">아티스트</string>
+    <string name="genre_sort_album_option">앨범</string>
+    <string name="genre_sort_title_option">제목</string>
+    <string name="genre_cd_generic_artist">일반 아티스트</string>
+    <string name="genre_shuffle_label">%1$s 셔플</string>
+
+    <!-- QuickFillScreen -->
+    <string name="quick_fill_select_songs">곡 선택</string>
+    <string name="quick_fill_choose_genre">장르 선택</string>
+    <string name="quick_fill_search_songs_placeholder">곡 검색</string>
+    <string name="quick_fill_new_genre">새 장르</string>
+    <string name="quick_fill_cd_add_custom_genre">사용자 지정 추가</string>
+    <string name="quick_fill_add_custom_genre_title">사용자 지정 장르 추가</string>
+    <string name="quick_fill_genre_name_placeholder">장르 이름</string>
+    <string name="quick_fill_select_icon">아이콘 선택</string>
+    <string name="quick_fill_select_genre_label_format">장르: %1$s</string>
+    <string name="quik_fill_select_a_genre_label">장르를 선택하세요</string>
+    <string name="quick_fill_action_title">Quick Fill</string>
+
+    <!-- MashupScreen -->
+    <string name="mashup_title">DJ 스페이스</string>
+    <string name="mashup_loading">로딩 중…</string>
+    <string name="mashup_deck_n">데크 %1$d</string>
+    <string name="mashup_load_song_cd">곡 로드</string>
+    <string name="mashup_no_song_loaded">로드된 곡 없음</string>
+    <string name="mashup_artist_placeholder">…</string>
+    <string name="mashup_stem_separation_unavailable">음원 분리 기능은 아직 사용할 수 없습니다.</string>
+    <string name="mashup_volume">볼륨</string>
+    <string name="mashup_speed">속도</string>
+    <string name="mashup_crossfader">크로스페이더</string>
+    <string name="mashup_deck_1">데크 1</string>
+    <string name="mashup_deck_2">데크 2</string>
+    <string name="mashup_select_song_title">곡 선택</string>
+    <string name="mashup_cd_play_pause">재생/일시정지</string>
+    <string name="mashup_cd_song_cover">곡 커버</string>
+    <string name="mashup_speed_multiplier">x%1$.2f</string>
 </resources>

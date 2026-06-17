@@ -14,6 +14,7 @@ import coil.size.Precision
 import coil.size.Size
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.SettableFuture
+import com.theveloper.pixelplay.data.diagnostics.PerformanceMetrics
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -38,6 +39,7 @@ class CoilBitmapLoader(private val context: Context, private val scope: Coroutin
         val future = SettableFuture.create<Bitmap>()
 
         scope.launch {
+            val startNanos = System.nanoTime()
             try {
                 val request = ImageRequest.Builder(context)
                     .data(data)
@@ -60,6 +62,11 @@ class CoilBitmapLoader(private val context: Context, private val scope: Coroutin
                     // toBitmap() now returns a bitmap owned exclusively by us (not in any
                     // Coil cache), so Media3 can use and recycle it freely.
                     val bitmap = drawable.toBitmap()
+                    PerformanceMetrics.recordTiming(
+                        PerformanceMetrics.Timings.ARTWORK_DECODE,
+                        (System.nanoTime() - startNanos) / 1_000_000
+                    )
+                    PerformanceMetrics.recordDecodedArtworkDimensions(bitmap.width, bitmap.height)
                     future.set(bitmap)
                 } else {
                     future.setException(IllegalStateException("Coil returned null drawable for data: $data"))

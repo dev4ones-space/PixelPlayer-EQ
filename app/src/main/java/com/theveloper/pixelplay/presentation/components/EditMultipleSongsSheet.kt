@@ -300,7 +300,7 @@ private fun EditMultipleSongsContent(
                     BatchEditField(
                         value = artist ?: "",
                         onValueChange = { artist = it.ifBlank { null } },
-                        label = stringResource(R.string.song_field_artist),
+                        label = stringResource(R.string.edit_song_field_artist),
                         placeholder = if (artistField.isMixed)
                             stringResource(R.string.batch_edit_mixed_values)
                         else
@@ -317,7 +317,7 @@ private fun EditMultipleSongsContent(
                     BatchEditField(
                         value = album ?: "",
                         onValueChange = { album = it.ifBlank { null } },
-                        label = stringResource(R.string.song_field_album),
+                        label = stringResource(R.string.edit_song_field_album),
                         placeholder = if (albumField.isMixed)
                             stringResource(R.string.batch_edit_mixed_values)
                         else
@@ -334,7 +334,7 @@ private fun EditMultipleSongsContent(
                     BatchEditField(
                         value = albumArtist ?: "",
                         onValueChange = { albumArtist = it.ifBlank { null } },
-                        label = stringResource(R.string.song_field_album_artist),
+                        label = stringResource(R.string.edit_song_field_album_artist),
                         placeholder = if (albumArtistField.isMixed)
                             stringResource(R.string.batch_edit_mixed_values)
                         else
@@ -351,7 +351,7 @@ private fun EditMultipleSongsContent(
                     BatchEditField(
                         value = genre ?: "",
                         onValueChange = { genre = it.ifBlank { null } },
-                        label = stringResource(R.string.song_field_genre),
+                        label = stringResource(R.string.edit_song_field_genre),
                         placeholder = if (genreField.isMixed)
                             stringResource(R.string.batch_edit_mixed_values)
                         else
@@ -368,7 +368,7 @@ private fun EditMultipleSongsContent(
                     BatchEditField(
                         value = composer ?: "",
                         onValueChange = { composer = it.ifBlank { null } },
-                        label = stringResource(R.string.song_field_composer),
+                        label = stringResource(R.string.edit_song_field_composer),
                         placeholder = stringResource(R.string.batch_edit_optional),
                         icon = Icons.Rounded.MusicNote,
                         tint = MaterialTheme.colorScheme.tertiary,
@@ -382,8 +382,8 @@ private fun EditMultipleSongsContent(
                     BatchEditField(
                         value = replayGainTrackGainDb ?: "",
                         onValueChange = { replayGainTrackGainDb = it.ifBlank { null } },
-                        label = stringResource(R.string.song_field_replaygain_track_db),
-                        placeholder = stringResource(R.string.placeholder_replaygain_track_example),
+                        label = stringResource(R.string.edit_song_field_replaygain_track),
+                        placeholder = stringResource(R.string.edit_song_replaygain_track_placeholder),
                         icon = Icons.Rounded.RepeatOne,
                         tint = MaterialTheme.colorScheme.primary,
                         textFieldColors = textFieldColors,
@@ -397,8 +397,8 @@ private fun EditMultipleSongsContent(
                     BatchEditField(
                         value = replayGainAlbumGainDb ?: "",
                         onValueChange = { replayGainAlbumGainDb = it.ifBlank { null } },
-                        label = stringResource(R.string.song_field_replaygain_album_db),
-                        placeholder = stringResource(R.string.placeholder_replaygain_album_example),
+                        label = stringResource(R.string.edit_song_field_replaygain_album),
+                        placeholder = stringResource(R.string.edit_song_replaygain_album_placeholder),
                         icon = Icons.Rounded.Repeat,
                         tint = MaterialTheme.colorScheme.tertiary,
                         textFieldColors = textFieldColors,
@@ -434,7 +434,7 @@ private fun EditMultipleSongsContent(
                                 contentColor = MaterialTheme.colorScheme.onSecondaryContainer
                             )
                         ) {
-                            Text(stringResource(R.string.cancel), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                            Text(stringResource(R.string.common_cancel), maxLines = 1, overflow = TextOverflow.Ellipsis)
                         }
                         Spacer(Modifier.width(8.dp))
                         Button(
@@ -457,7 +457,7 @@ private fun EditMultipleSongsContent(
                             },
                             modifier = Modifier.height(48.dp)
                         ) {
-                            Text(stringResource(R.string.action_save))
+                            Text(stringResource(R.string.common_save))
                         }
                     }
                 )
@@ -558,7 +558,7 @@ private fun BatchCoverArtEditorCard(
                         preview != null -> {
                             Image(
                                 bitmap = preview,
-                                contentDescription = stringResource(R.string.cd_cover_art_preview),
+                                contentDescription = stringResource(R.string.edit_song_cd_cover_preview),
                                 modifier = Modifier.fillMaxSize(),
                                 contentScale = ContentScale.Crop
                             )
@@ -630,7 +630,7 @@ private fun BatchCoverArtEditorCard(
                             Icon(Icons.Rounded.Restore, contentDescription = null)
                             Spacer(modifier = Modifier.width(4.dp))
                             Text(
-                                stringResource(R.string.action_reset),
+                                stringResource(R.string.common_reset),
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             )

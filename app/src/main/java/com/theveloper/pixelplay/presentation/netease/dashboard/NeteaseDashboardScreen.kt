@@ -60,14 +60,14 @@ fun NeteaseDashboardScreen(
             TopAppBar(
                 title = {
                     Text(
-                        stringResource(R.string.screen_netease_dashboard_title),
+                        stringResource(R.string.auth_netease_title),
                         fontFamily = GoogleSansRounded,
                         fontWeight = FontWeight.Bold
                     )
                 },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = stringResource(R.string.auth_cd_back))
+                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = stringResource(R.string.common_back))
                     }
                 },
                 actions = {
@@ -78,7 +78,7 @@ fun NeteaseDashboardScreen(
                     ) {
                         Icon(
                             Icons.Rounded.CloudSync,
-                            contentDescription = stringResource(R.string.cd_sync_all_playlists),
+                            contentDescription = stringResource(R.string.cloud_cd_sync_all_playlists),
                             tint = MaterialTheme.colorScheme.tertiary
                         )
                     }
@@ -89,7 +89,7 @@ fun NeteaseDashboardScreen(
                     }) {
                         Icon(
                             Icons.AutoMirrored.Rounded.Logout,
-                            contentDescription = stringResource(R.string.cd_logout)
+                            contentDescription = stringResource(R.string.cloud_cd_logout)
                         )
                     }
                 }
@@ -192,7 +192,7 @@ fun NeteaseDashboardScreen(
                                 fontWeight = FontWeight.Bold
                             )
                             Text(
-                                text = stringResource(R.string.dash_playlists_synced_count, playlists.size),
+                                text = stringResource(R.string.cloud_dashboard_playlists_synced_count, playlists.size),
                                 style = MaterialTheme.typography.bodySmall,
                                 fontFamily = GoogleSansRounded,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -213,7 +213,7 @@ fun NeteaseDashboardScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = stringResource(R.string.dash_title_playlists),
+                    text = stringResource(R.string.cloud_dashboard_title_playlists),
                     style = MaterialTheme.typography.titleMedium,
                     fontFamily = GoogleSansRounded,
                     fontWeight = FontWeight.Bold
@@ -226,7 +226,7 @@ fun NeteaseDashboardScreen(
                             modifier = Modifier.size(18.dp)
                         )
                         Spacer(Modifier.width(4.dp))
-                        Text(stringResource(R.string.dash_action_sync), fontFamily = GoogleSansRounded, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        Text(stringResource(R.string.cloud_dashboard_action_sync), fontFamily = GoogleSansRounded, maxLines = 1, overflow = TextOverflow.Ellipsis)
                     }
                 }
             }
@@ -250,14 +250,14 @@ fun NeteaseDashboardScreen(
                         )
                         Spacer(Modifier.height(16.dp))
                         Text(
-                            text = stringResource(R.string.dash_playlists_empty_title),
+                            text = stringResource(R.string.cloud_dashboard_playlists_empty_title),
                             style = MaterialTheme.typography.bodyLarge,
                             fontFamily = GoogleSansRounded,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Spacer(Modifier.height(8.dp))
                         Text(
-                            text = stringResource(R.string.dash_playlists_empty_hint_subsonic),
+                            text = stringResource(R.string.cloud_dashboard_playlists_empty_hint),
                             style = MaterialTheme.typography.bodyMedium,
                             fontFamily = GoogleSansRounded,
                             color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
@@ -350,7 +350,7 @@ private fun PlaylistCard(
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    text = stringResource(R.string.dash_song_count, playlist.songCount),
+                    text = stringResource(R.string.cloud_dashboard_song_count, playlist.songCount),
                     style = MaterialTheme.typography.bodySmall,
                     fontFamily = GoogleSansRounded,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -364,7 +364,7 @@ private fun PlaylistCard(
             ) {
                 Icon(
                     Icons.Rounded.Sync,
-                    contentDescription = stringResource(R.string.cd_sync),
+                    contentDescription = stringResource(R.string.cloud_cd_sync),
                     tint = MaterialTheme.colorScheme.tertiary,
                     modifier = Modifier.size(20.dp)
                 )
@@ -374,7 +374,7 @@ private fun PlaylistCard(
             IconButton(onClick = onDeleteClick) {
                 Icon(
                     Icons.Rounded.Delete,
-                    contentDescription = stringResource(R.string.cd_remove),
+                    contentDescription = stringResource(R.string.common_remove),
                     tint = MaterialTheme.colorScheme.error.copy(alpha = 0.7f),
                     modifier = Modifier.size(20.dp)
                 )

@@ -19,15 +19,38 @@ class NavidromeCredentialsTest {
     }
 
     @Test
-    fun `connectionValidationError rejects insecure http urls`() {
+    fun `connectionValidationError accepts local http urls`() {
+        val localUrls = listOf(
+            "http://192.168.1.20:4533",
+            "http://mynas:4533",
+            "http://nas.lan:4533",
+            "http://navidrome.home.arpa:4533",
+            "http://[::1]:4533",
+            "http://[fd00::1]:4533",
+            "http://100.101.102.103:4533"
+        )
+
+        localUrls.forEach { url ->
+            val credentials = NavidromeCredentials(
+                serverUrl = url,
+                username = "user",
+                password = "pass"
+            )
+
+            assertNull(credentials.connectionValidationError(), "Expected $url to be accepted")
+        }
+    }
+
+    @Test
+    fun `connectionValidationError rejects remote http urls`() {
         val credentials = NavidromeCredentials(
-            serverUrl = "http://192.168.1.20:4533",
+            serverUrl = "http://music.example.com",
             username = "user",
             password = "pass"
         )
 
         assertEquals(
-            "Use an https:// server URL for Navidrome/Subsonic.",
+            "Use an https:// server URL for remote Navidrome/Subsonic servers. HTTP is only allowed for local network addresses.",
             credentials.connectionValidationError()
         )
     }

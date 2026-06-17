@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+    <!-- Player UI & Playback Controls -->
+    <string name="player_cd_collapse">플레이어 접기</string>
+    <string name="player_now_playing">현재 재생 중</string>
+    <string name="player_cd_cloud_stream">클라우드 스트림</string>
+    <string name="player_cd_cast">전송</string>
+    <string name="player_cd_bluetooth">블루투스</string>
+    <string name="player_cd_local_playback">로컬 재생</string>
+    <string name="player_connecting">연결 중…</string>
+    <string name="player_cd_open_queue">대기열 열기</string>    
+
+    <!-- CastBottomSheet -->
+    <string name="cast_perm_title">연결 준비</string>
+    <string name="cast_perm_body">PixelPlayer가 주변 기기와 현재 Wi‑Fi를 감지할 수 있도록 허용해 주세요. 그래야 전송, 블루투스 오디오 및 스피커를 동기화할 수 있습니다.</string>
+    <string name="cast_perm_nearby_title">주변 기기</string>
+    <string name="cast_perm_nearby_desc">연결된 블루투스 오디오 기기를 감지하고 제어하는 데 필요합니다.</string>
+    <string name="cast_perm_location_title">Wi‑Fi 확인을 위한 위치 정보</string>
+    <string name="cast_perm_location_desc">호환되는 전송 기기를 찾기 위해 현재 연결된 Wi‑Fi 네트워크(SSID) 정보를 확인하는 데 위치 권한이 필요합니다.</string>
+    <string name="cast_allow_access">액세스 허용</string>
+    <string name="cast_perm_footer">이러한 권한은 기기 간 상호 연결(전송, 주변 스피커 제어, 오디오 동기화) 목적으로만 사용됩니다.</string>
+    <string name="cast_title_connect">기기 연결</string>
+    <string name="cast_scanning_nearby">주변 스캔 중</string>
+    <string name="cast_subtitle_session">전송 세션</string>
+    <string name="cast_connecting">연결 중</string>
+    <string name="cast_connected">연결됨</string>
+    <string name="cast_this_phone">이 휴대전화</string>
+    <string name="cast_bluetooth_audio">블루투스 오디오</string>
+    <string name="cast_local_playback">로컬 재생</string>
+    <string name="cast_playing">재생 중</string>
+    <string name="cast_paused">일시정지됨</string>
+    <string name="cast_volume_device">기기 볼륨</string>
+    <string name="cast_volume_phone">휴대전화 볼륨</string>
+    <string name="cast_volume_levels">%1$d/%2$d</string>
+    <string name="cast_cd_battery">배터리 수준</string>
+    <string name="cast_cd_volume_level">볼륨 수준</string>
+    <string name="cast_disconnect">연결 해제</string>
+    <string name="cast_connectivity">연결성</string>
+    <string name="cast_turn_on_wifi_bt">Wi-Fi 또는 블루투스 켜기</string>
+    <string name="cast_cd_refresh_connections">연결 새로고침</string>
+    <string name="cast_wifi">Wi-Fi</string>
+    <string name="cast_wifi_off">꺼짐</string>
+    <string name="cast_wifi_on">켜짐</string>
+    <string name="cast_wifi_connected">연결됨</string>
+    <string name="cast_bluetooth">블루투스</string>
+    <string name="cast_bt_off">꺼짐</string>
+    <string name="cast_bt_on">켜짐</string>
+    <string name="cast_bt_connected">연결됨</string>
+    <string name="cast_nearby_devices">주변 기기</string>
+    <string name="cast_cd_refresh_devices">기기 새로고침</string>
+    <string name="cast_status_connected">연결됨</string>
+    <string name="cast_status_connecting">연결 중</string>
+    <string name="cast_status_available_connect">연결 가능</string>
+    <string name="cast_status_available">사용 가능</string>
+    <string name="cast_connecting_ellipsis">연결 중...</string>
+    <string name="cast_searching">기기 검색 중…</string>
+    <string name="cast_searching_hint">TV나 스피커가 켜져 있고 동일한 Wi‑Fi 네트워크에 연결되어 있는지 확인하세요.</string>
+    <string name="cast_tab_controls">컨트롤</string>
+    <string name="cast_tab_devices">기기</string>
+
+    <!-- Casting & Remote Playback -->
+    <string name="cast_server_channel_name">Cast 미디어 서버</string>
+    <string name="cast_server_notification_title">기기로 전송 중</string>
+    <string name="cast_server_notification_text">Cast 기기에 미디어를 제공 중입니다</string>
+    <string name="cast_server_foreground_error">%1$s: %2$s</string>
+    <string name="cast_seek_unavailable_for_format">Cast에서는 캐스트 세션이 중단될 수 있으므로 이 오디오 형식에 대한 탐색(Seek)을 일시적으로 사용할 수 없습니다.</string>
+
+    <!-- Sleep Timer -->
+    <string name="sleep_timer_title">취침 타이머</string>
+    <string name="sleep_timer_zero_minutes_format">타이머</string>
+    <string name="sleep_timer_n_minutes_format">%1$d분</string>
+    <string name="sleep_timer_set_for_minutes_toast">타이머가 %1$d분으로 설정되었습니다.</string>
+    <string name="sleep_timer_play_count_one_time">1회</string>
+    <plurals name="sleep_timer_play_count_n_times">
+        <item quantity="other">%d회</item>
+    </plurals>
+    <string name="sleep_timer_play_count_label">재생 횟수: %1$s</string>
+    <string name="sleep_timer_end_of_current_track">현재 트랙 끝</string>
+    <string name="sleep_timer_eot_toast">트랙 끝에서 재생이 중지됩니다.</string>
+    <string name="sleep_timer_cd_switch_on">켜기</string>
+    <string name="sleep_timer_custom_time">사용자 지정 시간</string>
+    <string name="sleep_timer_cancel_timer">타이머 취소</string>
+    <string name="sleep_timer_display_eot">트랙 끝</string>
+    <string name="sleep_timer_cancelled_toast">타이머가 취소되었습니다.</string>
+    <string name="sleep_timer_eot_no_song_toast">트랙 끝 설정을 활성화할 수 없음: 활성 노래 없음.</string>
+    <string name="sleep_timer_eot_song_changed_toast">트랙 끝 타이머 비활성화됨: 노래가 %1$s에서 %2$s로 변경되었습니다.</string>
+    <string name="sleep_timer_label_previous_track">이전 트랙</string>
+    <string name="sleep_timer_label_current_track">현재 트랙</string>
+    <string name="sleep_timer_ui_set_custom_duration">사용자 지정 기간 설정</string>
+
+    <!-- QueueBottomSheet -->
+    <string name="queue_next_up_label">다음 트랙</string>
+    <string name="queue_tracks_empty">현재 대기열이 비어 있습니다.</string>
+    <plurals name="queue_tracks_lined_up">
+        <item quantity="other">트랙 %d개가 대기 중입니다.</item>
+    </plurals>
+    <string name="queue_source_fallback_label">대기열</string>
+    <string name="queue_empty_label">대기열이 비어 있습니다.</string>
+    <string name="queue_cd_reorder_song">곡 순서 변경</string>
+    <string name="queue_cd_toggle_shuffle_action">셔플 토글</string>
+    <string name="queue_cd_toggle_repeat_action">반복 토글</string>
+    <string name="queue_cd_sleep_timer_action">취침 타이머</string>
+    <string name="queue_cd_more_action">추가 작업</string>
+    <string name="queue_action_locate_current_song">현재 곡 위치 찾기</string>
+    <string name="queue_action_clear_queue">대기열 비우기</string>
+    <string name="queue_dialog_clear_queue_title">대기열 비우기</string>
+    <string name="queue_dialog_clear_queue_message">현재 곡을 제외한 대기열의 모든 곡을 지우시겠습니까?</string>
+    <string name="queue_action_save_as_playlist">플레이리스트로 저장</string>
+    <string name="queue_save_playlist_named">%1$s 대기열</string>
+    <string name="queue_save_playlist_current">현재 대기열</string>
+    <string name="queue_cd_dismiss_song">곡 닫기</string>
+    <string name="queue_song_removed">제거됨</string>
+    <string name="queue_save_as_playlist_sheet_title">플레이리스트로 저장</string>
+    <string name="queue_save_as_playlist_deselect_all">모두 선택 해제</string>
+    <string name="queue_save_as_playlist_name_label">플레이리스트 이름</string>
+    <string name="queue_save_as_playlist_search_placeholder">포함할 곡 검색…</string>
+    <string name="queue_save_as_playlist_search_no_match">\"%1$s\"와(과) 일치하는 곡이 없습니다</string>
+    <plurals name="queue_save_as_playlist_n_songs_selected">
+        <item quantity="other">곡 %d개 선택됨</item>
+    </plurals>
+    <string name="queue_save_as_playlist_format">저장 형식: %1$s</string>
+    <string name="queue_save_as_playlist_name_placeholder">플레이리스트 이름을 입력하세요</string>
+    <string name="queue_cd_remove_from_playlist">플레이리스트에서 제거</string>
+    <string name="queue_more_options_for_song">%1$s 추가 옵션</string>
+
+    <!-- LyricsSheet -->
+    <string name="lyrics_title">가사</string>
+    <string name="lyrics_loading">가사 불러오는 중…</string>
+    <string name="lyrics_mode_synced">동기화됨</string>
+    <string name="lyrics_mode_static">정적</string>
+    <string name="lyrics_options">가사 옵션</string>
+    <string name="lyrics_offset_minus_half">−.5</string>
+    <string name="lyrics_offset_minus_point_one">−.1</string>
+    <string name="lyrics_offset_plus_point_one">+.1</string>
+    <string name="lyrics_offset_plus_half">+.5</string>
+    <string name="lyrics_offset_zero">0초</string>
+    <string name="lyrics_offset_seconds_fmt">%1$+.1f초</string>
+    
+    <!-- LyricsRepository -->
+    <string name="lyrics_failed_to_search">가사 검색 실패</string>
+    <string name="lyrics_failed_to_fetch_from_remote">원격 서버에서 가사를 가져오지 못했습니다</string>
+    <string name="lyrics_fetch_timeout">연결 시간이 초과되었습니다. 인터넷 연결을 확인해 주세요.</string>
+    <string name="lyrics_network_error">네트워크 오류가 발생했습니다. 인터넷 연결을 확인해 주세요.</string>
+    <string name="lyrics_server_error">서버 오류(코드 %d)가 발생했습니다. 나중에 다시 시도해 주세요.</string>
+    
+    <!-- LyricsStateHolder -->
+    <string name="lyrics_already_available">가사가 이미 있습니다. 온라인 가져오기를 건너뜁니다.</string>
+    <string name="lyrics_embedded_already_available">내장된 가사가 이미 있습니다. 온라인 가져오기를 건너뜁니다.</string>
+    <string name="lyrics_local_lrc_already_available">로컬(.lrc) 가사가 이미 있습니다. 온라인 가져오기를 건너뜁니다.</string>
+
+    <!-- LyricsMoreBottomSheet -->
+    <string name="lyrics_save_title">가사 저장</string>
+    <string name="lyrics_translate_via_ai">AI로 번역</string>
+    <string name="lyrics_translate_already_translated">이 가사에는 이미 번역이 있습니다</string>
+    <string name="lyrics_translate_already_in_target_language">이 가사는 이미 해당 언어로 되어 있습니다</string>
+    <string name="lyrics_translate_api_not_configured">API 키가 구성되지 않았습니다</string>
+    <string name="lyrics_translate_success">가사가 성공적으로 번역되었습니다!</string>
+    <string name="lyrics_translate_progress">가사 번역 중...</string>
+    <string name="lyrics_reset_imported">가져온 가사 초기화</string>
+    <string name="lyrics_reset_dialog_title">가사를 초기화하시겠습니까?</string>
+    <string name="lyrics_reset_dialog_message">이 곡의 가사를 정말로 초기화하시겠습니까?</string>
+    <string name="lyrics_appearance_section">디자인</string>
+    <string name="lyrics_appearance_alignment">정렬</string>
+    <string name="lyrics_appearance_align_left">가사 왼쪽 정렬</string>
+    <string name="lyrics_appearance_align_center">가사 가운데 정렬</string>
+    <string name="lyrics_appearance_align_right">가사 오른쪽 정렬</string>
+    <string name="lyrics_controls_section">컨트롤</string>
+    <string name="lyrics_controls_adjust_sync">동기화 조정</string>
+    <string name="lyrics_controls_hide_sync">동기화 컨트롤 숨기기</string>
+    <string name="lyrics_controls_show_romanization">로마자 표기 표시</string>
+    <string name="lyrics_controls_show_translations">번역 표시</string>
+    <string name="lyrics_controls_disable_immersive_once">몰입 모드 해제 (1회)</string>
+    <string name="lyrics_controls_keep_screen_on">화면 켜짐 유지</string>
+    
+    <!-- LyricsSheet save dialog -->
+    <string name="lyrics_save_dialog_title">가사 저장</string>
+    <string name="lyrics_save_dialog_message">저장할 버전을 선택하세요:</string>
+    <string name="lyrics_save_synced">동기화됨(타임스탬프 포함)</string>
+    <string name="lyrics_save_plain">일반(텍스트만)</string>
+
+    <!-- FetchLyricsDialog -->
+    <string name="lyrics_search_online_prompt">온라인에서 가사를 검색하시겠습니까?</string>
+    <string name="lyrics_fetch_show_options_title">가사 옵션 표시</string>
+    <string name="lyrics_fetch_show_options_subtitle">첫 번째 검색 결과를 자동으로 적용하는 대신 항상 선택 창 열기</string>
+    <string name="lyrics_searching">가사 검색 중…</string>
+    <string name="lyrics_not_found">가사를 찾을 수 없음</string>
+    <string name="lyrics_custom_search_hint">가사를 자동으로 찾을 수 없습니다. 제목이나 아티스트를 수정하여 수동으로 검색해 보세요.</string>
+    <string name="lyrics_custom_search_field_title">곡 제목</string>
+    <string name="lyrics_custom_search_field_artist">아티스트 (선택 사항)</string>
+    <string name="lyrics_found_n_matches_format">%d개의 검색 결과 발견</string>
+    <string name="lyrics_synced_badge">동기화됨</string>
+    <string name="lyrics_artist_album_line">%1$s • %2$s</string>
+    <string name="lyrics_provided_by">가사 제공:</string>
+    <string name="lyrics_lrclib_uri">https://lrclib.net/</string>
+</resources>

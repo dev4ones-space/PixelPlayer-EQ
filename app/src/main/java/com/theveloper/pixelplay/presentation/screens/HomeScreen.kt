@@ -748,7 +748,7 @@ fun YourMixHeader(
         ) {
             Icon(
                 painter = painterResource(R.drawable.rounded_shuffle_24),
-                contentDescription = stringResource(R.string.cd_shuffle_play),
+                contentDescription = stringResource(R.string.common_shuffle_play),
                 modifier = Modifier.size(36.dp)
             )
         }
@@ -794,7 +794,7 @@ fun SongListItemFavs(
             ) {
                 SmartImage(
                     model = albumArtUrl,
-                    contentDescription = stringResource(R.string.cd_album_art_for_title, title),
+                    contentDescription = stringResource(R.string.common_album_art_for_title, title),
                     contentScale = ContentScale.Crop,
                     shape = RoundedCornerShape(8.dp),
                     modifier = Modifier.size(48.dp)

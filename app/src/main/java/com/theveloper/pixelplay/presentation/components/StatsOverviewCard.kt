@@ -35,6 +35,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.platform.LocalContext
+import android.text.format.DateFormat as AndroidDateFormat
 import com.theveloper.pixelplay.R
 import com.theveloper.pixelplay.data.stats.PlaybackStatsRepository
 import com.theveloper.pixelplay.data.stats.StatsTimeRange
@@ -89,7 +91,7 @@ fun StatsOverviewCard(
                         Modifier.padding(start = 24.dp, top = 24.dp, bottom = 24.dp)
                     ) {
                         Text(
-                            text = stringResource(R.string.presentation_batch_g_stats_overview_title),
+                            text = stringResource(R.string.home_stats_overview_title),
                             style = MaterialTheme.typography.titleMedium,
                             color = MaterialTheme.colorScheme.onSurface
                         )
@@ -142,7 +144,7 @@ private fun OverviewContent(summary: PlaybackStatsRepository.PlaybackStatsSummar
         Row(horizontalArrangement = Arrangement.spacedBy(24.dp)) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = stringResource(R.string.presentation_batch_g_stats_overview_total_plays),
+                    text = stringResource(R.string.home_stats_overview_total_plays),
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -155,7 +157,7 @@ private fun OverviewContent(summary: PlaybackStatsRepository.PlaybackStatsSummar
             }
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = stringResource(R.string.presentation_batch_g_stats_overview_avg_per_day),
+                    text = stringResource(R.string.home_stats_overview_avg_per_day),
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -171,7 +173,7 @@ private fun OverviewContent(summary: PlaybackStatsRepository.PlaybackStatsSummar
         if (topTrack != null) {
             Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 Text(
-                    text = stringResource(R.string.presentation_batch_g_stats_overview_top_track),
+                    text = stringResource(R.string.home_stats_overview_top_track),
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -184,7 +186,7 @@ private fun OverviewContent(summary: PlaybackStatsRepository.PlaybackStatsSummar
                 )
                 Text(
                     text = stringResource(
-                        R.string.presentation_batch_g_stats_overview_top_track_line,
+                        R.string.home_stats_overview_top_track_line,
                         topTrack.artist,
                         topTrack.playCount
                     ),
@@ -195,7 +197,7 @@ private fun OverviewContent(summary: PlaybackStatsRepository.PlaybackStatsSummar
                 )
             }
         }
-        MiniListeningTimeline(summary)
+        MiniListeningTimeline(summary, AndroidDateFormat.is24HourFormat(LocalContext.current))
     }
 }
 
@@ -208,13 +210,17 @@ private fun PlaceholderOverviewContent() {
             PlaceholderLine(width = 60.dp)
         }
         PlaceholderLine(width = 120.dp)
-        MiniListeningTimeline(null)
+        MiniListeningTimeline(null, AndroidDateFormat.is24HourFormat(LocalContext.current))
     }
 }
 
 @Composable
-private fun MiniListeningTimeline(summary: PlaybackStatsRepository.PlaybackStatsSummary?) {
+private fun MiniListeningTimeline(
+    summary: PlaybackStatsRepository.PlaybackStatsSummary?,
+    use24Hour: Boolean = false
+) {
     val timeline = summary?.timeline ?: emptyList()
+    val range = summary?.range ?: StatsTimeRange.WEEK
     if (summary?.range == StatsTimeRange.MONTH && timeline.isNotEmpty()) {
         MonthlyHorizontalListeningTimeline(timeline)
         return
@@ -256,7 +262,7 @@ private fun MiniListeningTimeline(summary: PlaybackStatsRepository.PlaybackStats
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = entry?.label ?: "",
+                    text = convertHourLabel(entry?.label ?: "", range, use24Hour),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -325,4 +331,55 @@ private fun PlaceholderLine(width: Dp) {
             .clip(RoundedCornerShape(8.dp))
             .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f))
     )
+}
+
+private fun convertHourLabel(label: String, range: StatsTimeRange, use24Hour: Boolean): String {
+    if (label.isBlank()) return label
+    if (range != StatsTimeRange.DAY) return label
+
+    // "7 AM", "7am", "7:00 AM", "7:00am" etc.
+    val amPmMatch = Regex("(?i)^(\\d{1,2})(?::(\\d{2}))?\\s*(am|pm)$").matchEntire(label.trim())
+    if (amPmMatch != null) {
+        val hour12 = amPmMatch.groupValues[1].toIntOrNull() ?: return label
+        val isPm = amPmMatch.groupValues[3].equals("pm", ignoreCase = true)
+        val hour24 = when {
+            isPm && hour12 != 12 -> hour12 + 12
+            !isPm && hour12 == 12 -> 0
+            else -> hour12
+        }
+        return if (use24Hour) {
+            String.format(java.util.Locale.getDefault(), "%02d:00", hour24)
+        } else {
+            val time = java.time.LocalTime.of(hour24, 0)
+            val formatter = java.time.format.DateTimeFormatter.ofPattern("h a", java.util.Locale.getDefault())
+            time.format(formatter)
+        }
+    }
+
+    // Already "HH:MM" 24h
+    val h24Match = Regex("^(\\d{1,2}):(\\d{2})$").matchEntire(label.trim())
+    if (h24Match != null) {
+        val hour24 = h24Match.groupValues[1].toIntOrNull() ?: return label
+        return if (use24Hour) {
+            String.format(java.util.Locale.getDefault(), "%02d:00", hour24)
+        } else {
+            val time = java.time.LocalTime.of(hour24, 0)
+            val formatter = java.time.format.DateTimeFormatter.ofPattern("h a", java.util.Locale.getDefault())
+            time.format(formatter)
+        }
+    }
+
+    // Bare integer "7" or "19"
+    val bareHour = label.trim().toIntOrNull()
+    if (bareHour != null && bareHour in 0..23) {
+        return if (use24Hour) {
+            String.format(java.util.Locale.getDefault(), "%02d:00", bareHour)
+        } else {
+            val time = java.time.LocalTime.of(bareHour, 0)
+            val formatter = java.time.format.DateTimeFormatter.ofPattern("h a", java.util.Locale.getDefault())
+            time.format(formatter)
+        }
+    }
+
+    return label
 }

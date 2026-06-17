@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Top Bar -->
+    <string name="topbar_beta_letter">β</string>
+    <string name="topbar_beta_label">Beta</string>
+    <string name="topbar_cd_cloud_streaming">Skystrømming</string>
+    <string name="topbar_cd_changelog">Endringslogg</string>
+    <string name="topbar_cloud_streaming_title">Skystrømming</string>
+    <string name="topbar_cloud_streaming_subtitle">Strøm musikk fra dine skykontoer</string>
+
+    <!-- BetaInfoBottomSheet -->
+    <string name="beta_sheet_version">Beta 0.7.0</string>
+    <string name="beta_sheet_letter">β</string>
+    <string name="beta_sheet_welcome_title">Velkommen til PixelPlayer 0.7.0-beta</string>
+    <string name="beta_sheet_welcome_body">Du bruker en betaversjon som kan inneholde feil, krasj eller eksperimentelle funksjoner. Hjelp oss å forbedre ved å rapportere problemer.</string>
+    <string name="beta_sheet_expect_title">Hva du kan forvente</string>
+    <string name="beta_sheet_expect_1">Feil, krasj eller uferdige funksjoner kan oppstå uventet.</string>
+    <string name="beta_sheet_expect_2">Noen funksjoner kan endres eller fjernes uten varsel.</string>
+    <string name="beta_sheet_expect_3">Betaversjoner kan være mer ustabile enn offisielle versjoner.</string>
+    <string name="beta_sheet_expect_4">Sjekk alltid for oppdateringer før du rapporterer et kjent problem.</string>
+    <string name="beta_sheet_expect_summary">Hva betaversjoner kan endre, bryte eller forbedre under testing.</string>
+    <string name="beta_sheet_github_title">GitHub issue-snarvei</string>
+    <string name="beta_sheet_github_body">Søk først, deretter åpne en fokusert rapport for feil, krasj, forespørsler eller spørsmål.</string>
+    <string name="beta_sheet_open_issues">Vis GitHub-issues</string>
+    <string name="beta_sheet_report_bug">Rapporter problem eller krasj</string>
+    <string name="beta_sheet_report_body">Del trinn for å reprodusere, forventet resultat, faktisk resultat og info om enheten din.</string>
+    <string name="beta_sheet_report_title">Hvordan rapportere</string>
+    <string name="beta_sheet_report_summary">En rask sjekkliste før du åpner en ny issue.</string>
+    <string name="beta_sheet_before_title">Før du åpner en issue</string>
+    <string name="beta_sheet_before_1">Søk i eksisterende åpne og lukkede issues for å unngå duplikater.</string>
+    <string name="beta_sheet_before_2">Oppdater til siste PixelPlayer-versjon og bekreft at problemet fortsatt oppstår.</string>
+    <string name="beta_sheet_before_3">Start appen på nytt og bekreft at problemet vedvarer.</string>
+    <string name="beta_sheet_before_4">Prøv å reprodusere det og skriv ned de nøyaktige trinnene.</string>
+    <string name="beta_sheet_issue_type_title">Hvilken type issue?</string>
+    <string name="beta_sheet_issue_type_bug">Feilrapport: Noe fungerer feil.</string>
+    <string name="beta_sheet_issue_type_feature">Funksjonsforespørsel: Legg til en ny funksjon eller forbedring.</string>
+    <string name="beta_sheet_issue_type_question">Spørsmål: Bruk Diskusjoner hvis aktivert, eller åpne en issue med spørsmålsetikett.</string>
+    <string name="beta_sheet_bug_title">Feilrapport</string>
+    <string name="beta_sheet_bug_summary_text">Kopier disse feltene når noe fungerer feil eller krasjer.</string>
+    <string name="beta_sheet_bug_template_title">Feilrapport</string>
+    <string name="beta_sheet_bug_summary">Kort sammendrag:</string>
+    <string name="beta_sheet_bug_expected">Forventet oppførsel:</string>
+    <string name="beta_sheet_bug_actual">Nåværende oppførsel:</string>
+    <string name="beta_sheet_bug_steps">Trinn for å spille av/reprodusere: 1. 2. 3.</string>
+    <string name="beta_sheet_bug_frequency">Hvor ofte skjer det? Alltid / Noen ganger / Sjelden.</string>
+    <string name="beta_sheet_bug_screenshot">Skjermbilde / video: hvis tilgjengelig.</string>
+    <string name="beta_sheet_bug_logs">Logger / stacktrace: hvis tilgjengelig.</string>
+    <string name="beta_sheet_env_title">Miljø</string>
+    <string name="beta_sheet_env_version">PixelPlayer-versjon:</string>
+    <string name="beta_sheet_env_source">Installasjonskilde: GitHub Release, debug-bygg, nightly-bygg, osv.</string>
+    <string name="beta_sheet_env_android">Android-versjon:</string>
+    <string name="beta_sheet_env_device">Enhetsmodell:</string>
+    <string name="beta_sheet_env_extra">Ekstra kontekst: SD-kortbruk, spesielle innstillinger, tillatelser, osv.</string>
+    <string name="beta_sheet_feature_title">Funksjonsforespørsel</string>
+    <string name="beta_sheet_feature_summary">Kopier disse feltene når du ønsker en ny funksjon eller forbedring.</string>
+    <string name="beta_sheet_feature_problem">Problemstilling: Hvilket problem prøver du å løse?</string>
+    <string name="beta_sheet_feature_solution">Foreslått løsning: Hvordan skal det fungere?</string>
+    <string name="beta_sheet_feature_alternatives">Alternativer vurdert: Andre tilnærminger?</string>
+    <string name="beta_sheet_feature_scope">Omfang: Hvilke skjermer eller flyter er berørt?</string>
+    <string name="beta_sheet_feature_mockup">Mockup eller referansebilde hvis tilgjengelig.</string>
+    <string name="beta_sheet_quality_title">Titler, personvern og omfang</string>
+    <string name="beta_sheet_quality_summary">Gjør rapporten enkel å sortere og trygg å dele.</string>
+    <string name="beta_sheet_title_examples_title">Gode issue-titler</string>
+    <string name="beta_sheet_title_example_1">Equalizer: Indikatoren forskyves ved bytte av forhåndsinnstillingsfaner</string>
+    <string name="beta_sheet_title_example_2">Søk: Historikklisten vises ikke ved tomt søk</string>
+    <string name="beta_sheet_title_example_3">Funksjon: Legg til \"Nylig lagt til\"-sortering for spillelister</string>
+    <string name="beta_sheet_avoid_title">Vennligst unngå</string>
+    <string name="beta_sheet_avoid_1">Generelle rapporter som \"Det fungerer ikke\".</string>
+    <string name="beta_sheet_avoid_2">Flere urelaterte problemer i én issue.</string>
+    <string name="beta_sheet_avoid_3">Uredigerte logger eller skjermbilder med private data.</string>
+    <string name="beta_sheet_privacy_title">Personvernmerknad</string>
+    <string name="beta_sheet_privacy_body">Fjern personlig eller privat informasjon før du legger ut logger, skjermbilder eller videoer.</string>
+    <string name="beta_sheet_nightly_title">Nightly-bygg</string>
+    <string name="beta_sheet_nightly_summary">Hvordan nightlies skiller seg fra utgivelser, og hva du bør inkludere når de feiler.</string>
+    <string name="beta_sheet_nightly_body">Nightly-bygg genereres fra siste commit og kan inneholde uferdige endringer, midlertidige feil eller regresjoner. De er mer eksperimentelle enn offisielle utgivelser.</string>
+    <string name="beta_sheet_nightly_access">Få tilgang til dem fra repositoriets GitHub Actions workflow-artefakter hvis tilgjengelig.</string>
+    <string name="beta_sheet_nightly_report_title">Rapportering av nightly-problemer</string>
+    <string name="beta_sheet_nightly_report_body">Når du rapporterer et problem fra en nightly-bygg, nevn alltid at det skjedde på en nightly-bygg, ikke på den offisielle utgivelsen. Inkluder byggdato, workflow-kjøringsnavn eller -nummer, eller commit-SHA hvis mulig. Sjekk også om samme problem oppstår på den siste offisielle utgivelsen.</string>
+    <string name="beta05_title">Beta 0.5.0 oppgradering</string>
+    <string name="beta05_clean_install_title">Ren installasjon anbefales</string>
+    <string name="beta05_clean_install_body">Hvis du kommer fra beta 0.5.0, kan denne oppdateringen trenge friske bibliotekdata.</string>
+    <string name="beta05_if_wrong_meta_title">Hvis metadata ser feil ut</string>
+    <string name="beta05_if_wrong_meta_body">Feil sanginfo, feil artister eller album betyr vanligvis at en ren installasjon er løsningen.</string>
+    <string name="beta05_dont_show">Ikke vis igjen</string>
+    <string name="beta05_got_it">Skjønner</string>
+
+    <!-- Crash report dialog -->
+    <string name="crash_report_title">Beklager, noe gikk galt</string>
+    <string name="crash_report_subtitle">Appen krasjet i forrige økt. Hjelp oss ved å dele krasjrapporten.</string>
+    <string name="crash_report_date_line">Dato: %1$s</string>
+    <string name="crash_report_error_label">Feil:</string>
+    <string name="crash_report_stack_preview_label">Stack trace (forhåndsvisning):</string>
+    <string name="crash_report_clipboard_label">Krasj-logg</string>
+    <string name="crash_report_toast_log_copied">Krasj-logg kopiert til utklippstavlen</string>
+    <string name="crash_report_share_subject">PixelPlayer krasjrapport</string>
+    <string name="crash_report_share_chooser">Del krasjrapport</string>
+
+    <!-- Home Option -->
+    <string name="home_option_dj_mashup">DJ Mashup</string>
+
+    <!-- Your Mix -->
+    <string name="home_your_mix_title">Din\nMix</string>
+    <string name="home_empty_placeholder_title">Ingen data å vise ennå</string>
+    <string name="home_empty_placeholder_subtitle">Miksen din vises her når PixelPlayer finner sanger eller synkroniserer en kilde.</string>
+    <string name="home_empty_placeholder_refresh">Oppdater</string>
+
+    <!-- DailyMixSection -->
+    <string name="home_daily_mix_title">DAILY MIX</string>
+    <string name="home_daily_mix_subtitle">Basert på historikk</string>
+    <string name="home_daily_mix_action_see_all">Se hele Daily Mix</string>
+    <string name="home_daily_mix_queue_name">Daily Mix</string>
+
+    <!-- DailyMixScreen -->
+    <string name="daily_mix_title">Daily Mix</string>
+    <plurals name="daily_mix_songs_dot_duration">
+        <item quantity="one">%1$d sang • %2$s</item>
+        <item quantity="other">%1$d sanger • %2$s</item>
+    </plurals>
+    <string name="daily_mix_action_play_it">Spill den</string>
+    <string name="daily_mix_cd_ai_playlist_generator">AI-spillelistegenerator</string>
+
+    <!-- DailyMixMenu -->
+    <string name="daily_mix_how_title">Hvordan din Daily Mix bygges</string>
+    <string name="daily_mix_how_body">Din Daily Mix bygges fra dine favoritter og mest spilte sanger. Vi legger også til spor fra artister og sjangere du liker, slik at du kan oppdage ny musikk.</string>
+    <string name="daily_mix_prompt_label">Fortell AI-en hva du vil høre på i dag</string>
+    <string name="daily_mix_cost_hint">Vi bruker et lite utvalg for å holde kostnadene lave</string>
+    <string name="daily_mix_updating">Oppdaterer…</string>
+    <string name="daily_mix_update">Oppdater Daily Mix</string>
+
+    <!-- AIPlaylistSheet -->
+    <string name="ai_playlist_headline_perfect">Perfekt kuratert</string>
+    <string name="ai_playlist_headline_daily_mix">Daily Mix</string>
+    <string name="ai_playlist_subtitle_journey_ready">Din lydreise er klar</string>
+    <string name="ai_playlist_subtitle_generator">AI-spillelistegenerator</string>
+    <string name="ai_playlist_description">Beskriv stemningen eller aktiviteten, og la AI kuratere den perfekte spillelisten fra biblioteket ditt.</string>
+    <string name="ai_playlist_section_size">Størrelse på spilleliste</string>
+    <string name="ai_playlist_min_songs">Min. antall sanger</string>
+    <string name="ai_playlist_max_songs">Maks. antall sanger</string>
+    <string name="ai_playlist_prompt_placeholder">f.eks. Rolig kveldsstemning, treningsenergi…</string>
+    <string name="ai_playlist_tap_to_retry">Trykk for å prøve på nytt</string>
+    <string name="ai_playlist_status_default">Lydreise ferdigstilt!</string>
+    <string name="ai_playlist_ready_to_play">Klar til avspilling</string>
+    <string name="ai_playlist_generating">Genererer…</string>
+    <string name="ai_playlist_generate">Generer spilleliste</string>
+
+    <!-- RecentlyPlayedSection -->
+    <string name="home_recently_played_title">Nylig spilt</string>
+
+    <!-- RecentlyPlayedScreen -->
+    <string name="recently_played_title">Nylig spilt</string>
+    <string name="recently_played_action_play_latest">Spill siste</string>
+    <string name="recently_played_empty_title">Ingen nylige avspillinger i %1$s</string>
+    <string name="recently_played_empty_subtitle">Endre tidsrommet eller spill flere sanger for å fylle denne oversikten.</string>
+    <string name="recently_played_queue_name">Nylig spilt</string>
+    <string name="recently_played_date_today">I dag</string>
+    <string name="recently_played_date_yesterday">I går</string>
+
+    <!-- StatsOverviewCard -->
+    <string name="home_stats_overview_title">Lyttestatistikk</string>
+    <string name="home_stats_overview_total_plays">Totalt antall avspillinger</string>
+    <string name="home_stats_overview_avg_per_day">Snitt per dag</string>
+    <string name="home_stats_overview_top_track">Mest spilt</string>
+    <string name="home_stats_overview_top_track_line">%1$s • %2$d avspillinger</string>
+
+    <!-- StatsScreen -->
+    <string name="stats_title">Lyttestatistikk</string>
+    <string name="stats_cd_refresh">Oppdater statistikk</string>
+    <string name="stats_range_today">I dag</string>
+    <string name="stats_range_week_to_date">Denne uken</string>
+    <string name="stats_range_month_to_date">Denne måneden</string>
+    <string name="stats_range_year_to_date">I år</string>
+    <string name="stats_range_all_time">All tid</string>
+    <string name="stats_hero_listening">Lytting</string>
+    <string name="stats_hero_plays">Avspillinger</string>
+    <string name="stats_section_listening_timeline">Lyttetidslinje</string>
+    <string name="stats_timeline_metric_listening_time">Lyttetid</string>
+    <string name="stats_timeline_metric_listening_time_desc">Total lyttetid i det valgte tidsrommet.</string>
+    <string name="stats_timeline_metric_play_count">Antall avspillinger</string>
+    <string name="stats_timeline_metric_play_count_desc">Hvor mange sesjoner du har fullført per segment.</string>
+    <string name="stats_timeline_metric_avg_session">Snittsesjon</string>
+    <string name="stats_timeline_metric_avg_session_desc">Gjennomsnittlig lyttelengde for hvert segment.</string>
+    <string name="stats_timeline_support_day">Delt inn i 4-timers vinduer for å vise dagsrytmen din.</string>
+    <string name="stats_timeline_support_week">Daglige søyler gjør det enkelt å sammenligne uker.</string>
+    <string name="stats_timeline_support_month">Ukentlige søyler viser månedens trend.</string>
+    <string name="stats_timeline_support_year">Månedlige søyler viser sesongvariasjoner gjennom året.</string>
+    <string name="stats_timeline_support_all">Årlige søyler oppsummerer hele historikken din.</string>
+    <string name="stats_empty_no_timeline_title">Ingen lyttedata ennå</string>
+    <string name="stats_empty_no_timeline_subtitle">Trykk på spill for å begynne å bygge lyttetidslinjen din</string>
+    <string name="stats_rhythm_daily">Dagsrytme</string>
+    <string name="stats_rhythm_weekly">Ukerytme</string>
+    <string name="stats_rhythm_monthly">Månedsrytme</string>
+    <string name="stats_rhythm_year">Året i et øyekast</string>
+    <string name="stats_rhythm_all_time">Progresjon over tid</string>
+    <string name="stats_grouped_4h">Gruppert i 4-timers segmenter</string>
+    <string name="stats_grouped_dow">Gruppert etter ukedag</string>
+    <string name="stats_grouped_week_of_month">Gruppert etter uke i måneden</string>
+    <string name="stats_grouped_by_month">Gruppert etter måned</string>
+    <string name="stats_grouped_by_year">Gruppert etter år</string>
+    <string name="stats_peak_segment">Toppsegment</string>
+    <string name="stats_n_plays">%1$d avspillinger</string>
+    <string name="stats_em_dash">—</string>
+    <string name="stats_section_top_categories">Toppkategorier</string>
+    <string name="stats_top_categories_subtitle">Sammenlign hvordan du lytter på tvers av sjangere, artister, album og sanger.</string>
+    <string name="stats_dim_genre">Sjanger</string>
+    <string name="stats_dim_artist">Artist</string>
+    <string name="stats_dim_album">Album</string>
+    <string name="stats_dim_song">Sang</string>
+    <string name="stats_card_listening_by_genre">Lytting etter sjanger</string>
+    <string name="stats_card_listening_by_artist">Lytting etter artist</string>
+    <string name="stats_card_listening_by_album">Lytting etter album</string>
+    <string name="stats_card_listening_by_song">Lytting etter sang</string>
+    <string name="stats_plays_artists">%1$d spill • %2$d artister</string>
+    <string name="stats_plays_tracks">%1$d spill • %2$d spor</string>
+    <string name="stats_empty_no_category_title">Ingen kategoridata ennå</string>
+    <string name="stats_empty_no_category_subtitle">Trykk på spill for å vise lyttedataene dine</string>
+    <string name="stats_section_listening_habits">Lyttevaner</string>
+    <string name="stats_empty_no_habits_title">Ingen vaner ennå</string>
+    <string name="stats_empty_no_habits_subtitle">Vi viser lyttevanene dine når vi kjenner deg bedre.</string>
+    <string name="stats_habit_total_sessions">Totalt antall sesjoner</string>
+    <string name="stats_habit_avg_session">Gjennomsnittlig sesjon</string>
+    <string name="stats_habit_longest_session">Lengste sesjon</string>
+    <string name="stats_habit_sessions_per_day">Sesjoner/dag</string>
+    <string name="stats_habit_most_active_day">Mest aktive dag</string>
+    <string name="stats_habit_no_playback_yet">Ingen avspilling ennå</string>
+    <string name="stats_habit_peak_timeline_slot">Mest aktive tidspunkt</string>
+    <string name="stats_section_top_artists">Toppartister</string>
+    <string name="stats_empty_no_artists_title">Ingen toppartister</string>
+    <string name="stats_empty_no_artists_subtitle">Fortsett å lytte, så vil favorittartistene dine vises her.</string>
+    <string name="stats_avatar_placeholder">\?</string>
+    <string name="stats_ranked_artist">%1$d. %2$s</string>
+    <string name="stats_section_top_albums">Toppalbum</string>
+    <string name="stats_empty_no_albums_title">Ingen toppalbum</string>
+    <string name="stats_empty_no_albums_subtitle">Album du ofte hører på vil vises her.</string>
+    <string name="stats_ranked_album">%1$d. %2$s</string>
+    <string name="stats_track_concentration_title">Sporkonsentrasjon</string>
+    <string name="stats_track_concentration_subtitle">Hvordan lyttetiden din er fordelt på toppsporene dine.</string>
+    <string name="stats_empty_no_concentration_title">Ingen data om konsentrasjon</string>
+    <string name="stats_empty_no_concentration_subtitle">Spill flere spor for å se lyttedataene dine.</string>
+    <string name="stats_slice_top_1">Topp 1</string>
+    <string name="stats_slice_top_2_3">Topp 2-3</string>
+    <string name="stats_slice_others">Andre</string>
+    <string name="stats_percent">%1$d%%</string>
+    <string name="stats_listening_concentration_title">Lyttekonsentrasjon</string>
+    <string name="stats_top_three_share_line">De 3 mest spilte sporene står for %1$d%% av lyttetiden din.</string>
+    <string name="stats_avg_plays_per_track">Snittspillinger/spor</string>
+    <string name="stats_unique_tracks">Unike spor</string>
+    <string name="stats_top_three_share_label">Andel topp 3</string>
+    <string name="stats_tracks_in_range_title">Spor i dette tidsrommet</string>
+    <string name="stats_tracks_in_range_subtitle">Mest spilte spor i det valgte tidsrommet.</string>
+    <string name="stats_empty_no_tracks_title">Ingen toppspor</string>
+    <string name="stats_empty_no_tracks_subtitle">Lytt til favorittene dine for å se dem her.</string>
+    <string name="stats_collapse_tracks">Skjul spor</string>
+    <string name="stats_show_all_tracks">Vis alle spor</string>
+
+    <!-- Time and Duration Formatting -->
+    <string name="duration_hours_minutes_long">%1$d t %2$02d min</string>
+    <string name="duration_minutes_long">%1$d min</string>
+    <string name="duration_hours_minutes_medium">%1$d t %2$02d m</string>
+    <string name="duration_hours_medium">%1$d t</string>
+    <string name="duration_minutes_medium">%1$d m</string>
+    <string name="duration_seconds_medium">%1$d s</string>
+    <string name="duration_hours_minutes_short">%1$dt %2$02dm</string>
+    <string name="duration_hours_short">%1$dt</string>
+    <string name="duration_minutes_short">%1$dm</string>
+    <string name="duration_seconds_short">%1$ds</string>
+    <string name="time_ago_never">Aldri</string>
+    <string name="time_ago_just_now">Akkurat nå</string>
+    <string name="time_ago_day_singular">1 dag siden</string>
+    <string name="time_ago_days_plural">%1$d dager siden</string>
+    <string name="time_ago_hour_singular">1 time siden</string>
+    <string name="time_ago_hours_plural">%1$d timer siden</string>
+    <string name="time_ago_minute_singular">1 minutt siden</string>
+    <string name="time_ago_minutes_plural">%1$d minutter siden</string>
+    <string name="song_count_singular">%1$d sang</string>
+    <string name="song_count_plural">%1$d sanger</string>
+    <string name="stats_week_label">Uke %1$d</string>
+</resources>

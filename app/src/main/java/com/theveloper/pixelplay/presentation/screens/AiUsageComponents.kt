@@ -108,7 +108,7 @@ fun AiUsageLogItem(
             // Provider and Model
             Column {
                 Text(
-                    text = stringResource(R.string.presentation_batch_h_ai_usage_provider_model, usage.provider, usage.model),
+                    text = stringResource(R.string.settings_ai_usage_provier_model, usage.provider, usage.model),
                     style = MaterialTheme.typography.titleSmall.copy(
                         fontFamily = GoogleSansRounded,
                         letterSpacing = 0.2.sp

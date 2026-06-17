@@ -14,6 +14,7 @@ import androidx.test.uiautomator.UiObject2
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.util.Locale
 import java.util.regex.Pattern
 
 @RunWith(AndroidJUnit4::class)
@@ -25,6 +26,30 @@ class PlayerSheetAnimationBenchmarks {
 
     @Test
     fun playerSheetOpenCloseGestures() {
+        runPlayerSheetBenchmarkForPlaylist(null)
+    }
+
+    @Test
+    fun playerSheetOpenCloseGestures_FLAC() {
+        runPlayerSheetBenchmarkForPlaylist("FLAC")
+    }
+
+    @Test
+    fun playerSheetOpenCloseGestures_MP3() {
+        runPlayerSheetBenchmarkForPlaylist("MP3")
+    }
+
+    @Test
+    fun playerSheetOpenCloseGestures_M4A() {
+        runPlayerSheetBenchmarkForPlaylist("M4A")
+    }
+
+    @Test
+    fun playerSheetOpenCloseGestures_OPUS() {
+        runPlayerSheetBenchmarkForPlaylist("OPUS")
+    }
+
+    private fun runPlayerSheetBenchmarkForPlaylist(playlistName: String?) {
         val packageName = benchmarkTargetPackageName()
 
         benchmarkRule.measureRepeated(
@@ -54,7 +79,11 @@ class PlayerSheetAnimationBenchmarks {
                     Thread.sleep(BENCHMARK_REBUILD_WAIT_MS)
                     dismissBenchmarkBlockingDialogs()
                 }
-                ensureSongIsReady()
+                if (playlistName != null) {
+                    playFromPlaylist(playlistName)
+                } else {
+                    ensureSongIsReady()
+                }
                 libraryRebuiltForThisRun = true
                 openHomeTab()
                 waitForSheetState(SHEET_COLLAPSED_PATTERN, "setup after opening Home")
@@ -83,6 +112,71 @@ class PlayerSheetAnimationBenchmarks {
             click(button)
             Thread.sleep(DEFAULT_WAIT_MS)
         }
+    }
+
+    private fun androidx.benchmark.macro.MacrobenchmarkScope.playFromPlaylist(playlistName: String) {
+        if (isExpandedSheetVisible()) {
+            collapseExpandedPlayer()
+            waitForSheetState(SHEET_COLLAPSED_PATTERN, "collapsing existing player during setup")
+        }
+
+        openLibraryTab()
+        waitForLibraryContent()
+
+        openLibraryTabDropdown()
+        selectPlaylistsTabInSheet()
+
+        Thread.sleep(DEFAULT_WAIT_MS)
+
+        val playlistButton = findByTextOrDescription(pattern(playlistName), SHORT_WAIT_MS)
+        if (playlistButton != null) {
+            click(playlistButton)
+        } else {
+            val y = when (playlistName.uppercase(Locale.US)) {
+                "FLAC" -> 300
+                "M4A" -> 410
+                "MP3" -> 520
+                "OPUS" -> 630
+                else -> 300
+            }
+            tap(device.displayWidth / 2, y)
+        }
+        Thread.sleep(DEFAULT_WAIT_MS)
+
+        tap(device.displayWidth / 2, (device.displayHeight * 0.30f).toInt())
+        waitForAnySheetState("after selecting first song in playlist $playlistName")
+
+        if (isExpandedSheetVisible()) {
+            collapseExpandedPlayer()
+            waitForSheetState(SHEET_COLLAPSED_PATTERN, "collapsing newly selected song")
+        }
+
+        if (!isCollapsedSheetVisible()) {
+            throw IllegalStateException(
+                "A playlist song was tapped, but the UnifiedPlayerSheetV2 mini-player did not appear. " +
+                    "Visible UI: ${visibleUiSnapshot()}"
+            )
+        }
+    }
+
+    private fun androidx.benchmark.macro.MacrobenchmarkScope.openLibraryTabDropdown() {
+        findByTextOrDescription(EXPAND_MENU_PATTERN, SHORT_WAIT_MS)?.let {
+            click(it)
+            Thread.sleep(DEFAULT_WAIT_MS)
+            return
+        }
+        tap((device.displayWidth * 0.52f).toInt(), 100)
+        Thread.sleep(DEFAULT_WAIT_MS)
+    }
+
+    private fun androidx.benchmark.macro.MacrobenchmarkScope.selectPlaylistsTabInSheet() {
+        findByTextOrDescription(PLAYLISTS_TAB_GRID_PATTERN, SHORT_WAIT_MS)?.let {
+            click(it)
+            Thread.sleep(DEFAULT_WAIT_MS)
+            return
+        }
+        tap((device.displayWidth * 0.75f).toInt(), (device.displayHeight * 0.27f).toInt())
+        Thread.sleep(DEFAULT_WAIT_MS)
     }
 
     private fun androidx.benchmark.macro.MacrobenchmarkScope.ensureSongIsReady() {
@@ -212,7 +306,6 @@ class PlayerSheetAnimationBenchmarks {
             return
         }
         repeat(4) {
-            if (!hasTextOrDescription(BACK_PATTERN)) return@repeat
             device.pressKeyCode(KeyEvent.KEYCODE_BACK)
             Thread.sleep(DEFAULT_WAIT_MS)
             findByTextOrDescription(HOME_TAB_PATTERN, TINY_WAIT_MS)?.let { home ->
@@ -393,6 +486,10 @@ class PlayerSheetAnimationBenchmarks {
         private val EMPTY_LIBRARY_PATTERN = pattern(
             "No songs|No valid songs|Sin canciones|No se encontraron canciones|Empty"
         )
+        private val EXPAND_MENU_PATTERN = pattern(
+            "Expand menu|Expandir men[uú]|Men[uü] aufklappen|D[eé]velopper le menu|Perluas menu|Espandi menu|메뉴 확장|Utvid meny|Развернуть menu|展开菜单"
+        )
+        private val PLAYLISTS_TAB_GRID_PATTERN = pattern("PLAYLISTS|Playlists|Listas de reproducci[oó]n")
 
         private fun pattern(alternatives: String): Pattern =
             Pattern.compile(".*($alternatives).*", Pattern.CASE_INSENSITIVE or Pattern.UNICODE_CASE)

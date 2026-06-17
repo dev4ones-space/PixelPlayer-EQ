@@ -1,6 +1,5 @@
 package com.theveloper.pixelplay.presentation.screens.search.components
 
-import androidx.annotation.OptIn
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -38,7 +37,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.text.ExperimentalTextApi
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.dp
 import androidx.media3.common.util.UnstableApi
@@ -53,6 +52,15 @@ import com.theveloper.pixelplay.ui.theme.LocalPixelPlayDarkTheme
 import androidx.compose.ui.res.stringResource
 import com.theveloper.pixelplay.R
 import racra.compose.smooth_corner_rect_library.AbsoluteSmoothCornerShape
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.ui.draw.scale
+import androidx.compose.foundation.border
+import androidx.compose.material.icons.rounded.CheckCircle
+import androidx.compose.material3.Icon
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 
 @OptIn(UnstableApi::class)
 @Composable
@@ -60,7 +68,12 @@ fun GenreCategoriesGrid(
     genres: List<Genre>,
     onGenreClick: (Genre) -> Unit,
     playerViewModel: PlayerViewModel,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isSelectionMode: Boolean = false,
+    selectedGenreIds: Set<String> = emptySet(),
+    onGenreLongPress: (Genre) -> Unit = {},
+    onGenreSelectionToggle: (Genre) -> Unit = {},
+    getSelectionIndex: (String) -> Int? = { null }
 ) {
     if (genres.isEmpty()) {
         Box(
@@ -118,20 +131,19 @@ fun GenreCategoriesGrid(
                 )
                 
                 // Toggle Button with persistence and styling
-                // "Round to Square (12dp) when selected" logic:
-                // Assuming List View is the "Selected" / "Alternative" state.
-                val shape = androidx.compose.animation.core.animateFloatAsState(
-                    targetValue = if (!isGridView) 12f else 50f, // 12dp for List, 50% (Circle) for Grid
+                // Animate between rounded corners in list mode and circular appearance in grid mode.
+                val animatedCornerRadius = animateDpAsState(
+                    targetValue = if (!isGridView) 12.dp else 50.dp,
                     label = "shapeAnimation"
                 )
-                
+
                 androidx.compose.material3.FilledIconButton(
                     onClick = { playerViewModel.toggleGenreViewMode() },
                     colors = androidx.compose.material3.IconButtonDefaults.filledIconButtonColors(
                         containerColor = MaterialTheme.colorScheme.secondaryContainer,
                         contentColor = MaterialTheme.colorScheme.onSecondaryContainer
                     ),
-                    shape = RoundedCornerShape(shape.value.dp)
+                    shape = RoundedCornerShape(animatedCornerRadius.value)
                 ) {
                 androidx.compose.material3.Icon(
                         imageVector = if (isGridView) Icons.AutoMirrored.Rounded.ViewList else Icons.Rounded.GridView,
@@ -145,7 +157,12 @@ fun GenreCategoriesGrid(
                 genre = genre,
                 customIcons = customGenreIcons,
                 onClick = { onGenreClick(genre) },
-                isGridView = isGridView
+                isGridView = isGridView,
+                isSelectionMode = isSelectionMode,
+                isSelected = selectedGenreIds.contains(genre.id),
+                selectionIndex = getSelectionIndex(genre.id),
+                onLongPress = { onGenreLongPress(genre) },
+                onSelectionToggle = { onGenreSelectionToggle(genre) }
             )
         }
     }
@@ -156,7 +173,12 @@ private fun GenreCard(
     genre: Genre,
     customIcons: Map<String, Int>,
     onClick: () -> Unit,
-    isGridView: Boolean
+    isGridView: Boolean,
+    isSelectionMode: Boolean = false,
+    isSelected: Boolean = false,
+    selectionIndex: Int? = null,
+    onLongPress: () -> Unit = {},
+    onSelectionToggle: () -> Unit = {}
 ) {
     val isDark = LocalPixelPlayDarkTheme.current
     val themeColor = remember(genre, isDark) {
@@ -171,16 +193,16 @@ private fun GenreCard(
 
     val shape = RoundedCornerShape(20.dp)
 
-//    val shape = AbsoluteSmoothCornerShape(
-//        cornerRadiusTR = 24.dp,
-//        smoothnessAsPercentTL = 70,
-//        cornerRadiusTL = 24.dp,
-//        smoothnessAsPercentTR = 70,
-//        cornerRadiusBR = 24.dp,
-//        smoothnessAsPercentBL = 70,
-//        cornerRadiusBL = 24.dp,
-//        smoothnessAsPercentBR = 70
-//    )
+    val selectionScale by animateFloatAsState(
+        targetValue = if (isSelected) 0.98f else 1f,
+        animationSpec = tween(durationMillis = 200),
+        label = "genreCardSelectionScale"
+    )
+    val selectionBorderWidth by animateDpAsState(
+        targetValue = if (isSelected) 2.5.dp else 0.dp,
+        animationSpec = tween(durationMillis = 200),
+        label = "genreCardSelectionBorder"
+    )
 
     // Layout Modifier Logic
     val cardModifier = if (isGridView) {
@@ -191,8 +213,33 @@ private fun GenreCard(
 
     Card(
         modifier = cardModifier
+            .scale(selectionScale)
+            .then(
+                if (isSelected) {
+                    Modifier.border(
+                        width = selectionBorderWidth,
+                        color = MaterialTheme.colorScheme.primary,
+                        shape = shape
+                    )
+                } else {
+                    Modifier
+                }
+            )
             .clip(shape)
-            .clickable(onClick = onClick),
+            .pointerInput(isSelectionMode) {
+                detectTapGestures(
+                    onTap = {
+                        if (isSelectionMode) {
+                            onSelectionToggle()
+                        } else {
+                            onClick()
+                        }
+                    },
+                    onLongPress = {
+                        onLongPress()
+                    }
+                )
+            },
         shape = shape,
         colors = CardDefaults.cardColors(containerColor = backgroundColor),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
@@ -275,6 +322,31 @@ private fun GenreCard(
                         overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
                         modifier = Modifier.fillMaxWidth(titlePresentation.secondLineWidthFraction)
                     )
+                }
+            }
+
+            if (isSelected) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.4f)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    if (selectionIndex != null && selectionIndex >= 0) {
+                        Text(
+                            text = selectionIndex.toString(),
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onPrimary
+                        )
+                    } else {
+                        Icon(
+                            imageVector = Icons.Rounded.CheckCircle,
+                            contentDescription = "Selected",
+                            tint = MaterialTheme.colorScheme.onPrimary,
+                            modifier = Modifier.size(28.dp)
+                        )
+                    }
                 }
             }
         }

@@ -83,7 +83,7 @@ fun DailyMixSection(
     val bottomBarHeightDp = resolveNavBarOccupiedHeight(systemNavBarInset, navBarCompactMode)
     var showSongInfoSheet by remember { mutableStateOf(false) }
     var showPlaylistBottomSheet by remember { mutableStateOf(false) }
-    val dailyMixQueueName = stringResource(R.string.presentation_batch_g_daily_mix_queue_name)
+    val dailyMixQueueName = stringResource(R.string.home_daily_mix_queue_name)
 
     Column(
         modifier = Modifier
@@ -119,15 +119,12 @@ fun DailyMixSection(
                     queueName = dailyMixQueueName,
                     isVoluntaryPlay = false
                 )
-                showSongInfoSheet = false
             },
             onAddToQueue = {
                 playerViewModel.addSongToQueue(song)
-                showSongInfoSheet = false
             },
             onAddNextToQueue = {
                 playerViewModel.addSongNextToQueue(song)
-                showSongInfoSheet = false
             },
             onAddToPlayList = {
                 showPlaylistBottomSheet = true
@@ -269,13 +266,13 @@ fun DailyMixHeader(thumbnails: ImmutableList<Song>) {
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = stringResource(R.string.presentation_batch_g_daily_mix_heading),
+                    text = stringResource(R.string.home_daily_mix_title),
                     style = titleStyle,
                     color = MaterialTheme.colorScheme.onPrimary
                 )
                 Text(
                     modifier = Modifier.padding(start = 1.dp),
-                    text = stringResource(R.string.presentation_batch_g_daily_mix_based_on_history),
+                    text = stringResource(R.string.home_daily_mix_subtitle),
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Normal,
                     color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.8f)
@@ -336,7 +333,7 @@ private fun DailyMixSongList(
     playerViewModel: PlayerViewModel,
     onMoreOptionsClick: (Song) -> Unit
 ) {
-    val dailyMixQueueName = stringResource(R.string.presentation_batch_g_daily_mix_queue_name)
+    val dailyMixQueueName = stringResource(R.string.home_daily_mix_queue_name)
     val stablePlayerState by playerViewModel.stablePlayerState.collectAsStateWithLifecycle()
     val itemContainerColor = MaterialTheme.colorScheme.surfaceContainerLow
 
@@ -402,7 +399,7 @@ private fun ViewAllDailyMixButton(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = stringResource(R.string.presentation_batch_g_daily_mix_see_all),
+                text = stringResource(R.string.home_daily_mix_action_see_all),
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Medium
             )

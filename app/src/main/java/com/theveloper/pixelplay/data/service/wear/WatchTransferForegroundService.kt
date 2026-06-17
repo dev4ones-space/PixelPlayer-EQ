@@ -116,12 +116,12 @@ class WatchTransferForegroundService : Service() {
             ?: transfers.maxByOrNull { it.updatedAtMillis }
 
         val title = when {
-            activeTransfers.size > 1 -> getString(R.string.watch_transfer_sending_n_to_watch, activeTransfers.size)
-            activeTransfers.size == 1 -> getString(R.string.watch_transfer_sending_to_watch)
-            selectedTransfer?.status == WearTransferProgress.STATUS_COMPLETED -> getString(R.string.watch_transfer_complete)
-            selectedTransfer?.status == WearTransferProgress.STATUS_FAILED -> getString(R.string.watch_transfer_failed)
-            selectedTransfer?.status == WearTransferProgress.STATUS_CANCELLED -> getString(R.string.watch_transfer_cancelled)
-            else -> getString(R.string.watch_transfer_preparing)
+            activeTransfers.size > 1 -> getString(R.string.watch_transfer_status_sending_n_to_watch, activeTransfers.size)
+            activeTransfers.size == 1 -> getString(R.string.watch_transfer_status_sending_to_watch)
+            selectedTransfer?.status == WearTransferProgress.STATUS_COMPLETED -> getString(R.string.watch_transfer_status_complete_service)
+            selectedTransfer?.status == WearTransferProgress.STATUS_FAILED -> getString(R.string.watch_transfer_status_failed_service)
+            selectedTransfer?.status == WearTransferProgress.STATUS_CANCELLED -> getString(R.string.watch_transfer_status_cancelled_service)
+            else -> getString(R.string.watch_transfer_status_preparing_service)
         }
 
         val contentText = buildContentText(selectedTransfer, activeTransfers.size)
@@ -173,13 +173,13 @@ class WatchTransferForegroundService : Service() {
         transfer: PhoneWatchTransferState?,
         activeTransferCount: Int,
     ): String {
-        if (transfer == null) return getString(R.string.watch_transfer_starting)
+        if (transfer == null) return getString(R.string.watch_transfer_status_starting)
 
         if (activeTransferCount > 1) {
-            return transfer.songTitle.ifBlank { getString(R.string.watch_transfer_multiple_active) }
+            return transfer.songTitle.ifBlank { getString(R.string.watch_transfer_status_multiple_active) }
         }
 
-        val songTitle = transfer.songTitle.ifBlank { getString(R.string.watch_transfer_preparing_transfer) }
+        val songTitle = transfer.songTitle.ifBlank { getString(R.string.watch_transfer_status_preparing_transfer) }
         val bytesText = formatBytesText(transfer)
         return if (bytesText != null) {
             "$songTitle • $bytesText"
@@ -189,7 +189,7 @@ class WatchTransferForegroundService : Service() {
     }
 
     private fun buildDetailedText(transfer: PhoneWatchTransferState?): String {
-        if (transfer == null) return getString(R.string.watch_transfer_starting)
+        if (transfer == null) return getString(R.string.watch_transfer_status_starting)
 
         val statusLine = when (transfer.status) {
             WearTransferProgress.STATUS_TRANSFERRING -> getString(R.string.watch_transfer_status_transferring)
@@ -214,7 +214,7 @@ class WatchTransferForegroundService : Service() {
         val status = when (transfer.status) {
             WearTransferProgress.STATUS_TRANSFERRING -> {
                 val percent = (transfer.progress * 100f).toInt().coerceIn(0, 100)
-                if (transfer.totalBytes > 0L) "$percent%" else getString(R.string.watch_transfer_starting_short)
+                if (transfer.totalBytes > 0L) "$percent%" else getString(R.string.watch_transfer_status_starting_short)
             }
             WearTransferProgress.STATUS_COMPLETED -> getString(R.string.watch_transfer_status_completed)
             WearTransferProgress.STATUS_FAILED -> getString(R.string.watch_transfer_status_failed)

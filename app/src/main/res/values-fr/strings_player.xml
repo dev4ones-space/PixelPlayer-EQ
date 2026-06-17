@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Player UI & Playback Controls -->
+    <string name="player_cd_collapse">Réduire le lecteur</string>
+    <string name="player_now_playing">En cours de lecture</string>
+    <string name="player_cd_cloud_stream">Flux Cloud</string>
+    <string name="player_cd_cast">Diffuser</string>
+    <string name="player_cd_bluetooth">Bluetooth</string>
+    <string name="player_cd_local_playback">Lecture locale</string>
+    <string name="player_connecting">Connexion en cours…</string>
+    <string name="player_cd_open_queue">Ouvrir la file d\'attente</string>
+
+    <!-- CastBottomSheet -->
+    <string name="cast_perm_title">Prêt à se connecter</string>
+    <string name="cast_perm_body">Autorisez PixelPlayer à voir vos appareils proches et votre Wi-Fi actuel pour synchroniser votre diffusion, audio Bluetooth et haut-parleurs.</string>
+    <string name="cast_perm_nearby_title">Appareils proches</string>
+    <string name="cast_perm_nearby_desc">Nécessaire pour lire et contrôler votre équipement audio Bluetooth connecté.</string>
+    <string name="cast_perm_location_title">Localisation pour le Wi-Fi</string>
+    <string name="cast_perm_location_desc">Android nécessite la localisation pour partager le réseau Wi-Fi (SSID) auquel vous êtes connecté afin que nous puissions trouver des appareils de diffusion compatibles.</string>
+    <string name="cast_allow_access">Autoriser l\'accès</string>
+    <string name="cast_perm_footer">Nous utilisons ces autorisations uniquement pour l\'interconnexion des appareils — diffusion, contrôle des haut-parleurs proches et synchronisation audio.</string>
+    <string name="cast_title_connect">Connecter l\'appareil</string>
+    <string name="cast_scanning_nearby">Analyse des appareils proches</string>
+    <string name="cast_subtitle_session">Session de diffusion</string>
+    <string name="cast_connecting">Connexion en cours</string>
+    <string name="cast_connected">Connecté</string>
+    <string name="cast_this_phone">Ce téléphone</string>
+    <string name="cast_bluetooth_audio">Audio Bluetooth</string>
+    <string name="cast_local_playback">Lecture locale</string>
+    <string name="cast_playing">En cours de lecture</string>
+    <string name="cast_paused">En pause</string>
+    <string name="cast_volume_device">Volume de l\'appareil</string>
+    <string name="cast_volume_phone">Volume du téléphone</string>
+    <string name="cast_volume_levels">%1$d/%2$d</string>
+    <string name="cast_cd_battery">Niveau de batterie</string>
+    <string name="cast_cd_volume_level">Niveau de volume</string>
+    <string name="cast_disconnect">Déconnecter</string>
+    <string name="cast_connectivity">Connectivité</string>
+    <string name="cast_turn_on_wifi_bt">Activez le Wi-Fi ou le Bluetooth</string>
+    <string name="cast_cd_refresh_connections">Actualiser les connexions</string>
+    <string name="cast_wifi">Wi-Fi</string>
+    <string name="cast_wifi_off">Désactivé</string>
+    <string name="cast_wifi_on">Activé</string>
+    <string name="cast_wifi_connected">Connecté</string>
+    <string name="cast_bluetooth">Bluetooth</string>
+    <string name="cast_bt_off">Désactivé</string>
+    <string name="cast_bt_on">Activé</string>
+    <string name="cast_bt_connected">Connecté</string>
+    <string name="cast_nearby_devices">Appareils proches</string>
+    <string name="cast_cd_refresh_devices">Actualiser les appareils</string>
+    <string name="cast_status_connected">Connecté</string>
+    <string name="cast_status_connecting">Connexion en cours</string>
+    <string name="cast_status_available_connect">Disponible pour se connecter</string>
+    <string name="cast_status_available">Disponible</string>
+    <string name="cast_connecting_ellipsis">Connexion en cours...</string>
+    <string name="cast_searching">Recherche d\'appareils…</string>
+    <string name="cast_searching_hint">Assurez-vous que votre TV ou enceinte est allumée et partage le même réseau Wi-Fi.</string>
+    <string name="cast_tab_controls">Contrôles</string>
+    <string name="cast_tab_devices">Appareils</string>
+
+    <!-- Casting & Remote Playback -->
+    <string name="cast_server_channel_name">Serveur multimédia Cast</string>
+    <string name="cast_server_notification_title">Diffusion vers l\'appareil</string>
+    <string name="cast_server_notification_text">Service multimédia vers l\'appareil Cast</string>
+    <string name="cast_server_foreground_error">%1$s : %2$s</string>
+    <string name="cast_seek_unavailable_for_format">La recherche de position est temporairement indisponible pour ce format audio sur Cast car elle peut faire planter la session Cast.</string>
+
+    <!-- Sleep Timer -->
+    <string name="sleep_timer_title">Minuteur de veille</string>
+    <string name="sleep_timer_zero_minutes_format">Minuteur</string>
+    <string name="sleep_timer_n_minutes_format">%1$d minutes</string>
+    <string name="sleep_timer_set_for_minutes_toast">Minuteur réglé pour %1$d minutes.</string>
+    <string name="sleep_timer_play_count_one_time">1 fois</string>
+    <plurals name="sleep_timer_play_count_n_times">
+        <item quantity="one">%d fois</item>
+        <item quantity="other">%d fois</item>
+    </plurals>
+    <string name="sleep_timer_play_count_label">Nombre de lectures : %1$s</string>
+    <string name="sleep_timer_end_of_current_track">Fin de la piste actuelle</string>
+    <string name="sleep_timer_eot_toast">La lecture s\'arrêtera à la fin de la piste.</string>
+    <string name="sleep_timer_cd_switch_on">Allumer</string>
+    <string name="sleep_timer_custom_time">Temps personnalisé</string>
+    <string name="sleep_timer_cancel_timer">Annuler le minuteur</string>
+    <string name="sleep_timer_display_eot">Fin de la piste</string>
+    <string name="sleep_timer_cancelled_toast">Minuteur annulé.</string>
+    <string name="sleep_timer_eot_no_song_toast">Impossible d\'activer la fin de la piste : aucune chanson active.</string>
+    <string name="sleep_timer_eot_song_changed_toast">Minuteur de fin de piste désactivé : la chanson est passée de %1$s à %2$s.</string>
+    <string name="sleep_timer_label_previous_track">Piste précédente</string>
+    <string name="sleep_timer_label_current_track">Piste actuelle</string>
+    <string name="sleep_timer_ui_set_custom_duration">Définir une durée personnalisée</string>
+
+    <!-- QueueBottomSheet -->
+    <string name="queue_next_up_label">À suivre</string>
+    <string name="queue_tracks_empty">La file d\'attente est vide pour le moment.</string>
+    <plurals name="queue_tracks_lined_up">
+        <item quantity="one">%d piste en attente.</item>
+        <item quantity="other">%d pistes en attente.</item>
+    </plurals>
+    <string name="queue_source_fallback_label">File d\'attente</string>
+    <string name="queue_empty_label">La file d\'attente est vide.</string>
+    <string name="queue_cd_reorder_song">Réorganiser la chanson</string>
+    <string name="queue_cd_toggle_shuffle_action">Activer/désactiver l\'aléatoire</string>
+    <string name="queue_cd_toggle_repeat_action">Activer/désactiver la répétition</string>
+    <string name="queue_cd_sleep_timer_action">Minuteur de mise en veille</string>
+    <string name="queue_cd_more_action">Actions de la file d\'attente</string>
+    <string name="queue_action_locate_current_song">Localiser la chanson en cours</string>
+    <string name="queue_action_clear_queue">Vider la file d\'attente</string>
+    <string name="queue_dialog_clear_queue_title">Vider la file d\'attente</string>
+    <string name="queue_dialog_clear_queue_message">Voulez-vous vraiment supprimer toutes les chansons de la file d\'attente, sauf l\'actuelle ?</string>
+    <string name="queue_action_save_as_playlist">Enregistrer comme liste de lecture</string>
+    <string name="queue_save_playlist_named">File d\'attente %1$s</string>
+    <string name="queue_save_playlist_current">File d\'attente actuelle</string>
+    <string name="queue_cd_dismiss_song">Ignorer la chanson</string>
+    <string name="queue_song_removed">supprimé</string>
+    <string name="queue_save_as_playlist_sheet_title">Enregistrer comme liste de lecture</string>
+    <string name="queue_save_as_playlist_deselect_all">Tout désélectionner</string>
+    <string name="queue_save_as_playlist_name_label">Nom de la liste de lecture</string>
+    <string name="queue_save_as_playlist_search_placeholder">Rechercher des chansons à inclure…</string>
+    <string name="queue_save_as_playlist_search_no_match">Aucune chanson ne correspond à « %1$s »</string>
+    <plurals name="queue_save_as_playlist_n_songs_selected">
+        <item quantity="one">%d chanson sélectionnée</item>
+        <item quantity="other">%d chansons sélectionnées</item>
+    </plurals>
+    <string name="queue_save_as_playlist_format">Enregistrer sous : %1$s</string>
+    <string name="queue_save_as_playlist_name_placeholder">Entrez un nom de liste de lecture</string>
+    <string name="queue_cd_remove_from_playlist">Retirer de la liste de lecture</string>
+    <string name="queue_more_options_for_song">Plus d\'options pour %1$s</string>
+
+    <!-- LyricsSheet -->
+    <string name="lyrics_title">Paroles</string>
+    <string name="lyrics_loading">Chargement des paroles…</string>
+    <string name="lyrics_mode_synced">Synchronisées</string>
+    <string name="lyrics_mode_static">Statiques</string>
+    <string name="lyrics_options">Options des paroles</string>
+    <string name="lyrics_offset_minus_half">−.5</string>
+    <string name="lyrics_offset_minus_point_one">−.1</string>
+    <string name="lyrics_offset_plus_point_one">+.1</string>
+    <string name="lyrics_offset_plus_half">+.5</string>
+    <string name="lyrics_offset_zero">0s</string>
+    <string name="lyrics_offset_seconds_fmt">%1$+.1fs</string>
+
+    <!-- LyricsRepository -->
+    <string name="lyrics_failed_to_search">Échec de la recherche de paroles</string>
+    <string name="lyrics_failed_to_fetch_from_remote">Échec de la récupération des paroles en ligne</string>
+    <string name="lyrics_fetch_timeout">Délai de connexion dépassé. Veuillez vérifier votre connexion Internet.</string>
+    <string name="lyrics_network_error">Erreur réseau. Veuillez vérifier votre connexion Internet.</string>
+    <string name="lyrics_server_error">Erreur serveur (code %d). Veuillez réessayer plus tard.</string>
+
+    <!-- LyricsStateHolder -->
+    <string name="lyrics_already_available">Paroles déjà disponibles. Recherche en ligne ignorée.</string>
+    <string name="lyrics_embedded_already_available">Paroles intégrées déjà trouvées. Recherche en ligne ignorée.</string>
+    <string name="lyrics_local_lrc_already_available">Paroles locales (.lrc) déjà trouvées. Recherche en ligne ignorée.</string>
+
+    <!-- LyricsMoreBottomSheet -->
+    <string name="lyrics_save_title">Enregistrer les paroles</string>
+    <string name="lyrics_translate_via_ai">Traduire avec l\'IA</string>
+    <string name="lyrics_translate_already_translated">Ces paroles ont déjà une traduction</string>
+    <string name="lyrics_translate_already_in_target_language">Ces paroles sont déjà dans cette langue</string>
+    <string name="lyrics_translate_api_not_configured">L\'API n\'est pas configurée</string>
+    <string name="lyrics_translate_success">Paroles traduites avec succès !</string>
+    <string name="lyrics_translate_progress">Traduction des paroles en cours...</string>
+    <string name="lyrics_reset_imported">Réinitialiser les paroles importées</string>
+    <string name="lyrics_reset_dialog_title">Réinitialiser les paroles ?</string>
+    <string name="lyrics_reset_dialog_message">Voulez-vous vraiment réinitialiser les paroles de cette chanson ?</string>
+    <string name="lyrics_appearance_section">Apparence</string>
+    <string name="lyrics_appearance_alignment">Alignement</string>
+    <string name="lyrics_appearance_align_left">Aligner les paroles à gauche</string>
+    <string name="lyrics_appearance_align_center">Aligner les paroles au centre</string>
+    <string name="lyrics_appearance_align_right">Aligner les paroles à droite</string>
+    <string name="lyrics_controls_section">Commandes</string>
+    <string name="lyrics_controls_adjust_sync">Ajuster la synchronisation</string>
+    <string name="lyrics_controls_hide_sync">Masquer les commandes de synchronisation</string>
+    <string name="lyrics_controls_show_romanization">Afficher la romanisation</string>
+    <string name="lyrics_controls_show_translations">Afficher les traductions</string>
+    <string name="lyrics_controls_disable_immersive_once">Désactiver l\'immersion (une fois)</string>
+    <string name="lyrics_controls_keep_screen_on">Garder l\'écran allumé</string>
+
+    <!-- LyricsSheet save dialog -->
+    <string name="lyrics_save_dialog_title">Enregistrer les paroles</string>
+    <string name="lyrics_save_dialog_message">Choisissez la version à enregistrer :</string>
+    <string name="lyrics_save_synced">Synchronisées (avec repères temporels)</string>
+    <string name="lyrics_save_plain">Simples (texte brut)</string>
+
+    <!-- FetchLyricsDialog -->
+    <string name="lyrics_search_online_prompt">Souhaitez-vous rechercher des paroles en ligne ?</string>
+    <string name="lyrics_fetch_show_options_title">Afficher les options de paroles</string>
+    <string name="lyrics_fetch_show_options_subtitle">Toujours ouvrir le sélecteur au lieu d\'appliquer automatiquement le premier résultat</string>
+    <string name="lyrics_searching">Recherche des paroles…</string>
+    <string name="lyrics_not_found">Paroles non trouvées</string>
+    <string name="lyrics_custom_search_hint">Nous n\'avons pas pu trouver les paroles automatiquement. Vous pouvez modifier le titre ou l\'artiste et essayer de rechercher manuellement.</string>
+    <string name="lyrics_custom_search_field_title">Titre de la chanson</string>
+    <string name="lyrics_custom_search_field_artist">Artiste (facultatif)</string>
+    <string name="lyrics_found_n_matches_format">Found %d match(es)</string>
+    <string name="lyrics_synced_badge">SYNCHRONISÉ</string>
+    <string name="lyrics_artist_album_line">%1$s • %2$s</string>
+    <string name="lyrics_provided_by">Paroles fournies par</string>
+    <string name="lyrics_lrclib_uri">https://lrclib.net/</string>
+</resources>

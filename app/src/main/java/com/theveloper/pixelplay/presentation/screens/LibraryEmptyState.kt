@@ -42,85 +42,85 @@ private fun libraryEmptySpec(
         LibraryTabId.SONGS -> when (storageFilter) {
             StorageFilter.ALL -> LibraryEmptySpec(
                 iconRes = R.drawable.rounded_music_off_24,
-                titleRes = R.string.lib_empty_songs_all_title,
-                subtitleRes = R.string.lib_empty_songs_all_subtitle
+                titleRes = R.string.library_empty_songs_all_title,
+                subtitleRes = R.string.library_empty_songs_all_subtitle
             )
             StorageFilter.OFFLINE -> LibraryEmptySpec(
                 iconRes = R.drawable.rounded_music_off_24,
-                titleRes = R.string.lib_empty_songs_offline_title,
-                subtitleRes = R.string.lib_empty_songs_offline_subtitle
+                titleRes = R.string.library_empty_songs_offline_title,
+                subtitleRes = R.string.library_empty_songs_offline_subtitle
             )
             StorageFilter.ONLINE -> LibraryEmptySpec(
                 iconRes = R.drawable.rounded_music_off_24,
-                titleRes = R.string.lib_empty_songs_online_title,
-                subtitleRes = R.string.lib_empty_songs_online_subtitle
+                titleRes = R.string.library_empty_songs_online_title,
+                subtitleRes = R.string.library_empty_songs_online_subtitle
             )
         }
 
         LibraryTabId.ALBUMS -> when (storageFilter) {
             StorageFilter.ALL -> LibraryEmptySpec(
                 iconRes = R.drawable.rounded_album_24,
-                titleRes = R.string.lib_empty_albums_all_title,
-                subtitleRes = R.string.lib_empty_albums_all_subtitle
+                titleRes = R.string.library_empty_albums_all_title,
+                subtitleRes = R.string.library_empty_albums_all_subtitle
             )
             StorageFilter.OFFLINE -> LibraryEmptySpec(
                 iconRes = R.drawable.rounded_album_24,
-                titleRes = R.string.lib_empty_albums_offline_title,
-                subtitleRes = R.string.lib_empty_albums_offline_subtitle
+                titleRes = R.string.library_empty_albums_offline_title,
+                subtitleRes = R.string.library_empty_albums_offline_subtitle
             )
             StorageFilter.ONLINE -> LibraryEmptySpec(
                 iconRes = R.drawable.rounded_album_24,
-                titleRes = R.string.lib_empty_albums_online_title,
-                subtitleRes = R.string.lib_empty_albums_online_subtitle
+                titleRes = R.string.library_empty_albums_online_title,
+                subtitleRes = R.string.library_empty_albums_online_subtitle
             )
         }
 
         LibraryTabId.ARTISTS -> when (storageFilter) {
             StorageFilter.ALL -> LibraryEmptySpec(
                 iconRes = R.drawable.rounded_artist_24,
-                titleRes = R.string.lib_empty_artists_all_title,
-                subtitleRes = R.string.lib_empty_artists_all_subtitle
+                titleRes = R.string.library_empty_artists_all_title,
+                subtitleRes = R.string.library_empty_artists_all_subtitle
             )
             StorageFilter.OFFLINE -> LibraryEmptySpec(
                 iconRes = R.drawable.rounded_artist_24,
-                titleRes = R.string.lib_empty_artists_offline_title,
-                subtitleRes = R.string.lib_empty_artists_offline_subtitle
+                titleRes = R.string.library_empty_artists_offline_title,
+                subtitleRes = R.string.library_empty_artists_offline_subtitle
             )
             StorageFilter.ONLINE -> LibraryEmptySpec(
                 iconRes = R.drawable.rounded_artist_24,
-                titleRes = R.string.lib_empty_artists_online_title,
-                subtitleRes = R.string.lib_empty_artists_online_subtitle
+                titleRes = R.string.library_empty_artists_online_title,
+                subtitleRes = R.string.library_empty_artists_online_subtitle
             )
         }
 
         LibraryTabId.LIKED -> when (storageFilter) {
             StorageFilter.ALL -> LibraryEmptySpec(
                 iconRes = R.drawable.round_favorite_24,
-                titleRes = R.string.lib_empty_liked_all_title,
-                subtitleRes = R.string.lib_empty_liked_all_subtitle
+                titleRes = R.string.library_empty_liked_all_title,
+                subtitleRes = R.string.library_empty_liked_all_subtitle
             )
             StorageFilter.OFFLINE -> LibraryEmptySpec(
                 iconRes = R.drawable.round_favorite_24,
-                titleRes = R.string.lib_empty_liked_offline_title,
-                subtitleRes = R.string.lib_empty_liked_offline_subtitle
+                titleRes = R.string.library_empty_liked_offline_title,
+                subtitleRes = R.string.library_empty_liked_offline_subtitle
             )
             StorageFilter.ONLINE -> LibraryEmptySpec(
                 iconRes = R.drawable.round_favorite_24,
-                titleRes = R.string.lib_empty_liked_online_title,
-                subtitleRes = R.string.lib_empty_liked_online_subtitle
+                titleRes = R.string.library_empty_liked_online_title,
+                subtitleRes = R.string.library_empty_liked_online_subtitle
             )
         }
 
         LibraryTabId.FOLDERS -> LibraryEmptySpec(
             iconRes = R.drawable.ic_folder,
-            titleRes = R.string.lib_empty_folders_title,
-            subtitleRes = R.string.lib_empty_folders_subtitle
+            titleRes = R.string.library_empty_folders_title,
+            subtitleRes = R.string.library_empty_folders_subtitle
         )
 
         LibraryTabId.PLAYLISTS -> LibraryEmptySpec(
             iconRes = R.drawable.rounded_playlist_play_24,
-            titleRes = R.string.lib_empty_playlists_title,
-            subtitleRes = R.string.lib_empty_playlists_subtitle
+            titleRes = R.string.library_empty_playlists_title,
+            subtitleRes = R.string.library_empty_playlists_subtitle
         )
     }
 }

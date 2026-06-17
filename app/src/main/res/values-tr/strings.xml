@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PixelPlayer</string>
+    <string name="app_tagline">Müzik Çalar</string>
+    <string name="app_name_change_title">Uygulama Adı Değişikliği</string>
+    <string name="app_name_change_message">Ticari marka kaynaklı bir sorun nedeniyle uygulamamızın adını PixelPlay\'den PixelPlayer olarak değiştirdik. Keyifli dinlemeler!</string>
+    <string name="app_name_change_do_not_show_again">Bir daha gösterme</string>
+
+    <!-- Navigation Bar Labels -->
+    <string name="nav_bar_home">Ana Sayfa</string>
+    <string name="nav_bar_search">Ara</string>
+    <string name="nav_bar_library">Kitaplık</string>
+
+    <!-- All files access dialog-->
+    <string name="all_files_access_title">Özel İzin Gerekiyor</string>
+    <string name="all_files_access_description">Şarkı meta verilerini (.mp3 dosyalarını) düzenlemek için PixelPlayer\'ın tüm dosyalara özel erişim sağlaması gerekir. Bu, parça etiketlerini doğrudan değiştirmemize olanak tanır. Meta veri düzenlemeyi etkinleştirmek için lütfen sonraki ekranda bu izni verin.</string>
+    <string name="grant_permission_button">İzin Ver</string>
+
+    <!-- External Player -->
+    <string name="external_queue_label">Hızlı oynat</string>
+    <string name="external_playback_error">Bu ses dosyası açılamadı.</string>
+    <string name="external_action_open_full_player">Tam oynatıcıyı aç</string>
+
+    <!-- App Shortcuts -->
+    <string name="shortcut_shuffle_short">Karıştır</string>
+    <string name="shortcut_shuffle_long">Tüm şarkıları karıştır</string>
+    <string name="tile_shuffle_all">Tümünü Karıştır</string>
+    <string name="tile_last_playlist">Son Çalma Listesi</string>
+    <string name="tile_last_playlist_unavailable">Açılacak çalma listesi yok</string>
+
+    <!-- Playstore Announcement -->
+    <string name="playstore_dialog_action_open">Play Store\'u Aç</string>
+    <string name="playstore_dialog_action_continue_beta">Beta\'ya devam et</string>
+    <string name="playstore_dialog_link_pending">Play Store bağlantısı GitHub yapılandırmasından etkinleştirilecek.</string>
+    <string name="playstore_dialog_title">PixelPlayer artık Google Play\'de mevcut</string>
+    <string name="playstore_dialog_body">Beta yapılarını aktif tutarken sürüm güncellemeleri için Google Play\'deki stabil kanalı kullanın.</string>
+    <string name="playstore_dialog_app_name">PixelPlayer</string>
+    <string name="playstore_dialog_release_announcement">Sürüm duyurusu</string>
+    <string name="playstore_dialog_coming_soon">Çok yakında</string>
+
+    <!-- Brick breaker -->
+    <string name="easter_egg_thank_you">PixelPlayer\'ı kullandığınız için teşekkür ederiz!</string>
+    <string name="brick_high">EN YÜKSEK %1$d</string>
+    <string name="brick_cd_close">Kapat</string>
+    <string name="brick_stat_score">PUAN</string>
+    <string name="brick_stat_lvl">SEVİYE %1$d</string>
+    <string name="brick_stat_lives">CAN</string>
+    <string name="brick_level_complete">SEVİYE TAMAMLANDI!</string>
+    <string name="brick_game_over">OYUN BİTTİ</string>
+    <string name="brick_score_line">Puan: %1$d</string>
+    <string name="brick_try_again">Tekrar Dene?</string>
+    <string name="brick_next_level">Sonraki Seviye</string>
+    <string name="brick_restart">Oyunu Yeniden Başlat</string>
+    <string name="brick_tap_relaunch">YENİDEN BAŞLATMAK İÇİN DOKUN</string>
+    <string name="brick_play_random">Rastgele Müzik Çal</string>
+    <string name="brick_title">Tuğla Kırıcı</string>
+    <string name="brick_high_score">EN YÜKSEK PUAN  %1$d</string>
+    <string name="brick_play">Oynat</string>
+    <string name="brick_drag_paddle">Raketi hareket ettirmek için sürükleyin</string>
+
+    <!-- Music Service -->
+    <string name="close_notification_player">Oynatıcıyı kapat</string>
+    <string name="service_processing_action">Oynatma eylemi işleniyor…</string>
+    <string name="player_playback_error">Oynatma hatası: %1$s</string>
+
+    <!-- Common Text & Labels -->
+    <string name="common_back">Geri</string>
+    <string name="common_ok">Tamam</string>
+    <string name="common_cancel">İptal</string>
+    <string name="common_dismiss">Kapat</string>
+    <string name="common_error">Hata</string>
+    <string name="common_search">Ara</string>
+    <string name="common_clear_search">Aramayı temizle</string>
+    <string name="common_all">Tümü</string>
+    <string name="common_confirm">Onayla</string>
+    <string name="common_saved">Kaydedildi!</string>
+    <string name="common_selected">Seçildi</string>
+    <string name="common_percentage_text">%%%1$d</string>
+    <string name="common_artist">Sanatçı</string>
+    <string name="common_select_all">Tümünü seç</string>
+    <string name="common_clear">Temizle</string>
+    <string name="common_error_unknown">Bilinmeyen hata</string>
+
+    <!-- Common Actions & Labels -->
+    <string name="common_save">Kaydet</string>
+    <string name="common_done">Bitti</string>
+    <string name="common_reset">Sıfırla</string>
+    <string name="common_apply">Uygula</string>
+    <string name="common_shuffle">Karıştır</string>
+    <string name="common_copy">Kopyala</string>
+    <string name="common_share">Paylaş</string>
+    <string name="common_undo">Geri al</string>
+    <string name="common_import">İçe aktar</string>
+    <string name="common_delete">Sil</string>
+    <string name="common_export">Dışa aktar</string>
+    <string name="common_merge">Birleştir</string>
+    <string name="common_rename">Yeniden adlandır</string>
+    <string name="common_create">Oluştur</string>
+    <string name="common_lyrics">Şarkı Sözleri</string>
+    <string name="common_settings">Ayarlar</string>
+    <string name="common_album_art">Albüm Kapağı</string>
+    <string name="common_playlist">Çalma Listesi</string>
+    <string name="common_unknown_track">Bilinmeyen parça</string>
+    <string name="common_unknown_artist">Bilinmeyen sanatçı</string>
+    <string name="common_unknown_album">Bilinmeyen albüm</string>
+    <string name="common_close">Kapat</string>
+    <string name="common_add">Ekle</string>
+    <string name="common_remove">Kaldır</string>
+    <string name="common_play">Oynat</string>
+    <string name="common_previous_track">Önceki parça</string>
+    <string name="common_next_track">Sonraki parça</string>
+    <string name="common_favorite">Favori</string>
+    <string name="common_pause">Duraklat</string>
+    <string name="common_repeat">Tekrarla</string>
+    <string name="common_options">Seçenekler</string>
+    <string name="common_shuffle_play">Karışık Oynat</string>
+    <string name="common_more_options_for">%1$s için daha fazla seçenek</string>
+    <string name="common_expand_menu">Menüyü genişlet</string>
+    <string name="common_next">Sıradaki</string>
+    <string name="common_finish">Bitir</string>
+    <string name="common_reset_defaults">Varsayılanları sıfırla</string>
+    <string name="common_export_all">Tümünü dışa aktar</string>
+    <string name="common_merge_all">Tümünü birleştir</string>
+    <string name="common_share_all">Tümünü paylaş</string>
+    <string name="common_play_album">Albümü oynat</string>
+    <string name="common_shuffle_play_album">Albümü karışık oynat</string>
+    <string name="common_album_art_for_title">%1$s için albüm kapağı</string>
+</resources>

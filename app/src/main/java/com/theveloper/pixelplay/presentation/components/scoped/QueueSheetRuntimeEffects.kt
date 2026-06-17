@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.snapshotFlow
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
 
 /**
  * Hosts lifecycle effects for queue sheet synchronization and haptic feedback.
@@ -22,6 +22,7 @@ internal fun QueueSheetRuntimeEffects(
     onTopEdgeReached: () -> Unit
 ) {
     val onTopEdgeReachedState = rememberUpdatedState(onTopEdgeReached)
+    val queueHiddenOffsetPxState = rememberUpdatedState(queueHiddenOffsetPx)
 
     LaunchedEffect(queueHiddenOffsetPx) {
         queueSheetController.syncOffsetToVisibility()
@@ -31,19 +32,14 @@ internal fun QueueSheetRuntimeEffects(
         queueSheetController.syncCollapsedWhenHidden()
     }
 
-    LaunchedEffect(queueHiddenOffsetPx, showQueueSheet) {
-        if (queueHiddenOffsetPx == 0f) return@LaunchedEffect
-        var hasHitTopEdge = showQueueSheet && queueSheetOffset.value <= 0.5f
-        snapshotFlow { queueSheetOffset.value to showQueueSheet }
-            .collectLatest { (offset, isShown) ->
-                val isFullyOpen = isShown && offset <= 0.5f
-                if (isFullyOpen && !hasHitTopEdge) {
-                    onTopEdgeReachedState.value()
-                    hasHitTopEdge = true
-                } else if (!isFullyOpen) {
-                    hasHitTopEdge = false
-                }
-            }
+    // Use .first{} instead of collectLatest so the haptic fires exactly once per open:
+    // the spring animation can overshoot (offset briefly > 0.5f after first crossing it),
+    // which would reset hasHitTopEdge in a collectLatest loop and cause a second haptic.
+    LaunchedEffect(showQueueSheet) {
+        if (!showQueueSheet || queueSheetOffset.value <= 0.5f) return@LaunchedEffect
+        snapshotFlow { queueSheetOffset.value to queueHiddenOffsetPxState.value }
+            .first { (offset, hiddenOffset) -> hiddenOffset > 0f && offset <= 0.5f }
+        onTopEdgeReachedState.value()
     }
 
     LaunchedEffect(allowQueueSheetInteraction, queueHiddenOffsetPx) {

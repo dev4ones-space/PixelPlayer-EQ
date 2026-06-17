@@ -77,11 +77,10 @@ class CarouselState(
 
     suspend fun scrollToItem(item: Int) = pagerState.scrollToPage(item, 0f)
 
-    @Suppress("UNUSED_PARAMETER")
     suspend fun animateScrollToItem(item: Int, animationSpec: AnimationSpec<Float> = spring()) {
         if ((item == pagerState.currentPage && pagerState.currentPageOffsetFraction == 0f) || pagerState.pageCount == 0) return
         val targetPage = if (pagerState.pageCount > 0) item.coerceIn(0, pagerState.pageCount - 1) else 0
-        pagerState.animateScrollToPage(targetPage)
+        pagerState.animateScrollToPage(page = targetPage, animationSpec = animationSpec)
     }
 
     companion object {

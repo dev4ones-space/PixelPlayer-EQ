@@ -64,7 +64,7 @@ fun CustomPresetsSheet(
                 .padding(bottom = 24.dp)
         ) {
             Text(
-                text = stringResource(R.string.presentation_batch_g_presets_saved_title),
+                text = stringResource(R.string.equalizer_presets_saved_title),
                 style = MaterialTheme.typography.titleLarge,
                 fontFamily = GoogleSansRounded,
                 fontWeight = FontWeight.Bold,
@@ -79,7 +79,7 @@ fun CustomPresetsSheet(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = stringResource(R.string.presentation_batch_g_presets_empty),
+                        text = stringResource(R.string.equalizer_presets_empty),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -159,21 +159,21 @@ private fun CustomPresetItem(
              IconButton(onClick = onPinClick) {
                 Icon(
                     imageVector = if (isPinned) Icons.Default.Star else Icons.Default.StarBorder,
-                    contentDescription = if (isPinned) stringResource(R.string.presentation_batch_g_presets_cd_unpin) else stringResource(R.string.presentation_batch_g_presets_cd_pin),
+                    contentDescription = if (isPinned) stringResource(R.string.equalizer_presets_cd_unpin) else stringResource(R.string.equalizer_presets_cd_pin),
                     tint = if (isPinned) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
             IconButton(onClick = onRenameClick) {
                 Icon(
                     imageVector = Icons.Outlined.Edit,
-                    contentDescription = stringResource(R.string.presentation_batch_g_presets_cd_rename),
+                    contentDescription = stringResource(R.string.equalizer_presets_cd_rename),
                     tint = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
             IconButton(onClick = onDeleteClick) {
                 Icon(
                     imageVector = Icons.Outlined.Delete,
-                    contentDescription = stringResource(R.string.presentation_batch_g_presets_cd_delete),
+                    contentDescription = stringResource(R.string.equalizer_presets_cd_delete),
                     tint = MaterialTheme.colorScheme.error
                 )
             }

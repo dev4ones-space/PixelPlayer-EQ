@@ -1,100 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Navigation / misc -->
+    <!-- Navigation -->
     <string name="nav_error_genre_id_missing">Feil: Sjanger-ID mangler</string>
-    <string name="easter_egg_thank_you">Takk for at du bruker PixelPlayer!</string>
 
-    <!-- Word delimiter config -->
-    <string name="word_delimiter_section_title">Gjeldende ord-separatorer</string>
-    <string name="word_delimiter_section_subtitle">Disse nøkkelordene deler artistnavn når de er omgitt av mellomrom. Små/store bokstaver ignoreres. Trykk for å fjerne.</string>
-    <string name="word_delimiter_empty">Ingen ord-separatorer konfigurert</string>
-    <string name="word_delimiter_add_title">Legg til ny ord-separator</string>
-    <string name="word_delimiter_hint">f.eks. feat. eller ft.</string>
-    <string name="word_delimiter_help_title">Hvordan ord-separatorer fungerer</string>
-    <string name="word_delimiter_help_body">Ord-separatorer matches uavhengig av store/små bokstaver med mellomrom rundt.\n\nSeparatorer med ett tegn (som \"x\") krever mellomrom på begge sider.\n\nEksempler:\n  \"Drake feat. Rihanna\" -&gt; Drake, Rihanna\n  \"Marshmello x Bastille\" -&gt; Marshmello, Bastille\n  \"A vs. B\" -&gt; A, B</string>
-    <string name="word_delimiters_screen_title">Ord-separatorer</string>
-    <string name="word_delimiter_reset_title">Nullstill ord-separatorer?</string>
-    <string name="word_delimiter_reset_message">Dette vil fjerne alle dine egne separatorer og gjenopprette standardverdiene. Dette kan ikke angres.</string>
-    <string name="word_delimiter_toast_added">Ord-separator lagt til</string>
-    <string name="word_delimiter_toast_invalid">Finnes allerede eller er ugyldig</string>
-    <string name="word_delimiter_toast_reset">Ord-separatorer nullstilt til standard</string>
-    <string name="action_reset">Nullstill</string>
-
-    <!-- Delimiter config (path separators) -->
-    <string name="delimiter_section_title">Gjeldende separatorer</string>
-    <string name="delimiter_section_subtitle">Trykk på en separator for å fjerne den. Minst én separator kreves.</string>
-    <string name="delimiter_add_title">Legg til ny separator</string>
-    <string name="delimiter_hint">f.eks. / eller ;</string>
-    <string name="delimiter_defaults_title">Standardseparatorer</string>
-    <string name="delimiter_reset_title">Nullstill separatorer?</string>
-    <string name="delimiter_reset_message">Dette vil fjerne dine separatorer og gjenopprette standardverdiene. Dette kan ikke angres.</string>
-    <string name="delimiter_toast_reset">Separatorer nullstilt til standard</string>
-    <string name="delimiter_toast_at_least_one">Minst én separator kreves</string>
-    <string name="delimiter_toast_added">Separator lagt til</string>
-    <string name="delimiter_toast_invalid">Separaten finnes allerede eller er ugyldig</string>
-    <string name="path_delimiters_toolbar_title">Separatorer</string>
-    <string name="delimiter_label_space">Mellomrom</string>
-    <string name="cd_add_path_delimiter">Legg til separator</string>
-
-    <!-- Accounts -->
-    <string name="accounts_google_drive_soon">Google Drive kommer snart.</string>
-    <string name="accounts_unable_open_screen">Kunne ikke åpne skjermen akkurat nå.</string>
-
-    <!-- Setup (subset; more keys follow in same file) -->
+    <!-- SetupScreen -->
+    <string name="setup_lets_go">La oss begynne!</string>
+    <string name="setup_step_format">Trinn %1$d av %2$d</string>
+    <string name="setup_toast_grant_permission_first">Vennligst gi nødvendig tillatelse først.</string>
+    <string name="setup_toast_grant_all_permissions">Vennligst gi alle nødvendige tillatelser.</string>
     <string name="setup_welcome_prefix">Velkommen til </string>
     <string name="setup_beta_symbol">β</string>
     <string name="setup_beta_label">Beta</string>
     <string name="setup_intro_body">La oss sette opp alt for deg.</string>
-    <string name="setup_checking_backup">Sjekker sikkerhetskopi…</string>
-    <string name="setup_theme_title">App-tema</string>
-    <string name="setup_theme_subtitle">Velg utseendet du ønsker før du begynner.</string>
-    <string name="setup_theme_footer">Du kan endre dette senere i innstillinger.</string>
-    <string name="setup_recommended">Anbefalt</string>
-    <string name="setup_library_layout_title">Bibliotekslayout</string>
-    <string name="setup_library_layout_subtitle">Velg hvordan du vil navigere i biblioteket.</string>
-    <string name="setup_compact_mode">Kompakt modus</string>
-    <string name="setup_library_layout_footer">Du kan endre dette senere i innstillinger.</string>
-    <string name="tab_library">Bibliotek</string>
-    <string name="tab_songs">SANGER</string>
-    <string name="tab_albums">ALBUM</string>
-    <string name="tab_artists">ARTISTER</string>
-    <string name="setup_all_set_title">Alt klart!</string>
-    <string name="setup_all_set_body">Du er klar til å nyte musikken din.</string>
-    <string name="setup_restore_backup_title">Gjenopprett sikkerhetskopi</string>
-    <string name="setup_restore_backup_subtitle">Se gjennom hva du vil importere før du fullfører oppsettet.</string>
-    <string name="setup_modules_selected_format">%1$d av %2$d moduler valgt</string>
-    <string name="setup_backup_created_format">Opprettet %1$s</string>
-    <string name="setup_backup_from_version">Sikkerhetskopi fra %1$s</string>
-    <string name="unknown_version">Ukjent versjon</string>
-    <string name="setup_lets_go">La oss begynne!</string>
-    <string name="setup_step_format">Trinn %1$d av %2$d</string>
-    <string name="setup_app_navigation_title">App-navigasjon</string>
-    <string name="setup_app_navigation_subtitle">Velg stil på navigasjonslinjen.</string>
-    <string name="setup_navbar_default_style">Standardstil</string>
-    <string name="setup_navbar_footer">Du kan endre dette senere i innstillinger.</string>
-    <string name="skip_for_now">Hopp over</string>
-    <string name="skip_not_now">Ikke nå</string>
-    <string name="restoring">Gjenoppretter</string>
-    <string name="restore_selected">Gjenopprett valgte</string>
-    <string name="customize_corner_radius">Juster hjørneradius</string>
-    <string name="toast_grant_permission_first">Vennligst gi nødvendig tillatelse først.</string>
-    <string name="toast_grant_all_permissions">Vennligst gi alle nødvendige tillatelser.</string>
-    <string name="toast_grant_storage_first">Gi lagringstilgang først</string>
-    <string name="toast_battery_settings_unavailable">Kunne ikke åpne batteriinnstillinger</string>
-
-    <!-- Content descriptions -->
-    <string name="cd_expand_menu">Utvid meny</string>
-    <string name="cd_next_step">Neste</string>
-    <string name="cd_finish">Fullfør</string>
-    <string name="cd_close">Lukk</string>
-    <string name="cd_remove">Fjern</string>
-    <string name="cd_add_word_delimiter">Legg til ord-separator</string>
-    <string name="cd_reset_defaults">Nullstill til standard</string>
-
-    <!-- Setup (additional literals) -->
-    <string name="setup_excluded_folders_title">Ekskluderte mapper</string>
-    <string name="setup_excluded_folders_description">Alle mapper skannes som standard. Velg steder du vil ignorere.</string>
-    <string name="setup_choose_folders_ignore">Velg mapper som skal ignoreres</string>
     <string name="setup_permission_media_title">Medietilgang</string>
     <string name="setup_permission_media_description">PixelPlayer trenger tilgang til lydfilene dine for å bygge biblioteket.</string>
     <string name="setup_permission_granted">Tillatelse gitt</string>
@@ -102,138 +19,226 @@
     <string name="setup_permission_notifications_title">Varslinger</string>
     <string name="setup_permission_notifications_description">Aktiver varslinger for å styre musikken fra låst skjerm.</string>
     <string name="setup_enable_notifications">Aktiver varslinger</string>
-    <string name="setup_permission_alarms_title">Alarmer og påminnelser</string>
-    <string name="setup_permission_alarms_description">Valgfritt, men anbefalt for Sleep Timer.</string>
-    <string name="setup_grant_permission_generic">Gi tillatelse</string>
     <string name="setup_backup_have_title">Har du en sikkerhetskopi?</string>
     <string name="setup_backup_have_description">Hvis du allerede har en PixelPlayer-sikkerhetskopi, kan du gjenopprette den nå.</string>
-    <string name="setup_inspecting_backup">Inspiserer sikkerhetskopi</string>
-    <string name="setup_restoring_backup">Gjenoppretter sikkerhetskopi</string>
     <string name="setup_import_backup">Importer sikkerhetskopi</string>
+    <string name="setup_inspecting_backup">Inspiserer sikkerhetskopi</string>
+    <string name="setup_checking_backup">Sjekker sikkerhetskopi…</string>
+    <string name="setup_restoring_backup">Gjenoppretter sikkerhetskopi</string>
+    <string name="setup_skip_for_now">Hopp over</string>
+    <string name="setup_restore_backup_title">Gjenopprett sikkerhetskopi</string>
+    <string name="setup_restore_backup_subtitle">Se gjennom hva du vil importere før du fullfører oppsettet.</string>
+    <string name="setup_modules_selected_format">%1$d av %2$d moduler valgt</string>
+    <string name="setup_backup_created_format">Opprettet %1$s</string>
+    <string name="setup_backup_from_version">Sikkerhetskopi fra %1$s</string>
+    <string name="setup_backup_unknown_version">Ukjent versjon</string>
+    <string name="setup_restore_selected">Gjenopprett valgte</string>
+    <string name="setup_restoring">Gjenoppretter</string>
+    <string name="setup_excluded_folders_title">Ekskluderte mapper</string>
+    <string name="setup_excluded_folders_description">Alle mapper skannes som standard. Velg steder du vil ignorere.</string>
+    <string name="setup_choose_folders_ignore">Velg mapper som skal ignoreres</string>
+    <string name="setup_toast_grant_storage_first">Gi lagringstilgang først</string>
+    <string name="setup_theme_title">App-tema</string>
+    <string name="setup_theme_subtitle">Velg utseendet du ønsker før du begynner.</string>
     <string name="setup_theme_dark_title">Mørkt</string>
     <string name="setup_theme_dark_description">Standard Material 3 mørkt utseende.</string>
     <string name="setup_theme_light_title">Lyst</string>
     <string name="setup_theme_light_description">Et lysere Material 3-utseende.</string>
     <string name="setup_theme_follow_title">Følg system</string>
     <string name="setup_theme_follow_description">Bruk telefonens gjeldende innstilling.</string>
+    <string name="setup_recommended">Anbefalt</string>
+    <string name="setup_theme_footer">Du kan endre dette senere i innstillinger.</string>
+    <string name="setup_library_layout_title">Bibliotekslayout</string>
+    <string name="setup_library_layout_subtitle">Velg hvordan du vil navigere i biblioteket.</string>
+    <string name="setup_preview_songs_label">Sanger</string>
+    <string name="setup_compact_mode">Kompakt modus</string>
     <string name="setup_compact_mode_pill_hint">Bruker minimal navigasjon</string>
     <string name="setup_compact_mode_tab_hint">Bruker standard fanerekke</string>
-    <string name="setup_preview_songs_label">Sanger</string>
+    <string name="setup_tab_songs">SANGER</string>
+    <string name="setup_tab_albums">ALBUM</string>
+    <string name="setup_tab_artists">ARTISTER</string>
+    <string name="setup_library_layout_footer">Du kan endre dette senere i innstillinger.</string>
+    <string name="setup_app_navigation_title">App-navigasjon</string>
+    <string name="setup_app_navigation_subtitle">Velg stil på navigasjonslinjen.</string>
+    <string name="setup_navbar_default_style">Standardstil</string>
+    <string name="setup_nav_floating_pill_description">Flytende felt med runde hjørner</string>
+    <string name="setup_nav_full_width_description">Standard bar i full bredde</string>
+    <string name="setup_customize_corner_radius">Juster hjørneradius</string>
+    <string name="setup_navbar_footer">Du kan endre dette senere i innstillinger.</string>
+    <string name="setup_permission_alarms_title">Alarmer og påminnelser</string>
+    <string name="setup_permission_alarms_description">Valgfritt, men anbefalt for Sleep Timer.</string>
+    <string name="setup_grant_permission_generic">Gi tillatelse</string>
     <string name="setup_battery_optimization_title">Batterioptimalisering</string>
     <string name="setup_battery_optimization_description">Deaktiver optimalisering for å unngå avbrudd i avspillingen.</string>
     <string name="setup_disable_battery_optimization">Deaktiver optimalisering</string>
-    <string name="setup_nav_floating_pill_description">Flytende felt med runde hjørner</string>
-    <string name="setup_nav_full_width_description">Standard bar i full bredde</string>
+    <string name="setup_all_set_title">Alt klart!</string>
+    <string name="setup_all_set_body">Du er klar til å nyte musikken din.</string>
 
-    <!-- Delete song (Material dialog from ViewModel) -->
-    <string name="dialog_delete_song_title">Slett sang?</string>
-    <string name="dialog_delete_song_message">\"%1$s\" av %2$s\n\nDenne sangen vil bli slettet permanent og kan ikke gjenopprettes.</string>
-
-    <!-- Home / detail shared -->
-    <string name="home_your_mix_title">Din\nMix</string>
-    <string name="cd_shuffle_play">Bland alle</string>
-    <string name="cd_album_art_for_title">Albumkunst for %1$s</string>
-    <string name="cd_options">Alternativer</string>
-    <string name="genre_quick_fill">Hurtigutfylling av sjanger</string>
-    <string name="cd_generic_artist">Artist</string>
-    <string name="cd_play_album">Spill album</string>
-    <string name="cd_shuffle_play_album">Bland album</string>
-    <string name="album_cover_for">Cover for %1$s</string>
-    <string name="album_detail_meta_line">%1$s • %2$s</string>
-    <string name="mashup_cd_play_pause">Spill/Pause</string>
-    <string name="cd_song_cover">Sangcover</string>
-
-    <!-- Crash report dialog -->
-    <string name="crash_report_title">Beklager, noe gikk galt</string>
-    <string name="crash_report_subtitle">Appen krasjet i forrige økt. Hjelp oss ved å dele krasjrapporten.</string>
-    <string name="crash_report_date_line">Dato: %1$s</string>
-    <string name="crash_report_error_label">Feil:</string>
-    <string name="crash_report_stack_preview_label">Stack trace (forhåndsvisning):</string>
-    <string name="crash_report_clipboard_label">Krasj-logg</string>
-    <string name="toast_crash_log_copied">Krasj-logg kopiert til utklippstavlen</string>
-    <string name="crash_report_share_subject">PixelPlayer krasjrapport</string>
-    <string name="crash_report_share_chooser">Del krasjrapport</string>
-    <string name="action_copy">Kopier</string>
-    <string name="action_share">Del</string>
-
-    <!-- Search screen -->
+    <!-- SearchScreen -->
     <string name="search_placeholder">Søk…</string>
-    <string name="cd_search_icon">Søk</string>
-    <string name="cd_clear_search_query">Tøm søk</string>
-    <string name="recent_searches">Nylige søk</string>
-    <string name="clear_all">Tøm alle</string>
-    <string name="cd_search_history_icon">Historikk</string>
-    <string name="cd_delete_search_history_item">Fjern fra historikk</string>
-    <string name="cd_no_search_results">Ingen resultater</string>
+    <string name="search_cd_search_icon">Søk</string>
+    <string name="search_cd_clear_search_query">Tøm søk</string>
+    <string name="search_recent_searches">Nylige søk</string>
+    <string name="search_action_clear_all">Tøm alt</string>
+    <string name="search_cd_search_history_icon">Historikk</string>
+    <string name="search_cd_delete_search_history_item">Slett søkehistorikk-element</string>
+    <string name="search_cd_no_results">Ingen resultater</string>
     <string name="search_no_results_for_query">Ingen resultater for \"%1$s\"</string>
     <string name="search_nothing_found">Fant ingenting</string>
     <string name="search_try_different_or_filters">Prøv et annet søkeord eller sjekk filtrene dine.</string>
     <string name="search_no_results_found">Ingen resultater funnet.</string>
-
-    <!-- Genre browse -->
     <string name="browse_by_genre">Finn via sjanger</string>
     <string name="no_genres_available">Ingen sjangere tilgjengelig.</string>
 
-    <!-- About -->
-    <string name="about_no_contributors">Ingen bidragsytere funnet akkurat nå. Vennligst prøv igjen senere.</string>
-    <string name="about_app_name">PixelPlayer</string>
-    <string name="about_tagline">Open source musikkspiller bygget sammen med fellesskapet.</string>
-    <string name="about_version_format">Versjon v%1$s</string>
-    <string name="about_contributions_format">%1$d bidrag</string>
-    <string name="screen_about">Om</string>
-    <string name="about_maintainer_title">Vedlikeholder</string>
-    <string name="about_maintainer_subtitle">Personen bak PixelPlayer.</string>
-    <string name="about_spotlight_title">Fremhevede bidragsytere</string>
-    <string name="about_spotlight_subtitle">Anerkjennelse for de som har hatt stor betydning.</string>
-    <string name="about_contributors_section_title">Bidragsytere</string>
-    <string name="about_contributors_section_subtitle">Live-liste fra GitHub.</string>
-    <string name="about_signal_open_source">Open source</string>
-    <string name="about_signal_community_first">Fellesskapet først</string>
-    <string name="about_signal_material3">Material 3</string>
-    <string name="cd_open_github_profile">Åpne GitHub-profil</string>
-    <string name="cd_open_telegram">Åpne Telegram</string>
-    <string name="cd_contributor_avatar">Avatar for %1$s</string>
-    <string name="cd_contributor_icon">Ikon for %1$s</string>
+    <!-- ArtistDetailScreen -->
+    <string name="artist_cd_play_title">Spill %1$s</string>
+    <string name="artist_cd_collapse_title">Slå sammen %1$s</string>
+    <string name="artist_cd_expand_title">Utvid %1$s</string>
+    <string name="artist_cd_edit_image">Rediger artistbilde</string>
+    <string name="artist_action_change_photo">Endre bilde</string>
+    <string name="artist_action_reset_to_default">Nullstill til standard</string>
+    <string name="artist_cd_shuffle_play">Bland artist</string>
 
-    <!-- Streaming / cloud dashboards -->
-    <string name="screen_subsonic_dashboard_title">Subsonic</string>
-    <string name="dash_playlists_synced_count">%1$d spillelister synkronisert</string>
-    <string name="dash_folders_synced_count">%1$d mapper synkronisert</string>
-    <string name="dash_title_playlists">Spillelister</string>
-    <string name="dash_music_folders">Musikkmapper</string>
-    <string name="dash_action_sync">Synk</string>
-    <string name="dash_playlists_empty_title">Ingen spillelister synkronisert ennå</string>
-    <string name="dash_playlists_empty_hint_subsonic">Trykk på synk for å hente spillelister</string>
-    <string name="dash_playlists_empty_hint_jellyfin">Trykk på synk for å hente Jellyfin-spillelister</string>
-    <string name="dash_no_folders_yet">Ingen mapper lagt til ennå</string>
-    <string name="dash_tap_plus_add_drive_folder">Trykk + for å legge til en Drive-mappe</string>
-    <string name="dash_quick_actions">Hurtighandlinger</string>
-    <string name="dash_quick_actions_subsonic_subtitle">Administrer Navidrome, Airsonic og andre.</string>
-    <string name="dash_quick_actions_jellyfin_subtitle">Administrer din Jellyfin-tilkobling.</string>
-    <string name="dash_status_syncing">Synkroniserer</string>
-    <string name="dash_action_sync_library">Synkroniser bibliotek</string>
-    <string name="dash_action_disconnect">Koble fra</string>
-    <string name="dash_song_count">%1$d sanger</string>
-    <string name="cd_sync">Synkroniser</string>
-    <string name="cd_sync_all">Synkroniser alle</string>
-    <string name="cd_add_drive_folder">Legg til mappe</string>
-    <string name="cd_logout">Logg ut</string>
-    <string name="screen_netease_dashboard_title">NetEase Music</string>
-    <string name="screen_qq_music_dashboard_title">QQ Music</string>
-    <string name="cd_sync_all_playlists">Synkroniser alle spillelister</string>
-    <string name="error_with_message_format">Feil: %1$s</string>
-    <string name="sync_status_syncing_ellipsis">Synkroniserer…</string>
-    <string name="qq_select_playlist_type_title">Velg type spilleliste</string>
-    <string name="qq_choose_playlists_to_sync">Velg hvilke som skal synkroniseres:</string>
-    <string name="qq_all_playlists">Alle spillelister</string>
-    <string name="qq_created_and_collected">Opprettet og innsamlet</string>
-    <string name="qq_created_playlists">Opprettede spillelister</string>
-    <string name="qq_collected_playlists">Innsamlede spillelister</string>
-    <string name="cd_user_avatar">Brukeravatar</string>
-    <string name="toast_playlist_created">Spilleliste opprettet</string>
-    <string name="toast_set_ai_provider_api_key_first">Sett opp AI API-nøkkel først</string>
-    <string name="toast_set_gemini_api_key_first">Sett opp Gemini API-nøkkel først</string>
-    <string name="toast_added_to_queue">Lagt i kø</string>
-    <string name="toast_playing_next">Spilles som neste</string>
-    <string name="error_share_song_format">Kunne ikke dele sang: %1$s</string>
+    <!-- AlbumDetailScreen -->
+    <string name="album_disc_number_header">Disk %d</string>
+    <string name="album_cover_for">Cover for %1$s</string>
+    <string name="album_detail_meta_line">%1$s · %2$s</string>
+
+    <!-- PlaylistDetailScreen -->
+    <string name="playlist_not_found">Spilleliste ikke funnet.</string>
+    <string name="playlist_empty_title">Denne spillelisten er tom.</string>
+    <string name="playlist_empty_add_hint">Trykk på \'Legg til sanger\' for å starte.</string>
+    <string name="playlist_empty_folder_label">Denne mappen inneholder ingen sanger.</string>
+    <string name="playlist_sort_songs_title">Sorter sanger</string>
+    <string name="playlist_more_options_title">Flere alternativer</string>
+    <string name="playlist_options_title">Alternativer for spilleliste</string>
+    <string name="playlist_action_edit_playlist">Rediger spilleliste</string>
+    <string name="playlist_action_delete_playlist">Slett spilleliste</string>
+    <string name="playlist_dialog_delete_title">Slett spilleliste?</string>
+    <string name="playlist_dialog_delete_body">Er du sikker på at du vil slette denne spillelisten?</string>
+    <string name="playlist_action_set_default_transition">Angi standard overgang</string>
+    <string name="playlist_action_export_playlist">Eksporter spilleliste</string>
+    <string name="playlist_song_duration_line">%1$s • %2$s</string>
+    <string name="playlist_action_play_it">Spill den</string>
+    <string name="playlist_action_add_songs">Legg til</string>
+    <string name="playlist_cd_add_songs">Legg til sanger</string>
+    <string name="playlist_action_remove_songs">Fjern</string>
+    <string name="playlist_cd_remove_songs">Fjern sanger</string>
+    <string name="playlist_action_reorder_songs">Endre rekkefølge</string>
+    <string name="playlist_cd_reorder_songs">Endre rekkefølge på sanger</string>
+
+    <!-- EditTransitionScreen -->
+    <string name="transition_title_global">Globale overganger</string>
+    <string name="transition_title_playlist_rules">Spillelisteregler</string>
+    <string name="transition_intro_global">Denne konfigurasjonen gjelder for alle avspillingskilder med mindre den overstyres.</string>
+    <string name="transition_intro_playlist">Konfigurer standardatferd for denne spesifikke spillelisten.</string>
+    <string name="transition_active_status">Aktiv status</string>
+    <string name="transition_status_global_default">Global standard</string>
+    <string name="transition_status_playlist_default">Spilleliste-standard</string>
+    <string name="transition_status_following_global">Følger global</string>
+    <string name="transition_status_custom_override">Egendefinert overstyring</string>
+    <string name="transition_custom_override_title">Egendefinert overstyring</string>
+    <string name="transition_custom_override_body">Aktiver for å angi spesifikke regler for denne spillelisten.</string>
+    <string name="transition_snackbar_using_global">Bruker globale standardverdier</string>
+    <string name="transition_snackbar_saved">Endringer lagret</string>
+    <string name="transition_style_title">Overgangsstil</string>
+    <string name="transition_style_subtitle">Hvordan spor tones inn i hverandre</string>
+    <string name="transition_mode_none">Ingen</string>
+    <string name="transition_mode_crossfade">Crossfade</string>
+    <string name="transition_duration_title">Overgangsvarighet</string>
+    <string name="transition_duration_subtitle_format">%1$ds total overlapp</string>
+    <string name="transition_reset_cd">Nullstill</string>
+    <string name="transition_visualizer_current">Gjeldende sang</string>
+    <string name="transition_visualizer_next">Neste sang</string>
+    <string name="transition_overlap_explanation_format">Spor vil overlappe i %1$ds</string>
+    <string name="transition_curves_title">Volumkurver</string>
+    <string name="transition_curves_subtitle">Finjuster lydstigningen</string>
+    <string name="transition_fade_out">Fade Out</string>
+    <string name="transition_fade_in">Fade In</string>
+
+    <!-- CreatePlaylistScreen -->
+    <string name="playlist_creation_new_smart">Ny smart spilleliste</string>
+    <string name="playlist_creation_new">Ny spilleliste</string>
+    <string name="playlist_creation_add_songs">Legg til sanger</string>
+    <string name="playlist_creation_cd_back_or_cancel">Tilbake eller Avbryt</string>
+    <string name="playlist_creation_next">Neste</string>
+    <string name="playlist_creation_create">Opprett</string>
+    <string name="playlist_creation_edit">Rediger spilleliste</string>
+    <string name="playlist_creation_auto_collage">Autogenerert kollasj</string>
+    <string name="playlist_creation_cd_add_photo">Legg til bilde</string>
+    <string name="playlist_creation_pick_image">Velg bilde</string>
+    <string name="playlist_creation_change">Endre</string>
+    <string name="playlist_creation_remove">Fjern</string>
+    <string name="playlist_creation_name_label">Navn på spilleliste</string>
+    <string name="playlist_creation_name_placeholder">Min kule miks</string>
+    <string name="playlist_creation_edit_cover">Rediger cover</string>
+    <string name="playlist_creation_adjust_cover_title">Juster coverbildet</string>
+    <string name="playlist_creation_adjust_cover_hint">Bruk gester for å finne den perfekte utsnittet</string>
+    <string name="playlist_creation_mode_manual">Manuell</string>
+    <string name="playlist_creation_mode_smart">Smart</string>
+    <string name="playlist_creation_generate_with_ai">Generer med AI</string>
+    <string name="playlist_creation_smart_rule">Smart regel</string>
+    <string name="playlist_creation_tab_default">Standard</string>
+    <string name="playlist_creation_tab_image">Bilde</string>
+    <string name="playlist_creation_tab_icon">Ikon</string>
+    <string name="playlist_creation_bg_color">Bakgrunnsfarge</string>
+    <string name="playlist_creation_icon_symbol">Ikonsymbol</string>
+    <string name="playlist_creation_shape_style">Formstil</string>
+    <string name="playlist_creation_shape_params">Form-parametere</string>
+    <string name="playlist_creation_corner_radius">Hjørneradius</string>
+    <string name="playlist_creation_smoothness">Glatthet</string>
+    <string name="playlist_creation_sides">Sider</string>
+    <string name="playlist_creation_curve">Kurve</string>
+    <string name="playlist_creation_rotation">Rotasjon</string>
+    <string name="playlist_creation_scale">Skala</string>
+    <string name="playlist_creation_rule_top_played_title">Mest spilt</string>
+    <string name="playlist_creation_rule_top_played_sub">Dine mest spilte spor.</string>
+    <string name="playlist_creation_rule_recently_played_title">Nylig spilt</string>
+    <string name="playlist_creation_rule_recently_played_sub">Sanger du har lyttet til nylig.</string>
+    <string name="playlist_creation_rule_forgotten_title">Glemte favoritter</string>
+    <string name="playlist_creation_rule_forgotten_sub">Favorittspor du ikke har spilt på en stund.</string>
+    <string name="playlist_creation_rule_new_gems_title">Nye perler</string>
+    <string name="playlist_creation_rule_new_gems_sub">Nylig tillagte spor med få avspillinger.</string>
+
+    <!-- GenreDetailScreen -->
+    <string name="genre_quick_fill">Hurtigutfylling av sjanger</string>
+    <string name="genre_sort_title">Sorter og spill</string>
+    <string name="genre_sort_action_shuffle">Bland</string>
+    <string name="genre_sort_by_title">Sorter etter</string>
+    <string name="genre_sort_artist_option">Artist</string>
+    <string name="genre_sort_album_option">Album</string>
+    <string name="genre_sort_title_option">Tittel</string>
+    <string name="genre_cd_generic_artist">Artist</string>
+    <string name="genre_shuffle_label">%1$s-blanding</string>
+
+    <!-- QuickFillScreen -->
+    <string name="quick_fill_select_songs">Velg sanger</string>
+    <string name="quick_fill_choose_genre">Velg sjanger</string>
+    <string name="quick_fill_search_songs_placeholder">Søk etter sanger</string>
+    <string name="quick_fill_new_genre">Ny sjanger</string>
+    <string name="quick_fill_cd_add_custom_genre">Legg til egendefinert</string>
+    <string name="quick_fill_add_custom_genre_title">Legg til egendefinert sjanger</string>
+    <string name="quick_fill_genre_name_placeholder">Sjangernavn</string>
+    <string name="quick_fill_select_icon">Velg ikon</string>
+    <string name="quick_fill_select_genre_label_format">Sjanger: %1$s</string>
+    <string name="quik_fill_select_a_genre_label">Velg en sjanger</string>
+    <string name="quick_fill_action_title">Quick Fill</string>
+
+    <!-- MashupScreen -->
+    <string name="mashup_title">DJ Space</string>
+    <string name="mashup_loading">Laster…</string>
+    <string name="mashup_deck_n">Deck %1$d</string>
+    <string name="mashup_load_song_cd">Last sang</string>
+    <string name="mashup_no_song_loaded">Ingen sang lastet</string>
+    <string name="mashup_artist_placeholder">…</string>
+    <string name="mashup_stem_separation_unavailable">Stems-separasjon er ikke tilgjengelig ennå.</string>
+    <string name="mashup_volume">Volum</string>
+    <string name="mashup_speed">Hastighet</string>
+    <string name="mashup_crossfader">Crossfader</string>
+    <string name="mashup_deck_1">Deck 1</string>
+    <string name="mashup_deck_2">Deck 2</string>
+    <string name="mashup_select_song_title">Velg en sang</string>
+    <string name="mashup_cd_play_pause">Spill/Pause</string>
+    <string name="mashup_cd_song_cover">Sangcover</string>
+    <string name="mashup_speed_multiplier">x%1$.2f</string>
 </resources>

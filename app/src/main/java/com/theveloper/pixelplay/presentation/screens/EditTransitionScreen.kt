@@ -111,9 +111,9 @@ fun EditTransitionScreen(
     LaunchedEffect(uiState.isSaved, isPlaylistScope, uiState.useGlobalDefaults) {
         if (uiState.isSaved) {
             val messageRes = if (isPlaylistScope && uiState.useGlobalDefaults) {
-                R.string.presentation_batch_d_transition_snackbar_using_global
+                R.string.transition_snackbar_using_global
             } else {
-                R.string.presentation_batch_d_transition_snackbar_saved
+                R.string.transition_snackbar_saved
             }
             snackbarHostState.showSnackbar(message = context.getString(messageRes))
         }
@@ -128,9 +128,9 @@ fun EditTransitionScreen(
                     Text(
                         modifier = Modifier.padding(start = 4.dp),
                         text = if (isPlaylistScope) {
-                            stringResource(R.string.presentation_batch_d_transition_title_playlist_rules)
+                            stringResource(R.string.transition_title_playlist_rules)
                         } else {
-                            stringResource(R.string.presentation_batch_d_transition_title_global)
+                            stringResource(R.string.transition_title_global)
                         },
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
@@ -143,7 +143,7 @@ fun EditTransitionScreen(
                         onClick = { navController.navigateUp() },
                         colors = IconButtonDefaults.filledIconButtonColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow)
                     ) {
-                        Icon(painterResource(R.drawable.rounded_arrow_back_24), contentDescription = stringResource(R.string.auth_cd_back), tint = MaterialTheme.colorScheme.onSurface)
+                        Icon(painterResource(R.drawable.rounded_arrow_back_24), contentDescription = stringResource(R.string.common_back), tint = MaterialTheme.colorScheme.onSurface)
                     }
                 },
                 actions = {
@@ -153,7 +153,7 @@ fun EditTransitionScreen(
                         enabled = !uiState.isLoading,
                         colors = IconButtonDefaults.filledIconButtonColors(containerColor = MaterialTheme.colorScheme.tertiaryContainer, contentColor = MaterialTheme.colorScheme.onTertiaryContainer)
                     ){
-                        Icon(Icons.Rounded.Save, contentDescription = stringResource(R.string.presentation_batch_d_transition_save_cd))
+                        Icon(Icons.Rounded.Save, contentDescription = stringResource(R.string.common_save))
                     }
                 },
                 scrollBehavior = scrollBehavior,
@@ -193,9 +193,9 @@ fun EditTransitionScreen(
                 item {
                     Text(
                         text = if (isPlaylistScope) {
-                            stringResource(R.string.presentation_batch_d_transition_intro_playlist)
+                            stringResource(R.string.transition_intro_playlist)
                         } else {
-                            stringResource(R.string.presentation_batch_d_transition_intro_global)
+                            stringResource(R.string.transition_intro_global)
                         },
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -287,16 +287,16 @@ private fun TransitionSummaryCard(
 
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = stringResource(R.string.presentation_batch_d_transition_active_status),
+                        text = stringResource(R.string.transition_active_status),
                         style = MaterialTheme.typography.labelLarge,
                         color = MaterialTheme.colorScheme.primary
                     )
                     Text(
                         text = when {
-                            !isPlaylistScope -> stringResource(R.string.presentation_batch_d_transition_status_global_default)
-                            followingGlobal -> stringResource(R.string.presentation_batch_d_transition_status_following_global)
-                            hasCustomRule -> stringResource(R.string.presentation_batch_d_transition_status_custom_override)
-                            else -> stringResource(R.string.presentation_batch_d_transition_status_playlist_default)
+                            !isPlaylistScope -> stringResource(R.string.transition_status_global_default)
+                            followingGlobal -> stringResource(R.string.transition_status_following_global)
+                            hasCustomRule -> stringResource(R.string.transition_status_custom_override)
+                            else -> stringResource(R.string.transition_status_playlist_default)
                         },
                         style = MaterialTheme.typography.titleLarge
                     )
@@ -319,9 +319,9 @@ private fun TransitionSummaryCard(
                         Column(modifier = Modifier
                             .weight(1f)
                             .padding(end = 16.dp)) {
-                            Text(stringResource(R.string.presentation_batch_d_transition_custom_override_title), style = MaterialTheme.typography.titleMedium)
+                            Text(stringResource(R.string.transition_custom_override_title), style = MaterialTheme.typography.titleMedium)
                             Text(
-                                text = stringResource(R.string.presentation_batch_d_transition_custom_override_body),
+                                text = stringResource(R.string.transition_custom_override_body),
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -353,9 +353,9 @@ private fun TransitionModeSection(
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             Icon(Icons.Rounded.GraphicEq, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
             Column {
-                Text(stringResource(R.string.presentation_batch_d_transition_style_title), style = MaterialTheme.typography.titleMedium)
+                Text(stringResource(R.string.transition_style_title), style = MaterialTheme.typography.titleMedium)
                 Text(
-                    text = stringResource(R.string.presentation_batch_d_transition_style_subtitle),
+                    text = stringResource(R.string.transition_style_subtitle),
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     style = MaterialTheme.typography.bodyMedium
                 )
@@ -379,8 +379,8 @@ private fun ExpressiveMorphingToggle(
 ) {
     val selectedIndex = if (selectedOption == TransitionMode.OVERLAP) 1 else 0
     val shape = CircleShape //RoundedCornerShape(16.dp) // Menos redondeado para más estructura, o 50 para capsula
-    val crossfadeLabel = stringResource(R.string.presentation_batch_d_transition_mode_crossfade)
-    val noneLabel = stringResource(R.string.presentation_batch_d_transition_mode_none)
+    val crossfadeLabel = stringResource(R.string.transition_mode_crossfade)
+    val noneLabel = stringResource(R.string.transition_mode_none)
 
     // Contenedor Plano con borde sutil
     BoxWithConstraints(
@@ -462,9 +462,9 @@ private fun TransitionDurationSection(
             modifier = Modifier.fillMaxWidth()
         ) {
             Column {
-                Text(stringResource(R.string.presentation_batch_d_transition_duration_title), style = MaterialTheme.typography.titleMedium)
+                Text(stringResource(R.string.transition_duration_title), style = MaterialTheme.typography.titleMedium)
                 Text(
-                    text = stringResource(R.string.presentation_batch_d_transition_duration_subtitle_format, durationInSeconds),
+                    text = stringResource(R.string.transition_duration_subtitle_format, durationInSeconds),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary
                 )
@@ -476,7 +476,7 @@ private fun TransitionDurationSection(
                     contentColor = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             ) {
-                Icon(Icons.Rounded.Tune, contentDescription = stringResource(R.string.presentation_batch_d_transition_reset_cd))
+                Icon(Icons.Rounded.Tune, contentDescription = stringResource(R.string.transition_reset_cd))
             }
         }
 
@@ -519,12 +519,12 @@ private fun CrossfadeVisualizer(durationMs: Int) {
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                stringResource(R.string.presentation_batch_d_transition_visualizer_current),
+                stringResource(R.string.transition_visualizer_current),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.tertiary
             )
             Text(
-                stringResource(R.string.presentation_batch_d_transition_visualizer_next),
+                stringResource(R.string.transition_visualizer_next),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.secondary
             )
@@ -640,7 +640,7 @@ private fun CrossfadeVisualizer(durationMs: Int) {
         // Explicación textual dinámica
         Text(
             text = stringResource(
-                R.string.presentation_batch_d_transition_overlap_explanation_format,
+                R.string.transition_overlap_explanation_format,
                 TimeUnit.MILLISECONDS.toSeconds(durationMs.toLong()).toInt()
             ),
             style = MaterialTheme.typography.bodySmall,
@@ -661,9 +661,9 @@ private fun TransitionCurvesSection(
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             Icon(Icons.Rounded.Tune, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
             Column {
-                Text(stringResource(R.string.presentation_batch_d_transition_curves_title), style = MaterialTheme.typography.titleMedium)
+                Text(stringResource(R.string.transition_curves_title), style = MaterialTheme.typography.titleMedium)
                 Text(
-                    stringResource(R.string.presentation_batch_d_transition_curves_subtitle),
+                    stringResource(R.string.transition_curves_subtitle),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -674,7 +674,7 @@ private fun TransitionCurvesSection(
             // Usamos colores terciarios para la salida (Fade Out)
             CurveSelectionColumn(
                 modifier = Modifier.weight(1f),
-                title = stringResource(R.string.presentation_batch_d_transition_fade_out),
+                title = stringResource(R.string.transition_fade_out),
                 selected = settings.curveOut,
                 onCurveSelected = onCurveOutSelected,
                 activeColor = MaterialTheme.colorScheme.tertiaryContainer,
@@ -683,7 +683,7 @@ private fun TransitionCurvesSection(
             // Usamos colores secundarios para la entrada (Fade In)
             CurveSelectionColumn(
                 modifier = Modifier.weight(1f),
-                title = stringResource(R.string.presentation_batch_d_transition_fade_in),
+                title = stringResource(R.string.transition_fade_in),
                 selected = settings.curveIn,
                 onCurveSelected = onCurveInSelected,
                 activeColor = MaterialTheme.colorScheme.secondaryContainer,

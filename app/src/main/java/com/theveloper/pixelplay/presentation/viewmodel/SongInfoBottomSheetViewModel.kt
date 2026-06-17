@@ -254,13 +254,27 @@ class SongInfoBottomSheetViewModel @Inject constructor(
         return transferStateStore.isSongSavedOnAllReachableWatches(songId)
     }
 
+    fun isSongEditable(song: Song): Boolean {
+        if (getCloudProviderLabel(song.contentUriString) != null) return false
+
+        if (song.path.isNotBlank()) {
+            val file = File(song.path)
+            return file.exists() && file.isFile
+        }
+
+        val uri = song.contentUriString
+        return uri.startsWith("content://") || uri.startsWith("file://")
+    }
+
     private fun getCloudProviderLabel(contentUriString: String): String? {
+        val normalized = contentUriString.lowercase().trim()
         return when {
-            contentUriString.startsWith("telegram://") -> "Telegram"
-            contentUriString.startsWith("netease://") -> "Netease Music"
-            contentUriString.startsWith("qqmusic://") -> "QQ Music"
-            contentUriString.startsWith("navidrome://") -> "Navidrome"
-            contentUriString.startsWith("gdrive://") -> "Google Drive"
+            normalized.startsWith("telegram://") || normalized.startsWith("telegram:") -> "Telegram"
+            normalized.startsWith("netease://") || normalized.startsWith("netease:") -> "Netease Music"
+            normalized.startsWith("qqmusic://") || normalized.startsWith("qqmusic:") -> "QQ Music"
+            normalized.startsWith("navidrome://") || normalized.startsWith("navidrome:") -> "Navidrome"
+            normalized.startsWith("gdrive://") || normalized.startsWith("gdrive:") -> "Google Drive"
+            normalized.startsWith("jellyfin://") || normalized.startsWith("jellyfin:") -> "Jellyfin"
             else -> null
         }
     }

@@ -80,9 +80,6 @@ class SetupViewModel @Inject constructor(
     /**
      * Expose sync progress for UI to show during initial setup
      */
-    /**
-     * Expose sync progress for UI to show during initial setup
-     */
     val isSyncing = syncManager.isSyncing
 
     private val fileExplorerStateHolder = FileExplorerStateHolder(userPreferencesRepository, viewModelScope, context)
@@ -299,8 +296,8 @@ class SetupViewModel @Inject constructor(
                     _events.emit(
                         SetupEvent.Message(
                             context.getString(
-                                R.string.backup_invalid_format,
-                                error.localizedMessage ?: context.getString(R.string.error_unknown),
+                                R.string.settings_backup_invalid_format,
+                                error.localizedMessage ?: context.getString(R.string.common_error_unknown),
                             )
                         )
                     )
@@ -340,8 +337,8 @@ class SetupViewModel @Inject constructor(
                         operation = BackupOperationType.IMPORT,
                         step = 0,
                         totalSteps = 1,
-                        title = context.getString(R.string.backup_progress_preparing_restore),
-                        detail = context.getString(R.string.backup_progress_starting_task),
+                        title = context.getString(R.string.settings_backup_progress_preparing_restore),
+                        detail = context.getString(R.string.settings_backup_progress_starting_task),
                     )
                 )
             }
@@ -352,21 +349,21 @@ class SetupViewModel @Inject constructor(
 
             when (result) {
                 is RestoreResult.Success -> {
-                    _events.emit(SetupEvent.RestoreCompleted(context.getString(R.string.restore_completed_success)))
+                    _events.emit(SetupEvent.RestoreCompleted(context.getString(R.string.settings_restore_completed_success)))
                 }
                 is RestoreResult.PartialFailure -> {
                     val canFinishSetup = result.succeeded.isNotEmpty() || !result.rolledBack
                     if (canFinishSetup) {
                         _events.emit(
                             SetupEvent.RestoreCompleted(
-                                context.getString(R.string.restore_completed_partial_issues),
+                                context.getString(R.string.settings_restore_completed_partial_issues),
                             )
                         )
                     } else {
                         _events.emit(
                             SetupEvent.Message(
                                 context.getString(
-                                    R.string.restore_could_not_complete,
+                                    R.string.settings_restore_could_not_complete,
                                     result.failed.values.joinToString(),
                                 ),
                             )
@@ -374,7 +371,7 @@ class SetupViewModel @Inject constructor(
                     }
                 }
                 is RestoreResult.TotalFailure -> {
-                    _events.emit(SetupEvent.Message(context.getString(R.string.restore_failed_format, result.error)))
+                    _events.emit(SetupEvent.Message(context.getString(R.string.settings_restore_failed_format, result.error)))
                 }
             }
 

@@ -80,7 +80,7 @@ fun GenreGradientTopBar(
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                    contentDescription = stringResource(R.string.auth_cd_back),
+                    contentDescription = stringResource(R.string.common_back),
                     tint = startColor
                 )
             }
@@ -139,12 +139,12 @@ fun HomeGradientTopBar(
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         Text(
-                            text = stringResource(R.string.presentation_batch_g_topbar_beta_letter),
+                            text = stringResource(R.string.topbar_beta_letter),
                             style = MaterialTheme.typography.titleSmall,
                             fontWeight = FontWeight.Black
                         )
                         Text(
-                            text = stringResource(R.string.presentation_batch_g_topbar_beta),
+                            text = stringResource(R.string.topbar_beta_label),
                             style = MaterialTheme.typography.titleSmall,
                             fontWeight = FontWeight.SemiBold
                         )
@@ -166,7 +166,7 @@ fun HomeGradientTopBar(
                 ) {
                     Icon(
                          imageVector = Icons.Rounded.Cloud,
-                         contentDescription = stringResource(R.string.presentation_batch_g_topbar_cd_telegram)
+                         contentDescription = stringResource(R.string.topbar_cd_cloud_streaming)
                     )
                 }
                 FilledIconButton(
@@ -178,7 +178,7 @@ fun HomeGradientTopBar(
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.round_newspaper_24),
-                        contentDescription = stringResource(R.string.presentation_batch_g_topbar_cd_changelog)
+                        contentDescription = stringResource(R.string.topbar_cd_changelog)
                     )
                 }
                 FilledIconButton(
@@ -190,7 +190,7 @@ fun HomeGradientTopBar(
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.rounded_settings_24),
-                        contentDescription = stringResource(R.string.settings_top_bar_title)
+                        contentDescription = stringResource(R.string.common_settings)
                     )
                 }
             }

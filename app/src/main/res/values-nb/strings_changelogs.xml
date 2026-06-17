@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="changelog_title">Endringslogg</string>
+    <string name="changelog_view_github">Vis på GitHub</string>
+    <string name="changelog_sec_improvements">Forbedringer</string>
+    <string name="changelog_sec_fixes">Feilrettinger</string>
+    <string name="changelog_sec_whats_new">Hva er nytt</string>
+    <string name="changelog_sec_added">Lagt til</string>
+    <string-array name="changelog_020_added">
+        <item>Chromecast-støtte for casting av lyd fra enheten din.</item>
+        <item>Endringslogg i appen for å holde deg oppdatert.</item>
+        <item>Støtte for .LRC-filer, både innebygde og eksterne.</item>
+        <item>Offline sangtekststøtte.</item>
+        <item>Synkroniserte sangtekster (synkronisert med sangen).</item>
+        <item>Ny skjerm for å se hele køen.</item>
+        <item>Endre rekkefølge og fjerne sanger fra køen.</item>
+        <item>Mini-spiller-gester (sveip ned for å lukke).</item>
+        <item>Flere material-animasjoner lagt til.</item>
+        <item>Nye innstillinger for å tilpasse utseende og følelse.</item>
+        <item>Nye innstillinger for å tømme cache.</item>
+    </string-array>
+    <string-array name="changelog_020_improvements">
+        <item>Fullstendig redesign av brukergrensesnittet.</item>
+        <item>Fullstendig redesign av spilleren.</item>
+        <item>Ytelsesforbedringer i biblioteket.</item>
+        <item>Forbedret oppstartshastighet.</item>
+        <item>AI-en gir nå bedre resultater.</item>
+    </string-array>
+    <string-array name="changelog_020_fixes">
+        <item>Fikset diverse feil i metadataredigereren.</item>
+        <item>Fikset en feil der avspillingsvarselet ikke ble fjernet.</item>
+        <item>Fikset flere feil som fikk appen til å krasje.</item>
+    </string-array>
+    <string-array name="changelog_030_whats_new">
+        <item>Introduserte et rikere statistikksenter med dypere innsikt i lytteøktene dine.</item>
+        <item>Lanserte en flytende hurtigspiller for å åpne og forhåndsvise lokale filer umiddelbart.</item>
+        <item>La til en mappefane med tre-stil navigering og spillelisteklar visning.</item>
+    </string-array>
+    <string-array name="changelog_030_improvements">
+        <item>Forbedret det generelle Material 3 UI-et for et renere og mer sammenhengende utseende.</item>
+        <item>Metadataredigering støtter nå endring av coverkunst.</item>
+        <item>Jevnere animasjoner og overganger på tvers av appen for smidigere navigasjon.</item>
+        <item>Forbedret artistskjermoppsettet med rikere detaljer og finpuss.</item>
+        <item>Oppgradert DailyMix og YourMix med smartere og mer mangfoldig utvalg.</item>
+        <item>Styrket AI-spillelistegenerering.</item>
+        <item>Forbedret søkerelevans og presentasjon for raskere oppdagelse.</item>
+        <item>Utvidet støtte for et bredere spekter av lydfilformater.</item>
+    </string-array>
+    <string-array name="changelog_030_fixes">
+        <item>Løst metadataproblemer slik at sangdetaljer holder seg nøyaktige overalt.</item>
+        <item>Gjenopprettet varslingssnarveier slik at they pålitelig hopper tilbake til avspilling.</item>
+    </string-array>
+    <string-array name="changelog_040_improvements">
+        <item>Stor redesign av navigasjon</item>
+        <item>Ny filutforsker for valg av kildekatalog</item>
+        <item>Nye tilkoblings- og castingfunksjoner</item>
+        <item>Sømløs kontinuitet mellom enheter</item>
+        <item>Gapfri overgang mellom sanger</item>
+        <item>Crossfade-kontroll</item>
+        <item>Ny funksjon for egendefinerte overganger (kun for spillelister)</item>
+        <item>Fortsett avspilling etter at appen er lukket</item>
+        <item>UI-optimaliseringer</item>
+        <item>Forbedret statistikkfunksjon</item>
+        <item>Redesignet køkontroll med flere funksjoner</item>
+        <item>Forbedret støtte for forskjellige filtyper for avspilling og metadataredigering</item>
+        <item>Forbedret tillatelseshåndtering</item>
+        <item>Mindre feilrettinger</item>
+    </string-array>
+    <string-array name="changelog_050_improvements">
+        <item>Material 3 Expressive UI-oppdatering</item>
+        <item>10-bånds equalizer og effekter</item>
+        <item>Ny biblioteksynkroniseringsflyt</item>
+        <item>AI-integrasjon (Gemini-modeller)</item>
+        <item>M3U spilleliste import/eksport</item>
+        <item>Deezer artistbildeintegrasjon</item>
+        <item>Egendefinerte spillelistebilder</item>
+        <item>Omstrukturering av innstillinger</item>
+        <item>Kø- og spilleranimasjoner</item>
+        <item>Baseline Profiles og ytelse</item>
+        <item>Bedre sangtekstsystem med synkroniseringsforskyvning</item>
+    </string-array>
+    <string-array name="changelog_050_fixes">
+        <item>Forbedringer av casting-stabilitet</item>
+        <item>Stabilitet i spillerpanelet</item>
+        <item>Generelle feilrettinger og opprydding</item>
+    </string-array>
+    <string-array name="changelog_060_whats_new">
+        <item>Android Auto-støtte er nå tilgjengelig for avspilling i bilen.</item>
+        <item>Wear OS-støtte er aktiv, inkludert bedre kontroll fra klokke til telefon.</item>
+        <item>Skyintegrasjoner utvidet med Telegram, NetEase, QQ Music og Google Drive-forbedringer.</item>
+        <item>Nylig spilt og gjenoppretting av vedvarende kø holder lytteøkten klar.</item>
+        <item>Sikkerhetskopiering og gjenoppretting v3 og kontoadministrasjonsverktøy er nå inkludert.</item>
+        <item>Sangtekster ble smartere med manuelt søk og lagringsforbedringer.</item>
+    </string-array>
+    <string-array name="changelog_060_improvements">
+        <item>Stor ytelsesforbedring på oppstart, bibliotek, kø og spillerinteraksjoner.</item>
+        <item>Spiller, Cast, Sangtekster, Artist og Sjanger ble redesignet for jevnere bruk.</item>
+        <item>Navigasjon og søkeflyt er mer pålitelig, dengan sikrere rutehåndtering.</item>
+        <item>Lydavspillingskompatibilitet forbedret for flere enheter og formater.</item>
+        <item>Flervalgsarbeid ble utvidet på tvers av sanger, album og spillelister.</item>
+    </string-array>
+    <string-array name="changelog_060_fixes">
+        <item>Kø- og blandingsatferd er nå meer stabil og forutsigbar.</item>
+        <item>Flere bakgrunnsavspillings- og casting-kanttilfeller ble fikset.</item>
+        <item>Sleep Timer, Filer-fanenavigasjon og albumartist-krasjproblemer ble fikset.</item>
+        <item>Widget-lasting og tjenestestabilitet ble forbedret for å redusere overoppvarming/minneproblemer.</item>
+        <item>Generelle feilrettinger og UI-forbedringer på tvers av appen.</item>
+    </string-array>
+    <string-array name="changelog_070_whats_new">
+        <item>Wear OS: Musikkoverføring, lokal avspilling, køsynkronisering og fjernkontroll fra klokken.</item>
+        <item>AI: Groq AI og OpenRouter (eksperimentell) integrasjon med token-optimalisering.</item>
+        <item>Sky: Jellyfin-støtte lagt til.</item>
+        <item>Sangtekster: Synkronisert oversettelse med egen bryter, Kugou LRC-formatstøtte, tekstjusteringstilpasning og forbedret fjernlasting.</item>
+        <item>UI/UX: Kompakt navigasjonslinje, dynamiske temaer fra albumkunstpalett, rullende tekst for lange titler og nye sorteringsalternativer.</item>
+        <item>Telegram: Innebygd emnestøtte og forbedrede visningsmodus.</item>
+    </string-array>
+    <string-array name="changelog_070_improvements">
+        <item>Lydmotor: Fullstendig overhaling med støtte for flere formater (MIDI, ALAC, M4A) og dekoderoptimalisering.</item>
+        <item>Effektivitet: Drastisk reduksjon i energiforbruk, overoppvarmingsfikser og optimalisering av bakgrunnsoppgaver (SyncWorker).</item>
+        <item>Database: Massive spørringsoptimaliseringer og redesignet coverkunst-cache for å forhindre datatap.</item>
+        <item>Oppstart: Forbedret lastetid via Baseline Profile-optimalisering.</item>
+    </string-array>
+    <string-array name="changelog_070_fixes">
+        <item>Avspilling: Fikset hakking i Opus/MP3, ReplayGain-feil under crossfade og oppstartsproblemer på Samsung-dekodere.</item>
+        <item>Stabilitet: Eliminerte krasj ved oppstart, artistnavigasjon og Android 12+-enheter.</item>
+        <item>UI: Fikset flimring av coverkunst, tekstoverflyt i ikke-latinske skrifttyper og oppførsel av navigasjonslinje/minispiller.</item>
+        <item>Sikkerhet: Styrket håndtering av påloggingsinformasjon, lagringstillatelser og medieserverkommunikasjon.</item>
+    </string-array>
+    <string-array name="changelog_070_added">
+        <item>Lokalisering: Spansk, Fransk, Russisk, Forenklet kinesisk, Indonesisk, Italiensk</item>
+    </string-array>
+</resources>

@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.theveloper.pixelplay.data.equalizer.EqualizerManager
 import com.theveloper.pixelplay.data.equalizer.EqualizerPreset
 import com.theveloper.pixelplay.data.preferences.EqualizerPreferencesRepository
+import com.theveloper.pixelplay.data.preferences.EqualizerViewMode
 import com.theveloper.pixelplay.data.preferences.UserPreferencesRepository
 import com.theveloper.pixelplay.data.service.player.DualPlayerEngine
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -41,7 +42,7 @@ data class EqualizerUiState(
     val isBassBoostSupported: Boolean = true,
     val isVirtualizerSupported: Boolean = true,
     val isLoudnessEnhancerSupported: Boolean = true,
-    val viewMode: UserPreferencesRepository.EqualizerViewMode = UserPreferencesRepository.EqualizerViewMode.SLIDERS,
+    val viewMode: EqualizerViewMode = EqualizerViewMode.SLIDERS,
     val isBassBoostDismissed: Boolean = false,
     val isVirtualizerDismissed: Boolean = false,
     val isLoudnessDismissed: Boolean = false,
@@ -208,7 +209,7 @@ class EqualizerViewModel @Inject constructor(
                  val bbDismissed = values[9] as Boolean
                  val vDismissed = values[10] as Boolean
                  val lDismissed = values[11] as Boolean
-                 val viewMode = values[12] as UserPreferencesRepository.EqualizerViewMode
+                 val viewMode = values[12] as EqualizerViewMode
                  val customPresets = (values[13] as? List<*>)?.filterIsInstance<EqualizerPreset>() ?: emptyList()
                  val pinnedPresets = (values[14] as? List<*>)?.filterIsInstance<String>() ?: emptyList()
 
@@ -253,9 +254,9 @@ class EqualizerViewModel @Inject constructor(
         viewModelScope.launch {
             val currentMode = _uiState.value.viewMode
             val nextMode = when (currentMode) {
-                UserPreferencesRepository.EqualizerViewMode.SLIDERS -> UserPreferencesRepository.EqualizerViewMode.GRAPH
-                UserPreferencesRepository.EqualizerViewMode.GRAPH -> UserPreferencesRepository.EqualizerViewMode.HYBRID
-                UserPreferencesRepository.EqualizerViewMode.HYBRID -> UserPreferencesRepository.EqualizerViewMode.SLIDERS
+                EqualizerViewMode.SLIDERS -> EqualizerViewMode.GRAPH
+                EqualizerViewMode.GRAPH -> EqualizerViewMode.HYBRID
+                EqualizerViewMode.HYBRID -> EqualizerViewMode.SLIDERS
             }
             equalizerPreferencesRepository.setEqualizerViewMode(nextMode)
         }

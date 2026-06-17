@@ -96,6 +96,7 @@ data class SettingsUiState(
     val useAnimatedLyrics: Boolean = false,
     val animatedLyricsBlurEnabled: Boolean = true,
     val animatedLyricsBlurStrength: Float = 2.5f,
+    val disableBlurAllOver: Boolean = false,
     val backupInfoDismissed: Boolean = false,
     val isDataTransferInProgress: Boolean = false,
     val restorePlan: RestorePlan? = null,
@@ -108,7 +109,8 @@ data class SettingsUiState(
     val minTracksPerAlbum: Int = 1,
     val replayGainEnabled: Boolean = false,
     val replayGainUseAlbumGain: Boolean = false,
-    val isSafeTokenLimitEnabled: Boolean = true
+    val isSafeTokenLimitEnabled: Boolean = true,
+    val showScrollbar: Boolean = true
 )
 
 data class FailedSongInfo(
@@ -166,7 +168,9 @@ private sealed interface SettingsUiUpdate {
         val immersiveLyricsEnabled: Boolean,
         val immersiveLyricsTimeout: Long,
         val animatedLyricsBlurEnabled: Boolean,
-        val animatedLyricsBlurStrength: Float
+        val animatedLyricsBlurStrength: Float,
+        val disableBlurAllOver: Boolean,
+        val showScrollbar: Boolean
     ) : SettingsUiUpdate
 }
 
@@ -452,6 +456,9 @@ class SettingsViewModel @Inject constructor(
     private val _dataTransferEvents = MutableSharedFlow<String>()
     val dataTransferEvents: SharedFlow<String> = _dataTransferEvents.asSharedFlow()
 
+    private val _dataTransferProgress = MutableStateFlow<BackupTransferProgressUpdate?>(null)
+    val dataTransferProgress: StateFlow<BackupTransferProgressUpdate?> = _dataTransferProgress.asStateFlow()
+
     init {
         viewModelScope.launch {
             backupManager.getBackupHistory().collect { history ->
@@ -470,12 +477,7 @@ class SettingsViewModel @Inject constructor(
                 _uiState.update { it.copy(collageAutoRotate = autoRotate) }
             }
         }
-    }
 
-    private val _dataTransferProgress = MutableStateFlow<BackupTransferProgressUpdate?>(null)
-    val dataTransferProgress: StateFlow<BackupTransferProgressUpdate?> = _dataTransferProgress.asStateFlow()
-
-    init {
         // One-time device capability check — result is cached inside HiFiCapabilityChecker
         _uiState.update {
             it.copy(
@@ -559,7 +561,9 @@ class SettingsViewModel @Inject constructor(
                 userPreferencesRepository.immersiveLyricsEnabledFlow,
                 userPreferencesRepository.immersiveLyricsTimeoutFlow,
                 userPreferencesRepository.animatedLyricsBlurEnabledFlow,
-                userPreferencesRepository.animatedLyricsBlurStrengthFlow
+                userPreferencesRepository.animatedLyricsBlurStrengthFlow,
+                userPreferencesRepository.disableBlurAllOverFlow,
+                userPreferencesRepository.showScrollbarFlow
             ) { values ->
                 SettingsUiUpdate.Group2(
                     keepPlayingInBackground = values[0] as Boolean,
@@ -578,7 +582,9 @@ class SettingsViewModel @Inject constructor(
                     immersiveLyricsEnabled = values[13] as Boolean,
                     immersiveLyricsTimeout = values[14] as Long,
                     animatedLyricsBlurEnabled = values[15] as Boolean,
-                    animatedLyricsBlurStrength = values[16] as Float
+                    animatedLyricsBlurStrength = values[16] as Float,
+                    disableBlurAllOver = values[17] as Boolean,
+                    showScrollbar = values[18] as Boolean
                 )
             }.collect { update ->
                 _uiState.update { state ->
@@ -599,7 +605,9 @@ class SettingsViewModel @Inject constructor(
                         immersiveLyricsEnabled = update.immersiveLyricsEnabled,
                         immersiveLyricsTimeout = update.immersiveLyricsTimeout,
                         animatedLyricsBlurEnabled = update.animatedLyricsBlurEnabled,
-                        animatedLyricsBlurStrength = update.animatedLyricsBlurStrength
+                        animatedLyricsBlurStrength = update.animatedLyricsBlurStrength,
+                        disableBlurAllOver = update.disableBlurAllOver,
+                        showScrollbar = update.showScrollbar
                     )
                 }
             }
@@ -834,6 +842,12 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
+    fun setShowScrollbar(enabled: Boolean) {
+        viewModelScope.launch {
+            userPreferencesRepository.setShowScrollbar(enabled)
+        }
+    }
+
     fun setLaunchTab(tab: String) {
         viewModelScope.launch {
             userPreferencesRepository.setLaunchTab(tab)
@@ -990,6 +1004,12 @@ class SettingsViewModel @Inject constructor(
     fun setAnimatedLyricsBlurStrength(strength: Float) {
         viewModelScope.launch {
             userPreferencesRepository.setAnimatedLyricsBlurStrength(strength)
+        }
+    }
+
+    fun setDisableBlurAllOver(disabled: Boolean) {
+        viewModelScope.launch {
+            userPreferencesRepository.setDisableBlurAllOver(disabled)
         }
     }
 
@@ -1156,7 +1176,7 @@ class SettingsViewModel @Inject constructor(
                 _uiState.update {
                     it.copy(
                         isLoadingModels = false,
-                        modelsFetchError = e.message ?: context.getString(R.string.models_fetch_failed),
+                        modelsFetchError = e.message ?: context.getString(R.string.settings_models_fetch_failed),
                     )
                 }
             }
@@ -1183,7 +1203,7 @@ class SettingsViewModel @Inject constructor(
      * This should only be used for testing in Developer Options.
      */
     fun triggerTestCrash() {
-        throw RuntimeException(context.getString(R.string.dev_test_crash_message))
+        throw RuntimeException(context.getString(R.string.settings_dev_test_crash_message))
     }
 
     fun resetSetupFlow() {
@@ -1248,19 +1268,19 @@ class SettingsViewModel @Inject constructor(
                 operation = BackupOperationType.EXPORT,
                 step = 0,
                 totalSteps = 1,
-                title = context.getString(R.string.backup_progress_preparing_backup),
-                detail = context.getString(R.string.backup_progress_starting_backup_task),
+                title = context.getString(R.string.settings_backup_progress_preparing_backup),
+                detail = context.getString(R.string.settings_backup_progress_starting_backup_task),
             )
             val result = backupManager.export(uri, sections) { progress ->
                 _dataTransferProgress.value = progress
             }
             result.fold(
-                onSuccess = { _dataTransferEvents.emit(context.getString(R.string.data_exported_successfully)) },
+                onSuccess = { _dataTransferEvents.emit(context.getString(R.string.settings_data_exported_successfully)) },
                 onFailure = {
                     _dataTransferEvents.emit(
                         context.getString(
-                            R.string.export_failed_format,
-                            it.localizedMessage ?: context.getString(R.string.error_unknown),
+                            R.string.settings_export_failed_format,
+                            it.localizedMessage ?: context.getString(R.string.common_error_unknown),
                         ),
                     )
                 },
@@ -1283,8 +1303,8 @@ class SettingsViewModel @Inject constructor(
                 onFailure = { error ->
                     _dataTransferEvents.emit(
                         context.getString(
-                            R.string.backup_invalid_format,
-                            error.localizedMessage ?: context.getString(R.string.error_unknown),
+                            R.string.settings_backup_invalid_format,
+                            error.localizedMessage ?: context.getString(R.string.common_error_unknown),
                         ),
                     )
                     _uiState.update { it.copy(isInspectingBackup = false) }
@@ -1310,28 +1330,28 @@ class SettingsViewModel @Inject constructor(
                 operation = BackupOperationType.IMPORT,
                 step = 0,
                 totalSteps = 1,
-                title = context.getString(R.string.backup_progress_preparing_restore),
-                detail = context.getString(R.string.backup_progress_starting_task),
+                title = context.getString(R.string.settings_backup_progress_preparing_restore),
+                detail = context.getString(R.string.settings_backup_progress_starting_task),
             )
             val result = backupManager.restore(uri, plan) { progress ->
                 _dataTransferProgress.value = progress
             }
             when (result) {
                 is RestoreResult.Success -> {
-                    _dataTransferEvents.emit(context.getString(R.string.data_restored_successfully))
+                    _dataTransferEvents.emit(context.getString(R.string.settings_data_restored_successfully))
                     syncManager.sync()
                 }
                 is RestoreResult.PartialFailure -> {
                     val failedNames = result.failed.entries.joinToString { "${it.key.label}: ${it.value}" }
                     _dataTransferEvents.emit(
-                        context.getString(R.string.restore_partial_unresolved_format, failedNames),
+                        context.getString(R.string.settings_restore_partial_unresolved_format, failedNames),
                     )
                     if (result.succeeded.isNotEmpty() || !result.rolledBack) {
                         syncManager.sync()
                     }
                 }
                 is RestoreResult.TotalFailure -> {
-                    _dataTransferEvents.emit(context.getString(R.string.restore_failed_format, result.error))
+                    _dataTransferEvents.emit(context.getString(R.string.settings_restore_failed_format, result.error))
                 }
             }
             delay(300)

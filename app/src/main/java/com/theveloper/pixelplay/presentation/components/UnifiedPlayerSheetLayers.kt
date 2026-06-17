@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -62,6 +63,8 @@ internal fun BoxScope.UnifiedPlayerMiniAndFullLayers(
     currentPositionProvider: () -> Long,
     isFavorite: Boolean,
     shouldRenderFullPlayer: Boolean = true,
+    currentHorizontalPaddingStartPxProvider: () -> Float,
+    currentHorizontalPaddingEndPxProvider: () -> Float,
     onShowQueueClicked: () -> Unit,
     onQueueDragStart: () -> Unit,
     onQueueDrag: (Float) -> Unit,
@@ -88,6 +91,27 @@ internal fun BoxScope.UnifiedPlayerMiniAndFullLayers(
                             // avoiding per-frame recomposition during gestures.
                             alpha = (1f - playerContentExpansionFraction.value * 2f)
                                 .coerceIn(0f, 1f)
+                        }
+                        .layout { measurable, constraints ->
+                            val fraction = playerContentExpansionFraction.value
+                            val startPaddingPx = currentHorizontalPaddingStartPxProvider().toInt().coerceAtLeast(0)
+                            val endPaddingPx = currentHorizontalPaddingEndPxProvider().toInt().coerceAtLeast(0)
+                            
+                            val targetWidth = if (fraction > 0f) {
+                                (constraints.maxWidth - startPaddingPx - endPaddingPx).coerceAtLeast(0)
+                            } else {
+                                constraints.maxWidth
+                            }
+                            val placeable = measurable.measure(
+                                constraints.copy(
+                                    minWidth = targetWidth,
+                                    maxWidth = targetWidth
+                                )
+                            )
+                            layout(constraints.maxWidth, constraints.maxHeight) {
+                                val xOffset = if (fraction > 0f) startPaddingPx else 0
+                                placeable.placeRelative(xOffset, 0)
+                            }
                         }
                         .zIndex(miniPlayerZIndex)
                 ) {

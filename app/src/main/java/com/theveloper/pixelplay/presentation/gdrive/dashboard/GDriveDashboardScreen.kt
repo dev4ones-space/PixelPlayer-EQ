@@ -71,7 +71,7 @@ fun GDriveDashboardScreen(
                 },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = stringResource(R.string.auth_cd_back))
+                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = stringResource(R.string.common_back))
                     }
                 },
                 actions = {
@@ -81,7 +81,7 @@ fun GDriveDashboardScreen(
                     }) {
                         Icon(
                             Icons.Rounded.Add,
-                            contentDescription = stringResource(R.string.cd_add_drive_folder),
+                            contentDescription = stringResource(R.string.gdrive_cd_add_folder),
                             tint = MaterialTheme.colorScheme.secondary
                         )
                     }
@@ -92,7 +92,7 @@ fun GDriveDashboardScreen(
                     ) {
                         Icon(
                             Icons.Rounded.CloudSync,
-                            contentDescription = stringResource(R.string.cd_sync_all),
+                            contentDescription = stringResource(R.string.cloud_cd_sync_all),
                             tint = MaterialTheme.colorScheme.secondary
                         )
                     }
@@ -103,7 +103,7 @@ fun GDriveDashboardScreen(
                     }) {
                         Icon(
                             Icons.AutoMirrored.Rounded.Logout,
-                            contentDescription = stringResource(R.string.cd_logout)
+                            contentDescription = stringResource(R.string.cloud_cd_logout)
                         )
                     }
                 }
@@ -198,7 +198,7 @@ fun GDriveDashboardScreen(
                                 overflow = TextOverflow.Ellipsis
                             )
                             Text(
-                                text = stringResource(R.string.dash_folders_synced_count, folders.size),
+                                text = stringResource(R.string.gdrive_dashboard_folders_synced_count, folders.size),
                                 style = MaterialTheme.typography.bodySmall,
                                 fontFamily = GoogleSansRounded,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -219,7 +219,7 @@ fun GDriveDashboardScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = stringResource(R.string.dash_music_folders),
+                    text = stringResource(R.string.gdrive_dashboard_music_folders),
                     style = MaterialTheme.typography.titleMedium,
                     fontFamily = GoogleSansRounded,
                     fontWeight = FontWeight.Bold
@@ -232,7 +232,7 @@ fun GDriveDashboardScreen(
                             modifier = Modifier.size(18.dp)
                         )
                         Spacer(Modifier.width(4.dp))
-                        Text(stringResource(R.string.dash_action_sync), fontFamily = GoogleSansRounded, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        Text(stringResource(R.string.cloud_dashboard_action_sync), fontFamily = GoogleSansRounded, maxLines = 1, overflow = TextOverflow.Ellipsis)
                     }
                 }
             }
@@ -256,14 +256,14 @@ fun GDriveDashboardScreen(
                         )
                         Spacer(Modifier.height(16.dp))
                         Text(
-                            text = stringResource(R.string.dash_no_folders_yet),
+                            text = stringResource(R.string.gdrive_dashboard_no_folders_yet),
                             style = MaterialTheme.typography.bodyLarge,
                             fontFamily = GoogleSansRounded,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Spacer(Modifier.height(8.dp))
                         Text(
-                            text = stringResource(R.string.dash_tap_plus_add_drive_folder),
+                            text = stringResource(R.string.gdrive_dashboard_add_folder_hint),
                             style = MaterialTheme.typography.bodyMedium,
                             fontFamily = GoogleSansRounded,
                             color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
@@ -341,7 +341,7 @@ private fun GDriveFolderCard(
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    text = stringResource(R.string.dash_song_count, folder.songCount),
+                    text = stringResource(R.string.cloud_dashboard_song_count, folder.songCount),
                     style = MaterialTheme.typography.bodySmall,
                     fontFamily = GoogleSansRounded,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -355,7 +355,7 @@ private fun GDriveFolderCard(
             ) {
                 Icon(
                     Icons.Rounded.Sync,
-                    contentDescription = stringResource(R.string.cd_sync),
+                    contentDescription = stringResource(R.string.cloud_cd_sync),
                     tint = MaterialTheme.colorScheme.secondary,
                     modifier = Modifier.size(20.dp)
                 )
@@ -365,7 +365,7 @@ private fun GDriveFolderCard(
             IconButton(onClick = onDeleteClick) {
                 Icon(
                     Icons.Rounded.Delete,
-                    contentDescription = stringResource(R.string.cd_remove),
+                    contentDescription = stringResource(R.string.common_remove),
                     tint = MaterialTheme.colorScheme.error.copy(alpha = 0.7f),
                     modifier = Modifier.size(20.dp)
                 )

@@ -49,12 +49,12 @@ object PlayStoreAnnouncementDefaults {
     fun localizedTemplate(context: Context): PlayStoreAnnouncementUiModel =
         PlayStoreAnnouncementUiModel(
             enabled = false,
-            title = context.getString(R.string.presentation_batch_g_playstore_title),
-            body = context.getString(R.string.presentation_batch_g_playstore_body),
+            title = context.getString(R.string.playstore_dialog_title),
+            body = context.getString(R.string.playstore_dialog_body),
             playStoreUrl = null,
-            primaryActionLabel = context.getString(R.string.presentation_batch_g_playstore_open),
-            dismissActionLabel = context.getString(R.string.presentation_batch_g_playstore_continue_beta),
-            linkPendingMessage = context.getString(R.string.presentation_batch_g_playstore_link_pending),
+            primaryActionLabel = context.getString(R.string.playstore_dialog_action_open),
+            dismissActionLabel = context.getString(R.string.playstore_dialog_action_continue_beta),
+            linkPendingMessage = context.getString(R.string.playstore_dialog_link_pending),
         )
 
     fun hardcodedPreview(context: Context): PlayStoreAnnouncementUiModel =
@@ -130,13 +130,13 @@ fun PlayStoreAnnouncementDialog(
                         verticalArrangement = Arrangement.spacedBy(2.dp),
                     ) {
                         Text(
-                            text = stringResource(R.string.presentation_batch_g_playstore_app_name),
+                            text = stringResource(R.string.playstore_dialog_app_name),
                             fontFamily = GoogleSansRounded,
                             style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.Bold,
                         )
                         Text(
-                            text = stringResource(R.string.presentation_batch_g_playstore_release_announcement),
+                            text = stringResource(R.string.playstore_dialog_release_announcement),
                             style = MaterialTheme.typography.labelLarge,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -200,7 +200,7 @@ fun PlayStoreAnnouncementDialog(
                             text = if (hasPlayStoreLink) {
                                 announcement.primaryActionLabel
                             } else {
-                                stringResource(R.string.presentation_batch_g_playstore_coming_soon)
+                                stringResource(R.string.playstore_dialog_coming_soon)
                             },
                             textAlign = TextAlign.Center,
                         )

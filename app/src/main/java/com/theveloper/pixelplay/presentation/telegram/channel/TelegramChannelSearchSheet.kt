@@ -133,7 +133,7 @@ fun TelegramChannelSearchSheet(
             ) {
                 // Header with expressive typography
                 Text(
-                    text = stringResource(R.string.presentation_batch_f_add_channel_sheet_title),
+                    text = stringResource(R.string.telegram_add_channel_sheet_title),
                     style = MaterialTheme.typography.headlineMedium,
                     fontFamily = GoogleSansRounded,
                     fontWeight = FontWeight.Bold,
@@ -143,7 +143,7 @@ fun TelegramChannelSearchSheet(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    text = stringResource(R.string.presentation_batch_f_add_channel_sheet_subtitle),
+                    text = stringResource(R.string.telegram_add_channel_sheet_subtitle),
                     style = MaterialTheme.typography.bodyLarge,
                     fontFamily = GoogleSansRounded,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -162,7 +162,7 @@ fun TelegramChannelSearchSheet(
                         onValueChange = viewModel::onQueryChanged,
                         placeholder = {
                             Text(
-                                stringResource(R.string.presentation_batch_f_channel_search_placeholder),
+                                stringResource(R.string.telegram_channel_search_placeholder),
                                 fontFamily = GoogleSansRounded
                             )
                         },
@@ -207,7 +207,7 @@ fun TelegramChannelSearchSheet(
                         } else {
                             Icon(
                                 Icons.AutoMirrored.Rounded.Send,
-                                contentDescription = stringResource(R.string.presentation_batch_f_cd_search)
+                                contentDescription = stringResource(R.string.common_search)
                             )
                         }
                     }
@@ -235,7 +235,7 @@ fun TelegramChannelSearchSheet(
                                 )
                                 Spacer(modifier = Modifier.height(20.dp))
                                 Text(
-                                    text = statusMessage ?: stringResource(R.string.presentation_batch_f_searching),
+                                    text = statusMessage ?: stringResource(R.string.telegram_searching),
                                     style = MaterialTheme.typography.titleMedium,
                                     fontFamily = GoogleSansRounded,
                                     color = MaterialTheme.colorScheme.primary
@@ -311,7 +311,7 @@ fun TelegramChannelSearchSheet(
                                         },
                                         text = {
                                             Text(
-                                                stringResource(R.string.presentation_batch_f_done),
+                                                stringResource(R.string.common_done),
                                                 fontFamily = GoogleSansRounded,
                                                 fontWeight = FontWeight.SemiBold
                                             )
@@ -351,7 +351,7 @@ fun TelegramChannelSearchSheet(
                                 Spacer(modifier = Modifier.height(24.dp))
 
                                 Text(
-                                    text = stringResource(R.string.presentation_batch_f_search_channel_title),
+                                    text = stringResource(R.string.telegram_search_channel_title),
                                     style = MaterialTheme.typography.titleMedium,
                                     fontFamily = GoogleSansRounded,
                                     fontWeight = FontWeight.SemiBold,
@@ -361,7 +361,7 @@ fun TelegramChannelSearchSheet(
                                 Spacer(modifier = Modifier.height(8.dp))
 
                                 Text(
-                                    text = stringResource(R.string.presentation_batch_f_search_channel_body),
+                                    text = stringResource(R.string.telegram_search_channel_body),
                                     style = MaterialTheme.typography.bodyMedium,
                                     fontFamily = GoogleSansRounded,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,

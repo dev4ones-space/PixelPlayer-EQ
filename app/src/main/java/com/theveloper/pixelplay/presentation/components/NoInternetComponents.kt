@@ -56,7 +56,7 @@ fun NoInternetDialog(
         },
         confirmButton = {
             TextButton(onClick = onDismiss) {
-                Text(stringResource(R.string.ok), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Text(stringResource(R.string.common_ok), maxLines = 1, overflow = TextOverflow.Ellipsis)
             }
         }
     )
@@ -109,7 +109,7 @@ fun NoInternetScreen(
                 onClick = onRetry,
                 modifier = Modifier.fillMaxWidth(0.5f)
             ) {
-                Text(stringResource(R.string.auth_web_retry), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Text(stringResource(R.string.auth_web_retry_action), maxLines = 1, overflow = TextOverflow.Ellipsis)
             }
         }
     }

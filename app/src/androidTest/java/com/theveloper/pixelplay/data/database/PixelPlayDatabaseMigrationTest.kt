@@ -27,7 +27,7 @@ class PixelPlayDatabaseMigrationTest {
     @After
     fun tearDown() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
-        for (version in 25..39) {
+        for (version in 25..41) {
             context.deleteDatabase(databaseNameFor(version))
         }
         context.deleteDatabase(DB_NAME_33_TO_34)
@@ -38,7 +38,7 @@ class PixelPlayDatabaseMigrationTest {
 
     @Test
     fun migrateEveryExportedSchemaToLatest() {
-        for (startVersion in 25..39) {
+        for (startVersion in 25..41) {
             helper.createDatabase(databaseNameFor(startVersion), startVersion).close()
 
             helper.runMigrationsAndValidate(
@@ -304,7 +304,7 @@ class PixelPlayDatabaseMigrationTest {
     }
 
     private object PixelPlayDatabaseVersion {
-        const val LATEST = 40
+        const val LATEST = 42
     }
 
     companion object {
@@ -328,7 +328,9 @@ class PixelPlayDatabaseMigrationTest {
             PixelPlayDatabase.MIGRATION_36_37,
             PixelPlayDatabase.MIGRATION_37_38,
             PixelPlayDatabase.MIGRATION_38_39,
-            PixelPlayDatabase.MIGRATION_39_40
+            PixelPlayDatabase.MIGRATION_39_40,
+            PixelPlayDatabase.MIGRATION_40_41,
+            PixelPlayDatabase.MIGRATION_41_42
         )
     }
 }

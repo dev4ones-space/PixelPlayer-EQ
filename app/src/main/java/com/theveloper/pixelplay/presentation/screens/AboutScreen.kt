@@ -479,7 +479,7 @@ fun AboutScreen(
         }
 
         CollapsibleCommonTopBar(
-            title = stringResource(R.string.screen_about),
+            title = stringResource(R.string.about_screen_title),
             collapseFraction = collapseFraction,
             headerHeight = currentTopBarHeightDp,
             onBackClick = onNavigationIconClick,
@@ -749,12 +749,12 @@ private fun ContributorCard(
             ) {
                 SocialIconButton(
                     painterRes = R.drawable.github,
-                    contentDescription = stringResource(R.string.cd_open_github_profile),
+                    contentDescription = stringResource(R.string.about_cd_open_github_profile),
                     url = contributor.githubUrl,
                 )
                 SocialIconButton(
                     painterRes = R.drawable.telegram,
-                    contentDescription = stringResource(R.string.cd_open_telegram),
+                    contentDescription = stringResource(R.string.about_cd_open_telegram),
                     url = contributor.telegramUrl,
                 )
             }
@@ -803,7 +803,7 @@ private fun ContributorAvatar(
             cachedBitmap != null -> {
                 Image(
                     bitmap = cachedBitmap!!,
-                    contentDescription = stringResource(R.string.cd_contributor_avatar, name),
+                    contentDescription = stringResource(R.string.about_cd_contributor_avatar, name),
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop,
                 )
@@ -814,7 +814,7 @@ private fun ContributorAvatar(
                         .data(avatarUrl)
                         .crossfade(true)
                         .build(),
-                    contentDescription = stringResource(R.string.cd_contributor_avatar, name),
+                    contentDescription = stringResource(R.string.about_cd_contributor_avatar, name),
                     modifier = Modifier.fillMaxSize(),
                     shape = CircleShape,
                     contentScale = ContentScale.Crop,
@@ -837,7 +837,7 @@ private fun ContributorAvatar(
                 ) {
                     Icon(
                         painter = painterResource(iconRes),
-                        contentDescription = stringResource(R.string.cd_contributor_icon, name),
+                        contentDescription = stringResource(R.string.about_cd_contributor_icon, name),
                         tint = iconTint,
                         modifier = Modifier.size(28.dp),
                     )

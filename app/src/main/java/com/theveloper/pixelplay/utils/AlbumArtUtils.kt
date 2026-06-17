@@ -2,26 +2,48 @@ package com.theveloper.pixelplay.utils
 
 import android.content.ContentUris
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.provider.MediaStore
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
+import com.theveloper.pixelplay.data.diagnostics.PerformanceMetrics
 import com.theveloper.pixelplay.data.media.AudioMetadataReader
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import timber.log.Timber
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream
+import java.util.concurrent.ConcurrentHashMap
+import kotlin.math.roundToInt
 
 object AlbumArtUtils {
     private const val CACHE_VERSION_SUFFIX = "_v4"
+
+    // Cached covers are display-only; the source audio file keeps its original art untouched.
+    // Embedded covers can be multi-megabyte full-resolution scans, and re-decoding such a blob
+    // on every cold artwork load is the dominant avoidable artwork cost (perf report:
+    // artwork_decode up to ~270 ms, max embedded ~6 MB). Bounding the cached copy to 1536 px
+    // JPEG is invisible on phone-class displays (the full player tops out at 2048 px) while
+    // cutting heavy covers to a few hundred KB — far cheaper to decode and lighter on RAM/IPC.
+    private const val MAX_CACHED_ART_DIMENSION_PX = 1536
+    private const val CACHED_ART_JPEG_QUALITY = 90
+    // Cache entries larger than this are treated as legacy/oversized and shrunk in the
+    // background on first access (one-time migration for art cached before bounding existed).
+    private const val OVERSIZED_CACHED_ART_BYTES = 900L * 1024
 
     // P2-1: Dedicated app-level scope to replace GlobalScope.
     // SupervisorJob ensures child failures don't cancel sibling coroutines.
     // Appropriate for fire-and-forget tasks like cache cleanup that outlive any single component.
     private val appScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    // Tracks cache files currently being shrunk so rapid repeated loads of the same oversized
+    // cover don't read the large blob into memory more than once concurrently.
+    private val artworkShrinkInFlight = ConcurrentHashMap.newKeySet<String>()
     private val commonArtworkFileNames = listOf(
         "cover.jpg", "cover.png", "cover.jpeg",
         "folder.jpg", "folder.png", "folder.jpeg",
@@ -70,6 +92,39 @@ object AlbumArtUtils {
         }
     }
 
+    /**
+     * Lightweight scan-time artwork resolution.
+     *
+     * Full embedded-art extraction can allocate large ByteArrays per song. During a library scan
+     * we only store the stable lazy URI; the normal image-loading path extracts/caches artwork
+     * later for visible rows.
+     */
+    fun getAlbumArtUriForLibraryScan(
+        appContext: Context,
+        songId: Long,
+        forceRefresh: Boolean
+    ): String? {
+        val cachedFile = getCachedAlbumArtFile(appContext, songId)
+        val noArtFile = noArtMarkerFile(appContext, songId)
+
+        if (forceRefresh) {
+            cachedFile.delete()
+            noArtFile.delete()
+        }
+
+        val hasCachedArtwork = cachedFile.exists() && cachedFile.length() > 0
+        if (hasCachedArtwork) {
+            cachedFile.setLastModified(System.currentTimeMillis())
+        }
+
+        return resolveAlbumArtUriForLibraryScan(
+            songId = songId,
+            hasCachedArtwork = hasCachedArtwork,
+            hasNoArtworkMarker = noArtFile.exists(),
+            forceRefresh = forceRefresh
+        )
+    }
+
     fun getCachedAlbumArtUri(
         appContext: Context,
         songId: Long
@@ -115,11 +170,14 @@ object AlbumArtUtils {
         if (!forceRefresh) {
             if (cachedFile.exists() && cachedFile.length() > 0) {
                 cachedFile.setLastModified(System.currentTimeMillis())
+                PerformanceMetrics.increment(PerformanceMetrics.Counters.ARTWORK_CACHE_HIT)
+                scheduleOversizedArtworkShrink(cachedFile)
                 return cachedFile
             }
             if (noArtFile.exists()) {
                 return null
             }
+            PerformanceMetrics.increment(PerformanceMetrics.Counters.ARTWORK_CACHE_MISS)
         } else {
             cachedFile.delete()
             noArtFile.delete()
@@ -325,8 +383,9 @@ object AlbumArtUtils {
     private fun cacheAlbumArtBytes(appContext: Context, bytes: ByteArray, songId: Long): File {
         val file = getCachedAlbumArtFile(appContext, songId)
 
+        val boundedBytes = boundArtworkForCache(bytes)
         file.outputStream().use { outputStream ->
-            outputStream.write(bytes)
+            outputStream.write(boundedBytes)
         }
         noArtMarkerFile(appContext, songId).delete()
 
@@ -336,6 +395,91 @@ object AlbumArtUtils {
         }
 
         return file
+    }
+
+    /**
+     * Schedules a one-time, background re-compression of an oversized cached cover. The current
+     * load still returns the existing file; subsequent loads get the bounded one. De-duplicated
+     * per file so rapid repeated loads don't read the same large blob into memory twice.
+     */
+    private fun scheduleOversizedArtworkShrink(file: File) {
+        if (file.length() <= OVERSIZED_CACHED_ART_BYTES) return
+        val key = file.absolutePath
+        if (!artworkShrinkInFlight.add(key)) return
+        appScope.launch {
+            try {
+                if (file.length() <= OVERSIZED_CACHED_ART_BYTES) return@launch
+                val raw = runCatching { file.readBytes() }.getOrNull() ?: return@launch
+                val bounded = boundArtworkForCache(raw)
+                if (bounded.size >= raw.size) return@launch
+                val tmp = File(file.parentFile, "${file.name}.shrink.tmp")
+                runCatching {
+                    tmp.outputStream().use { it.write(bounded) }
+                    if (!tmp.renameTo(file)) {
+                        file.outputStream().use { it.write(bounded) }
+                        tmp.delete()
+                    }
+                }
+            } finally {
+                artworkShrinkInFlight.remove(key)
+            }
+        }
+    }
+
+    /**
+     * Returns artwork bytes bounded for the display cache: longest edge at most
+     * [MAX_CACHED_ART_DIMENSION_PX], re-encoded as JPEG when the source is oversized by
+     * dimension or by on-disk size. Returns the original bytes unchanged when they are already
+     * small enough or when decoding fails, so artwork is never dropped or needlessly re-encoded.
+     */
+    private fun boundArtworkForCache(bytes: ByteArray): ByteArray {
+        return try {
+            val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+            BitmapFactory.decodeByteArray(bytes, 0, bytes.size, bounds)
+            val srcWidth = bounds.outWidth
+            val srcHeight = bounds.outHeight
+            if (srcWidth <= 0 || srcHeight <= 0) return bytes
+
+            val oversizedByDimension = maxOf(srcWidth, srcHeight) > MAX_CACHED_ART_DIMENSION_PX
+            val oversizedBySize = bytes.size > OVERSIZED_CACHED_ART_BYTES
+            if (!oversizedByDimension && !oversizedBySize) return bytes
+
+            val decodeOptions = BitmapFactory.Options().apply {
+                inSampleSize = calculateArtworkInSampleSize(srcWidth, srcHeight, MAX_CACHED_ART_DIMENSION_PX)
+            }
+            val decoded = BitmapFactory.decodeByteArray(bytes, 0, bytes.size, decodeOptions) ?: return bytes
+            val scaled = scaleArtworkDownTo(decoded, MAX_CACHED_ART_DIMENSION_PX)
+            val encoded = ByteArrayOutputStream().use { stream ->
+                scaled.compress(Bitmap.CompressFormat.JPEG, CACHED_ART_JPEG_QUALITY, stream)
+                stream.toByteArray()
+            }
+            if (scaled !== decoded) decoded.recycle()
+            scaled.recycle()
+            if (encoded.isNotEmpty() && encoded.size < bytes.size) encoded else bytes
+        } catch (e: Throwable) {
+            Timber.tag("AlbumArtUtils").w(e, "Failed to bound artwork for cache; keeping original bytes")
+            bytes
+        }
+    }
+
+    /** Largest power-of-two subsample that keeps the decoded longest edge >= [maxDimensionPx]. */
+    private fun calculateArtworkInSampleSize(srcWidth: Int, srcHeight: Int, maxDimensionPx: Int): Int {
+        var inSampleSize = 1
+        val longestEdge = maxOf(srcWidth, srcHeight)
+        while (longestEdge / (inSampleSize * 2) >= maxDimensionPx) {
+            inSampleSize *= 2
+        }
+        return inSampleSize
+    }
+
+    /** Scales [src] so its longest edge is [maxDimensionPx]; returns [src] unchanged if already smaller. */
+    private fun scaleArtworkDownTo(src: Bitmap, maxDimensionPx: Int): Bitmap {
+        val longestEdge = maxOf(src.width, src.height)
+        if (longestEdge <= maxDimensionPx) return src
+        val scale = maxDimensionPx.toFloat() / longestEdge
+        val targetWidth = (src.width * scale).roundToInt().coerceAtLeast(1)
+        val targetHeight = (src.height * scale).roundToInt().coerceAtLeast(1)
+        return Bitmap.createScaledBitmap(src, targetWidth, targetHeight, true)
     }
 
     private fun noArtMarkerFile(appContext: Context, songId: Long): File {
@@ -394,6 +538,24 @@ object AlbumArtUtils {
     }
 
     private fun extractEmbeddedAlbumArtBytes(filePath: String): ByteArray? {
+        val startNanos = System.nanoTime()
+        val bytes = extractEmbeddedAlbumArtBytesInternal(filePath)
+        PerformanceMetrics.recordTiming(
+            PerformanceMetrics.Timings.ARTWORK_EXTRACT,
+            (System.nanoTime() - startNanos) / 1_000_000
+        )
+        if (bytes != null) {
+            PerformanceMetrics.increment(PerformanceMetrics.Counters.ARTWORK_EXTRACTED_FRESH)
+            // Only the byte size is recorded — a free field read. Embedded artwork
+            // *dimensions* are intentionally NOT decoded here: a per-file bitmap decode
+            // during scan is exactly the kind of overhead this diagnostic must avoid.
+            // Decoded dimensions come instead from the real decode path (CoilBitmapLoader).
+            PerformanceMetrics.recordEmbeddedArtwork(bytes.size.toLong())
+        }
+        return bytes
+    }
+
+    private fun extractEmbeddedAlbumArtBytesInternal(filePath: String): ByteArray? {
         val retrieverArtwork = MediaMetadataRetrieverPool.withRetriever { retriever ->
             try {
                 retriever.setDataSource(filePath)
@@ -430,4 +592,19 @@ object AlbumArtUtils {
             Uri.fromFile(file)
         }
     }
+}
+
+internal fun resolveAlbumArtUriForLibraryScan(
+    songId: Long,
+    hasCachedArtwork: Boolean,
+    hasNoArtworkMarker: Boolean,
+    forceRefresh: Boolean
+): String? {
+    if (hasCachedArtwork) {
+        return LocalArtworkUri.buildSongUri(songId)
+    }
+    if (hasNoArtworkMarker && !forceRefresh) {
+        return null
+    }
+    return LocalArtworkUri.buildSongUri(songId)
 }

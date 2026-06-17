@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Telegram login -->
+    <string name="telegram_login_title">Connexion Telegram</string>
+    <string name="telegram_edit_number_chip">Vous modifiez votre numéro. L\'envoi d\'un nouveau code remplacera le précédent.</string>
+    <string name="telegram_working">Opération en cours…</string>
+    <string name="telegram_status_initializing">Initialisation de Telegram…</string>
+    <string name="telegram_status_logging_out">Déconnexion…</string>
+    <string name="telegram_status_closing">Fermeture de la session…</string>
+    <string name="telegram_status_closed">Session closed. Re-open login to continue.</string>
+    <string name="telegram_status_preparing">Préparation d\'une session Telegram sécurisée…</string>
+    <string name="telegram_status_waiting">En attente de la réponse de Telegram…</string>
+    <string name="telegram_connect">Connecter Telegram</string>
+    <string name="telegram_connect_subtitle">Connectez Telegram pour diffuser de la musique depuis vos canaux et discussions.</string>
+    <string name="telegram_phone_number_title">Numéro de téléphone</string>
+    <string name="telegram_phone_number_subtitle">Entrez votre numéro Telegram. Vous pourrez revenir le modifier plus tard.</string>
+    <string name="telegram_phone_number_hint">Numéro de téléphone</string>
+    <string name="telegram_phone_country_placeholder">1</string>
+    <string name="telegram_phone_local_placeholder">0612345678</string>
+    <string name="telegram_send_code">Envoyer le code</string>
+    <string name="telegram_verification_code_title">Code de vérification</string>
+    <string name="telegram_verification_code_subtitle">Entrez le code reçu de Telegram. Si le numéro est incorrect, revenez en arrière pour le modifier.</string>
+    <string name="telegram_code_field_label">Code</string>
+    <string name="telegram_code_placeholder">12345</string>
+    <string name="telegram_edit_phone">Modifier le numéro</string>
+    <string name="telegram_resend_code">Renvoyer le code</string>
+    <string name="telegram_verify_code">Vérifier le code</string>
+    <string name="telegram_two_step_password_title">Mot de passe en deux étapes</string>
+    <string name="telegram_two_step_password_subtitle">Entrez votre mot de passe Telegram. Vous pouvez toujours revenir en arrière pour corriger votre numéro.</string>
+    <string name="telegram_password_label">Mot de passe</string>
+    <string name="telegram_verify_password">Vérifier le mot de passe</string>
+    <string name="telegram_please_wait">Veuillez patienter…</string>
+
+    <!-- Telegram dashboard -->
+    <string name="telegram_channels_title">Canaux Telegram</string>
+    <string name="telegram_add_channel_fab">Ajouter un canal</string>
+    <string name="telegram_public_channel_fallback">Canal Telegram public</string>
+    <string name="telegram_syncing">Synchronisation en cours</string>
+    <string name="telegram_sync_now">Synchroniser maintenant</string>
+    <string name="telegram_cd_collapse_topics">Réduire les sujets</string>
+    <string name="telegram_cd_show_topics">Afficher les sujets</string>
+    <string name="telegram_cd_channel_options">Options du canal</string>
+    <string name="telegram_topics_heading">Sujets</string>
+    <string name="telegram_syncing_channel">Synchronisation du canal</string>
+    <string name="telegram_updating_songs_from_telegram">Mise à jour des chansons depuis Telegram</string>
+    <string name="telegram_fetch_latest_songs">Récupérer les dernières chansons de ce canal</string>
+    <string name="telegram_remove_channel">Supprimer le canal</string>
+    <string name="telegram_remove_channel_subtitle">Arrêter la synchronisation et supprimer les chansons en cache</string>
+    <string name="telegram_remove_channel_confirm_title">Supprimer le canal ?</string>
+    <string name="telegram_remove_channel_confirm_body">La synchronisation de %1$s s\'arrêtera et toutes les chansons en cache de ce canal seront supprimées.</string>
+    <string name="telegram_remove_channel_confirm_action">Supprimer</string>
+    <string name="telegram_no_channels_synced">Aucun canal synchronisé</string>
+    <string name="telegram_no_channels_body">Ajoutez des canaux Telegram publics pour synchroniser\nvotre bibliothèque musicale</string>
+    <string name="telegram_add_channel_button">Ajouter un canal</string>
+    <string name="telegram_never_synced">Jamais synchronisé</string>
+    <string name="telegram_synced_relative">Synchronisé %1$s</string>
+
+    <!-- Telegram channel search -->
+    <string name="telegram_add_channel_sheet_title">Ajouter un canal</string>
+    <string name="telegram_add_channel_sheet_subtitle">Recherchez un canal Telegram public pour synchroniser sa musique</string>
+    <string name="telegram_channel_search_placeholder">\@nomducanal ou lien</string>
+    <string name="telegram_searching">Recherche en cours…</string>
+    <string name="telegram_search_channel_title">Rechercher un canal</string>
+    <string name="telegram_search_channel_body">Entrez un nom d\'utilisateur de canal public ou un lien\npour synchroniser ses fichiers audio</string>
+
+    <plurals name="telegram_n_songs">
+        <item quantity="one">%d chanson</item>
+        <item quantity="other">%d chansons</item>
+    </plurals>
+    <plurals name="telegram_n_topics">
+        <item quantity="one">%d sujet</item>
+        <item quantity="other">%d sujets</item>
+    </plurals>
+
+    <!-- Subsonic/Navidrome dashboard -->
+    <string name="subsonic_dashboard_title">Subsonic</string>
+    <string name="subsonic_dashboard_quick_actions_subtitle">Gérer Navidrome, Airsonic et autres serveurs Subsonic.</string>
+
+    <!-- Jellyfin dashboard -->
+    <string name="jellyfin_dashboard_playlists_empty_hint">Appuyez sur synchro pour récupérer vos listes Jellyfin</string>
+    <string name="jellyfin_dashboard_quick_actions_subtitle">Gérer votre connexion au serveur Jellyfin.</string>
+
+    <!-- Google Drive dashboard -->
+    <string name="gdrive_dashboard_music_folders">Dossiers de musique</string>
+    <string name="gdrive_dashboard_add_folder_hint">Appuyez sur + pour ajouter un dossier Drive</string>
+    <string name="gdrive_dashboard_no_folders_yet">Aucun dossier ajouté</string>
+    <string name="gdrive_dashboard_folders_synced_count">%1$d dossiers synchronisés</string>
+    <string name="gdrive_cd_add_folder">Ajouter un dossier</string>
+
+    <!-- QQ Music dashboard -->
+    <string name="qqmusic_select_playlist_type_title">Choisir le type de liste</string>
+    <string name="qqmusic_choose_playlists_to_sync">Choisir les listes à synchroniser :</string>
+    <string name="qqmusic_all_playlists">Toutes les listes</string>
+    <string name="qqmusic_created_and_collected">Créées et collectées</string>
+    <string name="qqmusic_created_playlists">Listes créées</string>
+    <string name="qqmusic_collected_playlists">Listes collectées</string>
+
+    <!-- Cloud dashboard generic -->
+    <string name="cloud_dashboard_playlists_synced_count">%1$d listes de lecture synchronisées</string>
+    <string name="cloud_dashboard_title_playlists">Listes de lecture</string>
+    <string name="cloud_dashboard_action_sync">Synchro</string>
+    <string name="cloud_dashboard_playlists_empty_title">Aucune liste de lecture synchronisée</string>
+    <string name="cloud_dashboard_playlists_empty_hint">Appuyez sur synchro pour récupérer vos listes</string>
+    <string name="cloud_dashboard_quick_actions">Actions rapides</string>
+    <string name="cloud_dashboard_action_sync_library">Synchroniser la bibliothèque</string>
+    <string name="cloud_dashboard_action_disconnect">Se déconnecter</string>
+    <string name="cloud_dashboard_song_count">%1$d chansons</string>
+
+    <!-- Cloud sync status -->
+    <string name="cloud_sync_status_syncing">Synchronisation</string>
+    <string name="cloud_sync_status_syncing_library">Synchronisation de la bibliothèque…</string>
+    <string name="cloud_sync_status_fetching_playlists">Récupération des listes de lecture…</string>
+    <string name="cloud_sync_status_syncing_playlist_format">Synchronisation de la liste de lecture : %1$s</string>
+    <string name="cloud_sync_status_updating_local">Mise à jour de la bibliothèque locale…</string>
+    <string name="cloud_sync_status_sync_complete">Synchronisation terminée</string>
+    <string name="cloud_sync_status_fetching_albums">Récupération de la liste des albums…</string>
+    <string name="cloud_sync_status_fetching_songs_from_format">Récupération des chansons de %1$s…</string>
+    <string name="cloud_sync_status_saving_songs_format">Enregistrement de %1$d chansons dans la base de données…</string>
+    <string name="cloud_sync_status_no_songs_found">Aucune chanson trouvée dans la bibliothèque</string>
+    <string name="cloud_sync_status_library_sync_complete">Synchronisation de la bibliothèque terminée</string>
+    <string name="cloud_sync_status_syncing_ellipsis">Synchronisation…</string>
+    <string name="cloud_sync_error_with_message_format">Erreur : %1$s</string>
+
+    <!-- Cloud content descriptions -->
+    <string name="cloud_cd_sync">Synchroniser</string>
+    <string name="cloud_cd_sync_all">Tout synchroniser</string>
+    <string name="cloud_cd_logout">Se déconnecter</string>
+    <string name="cloud_cd_sync_all_playlists">Synchroniser toutes les listes</string>
+    <string name="cloud_cd_user_avatar">Avatar utilisateur</string>
+
+    <!-- No internet -->
+    <string name="no_internet_dialog_title">Pas de connexion Internet</string>
+    <string name="no_internet_dialog_message">Ce contenu nécessite une connexion Internet. Veuillez vérifier vos paramètres réseau et réessayer.</string>
+    <string name="offline_screen_title">Vous êtes hors ligne</string>
+    <string name="offline_screen_message">Veuillez vérifier votre connexion Internet et réessayer pour accéder à ce contenu.</string>
+
+    <!-- Cloud Authentication & Login Shared Strings -->
+    <string name="auth_connect_action">Se connecter</string>
+    <string name="auth_connecting_msg">Connexion…</string>
+    <string name="auth_details_subtitle">Entrez l\'URL de votre serveur et vos identifiants de compte.</string>
+    <string name="auth_details_title">Détails de la connexion</string>
+    <string name="auth_hide_pwd_action">Masquer le mot de passe</string>
+    <string name="auth_password_label">Mot de passe</string>
+    <string name="auth_password_placeholder">Entrez le mot de passe</string>
+    <string name="auth_prefill_http_action">Pré-remplir http://</string>
+    <string name="auth_server_url_label">URL du serveur</string>
+    <string name="auth_show_pwd_action">Afficher le mot de passe</string>
+    <string name="auth_telegram_title">Telegram</string>
+    <string name="auth_username_label">Nom d\'utilisateur</string>
+    <string name="auth_username_placeholder">admin</string>
+    <string name="auth_welcome_toast">Bienvenue, %1$s !</string>
+
+    <!-- Subsonic / Navidrome Auth -->
+    <string name="auth_navidrome_footer_msg">Compatible with Navidrome, Gonic, Airsonic, and other Subsonic-compatible servers</string>
+    <string name="auth_navidrome_info_msg">Prend en charge Navidrome, Airsonic, Gonic, Ampache et d\'autres serveurs compatibles avec l\'API Subsonic.</string>
+    <string name="auth_navidrome_password_hint">Le mot de passe d\'application fonctionne également si votre serveur le prend en charge.</string>
+    <string name="auth_navidrome_prefill_https_action">Pré-remplir https://</string>
+    <string name="auth_navidrome_subtitle">Connectez-vous à votre propre serveur de musique</string>
+    <string name="auth_navidrome_title">Subsonic / Navidrome</string>
+    <string name="auth_navidrome_url_hint">Utilisez l\'adresse de base complète https:// de votre serveur.</string>
+    <string name="auth_navidrome_url_placeholder">https://musique.exemple.com</string>
+    <string name="auth_navidrome_username_hint">Il s\'agit de votre nom de compte Subsonic ou Navidrome.</string>
+    <string name="auth_subsonic_navidrome_title">Subsonic / Navidrome</string>
+    <string name="auth_subsonic_title">Subsonic</string>
+
+    <!-- Jellyfin Auth -->
+    <string name="auth_jellyfin_connect_subtitle">Entrez l\'URL de votre serveur Jellyfin et vos identifiants de compte.</string>
+    <string name="auth_jellyfin_footer_msg">Se connecte aux serveurs Jellyfin pour diffuser votre bibliothèque musicale</string>
+    <string name="auth_jellyfin_info_msg">Se connecte aux serveurs Jellyfin. HTTP et HTTPS sont tous deux pris en charge pour l\'accès au réseau local.</string>
+    <string name="auth_jellyfin_logo_cd">Jellyfin</string>
+    <string name="auth_jellyfin_password_hint">Votre mot de passe Jellyfin.</string>
+    <string name="auth_jellyfin_subtitle">Connectez-vous à votre serveur multimédia Jellyfin</string>
+    <string name="auth_jellyfin_title">Jellyfin</string>
+    <string name="auth_jellyfin_url_hint">URL complète de votre serveur Jellyfin, y compris le port.</string>
+    <string name="auth_jellyfin_url_placeholder">http://192.168.1.100:8096</string>
+    <string name="auth_jellyfin_username_hint">Votre nom d\'utilisateur Jellyfin.</string>
+
+    <!-- Google Drive Auth -->
+    <string name="auth_gdrive_connect_subtitle">Diffusez des fichiers musicaux directement depuis votre Google Drive</string>
+    <string name="auth_gdrive_connect_title">Connecter Google Drive</string>
+    <string name="auth_gdrive_connected_toast">Google Drive connecté !</string>
+    <string name="auth_gdrive_create_action">Créer \"PixelPlayer Music\"</string>
+    <string name="auth_gdrive_create_subtitle">Créer un nouveau dossier ici pour votre musique</string>
+    <string name="auth_gdrive_empty_msg">Aucun dossier ici</string>
+    <string name="auth_gdrive_open_cd">Ouvrir le dossier</string>
+    <string name="auth_gdrive_select_subtitle">Choisissez ou créez un dossier à utiliser comme source musicale</string>
+    <string name="auth_gdrive_select_title">Sélectionner un dossier de musique</string>
+    <string name="auth_gdrive_setup_msg">Configuration de Google Drive…</string>
+    <string name="auth_gdrive_signin_action">Se connecter avec Google</string>
+    <string name="auth_gdrive_title">Google Drive</string>
+    <string name="auth_gdrive_use_action">Utiliser</string>
+
+    <!-- Web Login Shared/Generic -->
+    <string name="auth_cookies_unreadable_error">Impossible de lire les cookies de session.</string>
+    <string name="auth_done_action">Terminé</string>
+    <string name="auth_exit_action">Quitter</string>
+    <string name="auth_no_cookies_error">Aucun cookie trouvé. Connectez-vous d\'abord.</string>
+    <string name="auth_page_slow_msg">La page prend trop de temps à charger. Actualisez ou essayez un autre réseau.</string>
+    <string name="auth_plus_label">+</string>
+    <string name="auth_saving_msg">Enregistrement…</string>
+    <string name="auth_stay_action">Rester</string>
+    <string name="auth_timeout_toast">Le chargement de la page a expiré. Vous pouvez réessayer sans perdre votre progression.</string>
+    <string name="auth_web_back_cd">Retour Web</string>
+    <string name="auth_web_exit_msg">Vous pourrez revenir plus tard. L\'état actuel de la page sera perdu lors de la fermeture.</string>
+    <string name="auth_web_forward_cd">Avance Web</string>
+    <string name="auth_web_refresh_cd">Actualiser</string>
+    <string name="auth_web_retry_action">Réessayer</string>
+    <string name="auth_web_home_cd">Ouvrir l\'accueil</string>
+    <string name="auth_webview_failed_error">Échec du chargement de la WebView.</string>
+
+    <!-- NetEase Web Login -->
+    <string name="auth_netease_cookie_error">Échec de la lecture des cookies NetEase : %1$s</string>
+    <string name="auth_netease_exit_title">Quitter la connexion NetEase ?</string>
+    <string name="auth_netease_http_error">HTTP %1$d lors du chargement de NetEase.</string>
+    <string name="auth_netease_incomplete_error">Connexion non détectée. Terminez la connexion NetEase avant d\'appuyer sur Terminé.</string>
+    <string name="auth_netease_login_title">Connexion à NetEase Music</string>
+    <string name="auth_netease_security_msg">Note de sécurité : votre mot de passe est saisi uniquement dans les pages web de NetEase. PixelPlayer stocke les cookies de session (MUSIC_U) pour synchroniser votre bibliothèque.</string>
+    <string name="auth_netease_title">NetEase Music</string>
+
+    <!-- QQ Music Web Login -->
+    <string name="auth_qq_cookie_error">Échec de la lecture des cookies QQ Music : %1$s</string>
+    <string name="auth_qq_exit_title">Quitter la connexion QQ Music ?</string>
+    <string name="auth_qq_http_error">HTTP %1$d lors du chargement de QQ Music.</string>
+    <string name="auth_qq_incomplete_error">Connexion non détectée. Terminez la connexion QQ Music avant d\'appuyer sur Terminé.</string>
+    <string name="auth_qq_login_title">Connexion à QQ Music</string>
+    <string name="auth_qq_security_msg">Note de sécurité : votre mot de passe est saisi uniquement dans les pages web de QQ Music. PixelPlayer stocke les cookies de session pour synchroniser votre bibliothèque.</string>
+    <string name="auth_qq_title">QQ Music</string>
+</resources>

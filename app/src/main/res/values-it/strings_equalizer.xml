@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Equalizer preset dialogs -->
+    <string name="equalizer_error_name_empty">Il nome non può essere vuoto</string>
+    <string name="equalizer_action_rename">Rinomina</string>
+
+    <!-- EqualizerScreen -->
+    <string name="equalizer_change_view_mode_cd">Cambia modalità vista</string>
+    <string name="equalizer_disable_cd">Disabilita equalizzatore</string>
+    <string name="equalizer_enable_cd">Abilita equalizzatore</string>
+    <string name="equalizer_edit_tab_title">Modifica</string>
+    <string name="equalizer_edit_presets_cd">Modifica preset</string>
+    <string name="equalizer_custom_preset_cd">Preset personalizzato</string>
+    <string name="equalizer_presets_cd">Preset</string>
+    <string name="equalizer_action_update">Aggiorna</string>
+    <string name="equalizer_bass_boost">Potenziamento bassi</string>
+    <string name="equalizer_virtualizer">Virtualizzatore</string>
+    <string name="equalizer_loudness">Loudness</string>
+    <string name="equalizer_effect_not_supported">Non supportato</string>
+    <string name="equalizer_effect_not_supported_device">Non supportato su questo dispositivo</string>
+    <string name="equalizer_volume">Volume</string>
+    <string name="equalizer_frequency_response">Risposta in frequenza</string>
+    <string name="equalizer_unit_hz">Hz</string>
+    <string name="equalizer_band_bass">Bassi</string>
+    <string name="equalizer_band_low_mids">Medi bassi</string>
+    <string name="equalizer_band_high_mids">Medi alti</string>
+    <string name="equalizer_band_treble">Alti</string>
+    <string name="equalizer_band_bass_low">Bassi / Bassi medi</string>
+    <string name="equalizer_band_mid_high">Medi / Alti</string>
+    <string name="equalizer_page_n">Pagina %1$d</string>
+    <string name="equalizer_reset_duration_cd">Reimposta durata</string>
+    <string name="equalizer_action_save_new">Salva nuovo</string>
+
+    <!-- CustomPresetsSheet -->
+    <string name="equalizer_presets_saved_title">Preset salvati</string>
+    <string name="equalizer_presets_empty">Ancora nessun preset personalizzato salvato.</string>
+    <string name="equalizer_presets_cd_unpin">Stacca</string>
+    <string name="equalizer_presets_cd_pin">Fissa</string>
+    <string name="equalizer_presets_cd_rename">Rinomina</string>
+    <string name="equalizer_presets_cd_delete">Elimina</string>
+
+    <!-- SavePresetDialog -->
+    <string name="equalizer_presets_save_custom_title">Salva preset personalizzato</string>
+    <string name="equalizer_presets_save_custom_body">Inserisci un nome per il tuo preset equalizzatore personalizzato.</string>
+    <string name="equalizer_preset_name_placeholder">Nome preset</string>
+    <string name="equalizer_presets_rename_title">Rinomina preset</string>
+
+    <!-- ReorderPresetsSheet -->
+    <string name="equalizer_manage_presets_title">Gestisci preset</string>
+    <string name="equalizer_presets_drag_hint">Trascina per riordinare • Tocca l\'occhio per mostrare o nascondere</string>
+    <string name="equalizer_cd_reorder">Riordina</string>
+    <string name="equalizer_reset_presets_title">Reimposta preset</string>
+    <string name="equalizer_reset_presets_message">Questo ripristinerà l\'ordine predefinito e la visibilità dei preset. Continuare?</string>
+    <string name="equalizer_cd_reset_presets_default">Reimposta a predefinito</string>
+    <string name="equalizer_cd_visible">Visibile</string>
+    <string name="equalizer_cd_hidden">Nascosto</string>
+</resources>

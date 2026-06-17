@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+    <!-- Player UI & Playback Controls -->
+    <string name="player_cd_collapse">Minimer spiller</string>
+    <string name="player_now_playing">Spilles nå</string>
+    <string name="player_cd_cloud_stream">Skystrøm</string>
+    <string name="player_cd_cast">Cast</string>
+    <string name="player_cd_bluetooth">Bluetooth</string>
+    <string name="player_cd_local_playback">Lokal avspilling</string>
+    <string name="player_connecting">Kobler til…</string>
+    <string name="player_cd_open_queue">Åpne kø</string>    
+
+    <!-- CastBottomSheet -->
+    <string name="cast_perm_title">Gjør deg klar til å koble til</string>
+    <string name="cast_perm_body">Tillat PixelPlayer å se enheter i nærheten og gjeldende Wi-Fi slik at vi kan holde cast, Bluetooth og høyttalere synkronisert.</string>
+    <string name="cast_perm_nearby_title">Enheter i nærheten</string>
+    <string name="cast_perm_nearby_desc">Trengs for å styre Bluetooth-lydenheter.</string>
+    <string name="cast_perm_location_title">Posisjon for Wi-Fi</string>
+    <string name="cast_perm_location_desc">Android krever posisjon for å dele Wi-Fi-navnet slik at vi kan finne cast-enheter.</string>
+    <string name="cast_allow_access">Gi tilgang</string>
+    <string name="cast_perm_footer">Vi bruker kun disse tillatelsene for tilkobling mellom enheter.</string>
+    <string name="cast_title_connect">Koble til enhet</string>
+    <string name="cast_scanning_nearby">Skanner i nærheten</string>
+    <string name="cast_subtitle_session">Casting-sesjon</string>
+    <string name="cast_connecting">Kobler til</string>
+    <string name="cast_connected">Tilkoblet</string>
+    <string name="cast_this_phone">Denne telefonen</string>
+    <string name="cast_bluetooth_audio">Bluetooth-lyd</string>
+    <string name="cast_local_playback">Lokal avspilling</string>
+    <string name="cast_playing">Spiller av</string>
+    <string name="cast_paused">Pauset</string>
+    <string name="cast_volume_device">Enhetsvolum</string>
+    <string name="cast_volume_phone">Telefonvolum</string>
+    <string name="cast_volume_levels">%1$d/%2$d</string>
+    <string name="cast_cd_battery">Batterinivå</string>
+    <string name="cast_cd_volume_level">Volumnivå</string>
+    <string name="cast_disconnect">Koble fra</string>
+    <string name="cast_connectivity">Tilkobling</string>
+    <string name="cast_turn_on_wifi_bt">Slå på Wi-Fi eller Bluetooth</string>
+    <string name="cast_cd_refresh_connections">Oppdater tilkoblinger</string>
+    <string name="cast_wifi">Wi-Fi</string>
+    <string name="cast_wifi_off">Av</string>
+    <string name="cast_wifi_on">På</string>
+    <string name="cast_wifi_connected">Tilkoblet</string>
+    <string name="cast_bluetooth">Bluetooth</string>
+    <string name="cast_bt_off">Av</string>
+    <string name="cast_bt_on">På</string>
+    <string name="cast_bt_connected">Tilkoblet</string>
+    <string name="cast_nearby_devices">Enheter i nærheten</string>
+    <string name="cast_cd_refresh_devices">Oppdater enheter</string>
+    <string name="cast_status_connected">Tilkoblet</string>
+    <string name="cast_status_connecting">Kobler til</string>
+    <string name="cast_status_available_connect">Tilgjengelig for tilkobling</string>
+    <string name="cast_status_available">Tilgjengelig</string>
+    <string name="cast_connecting_ellipsis">Kobler til...</string>
+    <string name="cast_searching">Søker etter enheter…</string>
+    <string name="cast_searching_hint">Sørg for at TV-en eller høyttaleren er på og på samme nettverk.</string>
+    <string name="cast_tab_controls">Kontroller</string>
+    <string name="cast_tab_devices">Enheter</string>
+
+    <!-- Casting & Remote Playback -->
+    <string name="cast_server_channel_name">Cast medieserver</string>
+    <string name="cast_server_notification_title">Caster til enhet</string>
+    <string name="cast_server_notification_text">Serverer media til Cast-enhet</string>
+    <string name="cast_server_foreground_error">%1$s: %2$s</string>
+    <string name="cast_seek_unavailable_for_format">Sporing er midlertidig utilgjengelig for dette lydformatet på Cast fordi det kan krasje Cast-sesjonen.</string>
+
+    <!-- Sleep Timer -->
+    <string name="sleep_timer_title">Sleep timer</string>
+    <string name="sleep_timer_zero_minutes_format">Tidtaker</string>
+    <string name="sleep_timer_n_minutes_format">%1$d minutter</string>
+    <string name="sleep_timer_set_for_minutes_toast">Tidtaker satt til %1$d minutter.</string>
+    <string name="sleep_timer_play_count_one_time">1 gang</string>
+    <plurals name="sleep_timer_play_count_n_times">
+        <item quantity="one">%d gang</item>
+        <item quantity="other">%d ganger</item>
+    </plurals>
+    <string name="sleep_timer_play_count_label">Antall spillinger: %1$s</string>
+    <string name="sleep_timer_end_of_current_track">Slutt på gjeldende spor</string>
+    <string name="sleep_timer_eot_toast">Avspillingen vil stoppe ved slutten av sporet.</string>
+    <string name="sleep_timer_cd_switch_on">Slå på</string>
+    <string name="sleep_timer_custom_time">Egendefinert tid</string>
+    <string name="sleep_timer_cancel_timer">Avbryt tidtaker</string>
+    <string name="sleep_timer_display_eot">Slutt på spor</string>
+    <string name="sleep_timer_cancelled_toast">Tidtaker avbrutt.</string>
+    <string name="sleep_timer_eot_no_song_toast">Kan ikke aktivere slutt på spor: ingen aktiv sang.</string>
+    <string name="sleep_timer_eot_song_changed_toast">Tidtaker for slutt på spor deaktivert: sang endret fra %1$s til %2$s.</string>
+    <string name="sleep_timer_label_previous_track">Forrige spor</string>
+    <string name="sleep_timer_label_current_track">Gjeldende spor</string>
+    <string name="sleep_timer_ui_set_custom_duration">Angi egendefinert varighet</string>
+
+    <!-- QueueBottomSheet -->
+    <string name="queue_next_up_label">Neste</string>
+    <string name="queue_tracks_empty">Køen er tom for øyeblikket.</string>
+    <plurals name="queue_tracks_lined_up">
+        <item quantity="one">1 spor i kø.</item>
+        <item quantity="other">%d spor i kø.</item>
+    </plurals>
+    <string name="queue_source_fallback_label">Kø</string>
+    <string name="queue_empty_label">Køen er tom.</string>
+    <string name="queue_cd_reorder_song">Endre rekkefølge på sang</string>
+    <string name="queue_cd_toggle_shuffle_action">Bland sanger</string>
+    <string name="queue_cd_toggle_repeat_action">Gjenta sanger</string>
+    <string name="queue_cd_sleep_timer_action">Sleep timer</string>
+    <string name="queue_cd_more_action">Flere handlinger</string>
+    <string name="queue_action_locate_current_song">Finn gjeldende sang</string>
+    <string name="queue_action_clear_queue">Tøm kø</string>
+    <string name="queue_dialog_clear_queue_title">Tøm kø</string>
+    <string name="queue_dialog_clear_queue_message">Er du sikker på at du vil tømme alle sanger fra køen, bortsett fra den gjeldende?</string>
+    <string name="queue_action_save_as_playlist">Lagre som spilleliste</string>
+    <string name="queue_save_playlist_named">%1$s-kø</string>
+    <string name="queue_save_playlist_current">Gjeldende kø</string>
+    <string name="queue_cd_dismiss_song">Fjern sang</string>
+    <string name="queue_song_removed">fjernet</string>
+    <string name="queue_save_as_playlist_sheet_title">Lagre som spilleliste</string>
+    <string name="queue_save_as_playlist_deselect_all">Velg bort alle</string>
+    <string name="queue_save_as_playlist_name_label">Navn på spilleliste</string>
+    <string name="queue_save_as_playlist_search_placeholder">Søk etter sanger…</string>
+    <string name="queue_save_as_playlist_search_no_match">Ingen sanger samsvarer med \"%1$s\"</string>
+    <plurals name="queue_save_as_playlist_n_songs_selected">
+        <item quantity="one">%d sang valgt</item>
+        <item quantity="other">%d sanger valgt</item>
+    </plurals>
+    <string name="queue_save_as_playlist_format">Lagre som: %1$s</string>
+    <string name="queue_save_as_playlist_name_placeholder">Skriv inn et navn</string>
+    <string name="queue_cd_remove_from_playlist">Fjern fra spilleliste</string>
+    <string name="queue_more_options_for_song">Flere alternativer for %1$s</string>
+
+    <!-- LyricsSheet -->
+    <string name="lyrics_title">Sangtekster</string>
+    <string name="lyrics_loading">Laster sangtekster…</string>
+    <string name="lyrics_mode_synced">Synkronisert</string>
+    <string name="lyrics_mode_static">Statisk</string>
+    <string name="lyrics_options">Alternativer for tekst</string>
+    <string name="lyrics_offset_minus_half">−.5</string>
+    <string name="lyrics_offset_minus_point_one">−.1</string>
+    <string name="lyrics_offset_plus_point_one">+.1</string>
+    <string name="lyrics_offset_plus_half">+.5</string>
+    <string name="lyrics_offset_zero">0s</string>
+    <string name="lyrics_offset_seconds_fmt">%1$+.1fs</string>
+    
+    <!-- LyricsRepository -->
+    <string name="lyrics_failed_to_search">Kunne ikke søke etter sangtekster</string>
+    <string name="lyrics_failed_to_fetch_from_remote">Kunne ikke hente sangtekster fra serveren</string>
+    <string name="lyrics_fetch_timeout">Tilkoblingen ble tidsavbrutt. Vennligst sjekk internettforbindelsen din.</string>
+    <string name="lyrics_network_error">Nettverksfeil. Vennligst sjekk internettforbindelsen din.</string>
+    <string name="lyrics_server_error">Serverfeil (kode %d). Vennligst prøv igjen senere.</string>
+    
+    <!-- LyricsStateHolder -->
+    <string name="lyrics_already_available">Sangtekster allerede tilgjengelig. Hoppet over netthenting.</string>
+    <string name="lyrics_embedded_already_available">Innebygde sangtekster allerede funnet. Hoppet over netthenting.</string>
+    <string name="lyrics_local_lrc_already_available">Lokale (.lrc) sangtekster allerede funnet. Hoppet over netthenting.</string>
+
+    <!-- LyricsMoreBottomSheet -->
+    <string name="lyrics_save_title">Lagre sangtekster</string>
+    <string name="lyrics_translate_via_ai">Oversett via AI</string>
+    <string name="lyrics_translate_already_translated">Disse sangtekstene har allerede en oversettelse</string>
+    <string name="lyrics_translate_already_in_target_language">Disse sangtekstene er allerede på dette språket</string>
+    <string name="lyrics_translate_api_not_configured">API er ikke konfigurert</string>
+    <string name="lyrics_translate_success">Sangtekster oversatt!</string>
+    <string name="lyrics_translate_progress">Oversetter sangtekster...</string>
+    <string name="lyrics_reset_imported">Nullstill importerte sangtekster</string>
+    <string name="lyrics_reset_dialog_title">Nullstill sangtekst?</string>
+    <string name="lyrics_reset_dialog_message">Er du sikker på at du vil nullstille sangteksten for denne sangen?</string>
+    <string name="lyrics_appearance_section">Utseende</string>
+    <string name="lyrics_appearance_alignment">Justering</string>
+    <string name="lyrics_appearance_align_left">Venstrejuster tekst</string>
+    <string name="lyrics_appearance_align_center">Midtstill tekst</string>
+    <string name="lyrics_appearance_align_right">Høyrejuster tekst</string>
+    <string name="lyrics_controls_section">Kontroller</string>
+    <string name="lyrics_controls_adjust_sync">Juster synkronisering</string>
+    <string name="lyrics_controls_hide_sync">Skjul synkroniseringskontroller</string>
+    <string name="lyrics_controls_show_romanization">Vis romanisering</string>
+    <string name="lyrics_controls_show_translations">Vis oversettelser</string>
+    <string name="lyrics_controls_disable_immersive_once">Deaktiver immersiv modus (én gang)</string>
+    <string name="lyrics_controls_keep_screen_on">Hold skjermen på</string>
+    
+    <!-- LyricsSheet save dialog -->
+    <string name="lyrics_save_dialog_title">Lagre sangtekster</string>
+    <string name="lyrics_save_dialog_message">Velg versjon som skal lagres:</string>
+    <string name="lyrics_save_synced">Synkronisert (med tidsstempler)</string>
+    <string name="lyrics_save_plain">Vanlig (kun tekst)</string>
+
+    <!-- FetchLyricsDialog -->
+    <string name="lyrics_search_online_prompt">Vil du søke etter sangtekster på nettet?</string>
+    <string name="lyrics_fetch_show_options_title">Vis alternativer for sangtekst</string>
+    <string name="lyrics_fetch_show_options_subtitle">Åpne alltid velgeren i stedet for å bruke første treff automatisk</string>
+    <string name="lyrics_searching">Søker etter sangtekster…</string>
+    <string name="lyrics_not_found">Sangtekster ikke funnet</string>
+    <string name="lyrics_custom_search_hint">Vi fant ikke sangtekster automatisk. Du kan redigere tittel eller artist og prøve å søke manuelt.</string>
+    <string name="lyrics_custom_search_field_title">Sangtittel</string>
+    <string name="lyrics_custom_search_field_artist">Artist (valgfritt)</string>
+    <string name="lyrics_found_n_matches_format">Fant %d treff</string>
+    <string name="lyrics_synced_badge">SYNKRONISERT</string>
+    <string name="lyrics_artist_album_line">%1$s • %2$s</string>
+    <string name="lyrics_provided_by">Sangtekster levert av</string>
+    <string name="lyrics_lrclib_uri">https://lrclib.net/</string>
+</resources>

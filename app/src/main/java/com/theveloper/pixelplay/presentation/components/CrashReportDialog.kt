@@ -51,6 +51,10 @@ fun CrashReportDialog(
     onDismiss: () -> Unit
 ) {
     val context = LocalContext.current
+    val clipboardLabel = stringResource(R.string.crash_report_clipboard_label)
+    val toastCrashLogCopied = stringResource(R.string.crash_report_toast_log_copied)
+    val shareSubject = stringResource(R.string.crash_report_share_subject)
+    val shareChooserTitle = stringResource(R.string.crash_report_share_chooser)
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -150,11 +154,11 @@ fun CrashReportDialog(
                         onClick = {
                             val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                             val clip = ClipData.newPlainText(
-                                context.getString(R.string.crash_report_clipboard_label),
+                                clipboardLabel,
                                 crashLog.getFullLog(),
                             )
                             clipboard.setPrimaryClip(clip)
-                            Toast.makeText(context, context.getString(R.string.toast_crash_log_copied), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, toastCrashLogCopied, Toast.LENGTH_SHORT).show()
                         },
                         modifier = Modifier.weight(1f)
                     ) {
@@ -164,18 +168,18 @@ fun CrashReportDialog(
                             modifier = Modifier.size(18.dp)
                         )
                         Spacer(modifier = Modifier.width(6.dp))
-                        Text(stringResource(R.string.action_copy))
+                        Text(stringResource(R.string.common_copy))
                     }
 
                     FilledTonalButton(
                         onClick = {
                             val shareIntent = Intent(Intent.ACTION_SEND).apply {
                                 type = "text/plain"
-                                putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.crash_report_share_subject))
+                                putExtra(Intent.EXTRA_SUBJECT, shareSubject)
                                 putExtra(Intent.EXTRA_TEXT, crashLog.getFullLog())
                             }
                             context.startActivity(
-                                Intent.createChooser(shareIntent, context.getString(R.string.crash_report_share_chooser)),
+                                Intent.createChooser(shareIntent, shareChooserTitle),
                             )
                         },
                         modifier = Modifier.weight(1f)
@@ -186,7 +190,7 @@ fun CrashReportDialog(
                             modifier = Modifier.size(18.dp)
                         )
                         Spacer(modifier = Modifier.width(6.dp))
-                        Text(stringResource(R.string.action_share))
+                        Text(stringResource(R.string.common_share))
                     }
                 }
             }
@@ -194,7 +198,7 @@ fun CrashReportDialog(
         confirmButton = {},
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text(stringResource(R.string.dismiss), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Text(stringResource(R.string.common_dismiss), maxLines = 1, overflow = TextOverflow.Ellipsis)
             }
         }
     )

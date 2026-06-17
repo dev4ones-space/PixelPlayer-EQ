@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+    <!-- Player UI & Playback Controls -->
+    <string name="player_cd_collapse">Oynatıcıyı daralt</string>
+    <string name="player_now_playing">Şimdi Çalıyor</string>
+    <string name="player_cd_cloud_stream">Bulut akışı</string>
+    <string name="player_cd_cast">Yayınla</string>
+    <string name="player_cd_bluetooth">Bluetooth</string>
+    <string name="player_cd_local_playback">Yerel oynatma</string>
+    <string name="player_connecting">Bağlanıyor…</string>
+    <string name="player_cd_open_queue">Sırayı Aç</string>
+
+    <!-- CastBottomSheet -->
+    <string name="cast_perm_title">Bağlanmaya hazırlanın</string>
+    <string name="cast_perm_body">Allow PixelPlayer to see your nearby devices and current Wi‑Fi so we can keep your cast, Bluetooth audio, and speakers in sync.</string>
+    <string name="cast_perm_nearby_title">Yakındaki cihazlar</string>
+    <string name="cast_perm_nearby_desc">Bağlı Bluetooth ses cihazlarınızı okumak ve kontrol etmek için gereklidir.</string>
+    <string name="cast_perm_location_title">Wi‑Fi için konum</string>
+    <string name="cast_perm_location_desc">Android, uyumlu yayın cihazlarını bulabilmemiz için bulunduğunuz Wi‑Fi ağını (SSID) paylaşmak adına Konum izni gerektirir.</string>
+    <string name="cast_allow_access">Erişime izin ver</string>
+    <string name="cast_perm_footer">Bu izinleri yalnızca cihazlar arası etkileşim — yayınlama, yakındaki hoparlörleri kontrol etme ve sesi senkronize tutma — için kullanırız.</string>
+    <string name="cast_title_connect">Cihazı bağla</string>
+    <string name="cast_scanning_nearby">Yakındakiler taranıyor</string>
+    <string name="cast_subtitle_session">Yayın oturumu</string>
+    <string name="cast_connecting">Bağlanıyor</string>
+    <string name="cast_connected">Connected</string>
+    <string name="cast_this_phone">Bu telefon</string>
+    <string name="cast_bluetooth_audio">Bluetooth ses</string>
+    <string name="cast_local_playback">Yerel oynatma</string>
+    <string name="cast_playing">Playing</string>
+    <string name="cast_paused">Duraklatıldı</string>
+    <string name="cast_volume_device">Cihaz sesi</string>
+    <string name="cast_volume_phone">Telefon sesi</string>
+    <string name="cast_volume_levels">%1$d/%2$d</string>
+    <string name="cast_cd_battery">Pil seviyesi</string>
+    <string name="cast_cd_volume_level">Ses seviyesi</string>
+    <string name="cast_disconnect">Bağlantıyı kes</string>
+    <string name="cast_connectivity">Bağlantı</string>
+    <string name="cast_turn_on_wifi_bt">Wi-Fi veya Bluetooth\'u açın</string>
+    <string name="cast_cd_refresh_connections">Bağlantıları yenile</string>
+    <string name="cast_wifi">Wi-Fi</string>
+    <string name="cast_wifi_off">Kapalı</string>
+    <string name="cast_wifi_on">Açık</string>
+    <string name="cast_wifi_connected">Connected</string>
+    <string name="cast_bluetooth">Bluetooth</string>
+    <string name="cast_bt_off">Kapalı</string>
+    <string name="cast_bt_on">Açık</string>
+    <string name="cast_bt_connected">Connected</string>
+    <string name="cast_nearby_devices">Yakındaki cihazlar</string>
+    <string name="cast_cd_refresh_devices">Cihazları yenile</string>
+    <string name="cast_status_connected">Connected</string>
+    <string name="cast_status_connecting">Bağlanıyor</string>
+    <string name="cast_status_available_connect">Bağlantı için kullanılabilir</string>
+    <string name="cast_status_available">Kullanılabilir</string>
+    <string name="cast_connecting_ellipsis">Bağlanıyor...</string>
+    <string name="cast_searching">Cihazlar aranıyor…</string>
+    <string name="cast_searching_hint">TV\'nizin veya hoparlörünüzün açık ve aynı Wi‑Fi ağında olduğundan emin olun.</string>
+    <string name="cast_tab_controls">Kontroller</string>
+    <string name="cast_tab_devices">Cihazlar</string>
+
+    <!-- Casting & Remote Playback -->
+    <string name="cast_server_channel_name">Yayın medya sunucusu</string>
+    <string name="cast_server_notification_title">Cihaza yayınlanıyor</string>
+    <string name="cast_server_notification_text">Yayın cihazına medya sunuluyor</string>
+    <string name="cast_server_foreground_error">%1$s: %2$s</string>
+    <string name="cast_seek_unavailable_for_format">Yayın oturumunun çökmesine neden olabileceği için bu ses formatında yayın sırasında sarma geçici olarak kullanılamıyor.</string>
+
+    <!-- Sleep Timer -->
+    <string name="sleep_timer_title">Uyku zamanlayıcısı</string>
+    <string name="sleep_timer_zero_minutes_format">Zamanlayıcı</string>
+    <string name="sleep_timer_n_minutes_format">%1$d dakika</string>
+    <string name="sleep_timer_set_for_minutes_toast">Zamanlayıcı %1$d dakikaya ayarlandı.</string>
+    <string name="sleep_timer_play_count_one_time">1 kez</string>
+    <plurals name="sleep_timer_play_count_n_times">
+        <item quantity="one">%d kez</item>
+        <item quantity="other">%d kez</item>
+    </plurals>
+    <string name="sleep_timer_play_count_label">Çalma sayısı: %1$s</string>
+    <string name="sleep_timer_end_of_current_track">Mevcut parçanın sonunda</string>
+    <string name="sleep_timer_eot_toast">Oynatma parçanın sonunda duracak.</string>
+    <string name="sleep_timer_cd_switch_on">Aç</string>
+    <string name="sleep_timer_custom_time">Özel süre</string>
+    <string name="sleep_timer_cancel_timer">Zamanlayıcıyı iptal et</string>
+    <string name="sleep_timer_display_eot">Parçanın sonu</string>
+    <string name="sleep_timer_cancelled_toast">Zamanlayıcı iptal edildi.</string>
+    <string name="sleep_timer_eot_no_song_toast">Parça sonu etkinleştirilemedi: aktif şarkı yok.</string>
+    <string name="sleep_timer_eot_song_changed_toast">Parça sonu zamanlayıcısı devre dışı bırakıldı: şarkı %1$s iken %2$s olarak değişti.</string>
+    <string name="sleep_timer_label_previous_track">Önceki parça</string>
+    <string name="sleep_timer_label_current_track">Mevcut parça</string>
+    <string name="sleep_timer_ui_set_custom_duration">Özel süre ayarla</string>
+
+    <!-- QueueBottomSheet -->
+    <string name="queue_next_up_label">Sıradaki</string>
+    <string name="queue_tracks_empty">Kuyruk şu an boş.</string>
+    <plurals name="queue_tracks_lined_up">
+        <item quantity="one">1 parça sırada.</item>
+        <item quantity="other">%d parça sırada.</item>
+    </plurals>
+    <string name="queue_source_fallback_label">Kuyruk</string>
+    <string name="queue_empty_label">Kuyruk boş.</string>
+    <string name="queue_cd_reorder_song">Şarkıyı yeniden sırala</string>
+    <string name="queue_cd_toggle_shuffle_action">Karıştırmayı aç/kapat</string>
+    <string name="queue_cd_toggle_repeat_action">Tekrarlamayı aç/kapat</string>
+    <string name="queue_cd_sleep_timer_action">Uyku zamanlayıcısı</string>
+    <string name="queue_cd_more_action">Daha fazla eylem</string>
+    <string name="queue_action_locate_current_song">Mevcut şarkıyı bul</string>
+    <string name="queue_action_clear_queue">Kuyruğu temizle</string>
+    <string name="queue_dialog_clear_queue_title">Kuyruğu temizle</string>
+    <string name="queue_dialog_clear_queue_message">Mevcut şarkı hariç kuyruktaki tüm şarkıları temizlemek istediğinizden emin misiniz?</string>
+    <string name="queue_action_save_as_playlist">Çalma listesi olarak kaydet</string>
+    <string name="queue_save_playlist_named">%1$s kuyruğu</string>
+    <string name="queue_save_playlist_current">Mevcut kuyruk</string>
+    <string name="queue_cd_dismiss_song">Şarkıyı kaldır</string>
+    <string name="queue_song_removed">kaldırıldı</string>
+    <string name="queue_save_as_playlist_sheet_title">Çalma listesi olarak kaydet</string>
+    <string name="queue_save_as_playlist_deselect_all">Tüm seçimi kaldır</string>
+    <string name="queue_save_as_playlist_name_label">Çalma listesi adı</string>
+    <string name="queue_save_as_playlist_search_placeholder">Dahil edilecek şarkıları ara…</string>
+    <string name="queue_save_as_playlist_search_no_match">\"%1$s\" ile eşleşen şarkı yok</string>
+    <plurals name="queue_save_as_playlist_n_songs_selected">
+        <item quantity="one">%d şarkı seçildi</item>
+        <item quantity="other">%d şarkı seçildi</item>
+    </plurals>
+    <string name="queue_save_as_playlist_format">Farklı kaydet: %1$s</string>
+    <string name="queue_save_as_playlist_name_placeholder">Bir çalma listesi adı girin</string>
+    <string name="queue_cd_remove_from_playlist">Çalma listesinden kaldır</string>
+    <string name="queue_more_options_for_song">%1$s için daha fazla seçenek</string>
+
+    <!-- LyricsSheet -->
+    <string name="lyrics_title">Şarkı Sözleri</string>
+    <string name="lyrics_loading">Şarkı sözleri yükleniyor…</string>
+    <string name="lyrics_mode_synced">Senkronize</string>
+    <string name="lyrics_mode_static">Statik</string>
+    <string name="lyrics_options">Şarkı sözü seçenekleri</string>
+    <string name="lyrics_offset_minus_half">−.5</string>
+    <string name="lyrics_offset_minus_point_one">−.1</string>
+    <string name="lyrics_offset_plus_point_one">+.1</string>
+    <string name="lyrics_offset_plus_half">+.5</string>
+    <string name="lyrics_offset_zero">0s</string>
+    <string name="lyrics_offset_seconds_fmt">%1$+.1fs</string>
+
+    <!-- LyricsRepository -->
+    <string name="lyrics_failed_to_search">Şarkı sözleri aranamadı</string>
+    <string name="lyrics_failed_to_fetch_from_remote">Şarkı sözleri sunucudan alınamadı</string>
+    <string name="lyrics_fetch_timeout">Bağlantı zaman aşımına uğradı. Lütfen internet bağlantınızı kontrol edin.</string>
+    <string name="lyrics_network_error">Ağ hatası. Lütfen internet bağlantınızı kontrol edin.</string>
+    <string name="lyrics_server_error">Sunucu hatası (kod %d). Lütfen daha sonra tekrar deneyin.</string>
+
+    <!-- LyricsStateHolder -->
+    <string name="lyrics_already_available">Şarkı sözleri zaten mevcut. Çevrimiçi arama atlandı.</string>
+    <string name="lyrics_embedded_already_available">Gömülü şarkı sözleri zaten bulundu. Çevrimiçi arama atlandı.</string>
+    <string name="lyrics_local_lrc_already_available">Yerel (.lrc) şarkı sözleri zaten bulundu. Çevrimiçi arama atlandı.</string>
+
+    <!-- LyricsMoreBottomSheet -->
+    <string name="lyrics_save_title">Şarkı Sözlerini Kaydet</string>
+    <string name="lyrics_translate_via_ai">Yapay Zeka ile Çevir</string>
+    <string name="lyrics_translate_already_translated">Bu şarkı sözlerinin zaten bir çevirisi var</string>
+    <string name="lyrics_translate_already_in_target_language">Bu şarkı sözleri zaten bu dilde</string>
+    <string name="lyrics_translate_api_not_configured">API yapılandırılmamış</string>
+    <string name="lyrics_translate_success">Şarkı sözleri başarıyla çevrildi!</string>
+    <string name="lyrics_translate_progress">Şarkı sözleri çevriliyor...</string>
+    <string name="lyrics_reset_imported">İçe aktarılan sözleri sıfırla</string>
+    <string name="lyrics_reset_dialog_title">Şarkı sözleri sıfırlansın mı?</string>
+    <string name="lyrics_reset_dialog_message">Bu şarkının sözlerini sıfırlamak istediğinizden emin misiniz?</string>
+    <string name="lyrics_appearance_section">Görünüm</string>
+    <string name="lyrics_appearance_alignment">Hizalama</string>
+    <string name="lyrics_appearance_align_left">Sözleri sola hizala</string>
+    <string name="lyrics_appearance_align_center">Sözleri ortala</string>
+    <string name="lyrics_appearance_align_right">Sözleri sağa hizala</string>
+    <string name="lyrics_controls_section">Kontroller</string>
+    <string name="lyrics_controls_adjust_sync">Senkronizasyonu ayarla</string>
+    <string name="lyrics_controls_hide_sync">Senkronizasyon kontrollerini gizle</string>
+    <string name="lyrics_controls_show_romanization">Romanizasyonu göster</string>
+    <string name="lyrics_controls_show_translations">Çevirileri göster</string>
+    <string name="lyrics_controls_disable_immersive_once">Tam ekranı devre dışı bırak (bir kez)</string>
+    <string name="lyrics_controls_keep_screen_on">Ekranı açık tut</string>
+
+    <!-- LyricsSheet save dialog -->
+    <string name="lyrics_save_dialog_title">Şarkı Sözlerini Kaydet</string>
+    <string name="lyrics_save_dialog_message">Hangi sürümün kaydedileceğini seçin:</string>
+    <string name="lyrics_save_synced">Senkronize (zaman damgalı)</string>
+    <string name="lyrics_save_plain">Düz metin (yalnızca metin)</string>
+
+    <!-- FetchLyricsDialog -->
+    <string name="lyrics_search_online_prompt">Çevrimiçi şarkı sözü aramak ister misiniz?</string>
+    <string name="lyrics_fetch_show_options_title">Söz seçeneklerini göster</string>
+    <string name="lyrics_fetch_show_options_subtitle">İlk eşleşmeyi otomatik uygulamak yerine her zaman seçiciyi aç</string>
+    <string name="lyrics_searching">Şarkı sözleri aranıyor…</string>
+    <string name="lyrics_not_found">Şarkı sözü bulunamadı</string>
+    <string name="lyrics_custom_search_hint">Şarkı sözlerini otomatik olarak bulamadık. Başlığı veya sanatçıyı düzenleyip manuel aramayı deneyebilirsiniz.</string>
+    <string name="lyrics_custom_search_field_title">Şarkı Başlığı</string>
+    <string name="lyrics_custom_search_field_artist">Sanatçı (isteğe bağlı)</string>
+    <string name="lyrics_found_n_matches_format">%d eşleşme bulundu</string>
+    <string name="lyrics_synced_badge">SENKRONİZE</string>
+    <string name="lyrics_artist_album_line">%1$s • %2$s</string>
+    <string name="lyrics_provided_by">Şarkı sözü sağlayıcısı:</string>
+    <string name="lyrics_lrclib_uri">https://lrclib.net/</string>
+</resources>

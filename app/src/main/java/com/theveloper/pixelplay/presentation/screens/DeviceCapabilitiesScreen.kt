@@ -1,6 +1,8 @@
 package com.theveloper.pixelplay.presentation.screens
 
+import android.content.Intent
 import android.text.format.Formatter
+import android.widget.Toast
 import androidx.annotation.OptIn
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.Spring
@@ -25,26 +27,36 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Assessment
 import androidx.compose.material.icons.rounded.CheckCircle
+import androidx.compose.material.icons.rounded.ContentCopy
 import androidx.compose.material.icons.rounded.ErrorOutline
 import androidx.compose.material.icons.rounded.GraphicEq
 import androidx.compose.material.icons.rounded.Headphones
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.Memory
+import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material.icons.rounded.Speaker
 import androidx.compose.material.icons.rounded.Storage
 import androidx.compose.material.icons.rounded.Warning
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -63,9 +75,11 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -90,6 +104,9 @@ import com.theveloper.pixelplay.presentation.viewmodel.LocalMusicStorageSummary
 import com.theveloper.pixelplay.presentation.viewmodel.MemorySummary
 import com.theveloper.pixelplay.presentation.viewmodel.PlaybackCompatibilitySummary
 import com.theveloper.pixelplay.presentation.viewmodel.PlayerViewModel
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import kotlinx.coroutines.launch
 import racra.compose.smooth_corner_rect_library.AbsoluteSmoothCornerShape
 import kotlin.math.roundToInt
@@ -177,6 +194,9 @@ fun DeviceCapabilitiesScreen(
                 state = state,
                 lazyListState = lazyListState,
                 topPadding = currentTopBarHeightDp,
+                onGenerateReport = viewModel::generatePerformanceReport,
+                onAdvancedDiagnosticsChange = viewModel::setAdvancedPerformanceDiagnosticsEnabled,
+                onMarkLagNow = viewModel::markLagNow,
                 modifier = Modifier.fillMaxSize()
             )
         }
@@ -198,6 +218,9 @@ private fun DeviceCapabilitiesContent(
     state: DeviceCapabilitiesState,
     lazyListState: LazyListState,
     topPadding: Dp,
+    onGenerateReport: () -> Unit,
+    onAdvancedDiagnosticsChange: (Boolean) -> Unit,
+    onMarkLagNow: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -254,6 +277,200 @@ private fun DeviceCapabilitiesContent(
         item {
             DeviceInfoPanel(deviceInfo = state.deviceInfo)
         }
+
+        item {
+            PerformanceReportCard(
+                report = state.performanceReport,
+                isGenerating = state.isGeneratingReport,
+                advancedDiagnosticsEnabled = state.advancedDiagnosticsEnabled,
+                advancedDiagnosticsExpiresAtEpochMs = state.advancedDiagnosticsExpiresAtEpochMs,
+                onGenerate = onGenerateReport,
+                onAdvancedDiagnosticsChange = onAdvancedDiagnosticsChange,
+                onMarkLagNow = onMarkLagNow
+            )
+        }
+    }
+}
+
+@Composable
+private fun PerformanceReportCard(
+    report: String?,
+    isGenerating: Boolean,
+    advancedDiagnosticsEnabled: Boolean,
+    advancedDiagnosticsExpiresAtEpochMs: Long?,
+    onGenerate: () -> Unit,
+    onAdvancedDiagnosticsChange: (Boolean) -> Unit,
+    onMarkLagNow: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val context = LocalContext.current
+    val clipboardManager = LocalClipboardManager.current
+    val copiedMessage = stringResource(R.string.settings_devcaps_report_copied)
+    val shareTitle = stringResource(R.string.settings_devcaps_report_share_title)
+    val lagMarkedMessage = stringResource(R.string.settings_devcaps_advanced_diagnostics_marked)
+
+    CapabilityCard(
+        title = stringResource(R.string.settings_devcaps_report_title),
+        icon = Icons.Rounded.Assessment,
+        modifier = modifier
+    ) {
+        Text(
+            text = stringResource(R.string.settings_devcaps_report_description),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+
+        AdvancedDiagnosticsToggleRow(
+            enabled = advancedDiagnosticsEnabled,
+            expiresAtEpochMs = advancedDiagnosticsExpiresAtEpochMs,
+            onEnabledChange = onAdvancedDiagnosticsChange
+        )
+
+        if (advancedDiagnosticsEnabled) {
+            OutlinedButton(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = {
+                    onMarkLagNow()
+                    Toast.makeText(context, lagMarkedMessage, Toast.LENGTH_SHORT).show()
+                }
+            ) {
+                Text(stringResource(R.string.settings_devcaps_advanced_diagnostics_mark_lag))
+            }
+        }
+
+        Button(
+            modifier = Modifier.fillMaxWidth(),
+            onClick = onGenerate,
+            enabled = !isGenerating
+        ) {
+            if (isGenerating) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(18.dp),
+                    strokeWidth = 2.dp,
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
+            } else {
+                Text(
+                    text = stringResource(
+                        if (report == null) R.string.settings_devcaps_report_generate
+                        else R.string.settings_devcaps_report_regenerate
+                    )
+                )
+            }
+        }
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            if (report != null) {
+                OutlinedButton(
+                    modifier = Modifier.weight(1f),
+                    onClick = {
+                        clipboardManager.setText(AnnotatedString(report))
+                        Toast.makeText(context, copiedMessage, Toast.LENGTH_SHORT).show()
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Rounded.ContentCopy,
+                        contentDescription = null,
+                        modifier = Modifier.size(18.dp)
+                    )
+                    Spacer(Modifier.width(6.dp))
+                    Text(stringResource(R.string.settings_devcaps_report_copy))
+                }
+
+                OutlinedButton(
+                    modifier = Modifier.weight(1f),
+                    onClick = {
+                        val sendIntent = Intent(Intent.ACTION_SEND).apply {
+                            type = "text/plain"
+                            putExtra(Intent.EXTRA_SUBJECT, shareTitle)
+                            putExtra(Intent.EXTRA_TEXT, report)
+                        }
+                        context.startActivity(Intent.createChooser(sendIntent, shareTitle))
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Rounded.Share,
+                        contentDescription = null,
+                        modifier = Modifier.size(18.dp)
+                    )
+                    Spacer(Modifier.width(6.dp))
+                    Text(stringResource(R.string.settings_devcaps_report_share))
+                }
+            }
+        }
+
+        if (report != null) {
+            Surface(
+                shape = AbsoluteSmoothCornerShape(18.dp, 60),
+                color = MaterialTheme.colorScheme.surfaceContainerLow,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                SelectionContainer {
+                    Text(
+                        text = report,
+                        style = MaterialTheme.typography.bodySmall,
+                        fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier
+                            .padding(12.dp)
+                            .heightIn(max = 260.dp)
+                            .verticalScroll(rememberScrollState())
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun AdvancedDiagnosticsToggleRow(
+    enabled: Boolean,
+    expiresAtEpochMs: Long?,
+    onEnabledChange: (Boolean) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Surface(
+        modifier = modifier.fillMaxWidth(),
+        shape = AbsoluteSmoothCornerShape(18.dp, 60),
+        color = MaterialTheme.colorScheme.surfaceContainerLow
+    ) {
+        Row(
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(2.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.settings_devcaps_advanced_diagnostics_title),
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Text(
+                    text = if (enabled && expiresAtEpochMs != null) {
+                        stringResource(
+                            R.string.settings_devcaps_advanced_diagnostics_expires,
+                            formatDiagnosticsExpiry(expiresAtEpochMs)
+                        )
+                    } else {
+                        stringResource(R.string.settings_devcaps_advanced_diagnostics_description)
+                    },
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+            Switch(
+                checked = enabled,
+                onCheckedChange = onEnabledChange
+            )
+        }
     }
 }
 
@@ -299,9 +516,9 @@ private fun PlaybackReadinessCard(
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
                         text = if (needsReview) {
-                            stringResource(R.string.device_capabilities_review_title)
+                            stringResource(R.string.settings_devcaps_review_title)
                         } else {
-                            stringResource(R.string.device_capabilities_ready_title)
+                            stringResource(R.string.settings_devcaps_ready_title)
                         },
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.SemiBold,
@@ -316,31 +533,31 @@ private fun PlaybackReadinessCard(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 HeroMetricTile(
-                    label = stringResource(R.string.device_capabilities_metric_formats),
+                    label = stringResource(R.string.settings_devcaps_metric_formats),
                     value = audioCapabilities?.supportedCodecs
                         ?.flatMap { it.supportedTypes }
                         ?.distinct()
                         ?.size
                         ?.toString()
-                        ?: stringResource(R.string.device_capabilities_unknown_short),
+                        ?: stringResource(R.string.settings_devcaps_unknown),
                     modifier = Modifier.weight(1f),
                     containerColor = contentColor.copy(alpha = 0.10f),
                     contentColor = contentColor
                 )
                 HeroMetricTile(
-                    label = stringResource(R.string.device_capabilities_metric_hw_decoders),
+                    label = stringResource(R.string.settings_devcaps_metric_hw_decoders),
                     value = audioCapabilities?.supportedCodecs
                         ?.count { it.isHardwareAccelerated }
                         ?.toString()
-                        ?: stringResource(R.string.device_capabilities_unknown_short),
+                        ?: stringResource(R.string.settings_devcaps_unknown),
                     modifier = Modifier.weight(1f),
                     containerColor = contentColor.copy(alpha = 0.10f),
                     contentColor = contentColor
                 )
                 HeroMetricTile(
-                    label = stringResource(R.string.device_capabilities_metric_local_music),
+                    label = stringResource(R.string.settings_devcaps_metric_local_music),
                     value = storageSummary?.localSongCount?.toString()
-                        ?: stringResource(R.string.device_capabilities_unknown_short),
+                        ?: stringResource(R.string.settings_devcaps_unknown),
                     modifier = Modifier.weight(1f),
                     containerColor = contentColor.copy(alpha = 0.10f),
                     contentColor = contentColor
@@ -369,7 +586,7 @@ private fun LocalMusicStorageCard(
     val usedPercent = storagePercentLabel(storageSummary.deviceUsedFraction)
 
     CapabilityCard(
-        title = stringResource(R.string.device_capabilities_storage_title),
+        title = stringResource(R.string.settings_devcaps_storage_title),
         icon = Icons.Rounded.Storage,
         modifier = modifier
     ) {
@@ -378,18 +595,18 @@ private fun LocalMusicStorageCard(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             InfoTile(
-                label = stringResource(R.string.device_capabilities_storage_music_size),
+                label = stringResource(R.string.settings_devcaps_storage_music_size),
                 value = musicSize,
                 supporting = stringResource(
-                    R.string.device_capabilities_storage_music_count,
+                    R.string.settings_devcaps_storage_music_count,
                     storageSummary.localSongCount
                 ),
                 modifier = Modifier.weight(1f)
             )
             InfoTile(
-                label = stringResource(R.string.device_capabilities_storage_available),
+                label = stringResource(R.string.settings_devcaps_storage_available),
                 value = availableSize,
-                supporting = stringResource(R.string.device_capabilities_storage_total, totalSize),
+                supporting = stringResource(R.string.settings_devcaps_storage_total, totalSize),
                 modifier = Modifier.weight(1f)
             )
         }
@@ -399,12 +616,12 @@ private fun LocalMusicStorageCard(
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             ProgressReadout(
-                label = stringResource(R.string.device_capabilities_storage_music_footprint),
+                label = stringResource(R.string.settings_devcaps_storage_music_footprint),
                 value = musicPercent,
                 progress = storageSummary.localMusicStorageFraction
             )
             ProgressReadout(
-                label = stringResource(R.string.device_capabilities_storage_device_used),
+                label = stringResource(R.string.settings_devcaps_storage_device_used),
                 value = usedPercent,
                 progress = storageSummary.deviceUsedFraction,
                 color = MaterialTheme.colorScheme.secondary
@@ -416,7 +633,7 @@ private fun LocalMusicStorageCard(
                 if (storageSummary.cloudSongCount > 0) {
                     TonalChip(
                         text = stringResource(
-                            R.string.device_capabilities_storage_cloud_count,
+                            R.string.settings_devcaps_storage_cloud_count,
                             storageSummary.cloudSongCount
                         )
                     )
@@ -424,7 +641,7 @@ private fun LocalMusicStorageCard(
                 if (storageSummary.unavailableLocalFileCount > 0) {
                     TonalChip(
                         text = stringResource(
-                            R.string.device_capabilities_storage_unavailable_count,
+                            R.string.settings_devcaps_storage_unavailable_count,
                             storageSummary.unavailableLocalFileCount
                         ),
                         containerColor = MaterialTheme.colorScheme.errorContainer,
@@ -446,13 +663,13 @@ private fun PlaybackPathCard(
     val context = LocalContext.current
     val availableRam = memorySummary?.availableRamBytes?.let {
         Formatter.formatShortFileSize(context, it)
-    } ?: stringResource(R.string.device_capabilities_unknown_short)
+    } ?: stringResource(R.string.settings_devcaps_unknown)
     val totalRam = memorySummary?.totalRamBytes?.let {
         Formatter.formatShortFileSize(context, it)
-    } ?: stringResource(R.string.device_capabilities_unknown_short)
+    } ?: stringResource(R.string.settings_devcaps_unknown)
 
     CapabilityCard(
-        title = stringResource(R.string.device_capabilities_playback_path_title),
+        title = stringResource(R.string.settings_devcaps_playback_path_title),
         icon = Icons.Rounded.Speaker,
         modifier = modifier
     ) {
@@ -461,18 +678,18 @@ private fun PlaybackPathCard(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             InfoTile(
-                label = stringResource(R.string.presentation_batch_g_device_label_sample_rate),
-                value = stringResource(R.string.presentation_batch_g_device_value_hz, audioCapabilities.outputSampleRate),
+                label = stringResource(R.string.settings_devcaps_sample_rate_title),
+                value = stringResource(R.string.settings_devcaps_sample_rate_value_hz, audioCapabilities.outputSampleRate),
                 supporting = stringResource(
-                    R.string.device_capabilities_buffer_frames,
+                    R.string.settings_devcaps_buffer_frames,
                     audioCapabilities.outputFramesPerBuffer
                 ),
                 modifier = Modifier.weight(1f)
             )
             InfoTile(
-                label = stringResource(R.string.device_capabilities_hifi_pcm_float),
+                label = stringResource(R.string.settings_devcaps_hifi_pcm_float_title),
                 value = yesNo(audioCapabilities.isPcmFloatSupported),
-                supporting = stringResource(R.string.device_capabilities_hifi_pcm_float_supporting),
+                supporting = stringResource(R.string.settings_devcaps_hifi_pcm_float_supporting),
                 modifier = Modifier.weight(1f)
             )
         }
@@ -482,30 +699,30 @@ private fun PlaybackPathCard(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             InfoTile(
-                label = stringResource(R.string.presentation_batch_g_device_label_low_latency),
+                label = stringResource(R.string.settings_devcaps_low_latency_title),
                 value = yesNo(audioCapabilities.isLowLatencySupported),
-                supporting = stringResource(R.string.presentation_batch_g_device_label_pro_audio) +
+                supporting = stringResource(R.string.settings_devcaps_pro_audio_supporting) +
                     ": " + yesNo(audioCapabilities.isProAudioSupported),
                 modifier = Modifier.weight(1f)
             )
             InfoTile(
-                label = stringResource(R.string.device_capabilities_memory_title),
+                label = stringResource(R.string.settings_devcaps_memory_title),
                 value = availableRam,
-                supporting = stringResource(R.string.device_capabilities_memory_available_of, totalRam),
+                supporting = stringResource(R.string.settings_devcaps_memory_available_of, totalRam),
                 modifier = Modifier.weight(1f)
             )
         }
 
-        SectionLabel(text = stringResource(R.string.device_capabilities_offload_title))
+        SectionLabel(text = stringResource(R.string.settings_devcaps_offload_title))
         ChipRow(
-            emptyText = stringResource(R.string.device_capabilities_offload_empty),
+            emptyText = stringResource(R.string.settings_devcaps_offload_empty),
             chips = audioCapabilities.offloadSupportedFormats
         )
 
-        SectionLabel(text = stringResource(R.string.device_capabilities_outputs_title))
+        SectionLabel(text = stringResource(R.string.settings_devcaps_outputs_title))
         if (audioCapabilities.outputRoutes.isEmpty()) {
             Text(
-                text = stringResource(R.string.device_capabilities_outputs_empty),
+                text = stringResource(R.string.settings_devcaps_outputs_empty),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -527,9 +744,9 @@ private fun PlaybackPathCard(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 InfoTile(
-                    label = stringResource(R.string.presentation_batch_g_device_section_exoplayer),
+                    label = stringResource(R.string.settings_devcaps_exoplayer_title),
                     value = exo.version,
-                    supporting = stringResource(R.string.device_capabilities_renderers_count, exo.renderers),
+                    supporting = stringResource(R.string.settings_devcaps_renderers_count, exo.renderers),
                     icon = Icons.Rounded.Memory,
                     modifier = Modifier.weight(1f)
                 )
@@ -545,7 +762,7 @@ private fun FormatCompatibilityCard(
     modifier: Modifier = Modifier
 ) {
     CapabilityCard(
-        title = stringResource(R.string.device_capabilities_formats_title),
+        title = stringResource(R.string.settings_devcaps_formats_title),
         icon = Icons.Rounded.GraphicEq,
         verticalSpacing = 0.dp,
         modifier = modifier
@@ -582,7 +799,7 @@ private fun FormatCompatibilityCard(
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 TonalChip(
                     text = stringResource(
-                        R.string.device_capabilities_formats_supported_count,
+                        R.string.settings_devcaps_formats_supported_count,
                         compatibility.supportedLibrarySongCount
                     ),
                     leadingIcon = Icons.Rounded.CheckCircle
@@ -590,7 +807,7 @@ private fun FormatCompatibilityCard(
                 if (compatibility.unknownFormatSongCount > 0) {
                     TonalChip(
                         text = stringResource(
-                            R.string.device_capabilities_formats_unknown_count,
+                            R.string.settings_devcaps_formats_unknown_count,
                             compatibility.unknownFormatSongCount
                         ),
                         leadingIcon = Icons.Rounded.Info
@@ -611,15 +828,15 @@ private fun PlaybackFindingsCard(
         compatibility.resampledLocalSongCount > 0
 
     CapabilityCard(
-        title = stringResource(R.string.device_capabilities_findings_title),
+        title = stringResource(R.string.settings_devcaps_findings_title),
         icon = if (hasFindings) Icons.Rounded.Warning else Icons.Rounded.CheckCircle,
         modifier = modifier
     ) {
         if (!hasFindings) {
             FindingRow(
                 icon = Icons.Rounded.CheckCircle,
-                title = stringResource(R.string.device_capabilities_finding_clear_title),
-                body = stringResource(R.string.device_capabilities_finding_clear_body),
+                title = stringResource(R.string.settings_devcaps_finding_clear_title),
+                body = stringResource(R.string.settings_devcaps_finding_clear_body),
                 tone = FindingTone.Success
             )
             return@CapabilityCard
@@ -629,11 +846,11 @@ private fun PlaybackFindingsCard(
             FindingRow(
                 icon = Icons.Rounded.ErrorOutline,
                 title = stringResource(
-                    R.string.device_capabilities_finding_unsupported_title,
+                    R.string.settings_devcaps_finding_unsupported_title,
                     compatibility.unsupportedLibrarySongCount
                 ),
                 body = stringResource(
-                    R.string.device_capabilities_finding_unsupported_body,
+                    R.string.settings_devcaps_finding_unsupported_body,
                     compatibility.unsupportedFormats.take(4).joinToString(", ")
                 ),
                 tone = FindingTone.Error
@@ -645,11 +862,11 @@ private fun PlaybackFindingsCard(
             FindingRow(
                 icon = Icons.Rounded.Warning,
                 title = stringResource(
-                    R.string.device_capabilities_finding_resample_title,
+                    R.string.settings_devcaps_finding_resample_title,
                     compatibility.resampledLocalSongCount
                 ),
                 body = stringResource(
-                    R.string.device_capabilities_finding_resample_body,
+                    R.string.settings_devcaps_finding_resample_body,
                     compatibility.maxLocalSampleRate ?: 0
                 ),
                 tone = FindingTone.Warning
@@ -661,10 +878,10 @@ private fun PlaybackFindingsCard(
             FindingRow(
                 icon = Icons.Rounded.Info,
                 title = stringResource(
-                    R.string.device_capabilities_finding_unknown_title,
+                    R.string.settings_devcaps_finding_unknown_title,
                     compatibility.unknownFormatSongCount
                 ),
-                body = stringResource(R.string.device_capabilities_finding_unknown_body),
+                body = stringResource(R.string.settings_devcaps_finding_unknown_body),
                 tone = FindingTone.Info
             )
         }
@@ -680,7 +897,7 @@ private fun DeviceInfoPanel(
     val localized = localizedDeviceInfoEntries(orderedEntries)
 
     CapabilityCard(
-        title = stringResource(R.string.presentation_batch_g_device_info_title),
+        title = stringResource(R.string.settings_devcaps_device_info_title),
         icon = Icons.Rounded.Info,
         verticalSpacing = 0.dp,
         enableTopSpacer = true,
@@ -940,9 +1157,9 @@ private fun FormatSupportTile(
             }
             Text(
                 text = when {
-                    !format.isDecoderAvailable -> stringResource(R.string.device_capabilities_format_unsupported)
-                    format.isHardwareAccelerated -> stringResource(R.string.device_capabilities_format_hardware)
-                    else -> stringResource(R.string.device_capabilities_format_software)
+                    !format.isDecoderAvailable -> stringResource(R.string.settings_devcaps_format_unsupported)
+                    format.isHardwareAccelerated -> stringResource(R.string.settings_devcaps_format_hardware)
+                    else -> stringResource(R.string.settings_devcaps_format_software)
                 },
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -950,13 +1167,13 @@ private fun FormatSupportTile(
             Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                 if (format.isOffloadSupported) {
                     TonalChip(
-                        text = stringResource(R.string.device_capabilities_format_offload),
+                        text = stringResource(R.string.settings_devcaps_format_offload),
                         compact = true
                     )
                 }
                 if (format.librarySongCount > 0) {
                     TonalChip(
-                        text = stringResource(R.string.device_capabilities_format_library_count, format.librarySongCount),
+                        text = stringResource(R.string.settings_devcaps_format_library_count, format.librarySongCount),
                         compact = true
                     )
                 }
@@ -1007,9 +1224,9 @@ private fun ProgressReadout(
 private fun storagePercentLabel(fraction: Float): String {
     val percent = fraction * 100f
     return when {
-        fraction <= 0f -> stringResource(R.string.device_capabilities_storage_percent, 0)
-        percent < 1f -> stringResource(R.string.device_capabilities_storage_less_than_one_percent)
-        else -> stringResource(R.string.device_capabilities_storage_percent, percent.roundToInt())
+        fraction <= 0f -> stringResource(R.string.settings_devcaps_storage_percent, 0)
+        percent < 1f -> stringResource(R.string.settings_devcaps_storage_less_than_one_percent)
+        else -> stringResource(R.string.settings_devcaps_storage_percent, percent.roundToInt())
     }
 }
 
@@ -1017,6 +1234,9 @@ private fun Float.visibleProgress(): Float {
     val clamped = coerceIn(0f, 1f)
     return if (clamped > 0f && clamped < 0.01f) 0.01f else clamped
 }
+
+private fun formatDiagnosticsExpiry(epochMs: Long): String =
+    SimpleDateFormat("MMM d, HH:mm", Locale.getDefault()).format(Date(epochMs))
 
 @Composable
 private fun OutputRouteRow(
@@ -1185,7 +1405,7 @@ private fun ChipRow(
             TonalChip(text = it)
         }
         if (chips.size > 3) {
-            TonalChip(text = stringResource(R.string.device_capabilities_more_count, chips.size - 3))
+            TonalChip(text = stringResource(R.string.settings_devcaps_more_count, chips.size - 3))
         }
     }
 }
@@ -1204,33 +1424,33 @@ private fun SectionLabel(text: String) {
 @Composable
 private fun yesNo(value: Boolean): String {
     return if (value) {
-        stringResource(R.string.presentation_batch_g_yes)
+        stringResource(R.string.settings_devcaps_status_yes)
     } else {
-        stringResource(R.string.presentation_batch_g_no)
+        stringResource(R.string.settings_devcaps_status_no)
     }
 }
 
 @Composable
 private fun audioOutputCategoryLabel(category: AudioOutputCategory): String {
     return when (category) {
-        AudioOutputCategory.BuiltIn -> stringResource(R.string.device_capabilities_output_builtin)
-        AudioOutputCategory.Bluetooth -> stringResource(R.string.device_capabilities_output_bluetooth)
-        AudioOutputCategory.Usb -> stringResource(R.string.device_capabilities_output_usb)
-        AudioOutputCategory.Wired -> stringResource(R.string.device_capabilities_output_wired)
-        AudioOutputCategory.Cast -> stringResource(R.string.device_capabilities_output_digital)
-        AudioOutputCategory.Other -> stringResource(R.string.device_capabilities_output_other)
+        AudioOutputCategory.BuiltIn -> stringResource(R.string.settings_devcaps_output_builtin)
+        AudioOutputCategory.Bluetooth -> stringResource(R.string.settings_devcaps_output_bluetooth)
+        AudioOutputCategory.Usb -> stringResource(R.string.settings_devcaps_output_usb)
+        AudioOutputCategory.Wired -> stringResource(R.string.settings_devcaps_output_wired)
+        AudioOutputCategory.Cast -> stringResource(R.string.settings_devcaps_output_digital)
+        AudioOutputCategory.Other -> stringResource(R.string.settings_devcaps_output_other)
     }
 }
 
 @Composable
 private fun localizedDeviceInfoEntries(entries: List<Pair<String, String>>): List<Pair<String, String>> {
-    val lManufacturer = stringResource(R.string.presentation_batch_g_device_key_manufacturer)
-    val lModel = stringResource(R.string.presentation_batch_g_device_key_model)
-    val lBrand = stringResource(R.string.presentation_batch_g_device_key_brand)
-    val lDevice = stringResource(R.string.presentation_batch_g_device_key_device)
-    val lAndroid = stringResource(R.string.presentation_batch_g_device_key_android_version)
-    val lSdk = stringResource(R.string.presentation_batch_g_device_key_sdk_version)
-    val lHardware = stringResource(R.string.presentation_batch_g_device_key_hardware)
+    val lManufacturer = stringResource(R.string.settings_devcaps_device_info_manufacturer)
+    val lModel = stringResource(R.string.settings_devcaps_device_info_model)
+    val lBrand = stringResource(R.string.settings_devcaps_device_info_brand)
+    val lDevice = stringResource(R.string.settings_devcaps_device_info_device)
+    val lAndroid = stringResource(R.string.settings_devcaps_device_info_android_version)
+    val lSdk = stringResource(R.string.settings_devcaps_device_info_sdk_version)
+    val lHardware = stringResource(R.string.settings_devcaps_device_info_hardware)
 
     return entries.map { (key, value) ->
         val label = when (key) {

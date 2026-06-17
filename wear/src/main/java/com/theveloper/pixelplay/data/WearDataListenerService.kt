@@ -109,10 +109,11 @@ class WearDataListenerService : WearableListenerService() {
         }
 
         val playerState = json.decodeFromString<WearPlayerState>(stateJson)
-        stateRepository.updatePlayerState(playerState)
+        val adjustedPlayerState = playerState.withTransportLatencyApplied(dataMap)
+        stateRepository.updatePlayerState(adjustedPlayerState)
         stateRepository.setPhoneConnected(true)
-        Timber.tag(TAG).d("Updated state: ${playerState.songTitle} (playing=${playerState.isPlaying})")
-        maybeAutoLaunchPlayer(playerState)
+        Timber.tag(TAG).d("Updated state: ${adjustedPlayerState.songTitle} (playing=${adjustedPlayerState.isPlaying})")
+        maybeAutoLaunchPlayer(adjustedPlayerState)
 
         // Extract album art Asset
         if (dataMap.containsKey(WearDataPaths.KEY_ALBUM_ART)) {
@@ -134,6 +135,21 @@ class WearDataListenerService : WearableListenerService() {
         } else {
             stateRepository.updateAlbumArt(null)
         }
+    }
+
+    private fun WearPlayerState.withTransportLatencyApplied(dataMap: DataMap): WearPlayerState {
+        if (!isPlaying || totalDurationMs <= 0L) return this
+        val phonePublishedAtMs = dataMap.getLong(WearDataPaths.KEY_TIMESTAMP, 0L)
+        if (phonePublishedAtMs <= 0L) return this
+
+        val transportLatencyMs = (System.currentTimeMillis() - phonePublishedAtMs)
+            .coerceIn(0L, 5_000L)
+        if (transportLatencyMs <= 0L) return this
+
+        return copy(
+            currentPositionMs = (currentPositionMs + transportLatencyMs)
+                .coerceIn(0L, totalDurationMs),
+        )
     }
 
     private fun maybeAutoLaunchPlayer(playerState: WearPlayerState) {

@@ -207,13 +207,13 @@ fun PaletteStyleSettingsScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     Text(
-                        text = stringResource(R.string.presentation_batch_f_palette_style_heading),
+                        text = stringResource(R.string.settings_palette_style_title),
                         style = MaterialTheme.typography.titleLarge,
                         color = previewScheme.onSurface,
                         fontWeight = FontWeight.SemiBold
                     )
                     Text(
-                        text = stringResource(R.string.presentation_batch_f_palette_style_subtitle),
+                        text = stringResource(R.string.settings_palette_style_subtitle),
                         style = MaterialTheme.typography.bodyMedium,
                         color = previewScheme.onSurfaceVariant
                     )
@@ -298,14 +298,14 @@ private fun PaletteStyleHeader(
             ) {
                 Icon(
                     imageVector = Icons.Rounded.Close,
-                    contentDescription = stringResource(R.string.presentation_batch_f_cd_close)
+                    contentDescription = stringResource(R.string.common_close)
                 )
             }
 
             Spacer(modifier = Modifier.width(12.dp))
 
             Text(
-                text = stringResource(R.string.presentation_batch_f_colors_title),
+                text = stringResource(R.string.settings_palette_screen_title),
                 style = MaterialTheme.typography.headlineMedium,
                 color = scheme.onSurface,
                 modifier = Modifier.weight(1f)
@@ -324,7 +324,7 @@ private fun PaletteStyleHeader(
                 )
             ) {
                 Text(
-                    text = stringResource(R.string.presentation_batch_f_apply),
+                    text = stringResource(R.string.common_apply),
                     style = MaterialTheme.typography.titleMedium
                 )
             }
@@ -651,13 +651,13 @@ private fun PaletteAccuracySlider(
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = stringResource(R.string.presentation_batch_f_color_accuracy_title),
+                    text = stringResource(R.string.settings_palette_style_color_accuracy_title),
                     style = MaterialTheme.typography.titleMedium,
                     color = scheme.onSurface,
                     fontWeight = FontWeight.Medium
                 )
                 Text(
-                    text = stringResource(R.string.presentation_batch_f_color_accuracy_subtitle),
+                    text = stringResource(R.string.settings_palette_style_color_accuracy_subtitle),
                     style = MaterialTheme.typography.bodyMedium,
                     color = scheme.onSurfaceVariant
                 )
@@ -711,12 +711,12 @@ private fun PaletteAccuracySlider(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = stringResource(R.string.presentation_batch_f_accuracy_current),
+                text = stringResource(R.string.settings_palette_style_accuracy_current),
                 style = MaterialTheme.typography.bodySmall,
                 color = scheme.onSurfaceVariant
             )
             Text(
-                text = stringResource(R.string.presentation_batch_f_accuracy_more_accurate),
+                text = stringResource(R.string.settings_palette_style_accuracy_more_accurate),
                 style = MaterialTheme.typography.bodySmall,
                 color = scheme.onSurfaceVariant
             )
@@ -728,10 +728,10 @@ private fun PaletteAccuracySlider(
 private fun albumArtPaletteStyleDescription(style: AlbumArtPaletteStyle): String =
     stringResource(
         when (style) {
-            AlbumArtPaletteStyle.TONAL_SPOT -> R.string.presentation_batch_f_palette_style_tonal_spot_desc
-            AlbumArtPaletteStyle.VIBRANT -> R.string.presentation_batch_f_palette_style_vibrant_desc
-            AlbumArtPaletteStyle.EXPRESSIVE -> R.string.presentation_batch_f_palette_style_expressive_desc
-            AlbumArtPaletteStyle.FRUIT_SALAD -> R.string.presentation_batch_f_palette_style_fruit_salad_desc
+            AlbumArtPaletteStyle.TONAL_SPOT -> R.string.settings_palette_style_tonal_spot_desc
+            AlbumArtPaletteStyle.VIBRANT -> R.string.settings_palette_style_vibrant_desc
+            AlbumArtPaletteStyle.EXPRESSIVE -> R.string.settings_palette_style_expressive_desc
+            AlbumArtPaletteStyle.FRUIT_SALAD -> R.string.settings_palette_style_fruit_salad_desc
         }
     )
 
@@ -739,10 +739,10 @@ private fun albumArtPaletteStyleDescription(style: AlbumArtPaletteStyle): String
 private fun albumArtPaletteStyleLabel(style: AlbumArtPaletteStyle): String =
     stringResource(
         when (style) {
-            AlbumArtPaletteStyle.TONAL_SPOT -> R.string.presentation_batch_f_palette_label_tonal_spot
-            AlbumArtPaletteStyle.VIBRANT -> R.string.presentation_batch_f_palette_label_vibrant
-            AlbumArtPaletteStyle.EXPRESSIVE -> R.string.presentation_batch_f_palette_label_expressive
-            AlbumArtPaletteStyle.FRUIT_SALAD -> R.string.presentation_batch_f_palette_label_fruit_salad
+            AlbumArtPaletteStyle.TONAL_SPOT -> R.string.settings_palette_style_tonal_spot
+            AlbumArtPaletteStyle.VIBRANT -> R.string.settings_palette_style_vibrant
+            AlbumArtPaletteStyle.EXPRESSIVE -> R.string.settings_palette_style_expressive
+            AlbumArtPaletteStyle.FRUIT_SALAD -> R.string.settings_palette_style_fruit_salad
         }
     )
 
@@ -750,9 +750,9 @@ private fun albumArtPaletteStyleLabel(style: AlbumArtPaletteStyle): String =
 private fun accuracySummaryText(value: Int): String {
     val clamped = AlbumArtColorAccuracy.clamp(value)
     return when {
-        clamped == 0 -> stringResource(R.string.presentation_batch_f_accuracy_summary_current)
-        clamped in 1..3 -> stringResource(R.string.presentation_batch_f_accuracy_summary_subtle, clamped)
-        clamped in 4..7 -> stringResource(R.string.presentation_batch_f_accuracy_summary_balanced, clamped)
-        else -> stringResource(R.string.presentation_batch_f_accuracy_summary_precise, clamped)
+        clamped == 0 -> stringResource(R.string.settings_palette_style_accuracy_summary_current)
+        clamped in 1..3 -> stringResource(R.string.settings_palette_style_accuracy_summary_subtle, clamped)
+        clamped in 4..7 -> stringResource(R.string.settings_palette_style_accuracy_summary_balanced, clamped)
+        else -> stringResource(R.string.settings_palette_style_accuracy_summary_precise, clamped)
     }
 }

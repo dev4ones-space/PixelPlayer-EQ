@@ -24,7 +24,7 @@ fun AllFilesAccessDialog(
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text(text = stringResource(id = R.string.cancel), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Text(text = stringResource(id = R.string.common_cancel), maxLines = 1, overflow = TextOverflow.Ellipsis)
             }
         }
     )

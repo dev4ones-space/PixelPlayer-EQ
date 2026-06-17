@@ -86,33 +86,6 @@ fun CollapsibleCommonTopBar(
                 .fillMaxSize()
                 .statusBarsPadding()
         ) {
-            FilledIconButton(
-                modifier = Modifier
-                    .align(Alignment.TopStart)
-                    .padding(start = 12.dp, top = 4.dp)
-                    .zIndex(1f),
-                onClick = onBackClick,
-                colors = IconButtonDefaults.filledIconButtonColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
-                    contentColor = MaterialTheme.colorScheme.onSurface 
-                )
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                    contentDescription = stringResource(R.string.auth_cd_back)
-                )
-            }
-
-            // Actions (e.g. Equalizer toggle)
-            androidx.compose.foundation.layout.Row(
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(top = 4.dp), // Align with back button
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                actions()
-            }
-
             ExpressiveTopBarContent(
                 title = title,
                 collapseFraction = collapseFraction,
@@ -138,6 +111,34 @@ fun CollapsibleCommonTopBar(
                 titleMinWidthAxis = titleMinWidthAxis,
                 supportingContent = supportingContent
             )
+
+            FilledIconButton(
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .padding(start = 12.dp, top = 4.dp)
+                    .zIndex(1f),
+                onClick = onBackClick,
+                colors = IconButtonDefaults.filledIconButtonColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+                    contentColor = MaterialTheme.colorScheme.onSurface 
+                )
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+                    contentDescription = stringResource(R.string.common_back)
+                )
+            }
+
+            // Actions (e.g. Equalizer toggle)
+            androidx.compose.foundation.layout.Row(
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(top = 4.dp) // Align with back button
+                    .zIndex(1f),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                actions()
+            }
         }
     }
 }

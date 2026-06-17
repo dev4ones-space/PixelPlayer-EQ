@@ -54,15 +54,8 @@ data class JellyfinCredentials(
         }
 
         // Warn about cleartext HTTP on public hosts
-        if (!parsed.isHttps) {
-            val host = parsed.host
-            val isPrivate = host == "localhost" ||
-                    host == "127.0.0.1" ||
-                    host.endsWith(".local") ||
-                    CloudStreamSecurity.isPrivateIpv4Literal(host)
-            if (!isPrivate) {
-                return "Use https:// for remote Jellyfin servers. HTTP is only allowed for local network addresses."
-            }
+        if (!parsed.isHttps && !CloudStreamSecurity.isLocalOrPrivateHost(parsed.host)) {
+            return "Use https:// for remote Jellyfin servers. HTTP is only allowed for local network addresses."
         }
 
         return null

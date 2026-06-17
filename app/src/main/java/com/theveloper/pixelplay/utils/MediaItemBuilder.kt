@@ -3,10 +3,14 @@ package com.theveloper.pixelplay.utils
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import androidx.annotation.OptIn
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
+import androidx.media3.common.C
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
+import androidx.media3.common.MediaMetadata.PICTURE_TYPE_FRONT_COVER
+import androidx.media3.common.util.UnstableApi
 import com.theveloper.pixelplay.data.provider.SharedArtworkContentProvider
 import com.theveloper.pixelplay.data.model.Song
 import java.io.File
@@ -104,17 +108,23 @@ object MediaItemBuilder {
     }
 
     fun buildForExternalController(context: Context, song: Song): MediaItem {
-        return MediaItem.Builder()
-            .setMediaId(song.id)
-            .setUri(playbackUri(song))
-            .setMimeType(playbackMimeType(song))
-            .setMediaMetadata(
-                buildMediaMetadataForSong(
-                    song = song,
-                    exposedArtworkUri = externalControllerArtworkUri(context, song.albumArtUriString)
+        // This is the MediaSession item path for Android Auto / other external controllers;
+        // time it so the performance report can attribute browse/queue lag here.
+        return com.theveloper.pixelplay.data.diagnostics.PerformanceMetrics.time(
+            com.theveloper.pixelplay.data.diagnostics.PerformanceMetrics.Timings.MEDIASESSION_ITEM_BUILD
+        ) {
+            MediaItem.Builder()
+                .setMediaId(song.id)
+                .setUri(playbackUri(song))
+                .setMimeType(playbackMimeType(song))
+                .setMediaMetadata(
+                    buildMediaMetadataForSong(
+                        song = song,
+                        exposedArtworkUri = externalControllerArtworkUri(context, song.albumArtUriString)
+                    )
                 )
-            )
-            .build()
+                .build()
+        }
     }
 
     fun playbackUri(song: Song): Uri = playbackUri(
@@ -259,6 +269,7 @@ object MediaItemBuilder {
         }
     }
 
+    @OptIn(UnstableApi::class)
     private fun buildMediaMetadataForSong(
         song: Song,
         exposedArtworkUri: Uri? = artworkUri(song.albumArtUriString)

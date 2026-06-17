@@ -262,8 +262,8 @@ fun SettingsScreen(
                     itemIndex++
 
                     ExpressiveNavigationItem(
-                        title = stringResource(R.string.settings_accounts_row_title),
-                        subtitle = stringResource(R.string.settings_accounts_row_subtitle),
+                        title = stringResource(R.string.settings_category_accounts_title),
+                        subtitle = stringResource(R.string.settings_category_accounts_subtitle),
                         icon = Icons.Rounded.AccountCircle,
                         colors = getAccountsColors(isDark),
                         onClick = { navController.navigateSafely(Screen.Accounts.route) },
@@ -287,7 +287,7 @@ fun SettingsScreen(
             }
         }
         CollapsibleCommonTopBar(
-                title = stringResource(R.string.settings_top_bar_title),
+                title = stringResource(R.string.common_settings),
                 collapseFraction = collapseFraction,
                 headerHeight = currentTopBarHeightDp,
                 onBackClick = onNavigationIconClick

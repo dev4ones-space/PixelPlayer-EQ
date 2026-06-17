@@ -374,13 +374,8 @@ class BaselineProfileGenerator {
             return
         }
         waitForUi(EXTRA_UI_WAIT_MS)
-        val openedBackStackSurface = hasTextOrDescription(pattern(BACK_NAV_ALTERNATIVES))
         body()
-        if (openedBackStackSurface || hasTextOrDescription(pattern(BACK_NAV_ALTERNATIVES))) {
-            pressBackAndWait()
-        } else {
-            Log.d(TAG, "Optional surface '$labelPattern' did not navigate; staying on current app surface.")
-        }
+        pressBackAndWait()
     }
 
     private fun MacrobenchmarkScope.openSettingsFromHome(): Boolean {

@@ -21,9 +21,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.zIndex
 import androidx.compose.ui.unit.dp
@@ -52,6 +57,7 @@ internal fun UnifiedPlayerQueueLayer(
     albumColorScheme: ColorScheme,
     queueScrimAlpha: Float,
     showQueueSheet: Boolean,
+    isQueueCollapsing: Boolean,
     queueHiddenOffsetPx: Float,
     queueSheetOffset: Animatable<Float, AnimationVector1D>,
     queueSheetHeightPx: Float,
@@ -82,7 +88,9 @@ internal fun UnifiedPlayerQueueLayer(
     onRequestSaveAsPlaylist: (List<Song>, String, (String, Set<String>) -> Unit) -> Unit,
     onQueueDragStart: () -> Unit,
     onQueueDrag: (Float) -> Unit,
-    onQueueRelease: (Float, Float) -> Unit
+    onQueueRelease: (Float, Float) -> Unit,
+    queuePredictiveBackProgress: Animatable<Float, AnimationVector1D>,
+    queuePredictiveBackSwipeEdge: State<Int?>
 ) {
     if (!shouldRenderLayer) return
 
@@ -114,9 +122,12 @@ internal fun UnifiedPlayerQueueLayer(
                 QueueBottomSheet(
                     modifier = Modifier
                         .fillMaxSize()
-                        .offset { IntOffset(0, queueSheetOffset.value.roundToInt()) }
+                        .offset {
+                            val offsetVal = queueSheetOffset.value.roundToInt()
+                            IntOffset(0, if (offsetVal < 0) 0 else offsetVal)
+                        }
                         .graphicsLayer {
-                            alpha = if (showQueueSheet) 1f else 0f
+                            alpha = if (showQueueSheet || isQueueCollapsing) 1f else 0f
                         }
                         .onGloballyPositioned { coordinates ->
                             val measuredHeight = coordinates.size.height.toFloat()
@@ -153,7 +164,10 @@ internal fun UnifiedPlayerQueueLayer(
                     onRequestSaveAsPlaylist = onRequestSaveAsPlaylist,
                     onQueueDragStart = onQueueDragStart,
                     onQueueDrag = onQueueDrag,
-                    onQueueRelease = onQueueRelease
+                    onQueueRelease = onQueueRelease,
+                    predictiveBackProgress = queuePredictiveBackProgress,
+                    predictiveBackSwipeEdge = queuePredictiveBackSwipeEdge,
+                    queueSheetOffset = queueSheetOffset
                 )
             }
         }
@@ -175,6 +189,8 @@ internal fun UnifiedPlayerSongInfoLayer(
 ) {
     selectedSongForInfo?.let { staticSong ->
         val context = LocalContext.current
+        val toastAddedToQueue = stringResource(R.string.library_toast_added_to_queue)
+        val toastPlayingNext = stringResource(R.string.library_toast_playing_next)
         var showPlaylistBottomSheet by remember(staticSong.id) { mutableStateOf(false) }
         val playlistViewModel: PlaylistViewModel = hiltViewModel()
         val playlistUiState by playlistViewModel.uiState.collectAsStateWithLifecycle()
@@ -203,17 +219,14 @@ internal fun UnifiedPlayerSongInfoLayer(
                         contextSongs = currentPlaybackQueueProvider(),
                         queueName = currentQueueSourceNameProvider()
                     )
-                    onDismissSongInfo()
                 },
                 onAddToQueue = {
                     playerViewModel.addSongToQueue(liveSong)
-                    onDismissSongInfo()
-                    Toast.makeText(context, context.getString(R.string.toast_added_to_queue), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, toastAddedToQueue, Toast.LENGTH_SHORT).show()
                 },
                 onAddNextToQueue = {
                     playerViewModel.addSongNextToQueue(liveSong)
-                    onDismissSongInfo()
-                    Toast.makeText(context, context.getString(R.string.toast_playing_next), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, toastPlayingNext, Toast.LENGTH_SHORT).show()
                 },
                 onAddToPlayList = {
                     showPlaylistBottomSheet = true
@@ -274,6 +287,7 @@ internal fun UnifiedPlayerQueueAndSongInfoHost(
     albumColorScheme: ColorScheme,
     queueScrimAlpha: Float,
     showQueueSheet: Boolean,
+    isQueueCollapsing: Boolean,
     queueHiddenOffsetPx: Float,
     queueSheetOffset: Animatable<Float, AnimationVector1D>,
     queueSheetHeightPx: Float,
@@ -291,7 +305,9 @@ internal fun UnifiedPlayerQueueAndSongInfoHost(
     onLaunchSaveQueueOverlay: (List<Song>, String, (String, Set<String>) -> Unit) -> Unit,
     onNavigateToAlbum: (Song) -> Unit,
     onNavigateToArtist: (Song) -> Unit,
-    onNavigateToGenre: (Song) -> Unit
+    onNavigateToGenre: (Song) -> Unit,
+    queuePredictiveBackProgress: Animatable<Float, AnimationVector1D>,
+    queuePredictiveBackSwipeEdge: State<Int?>
 ) {
     if (!shouldRenderHost) return
 
@@ -391,6 +407,7 @@ internal fun UnifiedPlayerQueueAndSongInfoHost(
                 albumColorScheme = albumColorScheme,
                 queueScrimAlpha = queueScrimAlpha,
                 showQueueSheet = showQueueSheet,
+                isQueueCollapsing = isQueueCollapsing,
                 queueHiddenOffsetPx = queueHiddenOffsetPx,
                 queueSheetOffset = queueSheetOffset,
                 queueSheetHeightPx = queueSheetHeightPx,
@@ -421,7 +438,9 @@ internal fun UnifiedPlayerQueueAndSongInfoHost(
                 onRequestSaveAsPlaylist = onRequestSavePlaylist,
                 onQueueDragStart = onQueueStartDrag,
                 onQueueDrag = onQueueDrag,
-                onQueueRelease = onQueueRelease
+                onQueueRelease = onQueueRelease,
+                queuePredictiveBackProgress = queuePredictiveBackProgress,
+                queuePredictiveBackSwipeEdge = queuePredictiveBackSwipeEdge
             )
 
             UnifiedPlayerSongInfoLayer(
@@ -485,3 +504,5 @@ internal fun UnifiedPlayerCastLayer(
         }
     }
 }
+
+

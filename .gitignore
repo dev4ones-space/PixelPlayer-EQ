@@ -41,6 +41,13 @@ markdown.xml
 .vscode/
 .agents/
 
-*.jks
 CLAUDE-SESSION
 
+# Node/tooling dependencies and local env files
+**/node_modules/
+**/dist/
+**/.vite/
+**/.understand-anything/
+**/.env
+**/.env.*
+!**/.env.example

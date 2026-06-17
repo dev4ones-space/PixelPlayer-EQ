@@ -529,7 +529,7 @@ fun BrickBreakerOverlay(
                     )
                     Spacer(modifier = Modifier.size(8.dp))
                     Text(
-                        text = stringResource(R.string.presentation_batch_g_app_name),
+                        text = stringResource(R.string.app_name),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         color = colorScheme.onSurface
@@ -545,7 +545,7 @@ fun BrickBreakerOverlay(
                         shape = CircleShape
                     ) {
                         Text(
-                            text = stringResource(R.string.presentation_batch_g_brick_high, highScore),
+                            text = stringResource(R.string.brick_high, highScore),
                             modifier = Modifier.padding(horizontal = 12.dp, vertical = 7.dp),
                             style = MaterialTheme.typography.labelMedium,
                             color = colorScheme.onTertiaryContainer,
@@ -562,7 +562,7 @@ fun BrickBreakerOverlay(
                     ) {
                         Icon(
                             Icons.Outlined.Close,
-                            contentDescription = stringResource(R.string.presentation_batch_g_brick_cd_close),
+                            contentDescription = stringResource(R.string.brick_cd_close),
                             modifier = Modifier.size(18.dp)
                         )
                     }
@@ -586,21 +586,21 @@ fun BrickBreakerOverlay(
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    GameStat(stringResource(R.string.presentation_batch_g_brick_stat_score), score.toString())
+                    GameStat(stringResource(R.string.brick_stat_score), score.toString())
                     Surface(
                         color = colorScheme.primary,
                         shape = CircleShape,
                         modifier = Modifier.height(30.dp)
                     ) {
                         Text(
-                            text = stringResource(R.string.presentation_batch_g_brick_stat_lvl, level),
+                            text = stringResource(R.string.brick_stat_lvl, level),
                             modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
                             style = MaterialTheme.typography.labelLarge,
                             fontWeight = FontWeight.Black,
                             color = colorScheme.onPrimary
                         )
                     }
-                    GameStat(stringResource(R.string.presentation_batch_g_brick_stat_lives), lives.toString(), isLives = true)
+                    GameStat(stringResource(R.string.brick_stat_lives), lives.toString(), isLives = true)
                 }
             }
 
@@ -708,14 +708,14 @@ fun BrickBreakerOverlay(
                             verticalArrangement = Arrangement.Center
                         ) {
                             val title = if (hasWon) {
-                                stringResource(R.string.presentation_batch_g_brick_level_complete)
+                                stringResource(R.string.brick_level_complete)
                             } else {
-                                stringResource(R.string.presentation_batch_g_brick_game_over)
+                                stringResource(R.string.brick_game_over)
                             }
                             val subtitle = if (hasWon) {
-                                stringResource(R.string.presentation_batch_g_brick_score_line, score)
+                                stringResource(R.string.brick_score_line, score)
                             } else {
-                                stringResource(R.string.presentation_batch_g_brick_try_again)
+                                stringResource(R.string.brick_try_again)
                             }
                             val icon = if (hasWon) Icons.Rounded.Star else Icons.Rounded.Refresh
 
@@ -758,9 +758,9 @@ fun BrickBreakerOverlay(
                             ) {
                                 Text(
                                     if (hasWon) {
-                                        stringResource(R.string.presentation_batch_g_brick_next_level)
+                                        stringResource(R.string.brick_next_level)
                                     } else {
-                                        stringResource(R.string.presentation_batch_g_brick_restart)
+                                        stringResource(R.string.brick_restart)
                                     }
                                 )
                             }
@@ -776,7 +776,7 @@ fun BrickBreakerOverlay(
                         shadowElevation = 4.dp,
                     ) {
                         Text(
-                            text = stringResource(R.string.presentation_batch_g_brick_tap_relaunch),
+                            text = stringResource(R.string.brick_tap_relaunch),
                             modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp),
                             style = MaterialTheme.typography.labelLarge,
                             color = colorScheme.onSurfaceVariant,
@@ -813,7 +813,7 @@ fun BrickBreakerOverlay(
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
-                            text = stringResource(R.string.presentation_batch_g_brick_play_random),
+                            text = stringResource(R.string.brick_play_random),
                             style = MaterialTheme.typography.labelLarge,
                             color = colorScheme.onPrimaryContainer,
                             fontWeight = FontWeight.Bold
@@ -883,7 +883,7 @@ private fun PreLaunchMenu(
                 modifier = Modifier.size(28.dp)
             )
             Text(
-                text = stringResource(R.string.presentation_batch_g_brick_title),
+                text = stringResource(R.string.brick_title),
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.onSurface,
                 fontWeight = FontWeight.Bold,
@@ -893,7 +893,7 @@ private fun PreLaunchMenu(
                 shape = CircleShape
             ) {
                 Text(
-                    text = stringResource(R.string.presentation_batch_g_brick_high_score, highScore),
+                    text = stringResource(R.string.brick_high_score, highScore),
                     modifier = Modifier.padding(horizontal = 14.dp, vertical = 8.dp),
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onTertiaryContainer,
@@ -909,14 +909,14 @@ private fun PreLaunchMenu(
                 )
             ) {
                 Text(
-                    text = stringResource(R.string.presentation_batch_g_brick_play),
+                    text = stringResource(R.string.brick_play),
                     modifier = Modifier.padding(horizontal = 12.dp, vertical = 2.dp),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold
                 )
             }
             Text(
-                text = stringResource(R.string.presentation_batch_g_brick_drag_paddle),
+                text = stringResource(R.string.brick_drag_paddle),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )

@@ -392,7 +392,7 @@ class NavidromeRepository @Inject constructor(
                 val allSongs = mutableListOf<NavidromeSong>()
                 val pageSize = 500
                 
-                onProgress?.invoke(0.1f, context.getString(R.string.dash_status_fetching_albums))
+                onProgress?.invoke(0.1f, context.getString(R.string.cloud_sync_status_fetching_albums))
                 val fetchedAlbums = fetchAllAlbums(pageSize)
 
                 // Fetch songs for each album in parallel
@@ -415,7 +415,7 @@ class NavidromeRepository @Inject constructor(
                                 val progress = 0.1f + (currentProcessed.toFloat() / totalAlbums.coerceAtLeast(1) * 0.8f)
                                 onProgress?.invoke(
                                     progress, 
-                                    context.getString(R.string.dash_status_fetching_songs_from_format, albumTitle)
+                                    context.getString(R.string.cloud_sync_status_fetching_songs_from_format, albumTitle)
                                 )
 
                                 songsResult.fold(
@@ -436,13 +436,13 @@ class NavidromeRepository @Inject constructor(
 
                 if (allSongs.isEmpty()) {
                     Timber.d("$TAG: No library songs found on server")
-                    onProgress?.invoke(1f, context.getString(R.string.dash_status_no_songs_found))
+                    onProgress?.invoke(1f, context.getString(R.string.cloud_sync_status_no_songs_found))
                     return@withContext Result.success(0)
                 }
 
                 onProgress?.invoke(
                     0.95f, 
-                    context.getString(R.string.dash_status_saving_songs_format, allSongs.size)
+                    context.getString(R.string.cloud_sync_status_saving_songs_format, allSongs.size)
                 )
                 // Deduplicate by song ID
                 val uniqueSongs = allSongs.distinctBy { it.id }
@@ -456,7 +456,7 @@ class NavidromeRepository @Inject constructor(
                 dao.insertSongs(entities)
 
                 Timber.d("$TAG: Synced ${entities.size} library songs from ${fetchedAlbums.size} albums")
-                onProgress?.invoke(1f, context.getString(R.string.dash_status_library_sync_complete))
+                onProgress?.invoke(1f, context.getString(R.string.cloud_sync_status_library_sync_complete))
                 Result.success(entities.size)
             } catch (e: Exception) {
                 Timber.e(e, "$TAG: Failed to sync library songs")
@@ -500,7 +500,7 @@ class NavidromeRepository @Inject constructor(
             var syncedSongCount = 0
             var failedPlaylistCount = 0
 
-            onProgress?.invoke(0.05f, context.getString(R.string.dash_status_syncing_library))
+            onProgress?.invoke(0.05f, context.getString(R.string.cloud_sync_status_syncing_library))
             // Sync library songs (all albums)
             val libResult = syncLibrarySongs { progress, message ->
                 // Map library sync progress (0-1) to 0.05-0.4 range
@@ -511,7 +511,7 @@ class NavidromeRepository @Inject constructor(
                 onFailure = { Timber.w(it, "$TAG: Failed syncing library songs") }
             )
 
-            onProgress?.invoke(0.4f, context.getString(R.string.dash_status_fetching_playlists))
+            onProgress?.invoke(0.4f, context.getString(R.string.cloud_sync_status_fetching_playlists))
             // Sync playlists
             val playlistResult = syncPlaylists().getOrElse {
                 // Playlists failed but library songs may have synced
@@ -537,7 +537,7 @@ class NavidromeRepository @Inject constructor(
                 
                 onProgress?.invoke(
                     currentProgress, 
-                    context.getString(R.string.dash_status_syncing_playlist_format, playlist.name)
+                    context.getString(R.string.cloud_sync_status_syncing_playlist_format, playlist.name)
                 )
                 
                 val songSyncResult = syncPlaylistSongs(playlist.id)
@@ -550,7 +550,7 @@ class NavidromeRepository @Inject constructor(
                 )
             }
 
-            onProgress?.invoke(0.95f, context.getString(R.string.dash_status_updating_local))
+            onProgress?.invoke(0.95f, context.getString(R.string.cloud_sync_status_updating_local))
             // Sync to unified library once after everything is synced
             try {
                 syncUnifiedLibrarySongsFromNavidrome()
@@ -558,7 +558,7 @@ class NavidromeRepository @Inject constructor(
                 Timber.e(e, "$TAG: Failed to sync unified library")
             }
 
-            onProgress?.invoke(1f, context.getString(R.string.dash_status_sync_complete))
+            onProgress?.invoke(1f, context.getString(R.string.cloud_sync_status_sync_complete))
 
             if (failedPlaylistCount == 0) {
                 lastFullSyncTime = System.currentTimeMillis()

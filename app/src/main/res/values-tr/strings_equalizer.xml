@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+    <!-- Equalizer preset dialogs -->
+    <string name="equalizer_error_name_empty">Ad boş bırakılamaz</string>
+    <string name="equalizer_action_rename">Yeniden adlandır</string>
+
+    <!-- EqualizerScreen -->
+    <string name="equalizer_change_view_mode_cd">Görünüm modunu değiştir</string>
+    <string name="equalizer_disable_cd">Ekolayzeri devre dışı bırak</string>
+    <string name="equalizer_enable_cd">Ekolayzeri etkinleştir</string>
+    <string name="equalizer_edit_tab_title">Düzenle</string>
+    <string name="equalizer_edit_presets_cd">Ön ayarları düzenle</string>
+    <string name="equalizer_custom_preset_cd">Özel ön ayar</string>
+    <string name="equalizer_presets_cd">Ön ayarlar</string>
+    <string name="equalizer_action_update">Güncelle</string>
+    <string name="equalizer_bass_boost">Bas Güçlendirme</string>
+    <string name="equalizer_virtualizer">Sanallaştırıcı</string>
+    <string name="equalizer_loudness">Ses Yüksekliği</string>
+    <string name="equalizer_effect_not_supported">Desteklenmiyor</string>
+    <string name="equalizer_effect_not_supported_device">Bu cihazda desteklenmiyor</string>
+    <string name="equalizer_volume">Ses</string>
+    <string name="equalizer_frequency_response">Frekans Tepkisi</string>
+    <string name="equalizer_unit_hz">Hz</string>
+    <string name="equalizer_band_bass">Bas</string>
+    <string name="equalizer_band_low_mids">Düşük Midler</string>
+    <string name="equalizer_band_high_mids">Yüksek Midler</string>
+    <string name="equalizer_band_treble">Tiz</string>
+    <string name="equalizer_band_bass_low">Bas / Düşük</string>
+    <string name="equalizer_band_mid_high">Mid / Yüksek</string>
+    <string name="equalizer_page_n">Sayfa %1$d</string>
+    <string name="equalizer_reset_duration_cd">Süreyi sıfırla</string>
+    <string name="equalizer_action_save_new">Yeni olarak kaydet</string>
+
+    <!-- CustomPresetsSheet -->
+    <string name="equalizer_presets_saved_title">Kaydedilen Ön Ayarlar</string>
+    <string name="equalizer_presets_empty">Henüz özel ön ayar kaydedilmedi.</string>
+    <string name="equalizer_presets_cd_unpin">Sabitlemeyi kaldır</string>
+    <string name="equalizer_presets_cd_pin">Sabitle</string>
+    <string name="equalizer_presets_cd_rename">Yeniden adlandır</string>
+    <string name="equalizer_presets_cd_delete">Sil</string>
+
+    <!-- SavePresetDialog -->
+    <string name="equalizer_presets_save_custom_title">Özel ön ayarı kaydet</string>
+    <string name="equalizer_presets_save_custom_body">Özel ekolayzer ön ayarınız için bir ad girin.</string>
+    <string name="equalizer_preset_name_placeholder">Ön ayar adı</string>
+    <string name="equalizer_presets_rename_title">Ön ayarı yeniden adlandır</string>
+
+    <!-- ReorderPresetsSheet -->
+    <string name="equalizer_manage_presets_title">Ön ayarları yönet</string>
+    <string name="equalizer_presets_drag_hint">Yeniden sıralamak için sürükleyin • Göstermek veya gizlemek için göze dokunun</string>
+    <string name="equalizer_cd_reorder">Yeniden sırala</string>
+    <string name="equalizer_reset_presets_title">Ön ayarları sıfırla</string>
+    <string name="equalizer_reset_presets_message">Bu işlem, varsayılan ön ayar sırasını ve görünürlüğünü geri yükleyecektir. Devam edilsin mi?</string>
+    <string name="equalizer_cd_reset_presets_default">Varsayılana sıfırla</string>
+    <string name="equalizer_cd_visible">Görünür</string>
+    <string name="equalizer_cd_hidden">Gizli</string>
+</resources>

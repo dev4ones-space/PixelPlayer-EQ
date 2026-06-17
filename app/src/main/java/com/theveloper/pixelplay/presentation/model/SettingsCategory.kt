@@ -21,8 +21,8 @@ enum class SettingsCategory(
 ) {
     LIBRARY(
         id = "library",
-        titleRes = R.string.settings_category_library_title,
-        subtitleRes = R.string.settings_category_library_subtitle,
+        titleRes = R.string.settings_category_music_management_title,
+        subtitleRes = R.string.settings_category_music_management_subtitle,
         icon = Icons.Rounded.LibraryMusic
     ),
     APPEARANCE(

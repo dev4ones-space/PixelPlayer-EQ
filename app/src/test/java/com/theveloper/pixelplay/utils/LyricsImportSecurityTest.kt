@@ -130,6 +130,34 @@ class LyricsImportSecurityTest {
     }
 
     @Test
+    fun validateImportedLyricsFile_acceptsTtmlPayloadAboveLrcByteLimit() {
+        val padding = " ".repeat(LyricsImportSecurity.MAX_LYRICS_FILE_BYTES)
+        val ttml = """
+            <tt xmlns="http://www.w3.org/ns/ttml">
+              <head>
+                <metadata>$padding</metadata>
+              </head>
+              <body>
+                <div>
+                  <p begin="00:01.000" end="00:03.000">Hello world</p>
+                </div>
+              </body>
+            </tt>
+        """.trimIndent()
+
+        val result = LyricsImportSecurity.validateImportedLyricsFile(
+            fileName = "track.ttml",
+            mimeType = "application/ttml+xml",
+            inputStream = ttml.byteInputStream(),
+            reportedSizeBytes = ttml.toByteArray().size.toLong()
+        )
+
+        assertThat(ttml.toByteArray().size).isGreaterThan(LyricsImportSecurity.MAX_LYRICS_FILE_BYTES)
+        assertThat(ttml.toByteArray().size).isAtMost(LyricsImportSecurity.MAX_TTML_FILE_BYTES)
+        assertThat(result).isInstanceOf(LyricsImportValidationResult.Valid::class.java)
+    }
+
+    @Test
     fun validateImportedLyricsFile_acceptsAppleTtmlWordByWord() {
         val ttml = """
             <tt xmlns="http://www.w3.org/ns/ttml">

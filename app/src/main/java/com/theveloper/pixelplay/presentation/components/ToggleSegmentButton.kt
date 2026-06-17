@@ -28,9 +28,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.theveloper.pixelplay.presentation.components.LocalMaterialTheme
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 
 @Composable
 fun ToggleSegmentButton(
@@ -107,7 +110,10 @@ fun ToggleSegmentButton(
     inactiveContentColor: Color = LocalMaterialTheme.current.primary,
     activeCornerRadius: Dp = 8.dp,
     onClick: () -> Unit,
-    text: String
+    text: String,
+    maxLines: Int = Int.MAX_VALUE,
+    overflow: TextOverflow = TextOverflow.Clip,
+    textAlign: TextAlign = TextAlign.Center
 ) {
     ToggleSegmentButtonContainer(
         modifier = modifier,
@@ -118,11 +124,14 @@ fun ToggleSegmentButton(
         activeCornerRadius = activeCornerRadius,
         onClick = onClick
     ) {
-        androidx.compose.material3.Text(
+        Text(
             text = text,
             color = if (active) activeContentColor else inactiveContentColor,
-            style = androidx.compose.material3.MaterialTheme.typography.bodyMedium,
-            fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.Bold,
+            maxLines = maxLines,
+            overflow = overflow,
+            textAlign = textAlign
         )
     }
 }
@@ -139,7 +148,10 @@ fun ToggleSegmentButton(
     activeCornerRadius: Dp = 8.dp,
     onClick: () -> Unit,
     text: String,
-    imageVector: ImageVector
+    imageVector: ImageVector,
+    maxLines: Int = Int.MAX_VALUE,
+    overflow: TextOverflow = TextOverflow.Clip,
+    textAlign: TextAlign = TextAlign.Center
 ) {
     ToggleSegmentButtonContainer(
         modifier = modifier,
@@ -166,7 +178,10 @@ fun ToggleSegmentButton(
                 text = text,
                 color = if (active) activeContentColor else inactiveContentColor,
                 style = MaterialTheme.typography.bodyMedium,
-                fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                maxLines = maxLines,
+                overflow = overflow,
+                textAlign = textAlign
             )
         }
     }
@@ -204,7 +219,11 @@ private fun ToggleSegmentButtonContainer(
             .clickable(enabled = enabled, onClick = onClick),
         contentAlignment = Alignment.Center
     ) {
-        Box(modifier = Modifier.graphicsLayer(alpha = if (enabled) 1f else 0.38f)) {
+        Box(
+            modifier = Modifier
+                .graphicsLayer(alpha = if (enabled) 1f else 0.38f)
+                .padding(horizontal = 10.dp)
+        ) {
             content()
         }
     }

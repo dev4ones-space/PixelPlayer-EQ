@@ -1,17 +1,21 @@
 package com.theveloper.pixelplay.data.service.wear
-
+ 
 import android.app.Application
 import android.content.Context
 import android.graphics.Color as AndroidColor
 import android.media.AudioManager
 import android.net.Uri
 import androidx.core.graphics.ColorUtils
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import com.google.android.gms.wearable.Asset
 import com.google.android.gms.wearable.PutDataMapRequest
 import com.google.android.gms.wearable.Wearable
+import com.theveloper.pixelplay.data.preferences.dataStore
 import com.theveloper.pixelplay.data.model.PlayerInfo
 import com.theveloper.pixelplay.shared.WearDataPaths
+import com.theveloper.pixelplay.shared.WearLyrics
 import com.theveloper.pixelplay.shared.WearPlayerState
+import com.theveloper.pixelplay.shared.WearSyncedLyricLine
 import com.theveloper.pixelplay.shared.WearThemePalette
 import com.theveloper.pixelplay.utils.AlbumArtUtils
 import com.theveloper.pixelplay.utils.ArtworkTransportSanitizer
@@ -19,6 +23,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.first
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import timber.log.Timber
@@ -43,8 +48,26 @@ class WearStatePublisher @Inject constructor(
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private val json = Json { ignoreUnknownKeys = true }
 
+    private val artworkCacheLock = Any()
+    private var lastArtworkUri: String? = null
+    private var lastRawBitmapData: ByteArray? = null
+    private var cachedWearArtAsset: Asset? = null
+
+    /**
+     * Clear the cached artwork assets.
+     */
+    fun clearCache() {
+        synchronized(artworkCacheLock) {
+            lastArtworkUri = null
+            lastRawBitmapData = null
+            cachedWearArtAsset = null
+        }
+        Timber.tag(TAG).d("Cleared Wear artwork cache")
+    }
+
     companion object {
         private const val TAG = "WearStatePublisher"
+        private const val MAX_WEAR_LYRIC_LINES = 180
     }
 
     /**
@@ -68,6 +91,7 @@ class WearStatePublisher @Inject constructor(
      * Clear state from the Data Layer (e.g. when service is destroyed).
      */
     fun clearState() {
+        clearCache()
         scope.launch {
             try {
                 val request = PutDataMapRequest.create(WearDataPaths.PLAYER_STATE).apply {
@@ -84,8 +108,16 @@ class WearStatePublisher @Inject constructor(
     }
 
     private suspend fun publishStateInternal(songId: String?, playerInfo: PlayerInfo) {
+        // Read lyrics display preferences from DataStore so the watch respects
+        // the same translation/romanization visibility as the phone UI.
+        val prefs = application.dataStore.data.first()
+        val showLyricsTranslation = prefs[booleanPreferencesKey("show_lyrics_translation")] ?: true
+        val showLyricsRomanization = prefs[booleanPreferencesKey("show_lyrics_romanization")] ?: true
+
         val volumeLevel = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
         val volumeMax = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+
+        val wearLyrics = playerInfo.lyrics?.toWearLyrics(showLyricsTranslation, showLyricsRomanization)
 
         val wearState = WearPlayerState(
             songId = songId.orEmpty(),
@@ -102,6 +134,7 @@ class WearStatePublisher @Inject constructor(
             volumeMax = volumeMax,
             themePalette = buildWearThemePalette(playerInfo),
             queueRevision = playerInfo.wearQueueRevision,
+            lyrics = wearLyrics,
         )
 
         val stateJson = json.encodeToString(wearState)
@@ -110,9 +143,8 @@ class WearStatePublisher @Inject constructor(
             dataMap.putString(WearDataPaths.KEY_STATE_JSON, stateJson)
             dataMap.putLong(WearDataPaths.KEY_TIMESTAMP, System.currentTimeMillis())
 
-            // Attach album art as Asset if available
-            val wearArtBytes = resolveArtworkBytesForWear(playerInfo)
-            val artAsset = createAlbumArtAsset(wearArtBytes)
+            // Attach album art as Asset if available (cached to prevent duplicate processing)
+            val artAsset = getOrCreateWearArtworkAsset(playerInfo)
             if (artAsset != null) {
                 dataMap.putAsset(WearDataPaths.KEY_ALBUM_ART, artAsset)
             } else {
@@ -122,6 +154,45 @@ class WearStatePublisher @Inject constructor(
 
         dataClient.putDataItem(request)
         Timber.tag(TAG).d("Published state to Wear: ${wearState.songTitle} (playing=${wearState.isPlaying})")
+    }
+
+    private fun getOrCreateWearArtworkAsset(playerInfo: PlayerInfo): Asset? {
+        val uriString = playerInfo.albumArtUri
+        val rawBitmapData = playerInfo.albumArtBitmapData
+
+        synchronized(artworkCacheLock) {
+            val uriMatches = uriString == lastArtworkUri
+            val dataMatches = if (rawBitmapData == null && lastRawBitmapData == null) {
+                true
+            } else if (rawBitmapData != null && lastRawBitmapData != null) {
+                rawBitmapData === lastRawBitmapData || rawBitmapData.contentEquals(lastRawBitmapData)
+            } else {
+                false
+            }
+            if (uriMatches && dataMatches) {
+                return cachedWearArtAsset
+            }
+        }
+
+        val sanitizedBytes = resolveArtworkBytesForWear(playerInfo)
+        val asset = if (sanitizedBytes != null) {
+            try {
+                Asset.createFromBytes(sanitizedBytes)
+            } catch (e: Exception) {
+                Timber.tag(TAG).w(e, "Failed to create album art asset")
+                null
+            }
+        } else {
+            null
+        }
+
+        synchronized(artworkCacheLock) {
+            lastArtworkUri = uriString
+            lastRawBitmapData = rawBitmapData
+            cachedWearArtAsset = asset
+        }
+
+        return asset
     }
 
     private fun resolveArtworkBytesForWear(playerInfo: PlayerInfo): ByteArray? {
@@ -153,23 +224,6 @@ class WearStatePublisher @Inject constructor(
             data = playerInfo.albumArtBitmapData,
             config = ArtworkTransportSanitizer.WEAR_CONFIG,
         )
-    }
-
-    /**
-     * Compress album art to a JPEG suitable for full-screen watch display.
-     * Uses bounded downscale to preserve sharpness while keeping payload reasonable.
-     */
-    private fun createAlbumArtAsset(artBitmapData: ByteArray?): Asset? {
-        val boundedBytes = ArtworkTransportSanitizer.sanitizeEncodedBytes(
-            data = artBitmapData,
-            config = ArtworkTransportSanitizer.WEAR_CONFIG,
-        ) ?: return null
-        return try {
-            Asset.createFromBytes(boundedBytes)
-        } catch (e: Exception) {
-            Timber.tag(TAG).w(e, "Failed to create album art asset")
-            null
-        }
     }
 
     private fun downloadAndSanitizeRemoteArtwork(uriString: String): ByteArray? {
@@ -302,5 +356,39 @@ class WearStatePublisher @Inject constructor(
         val lightContrast = ColorUtils.calculateContrast(light, opaqueBackground)
         val darkContrast = ColorUtils.calculateContrast(dark, opaqueBackground)
         return if (lightContrast >= darkContrast) light else dark
+    }
+
+    private fun com.theveloper.pixelplay.data.model.Lyrics.toWearLyrics(
+        showTranslation: Boolean = true,
+        showRomanization: Boolean = true,
+    ): WearLyrics? {
+        val syncedLines = synced
+            ?.asSequence()
+            ?.filter { it.line.isNotBlank() || !it.translation.isNullOrBlank() || !it.romanization.isNullOrBlank() }
+            ?.take(MAX_WEAR_LYRIC_LINES)
+            ?.map { line ->
+                WearSyncedLyricLine(
+                    timeMs = line.time,
+                    line = line.line,
+                    translation = if (showTranslation) line.translation else null,
+                    romanization = if (showRomanization) line.romanization else null,
+                )
+            }
+            ?.toList()
+            .orEmpty()
+
+        if (syncedLines.isNotEmpty()) {
+            return WearLyrics(synced = syncedLines)
+        }
+
+        val plainLines = plain
+            ?.asSequence()
+            ?.map { it.trim() }
+            ?.filter { it.isNotBlank() }
+            ?.take(MAX_WEAR_LYRIC_LINES)
+            ?.toList()
+            .orEmpty()
+
+        return WearLyrics(plain = plainLines).takeIf { it.hasLyrics }
     }
 }

@@ -82,10 +82,10 @@ class ArtistDetailViewModel @Inject constructor(
                     if (artistId != null) {
                         loadArtistData(artistId)
                     } else {
-                        _uiState.update { it.copy(error = context.getString(R.string.invalid_artist_id), isLoading = false) }
+                        _uiState.update { it.copy(error = context.getString(R.string.artist_detail_invalid_id), isLoading = false) }
                     }
                 } else {
-                    _uiState.update { it.copy(error = context.getString(R.string.artist_id_not_found), isLoading = false) }
+                    _uiState.update { it.copy(error = context.getString(R.string.artist_detail_id_not_found), isLoading = false) }
                 }
             }
             .launchIn(viewModelScope)
@@ -109,7 +109,7 @@ class ArtistDetailViewModel @Inject constructor(
                     .catch { e ->
                         _uiState.update {
                             it.copy(
-                                error = context.getString(R.string.error_loading_artist, e.localizedMessage ?: ""),
+                                error = context.getString(R.string.artist_error_loading_artist, e.localizedMessage ?: ""),
                                 isLoading = false
                             )
                         }
@@ -117,7 +117,7 @@ class ArtistDetailViewModel @Inject constructor(
                     .collect { (artist, songs) ->
                         if (artist == null) {
                             _uiState.update {
-                                it.copy(error = context.getString(R.string.could_not_find_artist), isLoading = false)
+                                it.copy(error = context.getString(R.string.artist_detail_not_found), isLoading = false)
                             }
                             return@collect
                         }
@@ -166,7 +166,7 @@ class ArtistDetailViewModel @Inject constructor(
             } catch (e: Exception) {
                 _uiState.update {
                     it.copy(
-                        error = context.getString(R.string.error_loading_artist, e.localizedMessage ?: ""),
+                        error = context.getString(R.string.artist_error_loading_artist, e.localizedMessage ?: ""),
                         isLoading = false
                     )
                 }

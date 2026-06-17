@@ -90,8 +90,8 @@ class SyncWorkerTest {
             MediaStore.Audio.Media.DURATION, MediaStore.Audio.Media.DATA
         ))
         // Añadir filas de ejemplo
-        cursor.addRow(arrayOf(1L, "Test Song 1", "Test Artist 1", 101L, "Test Album 1", 201L, 180000L, "/sdcard/Music/song1.mp3"))
-        cursor.addRow(arrayOf(2L, "Test Song 2", "Test Artist 2", 102L, "Test Album 2", 202L, 240000L, "/sdcard/Music/song2.mp3"))
+        cursor.addRow(arrayOf<Any>(1L, "Test Song 1", "Test Artist 1", 101L, "Test Album 1", 201L, 180000L, "/sdcard/Music/song1.mp3"))
+        cursor.addRow(arrayOf<Any>(2L, "Test Song 2", "Test Artist 2", 102L, "Test Album 2", 202L, 240000L, "/sdcard/Music/song2.mp3"))
         return cursor
     }
 
@@ -99,8 +99,8 @@ class SyncWorkerTest {
         val cursor = MatrixCursor(arrayOf(
             MediaStore.Audio.Albums._ID, MediaStore.Audio.Albums.ALBUM, MediaStore.Audio.Albums.ARTIST
         ))
-        cursor.addRow(arrayOf(201L, "Test Album 1", "Test Artist 1"))
-        cursor.addRow(arrayOf(202L, "Test Album 2", "Test Artist 2"))
+        cursor.addRow(arrayOf<Any>(201L, "Test Album 1", "Test Artist 1"))
+        cursor.addRow(arrayOf<Any>(202L, "Test Album 2", "Test Artist 2"))
         return cursor
     }
 
@@ -108,8 +108,8 @@ class SyncWorkerTest {
          val cursor = MatrixCursor(arrayOf(
             MediaStore.Audio.Artists._ID, MediaStore.Audio.Artists.ARTIST
         ))
-        cursor.addRow(arrayOf(101L, "Test Artist 1"))
-        cursor.addRow(arrayOf(102L, "Test Artist 2"))
+        cursor.addRow(arrayOf<Any>(101L, "Test Artist 1"))
+        cursor.addRow(arrayOf<Any>(102L, "Test Artist 2"))
         return cursor
     }
 

@@ -49,7 +49,7 @@ fun AppRebrandDialog(
                         onCheckedChange = { doNotShowAgain = it }
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text(text = stringResource(id = R.string.do_not_show_again))
+                    Text(text = stringResource(id = R.string.app_name_change_do_not_show_again))
                 }
             }
         },
@@ -60,7 +60,7 @@ fun AppRebrandDialog(
                     onDismiss()
                 }
             ) {
-                Text(text = stringResource(id = R.string.dismiss), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Text(text = stringResource(id = R.string.common_dismiss), maxLines = 1, overflow = TextOverflow.Ellipsis)
             }
         }
     )

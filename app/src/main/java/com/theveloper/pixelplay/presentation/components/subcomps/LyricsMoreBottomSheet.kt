@@ -133,14 +133,14 @@ fun LyricsMoreBottomSheet(
                 Text(
                     modifier = Modifier
                         .padding(start = 6.dp, bottom = 6.dp),
-                    text = stringResource(R.string.lyrics),
+                    text = stringResource(R.string.lyrics_title),
                     color = accentColor,
                     style = MaterialTheme.typography.bodyLargeEmphasized
                 )
                  // Save lyrics to .lrc
                 if (lyrics != null) {
                     ListItem(
-                        headlineContent = { Text(stringResource(R.string.save_lyrics_dialog_title).substringBefore("?")) },
+                        headlineContent = { Text(stringResource(R.string.lyrics_save_title)) },
                         leadingContent = {
                             Icon(
                                 painter = painterResource(R.drawable.outline_save_24),
@@ -166,7 +166,7 @@ fun LyricsMoreBottomSheet(
                 // Translate via AI
                 if (lyrics != null) {
                     ListItem(
-                        headlineContent = { Text(stringResource(R.string.ai_translate_via_ai)) },
+                        headlineContent = { Text(stringResource(R.string.lyrics_translate_via_ai)) },
                         leadingContent = {
                             Icon(
                                 imageVector = Icons.Rounded.Translate,
@@ -197,7 +197,7 @@ fun LyricsMoreBottomSheet(
                 }
 
                 ListItem(
-                    headlineContent = { Text(stringResource(R.string.reset_imported_lyrics)) },
+                    headlineContent = { Text(stringResource(R.string.lyrics_reset_imported)) },
                     leadingContent = {
                         Icon(
                             painter = painterResource(R.drawable.outline_restart_alt_24),
@@ -222,8 +222,8 @@ fun LyricsMoreBottomSheet(
             if (showResetDialog) {
                 androidx.compose.material3.AlertDialog(
                     onDismissRequest = { showResetDialog = false },
-                    title = { Text(stringResource(R.string.lyrics_more_dialog_reset_title)) },
-                    text = { Text(stringResource(R.string.lyrics_more_dialog_reset_message)) },
+                    title = { Text(stringResource(R.string.lyrics_reset_dialog_title)) },
+                    text = { Text(stringResource(R.string.lyrics_reset_dialog_message)) },
                     confirmButton = {
                         androidx.compose.material3.TextButton(
                             onClick = {
@@ -232,14 +232,14 @@ fun LyricsMoreBottomSheet(
                                 onResetImportedLyrics()
                             }
                         ) {
-                            Text(stringResource(R.string.action_reset), color = MaterialTheme.colorScheme.error, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                            Text(stringResource(R.string.common_reset), color = MaterialTheme.colorScheme.error, maxLines = 1, overflow = TextOverflow.Ellipsis)
                         }
                     },
                     dismissButton = {
                         androidx.compose.material3.TextButton(
                             onClick = { showResetDialog = false }
                         ) {
-                            Text(stringResource(R.string.cancel), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                            Text(stringResource(R.string.common_cancel), maxLines = 1, overflow = TextOverflow.Ellipsis)
                         }
                     },
                     containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
@@ -256,7 +256,7 @@ fun LyricsMoreBottomSheet(
                 Text(
                     modifier = Modifier
                         .padding(start = 6.dp, bottom = 6.dp),
-                    text = stringResource(R.string.lyrics_more_appearance),
+                    text = stringResource(R.string.lyrics_appearance_section),
                     color = accentColor,
                     style = MaterialTheme.typography.bodyLargeEmphasized
                  )
@@ -269,7 +269,7 @@ fun LyricsMoreBottomSheet(
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     Text(
-                        text = stringResource(R.string.lyrics_more_alignment),
+                        text = stringResource(R.string.lyrics_appearance_alignment),
                         color = contentColor,
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.Medium
@@ -291,7 +291,7 @@ fun LyricsMoreBottomSheet(
                             activeCornerRadius = 50.dp,
                             onClick = { onLyricsAlignmentChange("left") },
                             imageVector = Icons.AutoMirrored.Rounded.FormatAlignLeft,
-                            contentDesc = stringResource(R.string.cd_lyrics_align_left)
+                            contentDesc = stringResource(R.string.lyrics_appearance_align_left)
                         )
 
                         ToggleSegmentButton(
@@ -306,7 +306,7 @@ fun LyricsMoreBottomSheet(
                             activeCornerRadius = 50.dp,
                             onClick = { onLyricsAlignmentChange("center") },
                             imageVector = Icons.Rounded.FormatAlignCenter,
-                            contentDesc = stringResource(R.string.cd_lyrics_align_center)
+                            contentDesc = stringResource(R.string.lyrics_appearance_align_center)
                         )
 
                         ToggleSegmentButton(
@@ -321,7 +321,7 @@ fun LyricsMoreBottomSheet(
                             activeCornerRadius = 50.dp,
                             onClick = { onLyricsAlignmentChange("right") },
                             imageVector = Icons.AutoMirrored.Rounded.FormatAlignRight,
-                            contentDesc = stringResource(R.string.cd_lyrics_align_right)
+                            contentDesc = stringResource(R.string.lyrics_appearance_align_right)
                         )
                     }
                 }
@@ -351,7 +351,7 @@ fun LyricsMoreBottomSheet(
                     Text(
                         modifier = Modifier
                             .padding(start = 6.dp, bottom = 6.dp),
-                        text = stringResource(R.string.lyrics_more_controls),
+                        text = stringResource(R.string.lyrics_controls_section),
                         color = accentColor,
                         style = MaterialTheme.typography.bodyLargeEmphasized
                     )
@@ -361,9 +361,9 @@ fun LyricsMoreBottomSheet(
                             headlineContent = {
                                 Text(
                                     if (isSyncControlsVisible) {
-                                        stringResource(R.string.lyrics_more_hide_sync_controls)
+                                        stringResource(R.string.lyrics_controls_hide_sync)
                                     } else {
-                                        stringResource(R.string.lyrics_more_adjust_sync)
+                                        stringResource(R.string.lyrics_controls_adjust_sync)
                                     }
                                 )
                             },
@@ -398,7 +398,7 @@ fun LyricsMoreBottomSheet(
 
                     if (isRomanizationVisible) {
                         ListItem(
-                            headlineContent = { Text(stringResource(R.string.lyrics_more_show_romanization)) },
+                            headlineContent = { Text(stringResource(R.string.lyrics_controls_show_romanization)) },
                             leadingContent = {
                                 Icon(
                                     imageVector = Icons.Rounded.Abc,
@@ -439,7 +439,7 @@ fun LyricsMoreBottomSheet(
 
                     if (isTranslationVisible) {
                         ListItem(
-                            headlineContent = { Text(stringResource(R.string.lyrics_more_show_translations)) },
+                            headlineContent = { Text(stringResource(R.string.lyrics_controls_show_translations)) },
                             leadingContent = {
                                 Icon(
                                     imageVector = Icons.Rounded.Translate,
@@ -481,7 +481,7 @@ fun LyricsMoreBottomSheet(
                     // Immersive Mode Toggle
                     if (isImmersiveVisible) {
                         ListItem(
-                            headlineContent = { Text(stringResource(R.string.lyrics_more_disable_immersive_once)) },
+                            headlineContent = { Text(stringResource(R.string.lyrics_controls_disable_immersive_once)) },
                             leadingContent = {
                                 Icon(
                                     imageVector = Icons.Rounded.VisibilityOff,
@@ -525,7 +525,7 @@ fun LyricsMoreBottomSheet(
                     // Keep Screen On Toggle
                     if (isKeepScreenOnVisible) {
                         ListItem(
-                            headlineContent = { Text(stringResource(R.string.lyrics_more_keep_screen_on)) },
+                            headlineContent = { Text(stringResource(R.string.lyrics_controls_keep_screen_on)) },
                             leadingContent = {
                                 Icon(
                                     imageVector = Icons.Rounded.BrightnessHigh,

@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Top Bar -->
+    <string name="topbar_beta_letter">β</string>
+    <string name="topbar_beta_label">Beta</string>
+    <string name="topbar_cd_cloud_streaming">Cloud Streaming</string>
+    <string name="topbar_cd_changelog">Log Perubahan</string>
+    <string name="topbar_cloud_streaming_title">Cloud Streaming</string>
+    <string name="topbar_cloud_streaming_subtitle">Alirkan musik dari akun cloud Anda</string>
+
+    <!-- BetaInfoBottomSheet -->
+    <string name="beta_sheet_version">Beta 0.7.0</string>
+    <string name="beta_sheet_letter">β</string>
+    <string name="beta_sheet_welcome_title">Selamat datang di PixelPlayer 0.7.0-beta</string>
+    <string name="beta_sheet_welcome_body">Anda menggunakan versi beta yang mungkin berisi bug, crash, atau fitur eksperimental. Bantu kami meningkatkannya dengan melaporkan masalah.</string>
+    <string name="beta_sheet_expect_title">Yang perlu diharapkan</string>
+    <string name="beta_sheet_expect_1">Bug, crash, atau fitur yang belum selesai dapat terjadi sewaktu-waktu.</string>
+    <string name="beta_sheet_expect_2">Beberapa fitur dapat berubah atau dihapus tanpa pemberitahuan.</string>
+    <string name="beta_sheet_expect_3">Versi beta mungkin lebih tidak stabil dibanding versi rilis.</string>
+    <string name="beta_sheet_expect_4">Selalu periksa pembaruan sebelum melaporkan masalah yang sudah diketahui.</string>
+    <string name="beta_sheet_expect_summary">Hal yang dapat berubah, rusak, atau ditingkatkan selama pengujian beta.</string>
+    <string name="beta_sheet_github_title">Shortcut issue GitHub</string>
+    <string name="beta_sheet_github_body">Cari terlebih dahulu, lalu buat laporan yang jelas untuk bug, crash, permintaan fitur, atau pertanyaan.</string>
+    <string name="beta_sheet_open_issues">Buka issue yang ada</string>
+    <string name="beta_sheet_report_bug">Laporkan masalah atau crash</string>
+    <string name="beta_sheet_report_body">Bagikan langkah-langkah untuk mereproduksi, hasil yang diharapkan, hasil aktual, dan detail perangkat/OS Anda.</string>
+    <string name="beta_sheet_report_title">Cara melapor</string>
+    <string name="beta_sheet_report_summary">Checklist singkat sebelum membuat issue baru.</string>
+    <string name="beta_sheet_before_title">Sebelum membuat issue</string>
+    <string name="beta_sheet_before_1">Cari issue terbuka dan tertutup yang sudah ada untuk menghindari duplikat.</string>
+    <string name="beta_sheet_before_2">Perbarui ke versi PixelPlayer terbaru dan pastikan masalah masih terjadi.</string>
+    <string name="beta_sheet_before_3">Mulai ulang aplikasi dan pastikan masalah tetap terjadi.</string>
+    <string name="beta_sheet_before_4">Coba reproduksi masalah dan catat langkah-langkahnya secara jelas.</string>
+    <string name="beta_sheet_issue_type_title">Jenis issue apa?</string>
+    <string name="beta_sheet_issue_type_bug">Laporan bug: Ada sesuatu yang tidak berjalan semestinya.</string>
+    <string name="beta_sheet_issue_type_feature">Permintaan fitur: Tambahkan fitur atau peningkatan baru.</string>
+    <string name="beta_sheet_issue_type_question">Pertanyaan: Gunakan Discussions jika tersedia, atau buat issue dengan label pertanyaan.</string>
+    <string name="beta_sheet_bug_title">Laporan bug</string>
+    <string name="beta_sheet_bug_summary_text">Salin bagian ini saat ada fitur yang bermasalah atau crash.</string>
+    <string name="beta_sheet_bug_template_title">Laporan Bug</string>
+    <string name="beta_sheet_bug_summary">Ringkasan singkat:</string>
+    <string name="beta_sheet_bug_expected">Perilaku yang diharapkan:</string>
+    <string name="beta_sheet_bug_actual">Perilaku saat ini:</string>
+    <string name="beta_sheet_bug_steps">Langkah memutar/reproduksi: 1. 2. 3.</string>
+    <string name="beta_sheet_bug_frequency">Seberapa sering terjadi? Selalu / Kadang / Jarang.</string>
+    <string name="beta_sheet_bug_screenshot">Screenshot / video: jika tersedia.</string>
+    <string name="beta_sheet_bug_logs">Log / stack trace: jika tersedia.</string>
+    <string name="beta_sheet_env_title">Lingkungan</string>
+    <string name="beta_sheet_env_version">Versi PixelPlayer:</string>
+    <string name="beta_sheet_env_source">Sumber instalasi: GitHub Release, debug build, nightly build, dll.</string>
+    <string name="beta_sheet_env_android">Versi Android:</string>
+    <string name="beta_sheet_env_device">Model perangkat:</string>
+    <string name="beta_sheet_env_extra">Konteks tambahan: penggunaan kartu SD, pengaturan khusus, izin, dll.</string>
+    <string name="beta_sheet_feature_title">Permintaan fitur</string>
+    <string name="beta_sheet_feature_summary">Salin bagian ini jika ingin fitur atau peningkatan baru.</string>
+    <string name="beta_sheet_feature_problem">Deskripsi masalah: Masalah apa yang ingin diselesaikan?</string>
+    <string name="beta_sheet_feature_solution">Solusi yang diusulkan: Bagaimana fitur ini seharusnya bekerja?</string>
+    <string name="beta_sheet_feature_alternatives">Alternatif yang dipertimbangkan: Apakah ada pendekatan lain?</string>
+    <string name="beta_sheet_feature_scope">Cakupan: Layar atau alur mana yang terpengaruh?</string>
+    <string name="beta_sheet_feature_mockup">Mockup atau gambar referensi jika tersedia.</string>
+    <string name="beta_sheet_quality_title">Judul, privasi, dan cakupan</string>
+    <string name="beta_sheet_quality_summary">Buat laporan mudah ditinjau dan aman untuk dibagikan.</string>
+    <string name="beta_sheet_title_examples_title">Contoh judul issue yang baik</string>
+    <string name="beta_sheet_title_example_1">Equalizer: Indikator bergeser saat berpindah tab preset</string>
+    <string name="beta_sheet_title_example_2">Pencarian: Riwayat tidak muncul saat query kosong</string>
+    <string name="beta_sheet_title_example_3">Fitur: Tambahkan opsi urut playlist "Baru Ditambahkan"</string>
+    <string name="beta_sheet_avoid_title">Harap hindari</string>
+    <string name="beta_sheet_avoid_1">Laporan umum seperti "Tidak berfungsi".</string>
+    <string name="beta_sheet_avoid_2">Beberapa masalah yang tidak berkaitan dalam satu issue.</string>
+    <string name="beta_sheet_avoid_3">Log atau screenshot tanpa sensor yang berisi data pribadi.</string>
+    <string name="beta_sheet_privacy_title">Catatan privasi</string>
+    <string name="beta_sheet_privacy_body">Sebelum mengunggah log, screenshot, atau video, hapus informasi pribadi atau sensitif.</string>
+    <string name="beta_sheet_nightly_title">Build nightly</string>
+    <string name="beta_sheet_nightly_summary">Perbedaan nightly dengan rilis resmi, serta apa yang perlu disertakan saat terjadi masalah.</string>
+    <string name="beta_sheet_nightly_body">Build nightly dibuat dari commit terbaru dan mungkin berisi perubahan yang belum selesai, bug sementara, atau regresi. Build ini lebih eksperimental dibanding rilis resmi.</string>
+    <string name="beta_sheet_nightly_access">Akses build tersebut melalui artifact workflow GitHub Actions repositori jika tersedia.</string>
+    <string name="beta_sheet_nightly_report_title">Melaporkan masalah nightly</string>
+    <string name="beta_sheet_nightly_report_body">Saat melaporkan masalah dari build nightly, selalu sebutkan bahwa masalah terjadi pada build nightly, bukan rilis resmi. Sertakan tanggal build, nama atau nomor workflow run, atau commit SHA jika memungkinkan. Periksa juga apakah masalah yang sama terjadi pada rilis resmi terbaru.</string>
+    <string name="beta05_title">Peningkatan Beta 0.5.0</string>
+    <string name="beta05_clean_install_title">Instal bersih direkomendasikan</string>
+    <string name="beta05_clean_install_body">Jika Anda datang dari beta 0.5.0, pembaruan ini mungkin memerlukan data pustaka baru alih-alih status cache lama.</string>
+    <string name="beta05_if_wrong_meta_title">Jika metadata atau entri pustaka tampak salah</string>
+    <string name="beta05_if_wrong_meta_body">Metadata lagu yang salah, artis atau album yang tidak cocok, atau entri yang tampak duplikat biasanya berarti instal bersih adalah solusinya.</string>
+    <string name="beta05_dont_show">Jangan tampilkan lagi</string>
+    <string name="beta05_got_it">Mengerti</string>
+
+    <!-- Crash report dialog -->
+    <string name="crash_report_title">Ups! Terjadi kesalahan</string>
+    <string name="crash_report_subtitle">Aplikasi berhenti mendadak selama sesi terakhir Anda. Bantu kami memperbaikinya dengan membagikan laporan crash.</string>
+    <string name="crash_report_date_line">Tanggal: %1$s</string>
+    <string name="crash_report_error_label">Kesalahan:</string>
+    <string name="crash_report_stack_preview_label">Stack trace (pratinjau):</string>
+    <string name="crash_report_clipboard_label">Log crash</string>
+    <string name="crash_report_toast_log_copied">Log crash disalin ke papan klip</string>
+    <string name="crash_report_share_subject">Laporan crash PixelPlayer</string>
+    <string name="crash_report_share_chooser">Bagikan laporan crash</string>
+
+    <!-- Home Option -->
+    <string name="home_option_dj_mashup">DJ Mashup</string>
+
+    <!-- Your Mix -->
+    <string name="home_your_mix_title">Your\nMix</string>
+    <string name="home_empty_placeholder_title">Belum ada data untuk ditampilkan</string>
+    <string name="home_empty_placeholder_subtitle">Mix Anda akan muncul di sini saat PixelPlayer menemukan lagu atau menyinkronkan sumber.</string>
+    <string name="home_empty_placeholder_refresh">Refresh</string>
+
+    <!-- DailyMixSection -->
+    <string name="home_daily_mix_title">DAILY MIX</string>
+    <string name="home_daily_mix_subtitle">Berdasarkan Riwayat</string>
+    <string name="home_daily_mix_action_see_all">Lihat semua Daily Mix</string>
+    <string name="home_daily_mix_queue_name">Daily Mix</string>
+
+    <!-- DailyMixScreen -->
+    <string name="daily_mix_title">Daily Mix</string>
+    <plurals name="daily_mix_songs_dot_duration">
+        <item quantity="one">%1$d lagu • %2$s</item>
+        <item quantity="other">%1$d lagu • %2$s</item>
+    </plurals>
+    <string name="daily_mix_action_play_it">Putar</string>
+    <string name="daily_mix_cd_ai_playlist_generator">Generator Playlist AI</string>
+
+    <!-- DailyMixMenu -->
+    <string name="daily_mix_how_title">Bagaimana Daily Mix Anda dibuat</string>
+    <string name="daily_mix_how_body">Daily Mix Anda dibuat dari lagu-lagu favorit dan yang paling sering Anda putar. Kami juga menambahkan lagu dari artis dan genre yang Anda suka supaya Anda bisa menemukan musik baru.</string>
+    <string name="daily_mix_prompt_label">Beri tahu AI apa yang ingin Anda dengarkan hari ini</string>
+    <string name="daily_mix_cost_hint">Kami menggunakan sampel kecil untuk menjaga biaya tetap rendah</string>
+    <string name="daily_mix_updating">Memperbarui…</string>
+    <string name="daily_mix_update">Perbarui Daily Mix</string>
+
+    <!-- AIPlaylistSheet -->
+    <string name="ai_playlist_headline_perfect">Perfectly Curated</string>
+    <string name="ai_playlist_headline_daily_mix">Daily Mix</string>
+    <string name="ai_playlist_subtitle_journey_ready">Perjalanan sonik Anda sudah siap</string>
+    <string name="ai_playlist_subtitle_generator">Generator Playlist AI</string>
+    <string name="ai_playlist_description">Jelaskan getaran, suasana hati, atau aktivitas dan biarkan AI menciptakan playlist yang sempurna dari pustaka Anda.</string>
+    <string name="ai_playlist_section_size">Ukuran playlist</string>
+    <string name="ai_playlist_min_songs">Lagu min</string>
+    <string name="ai_playlist_max_songs">Lagu maks</string>
+    <string name="ai_playlist_prompt_placeholder">misal. Getaran malam santai, energi latihan yang ceria…</string>
+    <string name="ai_playlist_tap_to_retry">Ketuk untuk Mencoba Lagi</string>
+    <string name="ai_playlist_status_default">Perjalanan sonik disintesis!</string>
+    <string name="ai_playlist_ready_to_play">Siap Diputar</string>
+    <string name="ai_playlist_generating">Menghasilkan…</string>
+    <string name="ai_playlist_generate">Hasilkan Playlist</string>
+
+    <!-- RecentlyPlayedSection -->
+    <string name="home_recently_played_title">Baru Diputar</string>
+
+    <!-- RecentlyPlayedScreen -->
+    <string name="recently_played_title">Baru Diputar</string>
+    <string name="recently_played_action_play_latest">Putar terbaru</string>
+    <string name="recently_played_empty_title">Belum ada yang diputar di %1$s</string>
+    <string name="recently_played_empty_subtitle">Ubah rentang atau putar lebih banyak lagu untuk mengisi timeline ini.</string>
+    <string name="recently_played_queue_name">Baru Diputar</string>
+    <string name="recently_played_date_today">Hari ini</string>
+    <string name="recently_played_date_yesterday">Kemarin</string>
+
+    <!-- StatsOverviewCard -->
+    <string name="home_stats_overview_title">Statistik mendengarkan</string>
+    <string name="home_stats_overview_total_plays">Total putaran</string>
+    <string name="home_stats_overview_avg_per_day">Rata-rata per hari</string>
+    <string name="home_stats_overview_top_track">Trek teratas</string>
+    <string name="home_stats_overview_top_track_line">%1$s • %2$d putaran</string>
+
+    <!-- StatsScreen -->
+    <string name="stats_title">Statistik Mendengarkan</string>
+    <string name="stats_cd_refresh">Segarkan statistik</string>
+    <string name="stats_range_today">Hari ini</string>
+    <string name="stats_range_week_to_date">Minggu Berjalan</string>
+    <string name="stats_range_month_to_date">Bulan Berjalan</string>
+    <string name="stats_range_year_to_date">Tahun Berjalan</string>
+    <string name="stats_range_all_time">Semua Waktu</string>
+    <string name="stats_hero_listening">Mendengarkan</string>
+    <string name="stats_hero_plays">Putaran</string>
+    <string name="stats_section_listening_timeline">Lini masa mendengarkan</string>
+    <string name="stats_timeline_metric_listening_time">Waktu mendengarkan</string>
+    <string name="stats_timeline_metric_listening_time_desc">Total waktu mendengarkan dalam rentang yang dipilih.</string>
+    <string name="stats_timeline_metric_play_count">Jumlah putaran</string>
+    <string name="stats_timeline_metric_play_count_desc">Berapa banyak sesi yang Anda selesaikan per segmen.</string>
+    <string name="stats_timeline_metric_avg_session">Rata-rata sesi</string>
+    <string name="stats_timeline_metric_avg_session_desc">Rata-rata durasi mendengarkan untuk setiap segmen.</string>
+    <string name="stats_timeline_support_day">Dibagi menjadi jendela 4 jam untuk mengungkapkan ritme harian Anda.</string>
+    <string name="stats_timeline_support_week">Bilah harian memudahkan perbandingan kebiasaan dari minggu ke minggu.</string>
+    <string name="stats_timeline_support_month">Bilah mingguan menunjukkan tren bulan ini.</string>
+    <string name="stats_timeline_support_year">Bilah bulanan menunjukkan musiman sepanjang tahun.</string>
+    <string name="stats_timeline_support_all">Bilah tahunan merangkum riwayat lengkap Anda.</string>
+    <string name="stats_empty_no_timeline_title">Belum ada data mendengarkan</string>
+    <string name="stats_empty_no_timeline_subtitle">Tekan putar untuk mulai membangun lini masa mendengarkan Anda</string>
+    <string name="stats_rhythm_daily">Ritme harian</string>
+    <string name="stats_rhythm_weekly">Ritme mingguan</string>
+    <string name="stats_rhythm_monthly">Ritme bulanan</string>
+    <string name="stats_rhythm_year">Tahun sekilas</string>
+    <string name="stats_rhythm_all_time">Progres semua waktu</string>
+    <string name="stats_grouped_4h">Dikelompokkan dalam segmen 4 jam</string>
+    <string name="stats_grouped_dow">Dikelompokkan berdasarkan hari dalam seminggu</string>
+    <string name="stats_grouped_week_of_month">Dikelompokkan berdasarkan minggu dalam sebulan</string>
+    <string name="stats_grouped_by_month">Dikelompokkan berdasarkan bulan</string>
+    <string name="stats_grouped_by_year">Dikelompokkan berdasarkan tahun</string>
+    <string name="stats_peak_segment">Segmen puncak</string>
+    <string name="stats_n_plays">%1$d putaran</string>
+    <string name="stats_em_dash">—</string>
+    <string name="stats_section_top_categories">Kategori teratas</string>
+    <string name="stats_top_categories_subtitle">Bandingkan cara Anda mendengarkan lintas genre, artis, album, dan lagu.</string>
+    <string name="stats_dim_genre">Genre</string>
+    <string name="stats_dim_artist">Artis</string>
+    <string name="stats_dim_album">Album</string>
+    <string name="stats_dim_song">Lagu</string>
+    <string name="stats_card_listening_by_genre">Mendengarkan berdasarkan genre</string>
+    <string name="stats_card_listening_by_artist">Mendengarkan berdasarkan artis</string>
+    <string name="stats_card_listening_by_album">Mendengarkan berdasarkan album</string>
+    <string name="stats_card_listening_by_song">Mendengarkan berdasarkan lagu</string>
+    <string name="stats_plays_artists">%1$d putaran • %2$d artis</string>
+    <string name="stats_plays_tracks">%1$d putaran • %2$d trek</string>
+    <string name="stats_empty_no_category_title">Belum ada data kategori</string>
+    <string name="stats_empty_no_category_subtitle">Tekan putar untuk menampilkan sorotan mendengarkan Anda</string>
+    <string name="stats_section_listening_habits">Kebiasaan mendengarkan</string>
+    <string name="stats_empty_no_habits_title">Belum ada kebiasaan</string>
+    <string name="stats_empty_no_habits_subtitle">Kami akan menampilkan kebiasaan mendengarkan Anda setelah kami mengenal Anda lebih baik.</string>
+    <string name="stats_habit_total_sessions">Total sesi</string>
+    <string name="stats_habit_avg_session">Rata-rata sesi</string>
+    <string name="stats_habit_longest_session">Sesi terlama</string>
+    <string name="stats_habit_sessions_per_day">Sesi/hari</string>
+    <string name="stats_habit_most_active_day">Hari paling aktif</string>
+    <string name="stats_habit_no_playback_yet">Belum ada pemutaran</string>
+    <string name="stats_habit_peak_timeline_slot">Slot lini masa puncak</string>
+    <string name="stats_section_top_artists">Artis teratas</string>
+    <string name="stats_empty_no_artists_title">Tidak ada artis teratas</string>
+    <string name="stats_empty_no_artists_subtitle">Teruslah mendengarkan dan artis favorit Anda akan muncul di sini.</string>
+    <string name="stats_avatar_placeholder">\?</string>
+    <string name="stats_ranked_artist">%1$d. %2$s</string>
+    <string name="stats_section_top_albums">Album teratas</string>
+    <string name="stats_empty_no_albums_title">Tidak ada album teratas</string>
+    <string name="stats_empty_no_albums_subtitle">Album yang sering Anda kunjungi kembali akan muncul di sini.</string>
+    <string name="stats_ranked_album">%1$d. %2$s</string>
+    <string name="stats_track_concentration_title">Konsentrasi trek</string>
+    <string name="stats_track_concentration_subtitle">Bagaimana waktu mendengarkan Anda didistribusikan ke seluruh trek teratas Anda.</string>
+    <string name="stats_empty_no_concentration_title">Belum ada data konsentrasi</string>
+    <string name="stats_empty_no_concentration_subtitle">Putar lebih banyak trek untuk melihat seberapa terfokus pendengaran Anda.</string>
+    <string name="stats_slice_top_1">Top 1</string>
+    <string name="stats_slice_top_2_3">Top 2-3</string>
+    <string name="stats_slice_others">Lainnya</string>
+    <string name="stats_percent">%1$d%%</string>
+    <string name="stats_listening_concentration_title">Konsentrasi mendengarkan</string>
+    <string name="stats_top_three_share_line">Top 3 trek menyumbang %1$d%% dari waktu mendengarkan Anda.</string>
+    <string name="stats_avg_plays_per_track">Rata-rata putaran/trek</string>
+    <string name="stats_unique_tracks">Trek unik</string>
+    <string name="stats_top_three_share_label">Top 3 share</string>
+    <string name="stats_tracks_in_range_title">Trek dalam rentang ini</string>
+    <string name="stats_tracks_in_range_subtitle">Trek yang paling sering diputar untuk rentang waktu yang dipilih.</string>
+    <string name="stats_empty_no_tracks_title">Tidak ada trek teratas</string>
+    <string name="stats_empty_no_tracks_subtitle">Dengarkan favorit Anda untuk melihatnya disorot di sini.</string>
+    <string name="stats_collapse_tracks">Ciutkan trek</string>
+    <string name="stats_show_all_tracks">Tampilkan semua trek</string>
+
+    <!-- Time and Duration Formatting -->
+    <string name="duration_hours_minutes_long">%1$d jam %2$02d menit</string>
+    <string name="duration_minutes_long">%1$d menit</string>
+    <string name="duration_hours_minutes_medium">%1$d j %2$02d m</string>
+    <string name="duration_hours_medium">%1$d j</string>
+    <string name="duration_minutes_medium">%1$d m</string>
+    <string name="duration_seconds_medium">%1$d d</string>
+    <string name="duration_hours_minutes_short">%1$dj %2$02dm</string>
+    <string name="duration_hours_short">%1$dj</string>
+    <string name="duration_minutes_short">%1$dm</string>
+    <string name="duration_seconds_short">%1$dd</string>
+    <string name="time_ago_never">Tidak pernah</string>
+    <string name="time_ago_just_now">Baru saja</string>
+    <string name="time_ago_day_singular">1 hari yang lalu</string>
+    <string name="time_ago_days_plural">%1$d hari yang lalu</string>
+    <string name="time_ago_hour_singular">1 jam yang lalu</string>
+    <string name="time_ago_hours_plural">%1$d jam yang lalu</string>
+    <string name="time_ago_minute_singular">1 menit yang lalu</string>
+    <string name="time_ago_minutes_plural">%1$d menit yang lalu</string>
+    <string name="song_count_singular">%1$d Lagu</string>
+    <string name="song_count_plural">%1$d Lagu</string>
+    <string name="stats_week_label">Minggu %1$d</string>
+</resources>

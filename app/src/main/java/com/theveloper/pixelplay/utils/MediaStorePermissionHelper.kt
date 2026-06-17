@@ -26,13 +26,52 @@ object MediaStorePermissionHelper {
     )
 
     /**
-     * Returns the MediaStore content URI for a given audio song ID.
+     * Returns the MediaStore content URI for a given audio song ID, querying the correct volume name.
      * Returns null for cloud songs (negative IDs).
+     */
+    fun getMediaStoreUri(context: Context, songId: Long): Uri? {
+        if (songId <= 0) return null
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val volumeName = try {
+                val projection = arrayOf(MediaStore.Audio.Media.VOLUME_NAME)
+                val selection = "${MediaStore.Audio.Media._ID} = ?"
+                val selectionArgs = arrayOf(songId.toString())
+                context.contentResolver.query(
+                    MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                    projection,
+                    selection,
+                    selectionArgs,
+                    null
+                )?.use { cursor ->
+                    if (cursor.moveToFirst()) {
+                        cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.VOLUME_NAME))
+                    } else {
+                        null
+                    }
+                }
+            } catch (e: Exception) {
+                null
+            }
+
+            val targetVolume = if (volumeName != null && volumeName != MediaStore.VOLUME_EXTERNAL) {
+                volumeName
+            } else {
+                MediaStore.VOLUME_EXTERNAL_PRIMARY
+            }
+            MediaStore.Audio.Media.getContentUri(targetVolume, songId)
+        } else {
+            ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, songId)
+        }
+    }
+
+    /**
+     * Legacy/fallback version of getMediaStoreUri when Context is not available.
+     * Returns the MediaStore content URI using the primary external volume to avoid Invalid Uri exception.
      */
     fun getMediaStoreUri(songId: Long): Uri? {
         if (songId <= 0) return null
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            MediaStore.Audio.Media.getContentUri(MediaStore.VOLUME_EXTERNAL, songId)
+            MediaStore.Audio.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY, songId)
         } else {
             ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, songId)
         }
@@ -55,7 +94,9 @@ object MediaStorePermissionHelper {
                 add(MediaStore.Audio.Media.getContentUri(volumeName, songId))
             }
             add(MediaStore.Audio.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY, songId))
-            add(MediaStore.Audio.Media.getContentUri(MediaStore.VOLUME_EXTERNAL, songId))
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+                add(MediaStore.Audio.Media.getContentUri(MediaStore.VOLUME_EXTERNAL, songId))
+            }
         }.distinctBy { it.toString() }
     }
 
@@ -113,7 +154,12 @@ object MediaStorePermissionHelper {
      * Useful for non-audio files like .lrc that are indexed by MediaStore.
      */
     fun getMediaStoreUri(context: Context, filePath: String): Uri? {
-        val projection = arrayOf(MediaStore.Files.FileColumns._ID)
+        val hasVolumeName = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
+        val projection = if (hasVolumeName) {
+            arrayOf(MediaStore.Files.FileColumns._ID, MediaStore.Files.FileColumns.VOLUME_NAME)
+        } else {
+            arrayOf(MediaStore.Files.FileColumns._ID)
+        }
         val selection = "${MediaStore.Files.FileColumns.DATA} = ?"
         val selectionArgs = arrayOf(filePath)
         val queryUri = MediaStore.Files.getContentUri("external")
@@ -121,7 +167,22 @@ object MediaStorePermissionHelper {
         return context.contentResolver.query(queryUri, projection, selection, selectionArgs, null)?.use { cursor ->
             if (cursor.moveToFirst()) {
                 val id = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns._ID))
-                ContentUris.withAppendedId(queryUri, id)
+                val volumeName = if (hasVolumeName) {
+                    cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.VOLUME_NAME))
+                } else {
+                    null
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    val targetVolume = if (volumeName != null && volumeName != MediaStore.VOLUME_EXTERNAL) {
+                        volumeName
+                    } else {
+                        MediaStore.VOLUME_EXTERNAL_PRIMARY
+                    }
+                    val baseVolumeUri = MediaStore.Files.getContentUri(targetVolume)
+                    ContentUris.withAppendedId(baseVolumeUri, id)
+                } else {
+                    ContentUris.withAppendedId(queryUri, id)
+                }
             } else {
                 null
             }
@@ -140,7 +201,49 @@ object MediaStorePermissionHelper {
         uris: Collection<Uri>
     ): IntentSender? {
         if (uris.isEmpty()) return null
-        return MediaStore.createWriteRequest(context.contentResolver, uris).intentSender
+
+        // Filter out URIs that do not exist in the MediaStore database
+        // to avoid IllegalArgumentException: Invalid Uri
+        val existingIds = try {
+            val projection = arrayOf(MediaStore.Files.FileColumns._ID)
+            val idList = uris.mapNotNull { it.lastPathSegment?.toLongOrNull() }
+            if (idList.isEmpty()) {
+                emptySet()
+            } else {
+                val selection = "${MediaStore.Files.FileColumns._ID} IN (${idList.joinToString(",") { "?" }})"
+                val selectionArgs = idList.map { it.toString() }.toTypedArray()
+                context.contentResolver.query(
+                    MediaStore.Files.getContentUri("external"),
+                    projection,
+                    selection,
+                    selectionArgs,
+                    null
+                )?.use { cursor ->
+                    val idSet = mutableSetOf<Long>()
+                    val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns._ID)
+                    while (cursor.moveToNext()) {
+                        idSet.add(cursor.getLong(idColumn))
+                    }
+                    idSet
+                } ?: emptySet()
+            }
+        } catch (e: Exception) {
+            emptySet()
+        }
+
+        val validUris = uris.filter { uri ->
+            val id = uri.lastPathSegment?.toLongOrNull()
+            id != null && id in existingIds
+        }
+
+        if (validUris.isEmpty()) return null
+
+        return try {
+            MediaStore.createWriteRequest(context.contentResolver, validUris).intentSender
+        } catch (e: Exception) {
+            android.util.Log.e("MediaStorePermissionHelper", "Failed to create write request for URIs: $validUris", e)
+            null
+        }
     }
 
     /**
@@ -194,7 +297,7 @@ object MediaStorePermissionHelper {
     ): IntentSender? {
         return try {
             MediaStore.createDeleteRequest(context.contentResolver, uris).intentSender
-        } catch (_: Exception) {
+        } catch (_: Throwable) {
             null
         }
     }
@@ -205,7 +308,7 @@ object MediaStorePermissionHelper {
      */
     @RequiresApi(Build.VERSION_CODES.R)
     fun createWriteRequestForSong(context: Context, songId: Long): IntentSender? {
-        val uri = getMediaStoreUri(songId) ?: return null
+        val uri = getMediaStoreUri(context, songId) ?: return null
         return createWriteRequestIntentSender(context, listOf(uri))
     }
 
@@ -215,7 +318,7 @@ object MediaStorePermissionHelper {
      */
     @RequiresApi(Build.VERSION_CODES.R)
     fun createDeleteRequestForSong(context: Context, songId: Long): IntentSender? {
-        val uri = getMediaStoreUri(songId) ?: return null
+        val uri = getMediaStoreUri(context, songId) ?: return null
         return createDeleteRequestIntentSender(context, listOf(uri))
     }
 }

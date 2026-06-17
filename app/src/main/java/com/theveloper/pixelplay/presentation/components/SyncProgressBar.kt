@@ -74,7 +74,7 @@ fun SyncProgressBar(
                 )
 
                 Text(
-                    text = stringResource(R.string.presentation_batch_g_sync_percent, percentage),
+                    text = stringResource(R.string.common_percentage_text, percentage),
                     style = MaterialTheme.typography.titleMedium,
                     fontFamily = GoogleSansRounded,
                     fontWeight = FontWeight.Bold,
@@ -105,9 +105,9 @@ fun SyncProgressBar(
             ) {
                 Text(
                     text = if (totalCount > 0) {
-                        stringResource(R.string.sync_files_progress, currentCount, totalCount)
+                        stringResource(R.string.library_sync_files_progress, currentCount, totalCount)
                     } else {
-                        stringResource(R.string.sync_scanning)
+                        stringResource(R.string.library_sync_scanning)
                     },
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -122,7 +122,7 @@ fun SyncProgressBar(
                     )
                 } else if (syncProgress.isCompleted) {
                     Text(
-                        text = stringResource(R.string.sync_complete),
+                        text = stringResource(R.string.library_sync_complete),
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Medium,
                         color = MaterialTheme.colorScheme.tertiary
@@ -138,7 +138,7 @@ fun SyncProgressBar(
                     horizontalArrangement = Arrangement.End
                 ) {
                     Text(
-                        text = stringResource(R.string.cancel),
+                        text = stringResource(R.string.common_cancel),
                         style = MaterialTheme.typography.labelLarge,
                         color = MaterialTheme.colorScheme.error,
                         modifier = Modifier.padding(4.dp)
@@ -152,15 +152,15 @@ fun SyncProgressBar(
 @Composable
 private fun getPhaseText(syncProgress: SyncProgress): String {
     return when {
-        syncProgress.isCompleted -> stringResource(R.string.sync_complete)
+        syncProgress.isCompleted -> stringResource(R.string.library_sync_complete)
         syncProgress.isRunning -> {
             when {
-                syncProgress.totalCount == 0 -> stringResource(R.string.sync_scanning)
-                syncProgress.hasProgress -> stringResource(R.string.sync_processing)
-                else -> stringResource(R.string.sync_in_progress)
+                syncProgress.totalCount == 0 -> stringResource(R.string.library_sync_scanning)
+                syncProgress.hasProgress -> stringResource(R.string.library_sync_processing)
+                else -> stringResource(R.string.library_sync_in_progress)
             }
         }
-        else -> stringResource(R.string.sync_pending)
+        else -> stringResource(R.string.library_sync_pending)
     }
 }
 
@@ -195,7 +195,7 @@ fun CompactSyncProgressIndicator(
         Spacer(modifier = Modifier.width(8.dp))
 
         Text(
-            text = stringResource(R.string.presentation_batch_g_sync_percent, (animatedProgress * 100).roundToInt()),
+            text = stringResource(R.string.common_percentage_text, (animatedProgress * 100).roundToInt()),
             style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )

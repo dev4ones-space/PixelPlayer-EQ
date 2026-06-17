@@ -228,7 +228,7 @@ fun AiPlaylistSheet(
                     Box(contentAlignment = Alignment.Center) {
                         Icon(
                             imageVector = Icons.Rounded.AutoAwesome,
-                            contentDescription = stringResource(R.string.cd_ai),
+                            contentDescription = null,
                             modifier = Modifier.size(32.dp),
                             tint = if (isGenerating) colors.onPrimaryContainer else colors.onTertiaryContainer
                         )

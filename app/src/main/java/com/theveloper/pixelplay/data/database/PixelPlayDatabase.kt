@@ -36,7 +36,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
         AiCacheEntity::class,
         AiUsageEntity::class
     ],
-    version = 41,
+    version = 42,
     exportSchema = true
 )
 abstract class PixelPlayDatabase : RoomDatabase() {
@@ -649,6 +649,104 @@ abstract class PixelPlayDatabase : RoomDatabase() {
             }
         }
 
+        val MIGRATION_41_42 = object : Migration(41, 42) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                // Recreate navidrome_songs table to change disc_number to NOT NULL (Room expected)
+                db.execSQL("DROP TABLE IF EXISTS navidrome_songs_new")
+                db.execSQL(
+                    """
+                        CREATE TABLE navidrome_songs_new (
+                            id TEXT NOT NULL PRIMARY KEY,
+                            navidrome_id TEXT NOT NULL,
+                            playlist_id TEXT NOT NULL,
+                            title TEXT NOT NULL,
+                            artist TEXT NOT NULL,
+                            artist_id TEXT,
+                            album TEXT NOT NULL,
+                            album_id TEXT,
+                            cover_art_id TEXT,
+                            duration INTEGER NOT NULL,
+                            track_number INTEGER NOT NULL,
+                            disc_number INTEGER NOT NULL,
+                            year INTEGER NOT NULL,
+                            genre TEXT,
+                            bitRate INTEGER,
+                            mime_type TEXT,
+                            suffix TEXT,
+                            path TEXT NOT NULL,
+                            date_added INTEGER NOT NULL
+                        )
+                    """.trimIndent()
+                )
+
+                if (tableExists(db, "navidrome_songs")) {
+                    val columns = getTableColumns(db, "navidrome_songs")
+                    val artistIdExpr = columnExpr(columns, "artist_id", "NULL")
+                    val albumIdExpr = columnExpr(columns, "album_id", "NULL")
+                    val coverArtIdExpr = columnExpr(columns, "cover_art_id", "NULL")
+                    val genreExpr = columnExpr(columns, "genre", "NULL")
+                    val bitRateExpr = columnExpr(columns, "bitRate", "NULL")
+                    val mimeTypeExpr = columnExpr(columns, "mime_type", "NULL")
+                    val suffixExpr = columnExpr(columns, "suffix", "NULL")
+                    val discNumberExpr = if ("disc_number" in columns) "COALESCE(disc_number, 0)" else "0"
+
+                    db.execSQL(
+                        """
+                            INSERT OR REPLACE INTO navidrome_songs_new (
+                                id,
+                                navidrome_id,
+                                playlist_id,
+                                title,
+                                artist,
+                                artist_id,
+                                album,
+                                album_id,
+                                cover_art_id,
+                                duration,
+                                track_number,
+                                disc_number,
+                                year,
+                                genre,
+                                bitRate,
+                                mime_type,
+                                suffix,
+                                path,
+                                date_added
+                            )
+                            SELECT
+                                id,
+                                navidrome_id,
+                                playlist_id,
+                                title,
+                                artist,
+                                $artistIdExpr,
+                                album,
+                                $albumIdExpr,
+                                $coverArtIdExpr,
+                                duration,
+                                track_number,
+                                $discNumberExpr,
+                                year,
+                                $genreExpr,
+                                $bitRateExpr,
+                                $mimeTypeExpr,
+                                $suffixExpr,
+                                path,
+                                date_added
+                            FROM navidrome_songs
+                        """.trimIndent()
+                    )
+
+                    db.execSQL("DROP TABLE navidrome_songs")
+                }
+
+                db.execSQL("ALTER TABLE navidrome_songs_new RENAME TO navidrome_songs")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_navidrome_songs_navidrome_id ON navidrome_songs(navidrome_id)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_navidrome_songs_playlist_id ON navidrome_songs(playlist_id)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_navidrome_songs_playlist_id_date_added ON navidrome_songs(playlist_id, date_added)")
+            }
+        }
+
         private fun ensureSongsTableHasDateAdded(db: SupportSQLiteDatabase) {
             if (!tableExists(db, "songs")) {
                 recreateSongsTable(db)
@@ -1258,7 +1356,7 @@ abstract class PixelPlayDatabase : RoomDatabase() {
                         cover_art_id TEXT,
                         duration INTEGER NOT NULL,
                         track_number INTEGER NOT NULL,
-                        disc_number INTEGER,
+                        disc_number INTEGER NOT NULL,
                         year INTEGER NOT NULL,
                         genre TEXT,
                         bitRate INTEGER,
@@ -1331,7 +1429,7 @@ abstract class PixelPlayDatabase : RoomDatabase() {
                                 $coverArtIdExpr,
                                 duration,
                                 track_number,
-                                disc_number,
+                                COALESCE(disc_number, 0),
                                 year,
                                 $genreExpr,
                                 $bitRateExpr,

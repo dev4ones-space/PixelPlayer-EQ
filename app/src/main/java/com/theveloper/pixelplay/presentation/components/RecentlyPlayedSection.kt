@@ -118,7 +118,7 @@ fun RecentlyPlayedSection(
         ) {
             Text(
                 modifier = Modifier.padding(start = 6.dp),
-                text = stringResource(R.string.presentation_batch_g_recently_played_title),
+                text = stringResource(R.string.home_recently_played_title),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.SemiBold
             )

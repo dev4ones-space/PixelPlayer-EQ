@@ -142,7 +142,7 @@ fun NeteaseWebLoginScreen(
     LaunchedEffect(loginState) {
         when (val state = loginState) {
             is NeteaseLoginState.Success -> {
-                Toast.makeText(context, context.getString(R.string.toast_welcome_user, state.nickname), Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, context.getString(R.string.auth_welcome_toast, state.nickname), Toast.LENGTH_SHORT).show()
                 onClose()
             }
 
@@ -164,7 +164,7 @@ fun NeteaseWebLoginScreen(
         delay(20_000)
         if (webUiState.isLoadingPage) {
             pageLoadTimeout = true
-            snackbarHostState.showSnackbar(context.getString(R.string.auth_snackbar_page_timeout))
+            snackbarHostState.showSnackbar(context.getString(R.string.auth_timeout_toast))
         }
     }
 
@@ -183,7 +183,7 @@ fun NeteaseWebLoginScreen(
                 viewModel.processCookies(cookieJson)
             },
             onFailure = { error ->
-                val message = error.message ?: context.getString(R.string.auth_error_cookies_unreadable)
+                val message = error.message ?: context.getString(R.string.auth_cookies_unreadable_error)
                 viewModel.clearError()
                 webUiState = webUiState.copy(lastError = message)
             }
@@ -202,11 +202,11 @@ fun NeteaseWebLoginScreen(
         AlertDialog(
             onDismissRequest = { showExitDialog = false },
             title = {
-                Text(text = stringResource(R.string.auth_web_exit_confirm_title_netease), fontFamily = GoogleSansRounded)
+                Text(text = stringResource(R.string.auth_netease_exit_title), fontFamily = GoogleSansRounded)
             },
             text = {
                 Text(
-                    text = stringResource(R.string.auth_web_exit_confirm_body),
+                    text = stringResource(R.string.auth_web_exit_msg),
                     fontFamily = GoogleSansRounded
                 )
             },
@@ -217,12 +217,12 @@ fun NeteaseWebLoginScreen(
                         onClose()
                     }
                 ) {
-                    Text(text = stringResource(R.string.auth_exit), fontFamily = GoogleSansRounded, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Text(text = stringResource(R.string.auth_exit_action), fontFamily = GoogleSansRounded, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showExitDialog = false }) {
-                    Text(text = stringResource(R.string.auth_stay), fontFamily = GoogleSansRounded, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Text(text = stringResource(R.string.auth_stay_action), fontFamily = GoogleSansRounded, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 }
             }
         )
@@ -234,7 +234,7 @@ fun NeteaseWebLoginScreen(
             CenterAlignedTopAppBar(
                 title = {
                     Text(
-                        text = stringResource(R.string.auth_login_netease_title),
+                        text = stringResource(R.string.auth_netease_login_title),
                         style = titleStyle,
                         color = MaterialTheme.colorScheme.onSurface,
                         maxLines = 1
@@ -251,7 +251,7 @@ fun NeteaseWebLoginScreen(
                     ) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                            contentDescription = stringResource(R.string.auth_cd_back)
+                            contentDescription = stringResource(R.string.common_back)
                         )
                     }
                 },
@@ -279,7 +279,7 @@ fun NeteaseWebLoginScreen(
                     ) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                            contentDescription = stringResource(R.string.auth_web_cd_web_back)
+                            contentDescription = stringResource(R.string.auth_web_back_cd)
                         )
                     }
 
@@ -296,7 +296,7 @@ fun NeteaseWebLoginScreen(
                     ) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Rounded.ArrowForward,
-                            contentDescription = stringResource(R.string.auth_web_cd_web_forward)
+                            contentDescription = stringResource(R.string.auth_web_forward_cd)
                         )
                     }
 
@@ -313,7 +313,7 @@ fun NeteaseWebLoginScreen(
                     ) {
                         Icon(
                             imageVector = Icons.Rounded.Refresh,
-                            contentDescription = stringResource(R.string.auth_web_cd_refresh)
+                            contentDescription = stringResource(R.string.auth_web_refresh_cd)
                         )
                     }
 
@@ -331,7 +331,7 @@ fun NeteaseWebLoginScreen(
                     ) {
                         Icon(
                             imageVector = Icons.Rounded.Home,
-                            contentDescription = stringResource(R.string.auth_web_cd_open_home)
+                            contentDescription = stringResource(R.string.auth_web_home_cd)
                         )
                     }
                 },
@@ -357,8 +357,8 @@ fun NeteaseWebLoginScreen(
                         Spacer(Modifier.width(8.dp))
                         Text(
                             text = when (loginState) {
-                                is NeteaseLoginState.Loading -> stringResource(R.string.auth_saving)
-                                else -> stringResource(R.string.auth_done)
+                                is NeteaseLoginState.Loading -> stringResource(R.string.auth_saving_msg)
+                                else -> stringResource(R.string.auth_done_action)
                             },
                             fontFamily = GoogleSansRounded,
                             fontWeight = FontWeight.SemiBold
@@ -389,7 +389,7 @@ fun NeteaseWebLoginScreen(
                 )
             ) {
                 Text(
-                    text = stringResource(R.string.auth_web_login_security_note_netease),
+                    text = stringResource(R.string.auth_netease_security_msg),
                     modifier = Modifier.padding(12.dp),
                     style = MaterialTheme.typography.bodySmall,
                     fontFamily = GoogleSansRounded,
@@ -397,7 +397,7 @@ fun NeteaseWebLoginScreen(
                 )
             }
 
-            val pageSlowMessage = stringResource(R.string.auth_page_slow)
+            val pageSlowMessage = stringResource(R.string.auth_page_slow_msg)
             val effectiveError = when {
                 pageLoadTimeout -> pageSlowMessage
                 webUiState.lastError != null -> webUiState.lastError
@@ -434,7 +434,7 @@ fun NeteaseWebLoginScreen(
                                 webView?.reload()
                             }
                         ) {
-                            Text(text = stringResource(R.string.auth_web_retry), fontFamily = GoogleSansRounded, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                            Text(text = stringResource(R.string.auth_web_retry_action), fontFamily = GoogleSansRounded, maxLines = 1, overflow = TextOverflow.Ellipsis)
                         }
                     }
                 }
@@ -524,7 +524,7 @@ private fun NeteaseWebView(
         modifier = modifier,
         factory = { ctx ->
             WebView(ctx).apply {
-                val loadFailedMessage = ctx.getString(R.string.auth_webview_load_failed)
+                val loadFailedMessage = ctx.getString(R.string.auth_webview_failed_error)
                 val cookieManager = CookieManager.getInstance()
                 cookieManager.setAcceptCookie(true)
                 cookieManager.setAcceptThirdPartyCookies(this, true)
@@ -598,7 +598,7 @@ private fun NeteaseWebView(
                         if (request?.isForMainFrame == true && (errorResponse?.statusCode ?: 200) >= 400) {
                             onMainFrameError(
                                 ctx.getString(
-                                    R.string.auth_http_error_loading_netease,
+                                    R.string.auth_netease_http_error,
                                     errorResponse?.statusCode ?: 0
                                 )
                             )
@@ -621,7 +621,7 @@ private fun readAndProcessCookies(context: Context): Result<String> {
         val merged = listOf(main, api).filter { it.isNotBlank() }.joinToString("; ")
 
         if (merged.isBlank()) {
-            return Result.failure(IllegalStateException(context.getString(R.string.auth_error_no_cookies)))
+            return Result.failure(IllegalStateException(context.getString(R.string.auth_no_cookies_error)))
         }
 
         val map = cookieStringToMap(merged)
@@ -631,7 +631,7 @@ private fun readAndProcessCookies(context: Context): Result<String> {
         if (!map.containsKey("MUSIC_U")) {
             return Result.failure(
                 IllegalStateException(
-                    context.getString(R.string.auth_error_netease_login_incomplete)
+                    context.getString(R.string.auth_netease_incomplete_error)
                 )
             )
         }
@@ -641,7 +641,7 @@ private fun readAndProcessCookies(context: Context): Result<String> {
     } catch (error: Throwable) {
         Result.failure(
             IllegalStateException(
-                context.getString(R.string.auth_error_read_netease_cookies_failed, error.message.orEmpty()),
+                context.getString(R.string.auth_netease_cookie_error, error.message.orEmpty()),
                 error
             )
         )

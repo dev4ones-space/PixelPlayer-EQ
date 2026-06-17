@@ -91,6 +91,11 @@ class PlaylistViewModel @Inject constructor(
         const val FOLDER_PLAYLIST_PREFIX = "folder_playlist:"
         private const val MANUAL_ORDER_MODE = "manual"
         private const val SMART_PLAYLIST_MAX_ITEMS = 100
+
+        fun sanitizeFileName(name: String): String {
+            val sanitized = name.replace(Regex("[\\\\/:*?\"<>|\\s]+"), "_").trim('_')
+            return if (sanitized.isEmpty()) "Playlist" else sanitized
+        }
     }
 
     // Helper function to resolve stored playlist sort keys
@@ -954,9 +959,9 @@ class PlaylistViewModel @Inject constructor(
                     _playlistCreationEvent.emit(true)
                 }.onFailure { e ->
                     val errorMessage = if (e.message?.contains("API Key") == true) {
-                        context.getString(R.string.ai_playlist_gemini_key_required)
+                        context.getString(R.string.playlist_view_model_ai_gemini_key_required)
                     } else {
-                        e.message ?: context.getString(R.string.error_unknown)
+                        e.message ?: context.getString(R.string.common_error_unknown)
                     }
                     _uiState.update { it.copy(isAiGenerating = false, aiGenerationError = errorMessage) }
                 }
@@ -1044,7 +1049,7 @@ class PlaylistViewModel @Inject constructor(
 
                 if (playlistsWithSongs.isEmpty()) {
                     Log.w("PlaylistViewModel", "No playlists found to share")
-                    Toast.makeText(context, context.getString(R.string.playlist_none_to_share), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, context.getString(R.string.playlist_view_model_none_to_share), Toast.LENGTH_SHORT).show()
                     return@launch
                 }
 
@@ -1056,21 +1061,33 @@ class PlaylistViewModel @Inject constructor(
                     // Single playlist: share M3U file directly
                     val (playlist, songs) = playlistsWithSongs.first()
                     val m3uContent = m3uManager.generateM3u(playlist, songs)
-                    shareFileName = "${playlist.name}.m3u"
+                    val sanitizedName = sanitizeFileName(playlist.name)
+                    shareFileName = "$sanitizedName.m3u"
                     shareFile = File(context.cacheDir, shareFileName)
                     shareFile.writeText(m3uContent)
                     shareMimeType = "audio/mpegurl"
                     Log.d("PlaylistViewModel", "Created M3U file: ${shareFile.absolutePath}, size: ${shareFile.length()} bytes")
                 } else {
                     // Multiple playlists: create ZIP file
-                    val zipFileName = "Playlists_${playlistsWithSongs.first().first.name}_and_${playlistsWithSongs.size - 1}_more.zip"
+                    val firstPlaylistName = sanitizeFileName(playlistsWithSongs.first().first.name)
+                    val zipFileName = "Playlists_${firstPlaylistName}_and_${playlistsWithSongs.size - 1}_more.zip"
                     shareFile = File(context.cacheDir, zipFileName)
                     val outputStream = FileOutputStream(shareFile)
 
                     java.util.zip.ZipOutputStream(outputStream).use { zipOut ->
+                        val usedNames = mutableSetOf<String>()
                         playlistsWithSongs.forEach { (playlist, songs) ->
                             val m3uContent = m3uManager.generateM3u(playlist, songs)
-                            val entry = java.util.zip.ZipEntry("${playlist.name}.m3u")
+                            val baseName = sanitizeFileName(playlist.name)
+                            var entryName = "$baseName.m3u"
+                            var counter = 1
+                            while (usedNames.contains(entryName)) {
+                                entryName = "${baseName}_$counter.m3u"
+                                counter++
+                            }
+                            usedNames.add(entryName)
+
+                            val entry = java.util.zip.ZipEntry(entryName)
                             zipOut.putNextEntry(entry)
                             zipOut.write(m3uContent.toByteArray())
                             zipOut.closeEntry()
@@ -1096,14 +1113,14 @@ class PlaylistViewModel @Inject constructor(
                 }
 
                 Log.d("PlaylistViewModel", "Launching share intent for: $shareFileName")
-                activity.startActivity(Intent.createChooser(shareIntent, context.getString(R.string.playlist_share_chooser_title)))
+                activity.startActivity(Intent.createChooser(shareIntent, context.getString(R.string.playlist_view_model_share_chooser_title)))
                 val n = playlistsWithSongs.size
-                val sharingMsg = context.resources.getQuantityString(R.plurals.sharing_playlists_message, n, n)
+                val sharingMsg = context.resources.getQuantityString(R.plurals.playlist_view_model_sharing_message, n, n)
                 Toast.makeText(context, sharingMsg, Toast.LENGTH_SHORT).show()
 
             } catch (e: Exception) {
                 Log.e("PlaylistViewModel", "Error sharing playlists", e)
-                Toast.makeText(context, context.getString(R.string.playlist_share_failed, e.message ?: ""), Toast.LENGTH_LONG).show()
+                Toast.makeText(context, context.getString(R.string.playlist_view_model_share_failed, e.message ?: ""), Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -1178,26 +1195,32 @@ class PlaylistViewModel @Inject constructor(
                 val playlistsWithSongs = getPlaylistsWithSongs(playlistIds)
                 if (playlistsWithSongs.isEmpty()) {
                     Log.w("PlaylistViewModel", "No playlists found to export")
-                    Toast.makeText(context, context.getString(R.string.playlist_none_to_export), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, context.getString(R.string.playlist_view_model_none_to_export), Toast.LENGTH_SHORT).show()
                     return@launch
                 }
 
                 playlistsWithSongs.forEach { (playlist, songs) ->
                     val m3uContent = m3uManager.generateM3u(playlist, songs)
-                    val file = File(exportDir, "${playlist.name}.m3u")
+                    val baseName = sanitizeFileName(playlist.name)
+                    var file = File(exportDir, "$baseName.m3u")
+                    var counter = 1
+                    while (file.exists()) {
+                        file = File(exportDir, "${baseName}_$counter.m3u")
+                        counter++
+                    }
                     file.writeText(m3uContent)
                     Log.d("PlaylistViewModel", "Exported playlist '${playlist.name}' to ${file.absolutePath}")
                 }
 
                 Log.d("PlaylistViewModel", "Successfully exported ${playlistIds.size} playlists to $exportDir")
                 val count = playlistsWithSongs.size
-                val folderLabel = context.getString(R.string.playlist_export_folder_display)
-                val exportedMsg = context.resources.getQuantityString(R.plurals.exported_playlists_message, count, count, folderLabel)
+                val folderLabel = context.getString(R.string.playlist_view_model_export_folder_display)
+                val exportedMsg = context.resources.getQuantityString(R.plurals.playlist_view_model_exported_message, count, count, folderLabel)
                 Toast.makeText(context, exportedMsg, Toast.LENGTH_SHORT).show()
 
             } catch (e: Exception) {
                 Log.e("PlaylistViewModel", "Error exporting playlists", e)
-                Toast.makeText(context, context.getString(R.string.playlist_export_failed, e.message ?: ""), Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, context.getString(R.string.playlist_view_model_export_failed, e.message ?: ""), Toast.LENGTH_SHORT).show()
             }
         }
     }

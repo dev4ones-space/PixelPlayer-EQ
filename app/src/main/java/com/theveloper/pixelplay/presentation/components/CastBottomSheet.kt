@@ -293,7 +293,7 @@ fun CastBottomSheet(
         ActiveDeviceUi(
             id = remoteRoute.id,
             title = remoteRoute.name,
-            subtitle = stringResource(R.string.presentation_batch_g_cast_subtitle_session),
+            subtitle = stringResource(R.string.cast_subtitle_session),
             isRemote = true,
             icon = when (remoteRoute.deviceType) {
                 MediaRouter.RouteInfo.DEVICE_TYPE_TV -> Icons.Rounded.Tv
@@ -304,20 +304,20 @@ fun CastBottomSheet(
             isConnecting = isCastConnecting,
             volume = routeVolume.toFloat().coerceAtLeast(0f),
             volumeRange = 0f..remoteRoute.volumeMax.toFloat().coerceAtLeast(1f),
-            connectionLabel = if (isCastConnecting) stringResource(R.string.presentation_batch_g_cast_connecting) else stringResource(R.string.presentation_batch_g_cast_connected)
+            connectionLabel = if (isCastConnecting) stringResource(R.string.cast_connecting) else stringResource(R.string.cast_connected)
         )
     } else {
         val isBluetoothAudio = isBluetoothEnabled && !activeBluetoothName.isNullOrEmpty()
         ActiveDeviceUi(
             id = "phone",
-            title = if (isBluetoothAudio) activeBluetoothName else stringResource(R.string.presentation_batch_g_cast_this_phone),
-            subtitle = if (isBluetoothAudio) stringResource(R.string.presentation_batch_g_cast_bluetooth_audio) else stringResource(R.string.presentation_batch_g_cast_local_playback),
+            title = if (isBluetoothAudio) activeBluetoothName else stringResource(R.string.cast_this_phone),
+            subtitle = if (isBluetoothAudio) stringResource(R.string.cast_bluetooth_audio) else stringResource(R.string.cast_local_playback),
             isRemote = false,
             icon = if (isBluetoothAudio) Icons.Rounded.Bluetooth else Icons.Rounded.Headphones,
             isConnecting = false,
             volume = trackVolume,
             volumeRange = 0f..1f,
-            connectionLabel = if (isPlaying) stringResource(R.string.presentation_batch_g_cast_playing) else stringResource(R.string.presentation_batch_g_cast_paused)
+            connectionLabel = if (isPlaying) stringResource(R.string.cast_playing) else stringResource(R.string.cast_paused)
         )
     }
 
@@ -468,11 +468,11 @@ private fun CastPermissionStep(
         verticalArrangement = Arrangement.spacedBy(18.dp)
     ) {
         Text(
-            text = stringResource(R.string.presentation_batch_g_cast_perm_title),
+            text = stringResource(R.string.cast_perm_title),
             style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
         )
         Text(
-            text = stringResource(R.string.presentation_batch_g_cast_perm_body),
+            text = stringResource(R.string.cast_perm_body),
             style = MaterialTheme.typography.bodyMedium,
             color = colors.onSurfaceVariant
         )
@@ -490,13 +490,13 @@ private fun CastPermissionStep(
             ) {
                 PermissionHighlight(
                     icon = Icons.Rounded.Bluetooth,
-                    title = stringResource(R.string.presentation_batch_g_cast_perm_nearby_title),
-                    description = stringResource(R.string.presentation_batch_g_cast_perm_nearby_desc)
+                    title = stringResource(R.string.cast_perm_nearby_title),
+                    description = stringResource(R.string.cast_perm_nearby_desc)
                 )
                 PermissionHighlight(
                     icon = Icons.Rounded.Wifi,
-                    title = stringResource(R.string.presentation_batch_g_cast_perm_location_title),
-                    description = stringResource(R.string.presentation_batch_g_cast_perm_location_desc)
+                    title = stringResource(R.string.cast_perm_location_title),
+                    description = stringResource(R.string.cast_perm_location_desc)
                 )
             }
         }
@@ -506,12 +506,12 @@ private fun CastPermissionStep(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(50)
         ) {
-            Text(text = stringResource(R.string.presentation_batch_g_cast_allow_access), maxLines = 1, overflow = TextOverflow.Ellipsis)
+            Text(text = stringResource(R.string.cast_allow_access), maxLines = 1, overflow = TextOverflow.Ellipsis)
         }
 
         if (missingPermissions.isNotEmpty()) {
             Text(
-                text = stringResource(R.string.presentation_batch_g_cast_perm_footer),
+                text = stringResource(R.string.cast_perm_footer),
                 style = MaterialTheme.typography.bodySmall,
                 color = colors.onSurfaceVariant
             )
@@ -615,7 +615,7 @@ private fun CastSheetContent(
             ) {
                 Text(
                     modifier = Modifier.padding(start = 6.dp, end = 8.dp),
-                    text = stringResource(R.string.presentation_batch_g_cast_title_connect),
+                    text = stringResource(R.string.cast_title_connect),
                     style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.SemiBold)
                 )
             }
@@ -627,7 +627,7 @@ private fun CastSheetContent(
                 label = "tabScanningIndicator"
             ) {
                 BadgeChip(
-                    text = stringResource(R.string.presentation_batch_g_cast_scanning_nearby),
+                    text = stringResource(R.string.cast_scanning_nearby),
                     iconVector = Icons.Filled.Refresh,
                     contentColor = MaterialTheme.colorScheme.primary
                 )
@@ -696,7 +696,7 @@ private fun CastSheetContent(
         ) {
             TabAnimation(
                 index = 0,
-                title = stringResource(R.string.presentation_batch_g_cast_tab_controls),
+                title = stringResource(R.string.cast_tab_controls),
                 selectedIndex = pagerState.currentPage,
                 onClick = {
                     scope.launch {
@@ -708,7 +708,7 @@ private fun CastSheetContent(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         Icons.Rounded.Speaker,
-                        contentDescription = stringResource(R.string.presentation_batch_g_cast_tab_controls),
+                        contentDescription = stringResource(R.string.cast_tab_controls),
                         modifier = Modifier.padding(horizontal = 4.dp)
                     )
                     Spacer(Modifier.width(4.dp))
@@ -722,7 +722,7 @@ private fun CastSheetContent(
 
             TabAnimation(
                 index = 1,
-                title = stringResource(R.string.presentation_batch_g_cast_tab_devices),
+                title = stringResource(R.string.cast_tab_devices),
                 selectedIndex = pagerState.currentPage,
                 onClick = {
                     scope.launch {
@@ -734,7 +734,7 @@ private fun CastSheetContent(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         Icons.Filled.Devices,
-                        contentDescription = stringResource(R.string.presentation_batch_g_cast_tab_devices),
+                        contentDescription = stringResource(R.string.cast_tab_devices),
                         modifier = Modifier.padding(horizontal = 4.dp)
                     )
                     Spacer(Modifier.width(4.dp))
@@ -783,12 +783,12 @@ private fun CastControlsTabContent(
             ) {
                 Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                     Text(
-                        text = stringResource(R.string.presentation_batch_g_cast_connectivity),
+                        text = stringResource(R.string.cast_connectivity),
                         style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                     )
                     Text(
                         text = if (allConnectivityOff) {
-                            stringResource(R.string.presentation_batch_g_cast_turn_on_wifi_bt)
+                            stringResource(R.string.cast_turn_on_wifi_bt)
                         } else {
                             "Manage active radios and rescan"
                         },
@@ -797,7 +797,7 @@ private fun CastControlsTabContent(
                     )
                 }
                 IconButton(onClick = onRefresh) {
-                    Icon(Icons.Filled.Refresh, contentDescription = stringResource(R.string.presentation_batch_g_cast_cd_refresh_connections))
+                    Icon(Icons.Filled.Refresh, contentDescription = stringResource(R.string.cast_cd_refresh_connections))
                 }
             }
             QuickSettingsRow(
@@ -1170,7 +1170,7 @@ private fun CollapsibleCastTopBar(
 //                )
 //        ) {
 //            Text(
-//                text = stringResource(R.string.presentation_batch_g_cast_title_connect),
+//                text = stringResource(R.string.cast_title_connect),
 //                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold),
 //                modifier = Modifier
 //                    .align(Alignment.Center)
@@ -1199,7 +1199,7 @@ private fun CollapsibleCastTopBar(
             ) {
                 Text(
                     modifier = Modifier.padding(start = 4.dp),
-                    text = stringResource(R.string.presentation_batch_g_cast_title_connect),
+                    text = stringResource(R.string.cast_title_connect),
                     style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.SemiBold)
                 )
             }
@@ -1211,7 +1211,7 @@ private fun CollapsibleCastTopBar(
                 label = "scanningIndicator"
             ) {
                 BadgeChip(
-                    text = stringResource(R.string.presentation_batch_g_cast_scanning_nearby),
+                    text = stringResource(R.string.cast_scanning_nearby),
                     iconVector = Icons.Filled.Refresh,
                     contentColor = MaterialTheme.colorScheme.primary
                 )
@@ -1246,7 +1246,7 @@ private fun DeviceSectionHeader(
             verticalArrangement = Arrangement.spacedBy(6.dp)
         ) {
             Text(
-                text = stringResource(R.string.presentation_batch_g_cast_nearby_devices),
+                text = stringResource(R.string.cast_nearby_devices),
                 style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
             )
             Text(
@@ -1264,7 +1264,7 @@ private fun DeviceSectionHeader(
             ),
             modifier = Modifier.clip(RoundedCornerShape(16.dp))
         ) {
-            Icon(Icons.Filled.Refresh, contentDescription = stringResource(R.string.presentation_batch_g_cast_cd_refresh_devices))
+            Icon(Icons.Filled.Refresh, contentDescription = stringResource(R.string.cast_cd_refresh_devices))
         }
     }
 }
@@ -1371,7 +1371,7 @@ private fun ActiveDeviceHero(
                     }
 
                     Text(
-                        text = if (device.isConnecting && device.isRemote) stringResource(R.string.presentation_batch_g_cast_connecting_ellipsis) else statusText,
+                        text = if (device.isConnecting && device.isRemote) stringResource(R.string.cast_connecting_ellipsis) else statusText,
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onTertiaryContainer,
                         maxLines = 1
@@ -1392,12 +1392,12 @@ private fun ActiveDeviceHero(
                             Icon(
                                 modifier = Modifier.size(22.dp),
                                 painter = painterResource(R.drawable.rounded_mimo_disconnect_24),
-                                contentDescription = stringResource(R.string.presentation_batch_g_cast_cd_disconnect_icon),
+                                contentDescription = stringResource(R.string.cast_disconnect),
                             )
                             Spacer(
                                 modifier = Modifier.width(6.dp)
                             )
-                            Text(stringResource(R.string.presentation_batch_g_cast_disconnect))
+                            Text(stringResource(R.string.cast_disconnect))
                         }
                     }
                 }
@@ -1411,7 +1411,7 @@ private fun ActiveDeviceHero(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = if (device.isRemote) stringResource(R.string.presentation_batch_g_cast_volume_device) else stringResource(R.string.presentation_batch_g_cast_volume_phone),
+                        text = if (device.isRemote) stringResource(R.string.cast_volume_device) else stringResource(R.string.cast_volume_phone),
                         style = MaterialTheme.typography.titleSmall,
                         color = MaterialTheme.colorScheme.onTertiaryContainer
                     )
@@ -1501,13 +1501,13 @@ private fun EmptyDeviceState() {
                 modifier = Modifier.size(36.dp)
             )
             Text(
-                text = stringResource(R.string.presentation_batch_g_cast_searching),
+                text = stringResource(R.string.cast_searching),
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Text(
-                text = stringResource(R.string.presentation_batch_g_cast_searching_hint),
+                text = stringResource(R.string.cast_searching_hint),
                 style = MaterialTheme.typography.bodySmall,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -1630,11 +1630,11 @@ private fun CastDeviceRow(
 
                 val statusText = when {
                     device.isBluetooth &&
-                        device.connectionState == MediaRouter.RouteInfo.CONNECTION_STATE_CONNECTED -> stringResource(R.string.presentation_batch_g_cast_status_connected)
-                    device.isBluetooth -> stringResource(R.string.presentation_batch_g_cast_status_available_connect)
-                    device.isSelected && device.connectionState == MediaRouter.RouteInfo.CONNECTION_STATE_CONNECTED -> stringResource(R.string.presentation_batch_g_cast_status_connected)
-                    device.isSelected && device.connectionState == MediaRouter.RouteInfo.CONNECTION_STATE_CONNECTING -> stringResource(R.string.presentation_batch_g_cast_status_connecting)
-                    else -> stringResource(R.string.presentation_batch_g_cast_status_available)
+                        device.connectionState == MediaRouter.RouteInfo.CONNECTION_STATE_CONNECTED -> stringResource(R.string.cast_status_connected)
+                    device.isBluetooth -> stringResource(R.string.cast_status_available_connect)
+                    device.isSelected && device.connectionState == MediaRouter.RouteInfo.CONNECTION_STATE_CONNECTED -> stringResource(R.string.cast_status_connected)
+                    device.isSelected && device.connectionState == MediaRouter.RouteInfo.CONNECTION_STATE_CONNECTING -> stringResource(R.string.cast_status_connecting)
+                    else -> stringResource(R.string.cast_status_available)
                 }
 
                 val statusIcon = if (device.isBluetooth) R.drawable.rounded_bluetooth_24 else R.drawable.rounded_wifi_24
@@ -1656,7 +1656,7 @@ private fun CastDeviceRow(
                 }
                 device.volumeHandling == MediaRouter.RouteInfo.PLAYBACK_VOLUME_VARIABLE && device.isSelected -> {
                     Text(
-                        text = stringResource(R.string.presentation_batch_h_cast_volume_levels, device.volume, device.volumeMax),
+                        text = stringResource(R.string.cast_volume_levels, device.volume, device.volumeMax),
                         style = MaterialTheme.typography.labelSmall,
                         color = onContainer,
                         modifier = Modifier.padding(end = 4.dp)
@@ -1684,21 +1684,21 @@ private fun BluetoothMetricIndicator(
         if (batteryPercent != null) {
             Icon(
                 imageVector = Icons.Rounded.BatteryFull,
-                contentDescription = stringResource(R.string.presentation_batch_g_cast_cd_battery),
+                contentDescription = stringResource(R.string.cast_cd_battery),
                 tint = contentColor,
                 modifier = Modifier.size(14.dp)
             )
         } else {
             Icon(
                 painter = painterResource(R.drawable.rounded_volume_up_24),
-                contentDescription = stringResource(R.string.presentation_batch_g_cast_cd_volume_level),
+                contentDescription = stringResource(R.string.cast_cd_volume_level),
                 tint = contentColor,
                 modifier = Modifier.size(14.dp)
             )
         }
 
         Text(
-            text = stringResource(R.string.presentation_batch_g_sync_percent, value),
+            text = stringResource(R.string.common_percentage_text, value),
             style = MaterialTheme.typography.labelSmall,
             color = contentColor
         )
@@ -1756,11 +1756,11 @@ private fun QuickSettingsRow(
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         QuickSettingTile(
-            label = if (wifiConnected && !wifiSsid.isNullOrEmpty()) wifiSsid else stringResource(R.string.presentation_batch_g_cast_wifi),
+            label = if (wifiConnected && !wifiSsid.isNullOrEmpty()) wifiSsid else stringResource(R.string.cast_wifi),
             subtitle = when {
-                !wifiOn -> stringResource(R.string.presentation_batch_g_cast_wifi_off)
-                wifiConnected -> stringResource(R.string.presentation_batch_g_cast_wifi_connected)
-                else -> stringResource(R.string.presentation_batch_g_cast_wifi_on)
+                !wifiOn -> stringResource(R.string.cast_wifi_off)
+                wifiConnected -> stringResource(R.string.cast_wifi_connected)
+                else -> stringResource(R.string.cast_wifi_on)
             },
             icon = if (wifiOn) Icons.Rounded.Wifi else Icons.Rounded.WifiOff,
             isActive = wifiOn,
@@ -1768,10 +1768,10 @@ private fun QuickSettingsRow(
             modifier = Modifier.weight(1f)
         )
         QuickSettingTile(
-            label = if (bluetoothEnabled && !bluetoothName.isNullOrEmpty()) bluetoothName else stringResource(R.string.presentation_batch_g_cast_bluetooth),
+            label = if (bluetoothEnabled && !bluetoothName.isNullOrEmpty()) bluetoothName else stringResource(R.string.cast_bluetooth),
             subtitle = if (bluetoothEnabled) {
-                if (!bluetoothName.isNullOrEmpty()) stringResource(R.string.presentation_batch_g_cast_bt_connected) else stringResource(R.string.presentation_batch_g_cast_bt_on)
-            } else stringResource(R.string.presentation_batch_g_cast_bt_off),
+                if (!bluetoothName.isNullOrEmpty()) stringResource(R.string.cast_bt_connected) else stringResource(R.string.cast_bt_on)
+            } else stringResource(R.string.cast_bt_off),
             icon = if (bluetoothEnabled) Icons.Rounded.Bluetooth else Icons.Rounded.BluetoothDisabled,
             isActive = bluetoothEnabled,
             onClick = onBluetoothClick,

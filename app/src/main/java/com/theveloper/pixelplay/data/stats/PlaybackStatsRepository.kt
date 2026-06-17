@@ -419,7 +419,7 @@ class PlaybackStatsRepository @Inject constructor(
         val peakDay = durationsByDayOfWeek.maxByOrNull { entry ->
             entry.value.sumOf { it.durationMs }
         }
-        val peakDayLabel = peakDay?.key?.getDisplayName(TextStyle.FULL, Locale.US)
+        val peakDayLabel = peakDay?.key?.getDisplayName(TextStyle.FULL, Locale.getDefault())
         val peakDayDuration = peakDay?.value?.sumOf { it.durationMs } ?: 0L
         val dayListeningDistribution = if (range == StatsTimeRange.DAY || range == StatsTimeRange.WEEK) {
             computeDayListeningDistribution(
@@ -943,7 +943,7 @@ class PlaybackStatsRepository @Inject constructor(
             val start = day.atStartOfDay(zoneId).toInstant()
             val end = day.plusDays(1).atStartOfDay(zoneId).toInstant()
             TimelineBucket(
-                label = day.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.US),
+                label = day.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault()),
                 startMillis = start.toEpochMilli(),
                 endMillis = end.toEpochMilli(),
                 inclusiveEnd = false
@@ -970,7 +970,7 @@ class PlaybackStatsRepository @Inject constructor(
                 val end = yearMonth.atDay(endDay).plusDays(1).atStartOfDay(zoneId).toInstant()
                 add(
                     TimelineBucket(
-                        label = "Week ${index + 1}",
+                        label = context.getString(com.theveloper.pixelplay.R.string.stats_week_label, index + 1),
                         startMillis = start.toEpochMilli(),
                         endMillis = end.toEpochMilli(),
                         inclusiveEnd = false
@@ -986,7 +986,7 @@ class PlaybackStatsRepository @Inject constructor(
             val start = year.atMonth(monthIndex).atDay(1).atStartOfDay(zoneId).toInstant()
             val end = year.atMonth(monthIndex).atEndOfMonth().plusDays(1).atStartOfDay(zoneId).toInstant()
             TimelineBucket(
-                label = year.atMonth(monthIndex).month.getDisplayName(TextStyle.SHORT, Locale.US),
+                label = year.atMonth(monthIndex).month.getDisplayName(TextStyle.SHORT, Locale.getDefault()),
                 startMillis = start.toEpochMilli(),
                 endMillis = end.toEpochMilli(),
                 inclusiveEnd = false

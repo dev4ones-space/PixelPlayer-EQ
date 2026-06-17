@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Navigation -->
+    <string name="nav_error_genre_id_missing">Hata: Tür kimliği (Genre ID) eksik</string>
+
+    <!-- SetupScreen -->
+    <string name="setup_lets_go">Hadi Başlayalım!</string>
+    <string name="setup_step_format">Adım %1$d / %2$d</string>
+    <string name="setup_toast_grant_permission_first">Lütfen önce gerekli izni verin.</string>
+    <string name="setup_toast_grant_all_permissions">Lütfen gerekli tüm izinleri verin.</string>
+    <string name="setup_welcome_prefix">Hoş geldiniz: </string>
+    <string name="setup_beta_symbol">β</string>
+    <string name="setup_beta_label">Beta</string>
+    <string name="setup_intro_body">Sizin için her şeyi ayarlayalım.</string>
+    <string name="setup_permission_media_title">Medya İzni</string>
+    <string name="setup_permission_media_description">PixelPlayer\'ın müzik kitaplığınızı oluşturabilmesi için ses dosyalarınıza erişmesi gerekir.</string>
+    <string name="setup_permission_granted">İzin Verildi</string>
+    <string name="setup_grant_media_permission">Medya İzni Ver</string>
+    <string name="setup_permission_notifications_title">Bildirimler</string>
+    <string name="setup_permission_notifications_description">Müziğinizi kilit ekranından ve bildirim panelinden kontrol edebilmek için bildirimleri etkinleştirin.</string>
+    <string name="setup_enable_notifications">Bildirimleri Etkinleştir</string>
+    <string name="setup_backup_have_title">Yedeğiniz var mı?</string>
+    <string name="setup_backup_have_description">Zaten bir PixelPlayer yedeğiniz varsa, şimdi geri yükleyin ve bu cihazdaki kalan kurulum adımlarının çoğunu atlayın.</string>
+    <string name="setup_import_backup">Yedeği içe aktar</string>
+    <string name="setup_inspecting_backup">Yedek inceleniyor</string>
+    <string name="setup_checking_backup">Yedekleme paketi kontrol ediliyor…</string>
+    <string name="setup_restoring_backup">Yedek geri yükleniyor</string>
+    <string name="setup_skip_for_now">Şimdilik atla</string>
+    <string name="setup_restore_backup_title">Yedeği Geri Yükle</string>
+    <string name="setup_restore_backup_subtitle">Kurulumu bitirmeden önce neleri içe aktarmak istediğinizi gözden geçirin.</string>
+    <string name="setup_modules_selected_format">%1$d/%2$d modül seçildi</string>
+    <string name="setup_backup_created_format">Oluşturulma tarihi: %1$s</string>
+    <string name="setup_backup_from_version">Yedekleme sürümü: %1$s</string>
+    <string name="setup_backup_unknown_version">Bilinmeyen sürüm</string>
+    <string name="setup_restore_selected">Seçilenleri geri yükle</string>
+    <string name="setup_restoring">Geri yükleniyor</string>
+    <string name="setup_excluded_folders_title">Hariç tutulan klasörler</string>
+    <string name="setup_excluded_folders_description">Varsayılan olarak tüm klasörler taranır. Kitaplığınızı oluştururken yok sayılmasını istediğiniz konumları seçin.</string>
+    <string name="setup_choose_folders_ignore">Yok sayılacak klasörleri seçin</string>
+    <string name="setup_toast_grant_storage_first">Önce depolama izinlerini verin</string>
+    <string name="setup_theme_title">Uygulama Teması</string>
+    <string name="setup_theme_subtitle">Kitaplığınızı keşfetmeye başlamadan önce istediğiniz görünümü seçin.</string>
+    <string name="setup_theme_dark_title">Koyu</string>
+    <string name="setup_theme_dark_description">PixelPlayer için varsayılan Material 3 koyu görünümü.</string>
+    <string name="setup_theme_light_title">Açık</string>
+    <string name="setup_theme_light_description">Uygulama genelinde daha parlak bir Material 3 görünümü.</string>
+    <string name="setup_theme_follow_title">Sistemi takip et</string>
+    <string name="setup_theme_follow_description">Telefonunuzun mevcut görünüm ayarıyla eşleştirin.</string>
+    <string name="setup_recommended">Önerilen</string>
+    <string name="setup_theme_footer">Bunu daha sonra Ayarlar &gt; Görünüm &gt; Uygulama Teması bölümünden değiştirebilirsiniz.</string>
+    <string name="setup_library_layout_title">Kitaplık Düzeni</string>
+    <string name="setup_library_layout_subtitle">Kitaplığınızda gezinmek için tercih ettiğiniz yolu seçin.</string>
+    <string name="setup_preview_songs_label">Şarkılar</string>
+    <string name="setup_compact_mode">Kompakt Mod</string>
+    <string name="setup_compact_mode_pill_hint">Minimal hap (pill) navigasyonu kullanılıyor</string>
+    <string name="setup_compact_mode_tab_hint">Standart sekme satırı kullanılıyor</string>
+    <string name="setup_tab_songs">ŞARKILAR</string>
+    <string name="setup_tab_albums">ALBÜMLER</string>
+    <string name="setup_tab_artists">ARTISTS</string>
+    <string name="setup_library_layout_footer">Bunu daha sonra Ayarlar &gt; Görünüm &gt; Kitaplık Navigasyonu bölümünden değiştirebilirsiniz.</string>
+    <string name="setup_app_navigation_title">Uygulama Navigasyonu</string>
+    <string name="setup_app_navigation_subtitle">Alt navigasyon çubuğunun stilini seçin.</string>
+    <string name="setup_navbar_default_style">Varsayılan Stil</string>
+    <string name="setup_nav_floating_pill_description">Yuvarlatılmış köşeli duran hap (floating pill)</string>
+    <string name="setup_nav_full_width_description">Standart tam genişlikte çubuk</string>
+    <string name="setup_customize_corner_radius">Köşe Yuvarlama Çapını Özelleştir</string>
+    <string name="setup_navbar_footer">Bunu daha sonra Ayarlar &gt; Görünüm &gt; Navigasyon Çubuğu Stili bölümünden değiştirebilirsiniz.</string>
+    <string name="setup_permission_alarms_title">Alarmlar ve Hatırlatıcılar</string>
+    <string name="setup_permission_alarms_description">İsteğe bağlıdır, ancak Uyku Zamanlayıcısı kullanıyorsanız ve PixelPlayer\'ın oynatmayı tam zamanında durdurmasını istiyorsanız önerilir.</string>
+    <string name="setup_grant_permission_generic">İzin Ver</string>
+    <string name="setup_battery_optimization_title">Pil Optimizasyonu</string>
+    <string name="setup_battery_optimization_description">Bazı Android cihazlar arka plan uygulamalarını agresif bir şekilde kapatır. Beklenmedik oynatma kesintilerini önlemek için PixelPlayer için pil optimizasyonunu devre dışı bırakın.</string>
+    <string name="setup_disable_battery_optimization">Optimizasyonu Devre Dışı Bırak</string>
+    <string name="setup_all_set_title">Her Şey Hazır!</string>
+    <string name="setup_all_set_body">Müziğinizin keyfini çıkarmaya hazırsınız.</string>
+
+    <!-- SearchScreen -->
+    <string name="search_placeholder">Ara…</string>
+    <string name="search_cd_search_icon">Ara</string>
+    <string name="search_cd_clear_search_query">Aramayı temizle</string>
+    <string name="search_recent_searches">Son aramalar</string>
+    <string name="search_action_clear_all">Tümünü temizle</string>
+    <string name="search_cd_search_history_icon">Geçmiş</string>
+    <string name="search_cd_delete_search_history_item">Arama geçmişi öğesini sil</string>
+    <string name="search_cd_no_results">Sonuç yok</string>
+    <string name="search_no_results_for_query">\"%1$s\" için sonuç bulunamadı</string>
+    <string name="search_nothing_found">Hiçbir şey bulunamadı</string>
+    <string name="search_try_different_or_filters">Farklı bir arama terimi deneyin veya filtrelerinizi kontrol edin.</string>
+    <string name="search_no_results_found">Sonuç bulunamadı.</string>
+    <string name="browse_by_genre">Türe göre göz at</string>
+    <string name="no_genres_available">Mevcut tür yok.</string>
+
+    <!-- ArtistDetailScreen -->
+    <string name="artist_cd_play_title">%1$s Oynat</string>
+    <string name="artist_cd_collapse_title">%1$s Daralt</string>
+    <string name="artist_cd_expand_title">%1$s Genişlet</string>
+    <string name="artist_cd_edit_image">Sanatçı resmini düzenle</string>
+    <string name="artist_action_change_photo">Fotoğrafı değiştir</string>
+    <string name="artist_action_reset_to_default">Varsayılana sıfırla</string>
+    <string name="artist_cd_shuffle_play">Sanatçıyı karışık çal</string>
+
+    <!-- AlbumDetailScreen -->
+    <string name="album_disc_number_header">Disk %d</string>
+    <string name="album_cover_for">%1$s kapağı</string>
+    <string name="album_detail_meta_line">%1$s · %2$s</string>
+
+    <!-- PlaylistDetailScreen -->
+    <string name="playlist_not_found">Çalma listesi bulunamadı.</string>
+    <string name="playlist_empty_title">Bu çalma listesi boş.</string>
+    <string name="playlist_empty_add_hint">Başlamak için \'Şarkı Ekle\' seçeneğine dokunun.</string>
+    <string name="playlist_empty_folder_label">Bu klasör şarkı içermiyor.</string>
+    <string name="playlist_sort_songs_title">Şarkıları Sırala</string>
+    <string name="playlist_more_options_title">Daha Fazla Seçenek</string>
+    <string name="playlist_options_title">Çalma listesi seçenekleri</string>
+    <string name="playlist_action_edit_playlist">Çalma listesini düzenle</string>
+    <string name="playlist_action_delete_playlist">Çalma listesini sil</string>
+    <string name="playlist_dialog_delete_title">Çalma listesi silinsin mi?</string>
+    <string name="playlist_dialog_delete_body">Bu çalma listesini silmek istediğinizden emin misiniz?</string>
+    <string name="playlist_action_set_default_transition">Varsayılan geçişi ayarla</string>
+    <string name="playlist_action_export_playlist">Çalma Listesini Dışa Aktar</string>
+    <string name="playlist_song_duration_line">%1$s • %2$s</string>
+    <string name="playlist_action_play_it">Çal</string>
+    <string name="playlist_action_add_songs">Ekle</string>
+    <string name="playlist_cd_add_songs">Şarkı ekle</string>
+    <string name="playlist_action_remove_songs">Kaldır</string>
+    <string name="playlist_cd_remove_songs">Şarkıları kaldır</string>
+    <string name="playlist_action_reorder_songs">Yeniden sırala</string>
+    <string name="playlist_cd_reorder_songs">Şarkıları yeniden sırala</string>
+
+    <!-- EditTransitionScreen -->
+    <string name="transition_title_global">Genel geçişler</string>
+    <string name="transition_title_playlist_rules">Çalma listesi kuralları</string>
+    <string name="transition_intro_global">Bu yapılandırma, geçersiz kılınmadığı sürece tüm oynatma kaynakları için geçerlidir.</string>
+    <string name="transition_intro_playlist">Bu özel çalma listesi için varsayılan davranışı yapılandırın.</string>
+    <string name="transition_active_status">Aktif Durum</string>
+    <string name="transition_status_global_default">Genel Varsayılan</string>
+    <string name="transition_status_playlist_default">Çalma Listesi Varsayılanı</string>
+    <string name="transition_status_following_global">Genele Uyuluyor</string>
+    <string name="transition_status_custom_override">Özel Geçersiz Kılma</string>
+    <string name="transition_custom_override_title">Özel Geçersiz Kılma</string>
+    <string name="transition_custom_override_body">Bu çalma listesi için özel kurallar belirlemek üzere etkinleştirin.</string>
+    <string name="transition_snackbar_using_global">Genel varsayılanlar kullanılıyor</string>
+    <string name="transition_snackbar_saved">Değişiklikler başarıyla kaydedildi</string>
+    <string name="transition_style_title">Geçiş Stili</string>
+    <string name="transition_style_subtitle">Parçaların birbirine nasıl karışacağı</string>
+    <string name="transition_mode_none">Hiçbiri</string>
+    <string name="transition_mode_crossfade">Çapraz Geçiş</string>
+    <string name="transition_duration_title">Geçiş Süresi</string>
+    <string name="transition_duration_subtitle_format">Toplam %1$d sn örtüşme</string>
+    <string name="transition_reset_cd">Sıfırla</string>
+    <string name="transition_visualizer_current">Mevcut Şarkı</string>
+    <string name="transition_visualizer_next">Sıradaki Şarkı</string>
+    <string name="transition_overlap_explanation_format">Parçalar %1$d sn boyunca örtüşecek</string>
+    <string name="transition_curves_title">Ses Eğrileri</string>
+    <string name="transition_curves_subtitle">Ses eğimini ince ayarla</string>
+    <string name="transition_fade_out">Yavaşça Kıs</string>
+    <string name="transition_fade_in">Yavaşça Aç</string>
+
+    <!-- CreatePlaylistScreen -->
+    <string name="playlist_creation_new_smart">Yeni akıllı çalma listesi</string>
+    <string name="playlist_creation_new">Yeni çalma listesi</string>
+    <string name="playlist_creation_add_songs">Şarkı Ekle</string>
+    <string name="playlist_creation_cd_back_or_cancel">Geri veya İptal</string>
+    <string name="playlist_creation_next">İleri</string>
+    <string name="playlist_creation_create">Oluştur</string>
+    <string name="playlist_creation_edit">Çalma Listesini Düzenle</string>
+    <string name="playlist_creation_auto_collage">Otomatik oluşturulan kolaj</string>
+    <string name="playlist_creation_cd_add_photo">Fotoğraf Ekle</string>
+    <string name="playlist_creation_pick_image">Görsel Seç</string>
+    <string name="playlist_creation_change">Değiştir</string>
+    <string name="playlist_creation_remove">Kaldır</string>
+    <string name="playlist_creation_name_label">Çalma Listesi Adı</string>
+    <string name="playlist_creation_name_placeholder">Harika miksim</string>
+    <string name="playlist_creation_edit_cover">Kapağı Düzenle</string>
+    <string name="playlist_creation_adjust_cover_title">Kapak resminizi ayarlayın</string>
+    <string name="playlist_creation_adjust_cover_hint">Mükemmel çerçeveyi bulmak için kıstırma ve sürükleme hareketlerini kullanın</string>
+    <string name="playlist_creation_mode_manual">Manuel</string>
+    <string name="playlist_creation_mode_smart">Akıllı</string>
+    <string name="playlist_creation_generate_with_ai">Yapay Zeka ile Oluştur</string>
+    <string name="playlist_creation_smart_rule">Akıllı Kural</string>
+    <string name="playlist_creation_tab_default">Varsayılan</string>
+    <string name="playlist_creation_tab_image">Görsel</string>
+    <string name="playlist_creation_tab_icon">Simge</string>
+    <string name="playlist_creation_bg_color">Arka Plan Rengi</string>
+    <string name="playlist_creation_icon_symbol">Simge Sembolü</string>
+    <string name="playlist_creation_shape_style">Şekil Stili</string>
+    <string name="playlist_creation_shape_params">Şekil parametreleri</string>
+    <string name="playlist_creation_corner_radius">Köşe Yarıçapı</string>
+    <string name="playlist_creation_smoothness">Yumuşaklık</string>
+    <string name="playlist_creation_sides">Kenarlar</string>
+    <string name="playlist_creation_curve">Eğri</string>
+    <string name="playlist_creation_rotation">Döndürme</string>
+    <string name="playlist_creation_scale">Ölçek</string>
+    <string name="playlist_creation_rule_top_played_title">En Çok Çalınanlar</string>
+    <string name="playlist_creation_rule_top_played_sub">En çok çaldığınız parçalar.</string>
+    <string name="playlist_creation_rule_recently_played_title">Son Oynatılanlar</string>
+    <string name="playlist_creation_rule_recently_played_sub">En son dinlediğiniz şarkılar.</string>
+    <string name="playlist_creation_rule_forgotten_title">Unutulan Favoriler</string>
+    <string name="playlist_creation_rule_forgotten_sub">Bir süredir çalmadığınız favori parçalar.</string>
+    <string name="playlist_creation_rule_new_gems_title">Yeni Cevherler</string>
+    <string name="playlist_creation_rule_new_gems_sub">Düşük çalma sayısına sahip, yakın zamanda eklenen parçalar.</string>
+
+    <!-- GenreDetailScreen -->
+    <string name="genre_quick_fill">Türü Hızlı Doldur</string>
+    <string name="genre_sort_title">Sırala &amp; Oynat</string>
+    <string name="genre_sort_action_shuffle">Karıştır</string>
+    <string name="genre_sort_by_title">Sıralama Kriteri</string>
+    <string name="genre_sort_artist_option">Sanatçı</string>
+    <string name="genre_sort_album_option">Albüm</string>
+    <string name="genre_sort_title_option">Başlık</string>
+    <string name="genre_cd_generic_artist">Genel sanatçı</string>
+    <string name="genre_shuffle_label">%1$s Karışık</string>
+
+    <!-- QuickFillScreen -->
+    <string name="quick_fill_select_songs">Şarkıları Seç</string>
+    <string name="quick_fill_choose_genre">Tür Seç</string>
+    <string name="quick_fill_search_songs_placeholder">Şarkı ara</string>
+    <string name="quick_fill_new_genre">Yeni Tür</string>
+    <string name="quick_fill_cd_add_custom_genre">Özel Ekle</string>
+    <string name="quick_fill_add_custom_genre_title">Özel Tür Ekle</string>
+    <string name="quick_fill_genre_name_placeholder">Tür Adı</string>
+    <string name="quick_fill_select_icon">Simge Seç</string>
+    <string name="quick_fill_select_genre_label_format">Tür: %1$s</string>
+    <string name="quik_fill_select_a_genre_label">Bir tür seçin</string>
+    <string name="quick_fill_action_title">Hızlı Doldur</string>
+
+    <!-- MashupScreen -->
+    <string name="mashup_title">DJ Alanı</string>
+    <string name="mashup_loading">Yükleniyor…</string>
+    <string name="mashup_deck_n">Deck %1$d</string>
+    <string name="mashup_load_song_cd">Şarkı yükle</string>
+    <string name="mashup_no_song_loaded">Şarkı yüklenmedi</string>
+    <string name="mashup_artist_placeholder">…</string>
+    <string name="mashup_stem_separation_unavailable">Kanal ayırma (stem) henüz kullanılamıyor.</string>
+    <string name="mashup_volume">Ses</string>
+    <string name="mashup_speed">Hız</string>
+    <string name="mashup_crossfader">Çapraz Geçiş (Crossfader)</string>
+    <string name="mashup_deck_1">Deck 1</string>
+    <string name="mashup_deck_2">Deck 2</string>
+    <string name="mashup_select_song_title">Bir şarkı seçin</string>
+    <string name="mashup_cd_play_pause">Oynat/Duraklat</string>
+    <string name="mashup_cd_song_cover">Şarkı kapağı</string>
+    <string name="mashup_speed_multiplier">x%1$.2f</string>
+</resources>

@@ -32,12 +32,12 @@ fun SavePresetDialog(
     AlertDialog(
         onDismissRequest = onDismiss,
         title = {
-            Text(text = stringResource(R.string.equalizer_save_custom_preset_title), fontFamily = GoogleSansRounded)
+            Text(text = stringResource(R.string.equalizer_presets_save_custom_title), fontFamily = GoogleSansRounded)
         },
         text = {
             Column {
                 Text(
-                    text = stringResource(R.string.equalizer_save_custom_preset_body),
+                    text = stringResource(R.string.equalizer_presets_save_custom_body),
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
@@ -47,14 +47,14 @@ fun SavePresetDialog(
                         name = it
                         isError = false
                     },
-                    label = { Text(stringResource(R.string.equalizer_preset_name_label)) },
+                    label = { Text(stringResource(R.string.equalizer_preset_name_placeholder)) },
                     singleLine = true,
                     isError = isError,
                     modifier = Modifier.fillMaxWidth()
                 )
                 if (isError) {
                     Text(
-                        text = stringResource(R.string.error_name_empty),
+                        text = stringResource(R.string.equalizer_error_name_empty),
                         color = MaterialTheme.colorScheme.error,
                         style = MaterialTheme.typography.labelSmall,
                         modifier = Modifier.padding(top = 4.dp)
@@ -73,12 +73,12 @@ fun SavePresetDialog(
                     }
                 }
             ) {
-                Text(stringResource(R.string.action_save))
+                Text(stringResource(R.string.common_save))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text(stringResource(R.string.cancel), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Text(stringResource(R.string.common_cancel), maxLines = 1, overflow = TextOverflow.Ellipsis)
             }
         }
     )
@@ -96,7 +96,7 @@ fun RenamePresetDialog(
     AlertDialog(
         onDismissRequest = onDismiss,
         title = {
-            Text(text = stringResource(R.string.equalizer_rename_preset_title), fontFamily = GoogleSansRounded)
+            Text(text = stringResource(R.string.equalizer_presets_rename_title), fontFamily = GoogleSansRounded)
         },
         text = {
             Column {
@@ -106,14 +106,14 @@ fun RenamePresetDialog(
                         name = it
                         isError = false
                     },
-                    label = { Text(stringResource(R.string.equalizer_preset_name_label)) },
+                    label = { Text(stringResource(R.string.equalizer_preset_name_placeholder)) },
                     singleLine = true,
                     isError = isError,
                     modifier = Modifier.fillMaxWidth()
                 )
                 if (isError) {
                     Text(
-                        text = stringResource(R.string.error_name_empty),
+                        text = stringResource(R.string.equalizer_error_name_empty),
                         color = MaterialTheme.colorScheme.error,
                         style = MaterialTheme.typography.labelSmall,
                         modifier = Modifier.padding(top = 4.dp)
@@ -132,12 +132,12 @@ fun RenamePresetDialog(
                     }
                 }
             ) {
-                Text(stringResource(R.string.action_rename))
+                Text(stringResource(R.string.equalizer_action_rename))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text(stringResource(R.string.cancel), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Text(stringResource(R.string.common_cancel), maxLines = 1, overflow = TextOverflow.Ellipsis)
             }
         }
     )

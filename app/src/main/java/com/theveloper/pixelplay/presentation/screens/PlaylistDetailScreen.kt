@@ -12,8 +12,11 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -85,8 +88,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -96,8 +102,11 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.view.HapticFeedbackConstantsCompat
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.media3.common.util.UnstableApi
@@ -110,9 +119,11 @@ import com.theveloper.pixelplay.presentation.components.PlaylistBottomSheet
 import com.theveloper.pixelplay.presentation.components.QueuePlaylistSongItem
 import com.theveloper.pixelplay.presentation.components.SongPickerBottomSheet
 import com.theveloper.pixelplay.presentation.components.ExpressiveScrollBar
+import com.theveloper.pixelplay.ui.theme.LocalShowScrollbar
 import com.theveloper.pixelplay.presentation.components.SmartImage
 import com.theveloper.pixelplay.presentation.components.SongInfoBottomSheet
 import com.theveloper.pixelplay.presentation.components.resolveNavBarOccupiedHeight
+import com.theveloper.pixelplay.presentation.components.subcomps.TightWrapText
 import com.theveloper.pixelplay.presentation.navigation.Screen
 import com.theveloper.pixelplay.presentation.viewmodel.PlayerViewModel
 import com.theveloper.pixelplay.presentation.viewmodel.PlaylistViewModel
@@ -148,31 +159,31 @@ fun PlaylistDetailScreen(
     val uiState by playlistViewModel.uiState.collectAsStateWithLifecycle()
     val playerStableState by playerViewModel.stablePlayerState.collectAsStateWithLifecycle()
     val context = LocalContext.current
-    val fallbackPlaylistName = stringResource(R.string.shortcut_playlist_short)
-    val sortSongsLabel = stringResource(R.string.presentation_batch_b_sort_songs)
-    val moreOptionsLabel = stringResource(R.string.presentation_batch_b_more_options)
-    val playItLabel = stringResource(R.string.presentation_batch_b_play_it)
-    val shuffleLabel = stringResource(R.string.shortcut_shuffle_short)
-    val addSongsCd = stringResource(R.string.presentation_batch_b_add_songs)
-    val addLabel = stringResource(R.string.presentation_batch_b_add)
-    val removeLabel = stringResource(R.string.cd_remove)
-    val removeSongsCd = stringResource(R.string.presentation_batch_b_remove_songs)
-    val reorderLabel = stringResource(R.string.presentation_batch_b_reorder)
-    val reorderSongsCd = stringResource(R.string.presentation_batch_b_reorder_songs)
-    val reorderSongCd = stringResource(R.string.presentation_batch_b_reorder_song)
-    val playlistEmptyTitle = stringResource(R.string.presentation_batch_b_playlist_empty_title)
-    val playlistEmptyFolder = stringResource(R.string.presentation_batch_b_playlist_empty_folder_body)
-    val playlistEmptyAddHint = stringResource(R.string.presentation_batch_b_playlist_empty_add_hint)
-    val playlistOptionsTitle = stringResource(R.string.presentation_batch_b_playlist_options_title)
-    val editPlaylistLabel = stringResource(R.string.presentation_batch_b_edit_playlist)
-    val deletePlaylistLabel = stringResource(R.string.presentation_batch_b_delete_playlist)
-    val setDefaultTransitionLabel = stringResource(R.string.presentation_batch_b_set_default_transition)
-    val exportPlaylistLabel = stringResource(R.string.presentation_batch_b_export_playlist)
-    val deletePlaylistConfirmTitle = stringResource(R.string.presentation_batch_b_delete_playlist_confirm_title)
-    val deletePlaylistConfirmBody = stringResource(R.string.presentation_batch_b_delete_playlist_confirm_body)
-    val sortSheetTitle = stringResource(R.string.presentation_batch_b_sort_songs)
-    val toastAddedToQueue = stringResource(R.string.toast_added_to_queue)
-    val toastPlayingNext = stringResource(R.string.toast_playing_next)
+    val fallbackPlaylistName = stringResource(R.string.common_playlist)
+    val sortSongsLabel = stringResource(R.string.playlist_sort_songs_title)
+    val moreOptionsLabel = stringResource(R.string.playlist_more_options_title)
+    val playItLabel = stringResource(R.string.playlist_action_play_it)
+    val shuffleLabel = stringResource(R.string.common_shuffle)
+    val addSongsCd = stringResource(R.string.playlist_cd_add_songs)
+    val addLabel = stringResource(R.string.playlist_action_add_songs)
+    val removeLabel = stringResource(R.string.playlist_action_remove_songs)
+    val removeSongsCd = stringResource(R.string.playlist_cd_remove_songs)
+    val reorderLabel = stringResource(R.string.playlist_action_reorder_songs)
+    val reorderSongsCd = stringResource(R.string.playlist_cd_reorder_songs)
+    val reorderSongCd = stringResource(R.string.playlist_cd_reorder_songs)
+    val playlistEmptyTitle = stringResource(R.string.playlist_empty_title)
+    val playlistEmptyFolder = stringResource(R.string.playlist_empty_folder_label)
+    val playlistEmptyAddHint = stringResource(R.string.playlist_empty_add_hint)
+    val playlistOptionsTitle = stringResource(R.string.playlist_options_title)
+    val editPlaylistLabel = stringResource(R.string.playlist_action_edit_playlist)
+    val deletePlaylistLabel = stringResource(R.string.playlist_action_delete_playlist)
+    val setDefaultTransitionLabel = stringResource(R.string.playlist_action_set_default_transition)
+    val exportPlaylistLabel = stringResource(R.string.playlist_action_export_playlist)
+    val deletePlaylistConfirmTitle = stringResource(R.string.playlist_dialog_delete_title)
+    val deletePlaylistConfirmBody = stringResource(R.string.playlist_dialog_delete_body)
+    val sortSheetTitle = stringResource(R.string.playlist_sort_songs_title)
+    val toastAddedToQueue = stringResource(R.string.library_toast_added_to_queue)
+    val toastPlayingNext = stringResource(R.string.library_toast_playing_next)
     val currentPlaylist = uiState.currentPlaylistDetails
     val isFolderPlaylist = currentPlaylist?.id?.startsWith(FOLDER_PLAYLIST_PREFIX) == true
     val songsInPlaylist = uiState.currentPlaylistSongs
@@ -271,7 +282,7 @@ fun PlaylistDetailScreen(
                     Text(
                         modifier = Modifier.padding(start = 8.dp),
                         text = stringResource(
-                            R.string.presentation_batch_f_status_bullet_step,
+                            R.string.playlist_song_duration_line,
                             formatSongCount(songsInPlaylist.size),
                             formatTotalDuration(songsInPlaylist)
                         ),
@@ -288,7 +299,7 @@ fun PlaylistDetailScreen(
                         ),
                         onClick = onBackClick
                     ) {
-                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, stringResource(R.string.auth_cd_back))
+                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, stringResource(R.string.common_back))
                     }
                 },
                 actions = {
@@ -375,15 +386,22 @@ fun PlaylistDetailScreen(
                             smoothnessAsPercentBR = 60,
                             cornerRadiusBR = 14.dp,
                             smoothnessAsPercentBL = 60
-                        )
+                        ),
+                        contentPadding = PaddingValues(horizontal = 10.dp),
                     ) {
                         Icon(
                             Icons.Rounded.PlayArrow,
-                            contentDescription = stringResource(R.string.cd_play),
+                            contentDescription = stringResource(R.string.common_play),
                             modifier = Modifier.size(20.dp)
                         )
                         Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-                        Text(playItLabel)
+                        TightWrapText(
+                                text = playItLabel,
+                                modifier = Modifier.padding(end = 4.dp),
+                                overflow = TextOverflow.Ellipsis,
+                                maxLines = 2,
+                                lineHeight = 20.sp
+                            )
                     }
                     FilledTonalButton(
                         onClick = {
@@ -409,7 +427,8 @@ fun PlaylistDetailScreen(
                             smoothnessAsPercentBR = 60,
                             cornerRadiusBR = 60.dp,
                             smoothnessAsPercentBL = 60
-                        )
+                        ),
+                        contentPadding = PaddingValues(horizontal = 10.dp),
                     ) {
                         Icon(
                             Icons.Rounded.Shuffle,
@@ -417,7 +436,13 @@ fun PlaylistDetailScreen(
                             modifier = Modifier.size(ButtonDefaults.IconSize)
                         )
                         Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-                        Text(shuffleLabel)
+                        TightWrapText(
+                                text = shuffleLabel,
+                                modifier = Modifier.padding(end = 4.dp),
+                                overflow = TextOverflow.Ellipsis,
+                                maxLines = 2,
+                                lineHeight = 20.sp
+                            )
                     }
                 }
 
@@ -464,7 +489,6 @@ fun PlaylistDetailScreen(
                                 contentColor = MaterialTheme.colorScheme.onTertiaryContainer
                             ),
                             modifier = Modifier
-                                .weight(0.75f)
                                 .height(actionButtonsHeight)
                                 .animateContentSize()
                         ) {
@@ -473,69 +497,163 @@ fun PlaylistDetailScreen(
                                 contentDescription = addSongsCd,
                                 modifier = Modifier.size(20.dp)
                             )
-                            Spacer(Modifier.width(4.dp))
+                            Spacer(Modifier.width(6.dp))
                             Text(
+                                modifier = Modifier.padding(end = 4.dp),
                                 text = addLabel,
-                                style = MaterialTheme.typography.labelLarge
+                                style = MaterialTheme.typography.labelLarge,
+                                maxLines = 1,
+                                softWrap = false
                             )
                         }
 
-                        Button(
-                            onClick = { isRemoveModeEnabled = !isRemoveModeEnabled },
-                            shape = RoundedCornerShape(removeCornerRadius),
-                            contentPadding = PaddingValues(horizontal = 8.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = removeButtonColor,
-                                contentColor = removeIconColor
-                            ),
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(actionButtonsHeight)
-                                .animateContentSize()
-                                .clip(RoundedCornerShape(removeCornerRadius))
-                        ) {
-                            Icon(
-                                modifier = Modifier.size(18.dp),
-                                imageVector = Icons.Default.RemoveCircleOutline,
-                                contentDescription = removeSongsCd,
-                                tint = removeIconColor
-                            )
-                            Spacer(Modifier.width(6.dp))
-                            Text(
-                                modifier = Modifier.padding(end = 4.dp),
-                                text = removeLabel,
-                                color = removeIconColor,
-                                style = MaterialTheme.typography.labelMedium
-                            )
-                        }
+                        val scrollState = rememberScrollState()
+                        val showStartFade by remember { derivedStateOf { scrollState.value > 0 } }
+                        val showEndFade by remember { derivedStateOf { scrollState.value < scrollState.maxValue } }
 
-                        Button(
-                            onClick = { isReorderModeEnabled = !isReorderModeEnabled },
-                            shape = RoundedCornerShape(reorderCornerRadius),
-                            contentPadding = PaddingValues(horizontal = 8.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = reorderButtonColor,
-                                contentColor = reorderIconColor
-                            ),
+                        BoxWithConstraints(
                             modifier = Modifier
                                 .weight(1f)
-                                .height(actionButtonsHeight)
-                                .animateContentSize()
-                                .clip(RoundedCornerShape(reorderCornerRadius))
+                                .graphicsLayer { compositingStrategy = CompositingStrategy.Offscreen }
+                                .drawWithContent {
+                                    drawContent()
+                                    val gradientWidth = 8.dp.toPx()
+
+                                    if (showStartFade) {
+                                        drawRect(
+                                            brush = Brush.horizontalGradient(
+                                                colors = listOf(Color.Transparent, Color.Black),
+                                                endX = gradientWidth
+                                            ),
+                                            blendMode = BlendMode.DstIn
+                                        )
+                                    }
+
+                                    if (showEndFade) {
+                                        drawRect(
+                                            brush = Brush.horizontalGradient(
+                                                colors = listOf(Color.Black, Color.Transparent),
+                                                startX = this.size.width - gradientWidth
+                                            ),
+                                            blendMode = BlendMode.DstIn
+                                        )
+                                    }
+                                }
                         ) {
-                            Icon(
-                                modifier = Modifier.size(22.dp),
-                                painter = painterResource(R.drawable.drag_order_icon),
-                                contentDescription = reorderSongsCd,
-                                tint = reorderIconColor
-                            )
-                            Spacer(Modifier.width(6.dp))
-                            Text(
-                                modifier = Modifier.padding(end = 4.dp),
-                                text = reorderLabel,
-                                color = reorderIconColor,
-                                style = MaterialTheme.typography.labelMedium
-                            )
+                            val containerWidthPx = constraints.maxWidth
+
+                            Layout(
+                                modifier = Modifier.horizontalScroll(scrollState),
+                                content = {
+                                    Button(
+                                        onClick = { isRemoveModeEnabled = !isRemoveModeEnabled },
+                                        shape = RoundedCornerShape(removeCornerRadius),
+                                        contentPadding = PaddingValues(horizontal = 8.dp),
+                                        colors = ButtonDefaults.buttonColors(
+                                            containerColor = removeButtonColor,
+                                            contentColor = removeIconColor
+                                        ),
+                                        modifier = Modifier
+                                            .height(actionButtonsHeight)
+                                            .animateContentSize()
+                                            .clip(RoundedCornerShape(removeCornerRadius))
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Default.RemoveCircleOutline,
+                                            contentDescription = removeSongsCd,
+                                            modifier = Modifier.size(16.dp),
+                                            tint = removeIconColor
+                                        )
+                                        Spacer(Modifier.width(6.dp))
+                                        Text(
+                                            modifier = Modifier.padding(end = 4.dp),
+                                            text = removeLabel,
+                                            color = removeIconColor,
+                                            style = MaterialTheme.typography.labelMedium,
+                                            maxLines = 1,
+                                            softWrap = false
+                                        )
+                                    }
+
+                                    Button(
+                                        onClick = { isReorderModeEnabled = !isReorderModeEnabled },
+                                        shape = RoundedCornerShape(reorderCornerRadius),
+                                        contentPadding = PaddingValues(horizontal = 8.dp),
+                                        colors = ButtonDefaults.buttonColors(
+                                            containerColor = reorderButtonColor,
+                                            contentColor = reorderIconColor
+                                        ),
+                                        modifier = Modifier
+                                            .height(actionButtonsHeight)
+                                            .animateContentSize()
+                                            .clip(RoundedCornerShape(reorderCornerRadius))
+                                    ) {
+                                        Icon(
+                                            painter = painterResource(R.drawable.drag_order_icon),
+                                            contentDescription = reorderSongsCd,
+                                            modifier = Modifier.size(22.dp),
+                                            tint = reorderIconColor
+                                        )
+                                        Spacer(Modifier.width(6.dp))
+                                        Text(
+                                            modifier = Modifier.padding(end = 4.dp),
+                                            text = reorderLabel,
+                                            color = reorderIconColor,
+                                            style = MaterialTheme.typography.labelMedium,
+                                            maxLines = 1,
+                                            softWrap = false
+                                        )
+                                    }
+                                }
+                            ) { measurables, childConstraints ->
+                                val spacingPx = 8.dp.roundToPx()
+                                val totalSpacing = spacingPx * (measurables.size - 1)
+
+                                // Query maxIntrinsicWidth of each child without measuring
+                                val totalNaturalWidth = measurables.sumOf { measurable ->
+                                    measurable.maxIntrinsicWidth(Constraints.Infinity)
+                                } + totalSpacing
+
+                                val finalPlaceables = if (totalNaturalWidth <= containerWidthPx && containerWidthPx > 0) {
+                                    // Stretch them equally to fill containerWidthPx
+                                    val availableSpace = containerWidthPx - totalSpacing
+                                    val equalWidth = (availableSpace / measurables.size).coerceAtLeast(0)
+                                    measurables.map { measurable ->
+                                        measurable.measure(
+                                            childConstraints.copy(
+                                                minWidth = equalWidth,
+                                                maxWidth = equalWidth
+                                            )
+                                        )
+                                    }
+                                } else {
+                                    // Measure naturally
+                                    measurables.map { measurable ->
+                                        measurable.measure(
+                                            childConstraints.copy(
+                                                minWidth = 0,
+                                                maxWidth = Constraints.Infinity
+                                            )
+                                        )
+                                    }
+                                }
+
+                                val layoutWidth = if (totalNaturalWidth <= containerWidthPx && containerWidthPx > 0) {
+                                    containerWidthPx
+                                } else {
+                                    totalNaturalWidth
+                                }
+
+                                val height = finalPlaceables.maxOfOrNull { it.height } ?: 0
+
+                                layout(layoutWidth, height) {
+                                    var xPosition = 0
+                                    finalPlaceables.forEach { placeable ->
+                                        placeable.placeRelative(x = xPosition, y = 0)
+                                        xPosition += placeable.width + spacingPx
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -580,13 +698,14 @@ fun PlaylistDetailScreen(
                             contentPadding = PaddingValues(
                                 top = 12.dp,
                                 bottom = MiniPlayerHeight + WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding() + 16.dp,
-                                end = if (listState.canScrollForward || listState.canScrollBackward) 24.dp else 0.dp
+                                end = 0.dp
                             ).let {
+                                val showScrollBar = LocalShowScrollbar.current && (listState.canScrollForward || listState.canScrollBackward)
                                 PaddingValues(
                                     top = it.calculateTopPadding(),
                                     bottom = it.calculateBottomPadding(),
                                     start = it.calculateLeftPadding(androidx.compose.ui.unit.LayoutDirection.Ltr),
-                                    end = if (listState.canScrollForward || listState.canScrollBackward) 24.dp else 0.dp
+                                    end = if (showScrollBar) 24.dp else 0.dp
                                 )
                             }
                         ) {
@@ -762,7 +881,8 @@ fun PlaylistDetailScreen(
                     label = exportPlaylistLabel,
                     onClick = {
                         showPlaylistOptionsSheet = false
-                        m3uExportLauncher.launch("${currentPlaylist?.name ?: fallbackPlaylistName}.m3u")
+                        val sanitizedName = PlaylistViewModel.sanitizeFileName(currentPlaylist?.name ?: fallbackPlaylistName)
+                        m3uExportLauncher.launch("$sanitizedName.m3u")
                     }
                 )
             }
@@ -823,12 +943,12 @@ fun PlaylistDetailScreen(
                         showDeleteConfirmation = false
                     }
                 ) {
-                    Text(stringResource(R.string.delete_action), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Text(stringResource(R.string.common_delete), maxLines = 1, overflow = TextOverflow.Ellipsis)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showDeleteConfirmation = false }) {
-                    Text(stringResource(R.string.cancel), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Text(stringResource(R.string.common_cancel), maxLines = 1, overflow = TextOverflow.Ellipsis)
                 }
             }
         )
@@ -857,16 +977,13 @@ fun PlaylistDetailScreen(
                 onDismiss = { showSongInfoBottomSheet = false },
                 onPlaySong = {
                     playerViewModel.showAndPlaySong(currentSong)
-                    showSongInfoBottomSheet = false
                 },
                 onAddToQueue = {
                     playerViewModel.addSongToQueue(currentSong) // Assumes such a method exists or will be added
-                    showSongInfoBottomSheet = false
                     playerViewModel.sendToast(toastAddedToQueue)
                 },
                 onAddNextToQueue = {
                     playerViewModel.addSongNextToQueue(currentSong)
-                    showSongInfoBottomSheet = false
                     playerViewModel.sendToast(toastPlayingNext)
                 },
                 onAddToPlayList = {
@@ -1037,35 +1154,4 @@ private fun PlaylistActionItem(
             color = MaterialTheme.colorScheme.onSurface
         )
     }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-// SongPickerBottomSheet moved to com.theveloper.pixelplay.presentation.components
-fun RenamePlaylistDialog(currentName: String, onDismiss: () -> Unit, onRename: (String) -> Unit) {
-    var newName by remember { mutableStateOf(TextFieldValue(currentName)) }
-    val renameTitle = stringResource(R.string.presentation_batch_b_rename_playlist_dialog_title)
-    val newNameLabel = stringResource(R.string.presentation_batch_b_new_name)
-    val renameAction = stringResource(R.string.action_rename)
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text(renameTitle) },
-        text = {
-            OutlinedTextField(
-                value = newName,
-                onValueChange = { newName = it },
-                label = { Text(newNameLabel) },
-                shape = CircleShape,
-                singleLine = true,
-                modifier = Modifier.fillMaxWidth()
-            )
-        },
-        confirmButton = {
-            Button(
-                onClick = { if (newName.text.isNotBlank()) onRename(newName.text) },
-                enabled = newName.text.isNotBlank() && newName.text != currentName
-            ) { Text(renameAction, maxLines = 1, overflow = TextOverflow.Ellipsis) }
-        },
-        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel), maxLines = 1, overflow = TextOverflow.Ellipsis) } }
-    )
 }

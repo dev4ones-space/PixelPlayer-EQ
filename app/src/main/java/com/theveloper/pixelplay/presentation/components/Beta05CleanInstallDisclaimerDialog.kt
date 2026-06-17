@@ -89,7 +89,7 @@ fun Beta05CleanInstallDisclaimerDialog(
                                 color = MaterialTheme.colorScheme.secondaryContainer,
                             ) {
                                 Text(
-                                    text = stringResource(R.string.presentation_batch_g_beta05_title),
+                                    text = stringResource(R.string.beta05_title),
                                     modifier = Modifier.padding(horizontal = 9.dp, vertical = 4.dp),
                                     style = MaterialTheme.typography.labelMedium,
                                     fontWeight = FontWeight.SemiBold,
@@ -113,13 +113,13 @@ fun Beta05CleanInstallDisclaimerDialog(
                         }
 
                         Text(
-                            text = stringResource(R.string.presentation_batch_g_beta05_clean_install_title),
+                            text = stringResource(R.string.beta05_clean_install_title),
                             style = MaterialTheme.typography.titleLarge,
                             fontFamily = GoogleSansRounded,
                             fontWeight = FontWeight.Bold,
                         )
                         Text(
-                            text = stringResource(R.string.presentation_batch_g_beta05_clean_install_body),
+                            text = stringResource(R.string.beta05_clean_install_body),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -149,12 +149,12 @@ fun Beta05CleanInstallDisclaimerDialog(
                             verticalArrangement = Arrangement.spacedBy(4.dp),
                         ) {
                             Text(
-                                text = stringResource(R.string.presentation_batch_g_beta05_if_wrong_meta_title),
+                                text = stringResource(R.string.beta05_if_wrong_meta_title),
                                 style = MaterialTheme.typography.titleSmall,
                                 fontWeight = FontWeight.SemiBold,
                             )
                             Text(
-                                text = stringResource(R.string.presentation_batch_g_beta05_if_wrong_meta_body),
+                                text = stringResource(R.string.beta05_if_wrong_meta_body),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
@@ -180,7 +180,7 @@ fun Beta05CleanInstallDisclaimerDialog(
                             onCheckedChange = { dontShowAgain = it },
                         )
                         Text(
-                            text = stringResource(R.string.presentation_batch_g_beta05_dont_show),
+                            text = stringResource(R.string.beta05_dont_show),
                             style = MaterialTheme.typography.bodyMedium,
                             fontWeight = FontWeight.Medium,
                         )
@@ -196,7 +196,7 @@ fun Beta05CleanInstallDisclaimerDialog(
                             modifier = Modifier.size(18.dp),
                         )
                         Spacer(modifier = Modifier.size(6.dp))
-                        Text(text = stringResource(R.string.presentation_batch_g_beta05_got_it))
+                        Text(text = stringResource(R.string.beta05_got_it))
                     }
                 }
             }

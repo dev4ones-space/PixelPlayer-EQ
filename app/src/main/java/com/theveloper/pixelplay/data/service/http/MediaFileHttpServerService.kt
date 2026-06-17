@@ -324,7 +324,7 @@ class MediaFileHttpServerService : Service() {
             lastFailureMessage = getString(
                 R.string.cast_server_foreground_error,
                 throwable.javaClass.simpleName,
-                throwable.message ?: getString(R.string.error_unknown),
+                throwable.message ?: getString(R.string.common_error_unknown),
             )
             Timber.e(throwable, "Failed to enter foreground mode for cast HTTP server")
             stopSelf()

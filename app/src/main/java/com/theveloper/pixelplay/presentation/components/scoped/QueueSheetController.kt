@@ -26,11 +26,14 @@ internal class QueueSheetController(
     private val minFlingTravelPxProvider: () -> Float,
     private val dragThresholdPxProvider: () -> Float,
     private val showQueueSheetProvider: () -> Boolean,
-    private val onShowQueueSheetChange: (Boolean) -> Unit
+    private val onShowQueueSheetChange: (Boolean) -> Unit,
+    private val onIsCollapsingChange: (Boolean) -> Unit,
+    private val animationSpec: androidx.compose.animation.core.AnimationSpec<Float>
 ) {
     private var dragOffsetCache: Float? = null
     private var pendingDragTarget: Float? = null
     private var dragSnapJob: Job? = null
+    private var isCollapsing = false
 
     private fun resetDragPipeline() {
         dragOffsetCache = null
@@ -69,12 +72,14 @@ internal class QueueSheetController(
         } else {
             hiddenOffset
         }
-        queueSheetOffset.snapTo(targetOffset)
+        if (!isCollapsing) {
+            queueSheetOffset.snapTo(targetOffset)
+        }
     }
 
     suspend fun syncCollapsedWhenHidden() {
         val hiddenOffset = hiddenOffsetProvider()
-        if (!showQueueSheetProvider() && hiddenOffset > 0f && queueSheetOffset.value != hiddenOffset) {
+        if (!showQueueSheetProvider() && !isCollapsing && hiddenOffset > 0f && queueSheetOffset.value != hiddenOffset) {
             queueSheetOffset.snapTo(hiddenOffset)
         }
     }
@@ -97,7 +102,11 @@ internal class QueueSheetController(
         }
         val target = if (targetExpanded) 0f else hiddenOffset
         val shouldPrewarmFirstFrame = targetExpanded && !showQueueSheetProvider()
-        onShowQueueSheetChange(true)
+        if (!targetExpanded) {
+            isCollapsing = true
+            onIsCollapsingChange(true)
+        }
+        onShowQueueSheetChange(targetExpanded)
         if (shouldPrewarmFirstFrame) {
             queueSheetOffset.snapTo(hiddenOffset)
             if (coroutineContext[MonotonicFrameClock] != null) {
@@ -106,24 +115,18 @@ internal class QueueSheetController(
                 yield()
             }
         }
-        val travelFraction = if (hiddenOffset > 0f) {
-            (abs(queueSheetOffset.value - target) / hiddenOffset).coerceIn(0f, 1f)
-        } else {
-            1f
-        }
-        val durationMillis = if (targetExpanded) {
-            (220f + (120f * travelFraction)).toInt()
-        } else {
-            (190f + (110f * travelFraction)).toInt()
-        }
-        queueSheetOffset.animateTo(
-            targetValue = target,
-            animationSpec = tween(
-                durationMillis = durationMillis,
-                easing = FastOutSlowInEasing
+        try {
+            queueSheetOffset.animateTo(
+                targetValue = target,
+                animationSpec = animationSpec
             )
-        )
-        onShowQueueSheetChange(targetExpanded)
+        } finally {
+            onShowQueueSheetChange(targetExpanded)
+            if (!targetExpanded) {
+                isCollapsing = false
+                onIsCollapsingChange(false)
+            }
+        }
     }
 
     fun animate(targetExpanded: Boolean) {

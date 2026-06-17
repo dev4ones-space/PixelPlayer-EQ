@@ -55,9 +55,9 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MediumFlexibleTopAppBar
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.PrimaryTabRow
-import androidx.compose.material3.RadioButton
-import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -90,6 +90,7 @@ import androidx.compose.ui.window.DialogProperties
 import com.theveloper.pixelplay.presentation.screens.TabAnimation
 import com.theveloper.pixelplay.presentation.viewmodel.DirectoryEntry
 import com.theveloper.pixelplay.ui.theme.GoogleSansRounded
+import com.theveloper.pixelplay.ui.theme.LocalShowScrollbar
 import com.theveloper.pixelplay.utils.StorageInfo
 import java.io.File
 
@@ -256,7 +257,7 @@ fun FileExplorerContent(
                     ) {
                         Icon(
                             imageVector = Icons.Rounded.Close,
-                            contentDescription = stringResource(R.string.presentation_batch_g_file_explorer_cd_close)
+                            contentDescription = stringResource(R.string.common_close)
                         )
                     }
                 },
@@ -271,7 +272,7 @@ fun FileExplorerContent(
                     ) {
                         Icon(
                             imageVector = Icons.Rounded.Refresh,
-                            contentDescription = stringResource(R.string.presentation_batch_g_file_explorer_cd_refresh)
+                            contentDescription = stringResource(R.string.file_explorer_cd_refresh)
                         )
                     }
                 }
@@ -288,11 +289,11 @@ fun FileExplorerContent(
             ) {
                 Icon(
                     imageVector = Icons.Rounded.Done,
-                    contentDescription = stringResource(R.string.presentation_batch_g_file_explorer_cd_done),
+                    contentDescription = stringResource(R.string.common_done),
                     tint = MaterialTheme.colorScheme.onTertiaryContainer
                 )
                 Spacer(modifier = Modifier.width(10.dp))
-                Text(text = stringResource(R.string.presentation_batch_g_file_explorer_done))
+                Text(text = stringResource(R.string.common_done))
             }
         }
     ) { innerPadding ->
@@ -340,7 +341,7 @@ fun FileExplorerContent(
             }
 
             Text(
-                text = stringResource(R.string.presentation_batch_g_file_explorer_hint),
+                text = stringResource(R.string.file_explorer_hint),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier
@@ -381,7 +382,7 @@ fun FileExplorerContent(
                             supportingText = loadingHint
                         )
 
-                        children.isEmpty() -> ExplorerEmptyState(text = stringResource(R.string.presentation_batch_g_file_explorer_empty_folders))
+                        children.isEmpty() -> ExplorerEmptyState(text = stringResource(R.string.file_explorer_empty_folders))
 
                         else -> {
                             LazyColumn(
@@ -396,7 +397,7 @@ fun FileExplorerContent(
                                     ),
                                 contentPadding = PaddingValues(
                                     bottom = 24.dp,
-                                    end = if (listState.canScrollForward || listState.canScrollBackward) 24.dp else 0.dp
+                                    end = if (LocalShowScrollbar.current && (listState.canScrollForward || listState.canScrollBackward)) 24.dp else 0.dp
                                 ),
                                 verticalArrangement = Arrangement.spacedBy(10.dp),
                                 state = listState
@@ -606,33 +607,33 @@ private fun FileExplorerItem(
         }
 
         if (navigationEnabled) {
-            Icon(
-                imageVector = Icons.Rounded.ChevronRight,
-                contentDescription = null,
-                tint = contentColor
-            )
+            Box(
+                modifier = Modifier
+                    .size(32.dp)
+                    .clip(CircleShape)
+                    .background(contentColor.copy(alpha = 0.08f)),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = Icons.Rounded.ChevronRight,
+                    contentDescription = null,
+                    tint = contentColor,
+                    modifier = Modifier.size(20.dp)
+                )
+            }
         } else {
             Spacer(modifier = Modifier.width(8.dp))
         }
 
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = if (isBlocked) "Excluded" else "Included",
-                style = MaterialTheme.typography.labelMedium,
-                color = if (isBlocked) MaterialTheme.colorScheme.onErrorContainer else MaterialTheme.colorScheme.onSurfaceVariant
+        Checkbox(
+            checked = isBlocked,
+            onCheckedChange = { onToggleAllowed() },
+            colors = CheckboxDefaults.colors(
+                checkedColor = MaterialTheme.colorScheme.onErrorContainer,
+                uncheckedColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                checkmarkColor = MaterialTheme.colorScheme.errorContainer
             )
-            RadioButton(
-                selected = isBlocked,
-                onClick = onToggleAllowed,
-                colors = RadioButtonDefaults.colors(
-                    selectedColor = MaterialTheme.colorScheme.onErrorContainer,
-                    unselectedColor = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            )
-        }
+        )
     }
 }
 
@@ -694,7 +695,7 @@ private fun FileExplorerHeader(
                 ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                        contentDescription = stringResource(R.string.presentation_batch_g_file_explorer_cd_navigate_up),
+                        contentDescription = stringResource(R.string.file_explorer_cd_navigate_up),
                         tint = MaterialTheme.colorScheme.onSurface
                     )
                 }
@@ -777,7 +778,7 @@ private fun FileExplorerHeader(
                                 if (isRoot) {
                                     Icon(
                                         imageVector = Icons.Rounded.Home,
-                                        contentDescription = stringResource(R.string.presentation_batch_g_file_explorer_cd_go_root),
+                                        contentDescription = stringResource(R.string.file_explorer_cd_go_root),
                                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                                         modifier = Modifier
                                             .padding(end = 4.dp)

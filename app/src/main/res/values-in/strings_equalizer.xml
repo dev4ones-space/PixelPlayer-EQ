@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+    <!-- Equalizer preset dialogs -->
+    <string name="equalizer_error_name_empty">Nama tidak boleh kosong</string>
+    <string name="equalizer_action_rename">Ubah Nama</string>
+
+    <!-- EqualizerScreen -->
+    <string name="equalizer_change_view_mode_cd">Ubah mode tampilan</string>
+    <string name="equalizer_disable_cd">Nonaktifkan equalizer</string>
+    <string name="equalizer_enable_cd">Aktifkan equalizer</string>
+    <string name="equalizer_edit_tab_title">Edit</string>
+    <string name="equalizer_edit_presets_cd">Edit preset</string>
+    <string name="equalizer_custom_preset_cd">Preset kustom</string>
+    <string name="equalizer_presets_cd">Preset</string>
+    <string name="equalizer_action_update">Perbarui</string>
+    <string name="equalizer_bass_boost">Bass Boost</string>
+    <string name="equalizer_virtualizer">Virtualizer</string>
+    <string name="equalizer_loudness">Loudness</string>
+    <string name="equalizer_effect_not_supported">Tidak didukung</string>
+    <string name="equalizer_effect_not_supported_device">Tidak didukung di perangkat ini</string>
+    <string name="equalizer_volume">Volume</string>
+    <string name="equalizer_frequency_response">Respons Frekuensi</string>
+    <string name="equalizer_unit_hz">Hz</string>
+    <string name="equalizer_band_bass">Bass</string>
+    <string name="equalizer_band_low_mids">Low Mids</string>
+    <string name="equalizer_band_high_mids">High Mids</string>
+    <string name="equalizer_band_treble">Treble</string>
+    <string name="equalizer_band_bass_low">Bass / Low</string>
+    <string name="equalizer_band_mid_high">Mid / High</string>
+    <string name="equalizer_page_n">Halaman %1$d</string>
+    <string name="equalizer_reset_duration_cd">Reset durasi</string>
+    <string name="equalizer_action_save_new">Simpan baru</string>
+
+    <!-- CustomPresetsSheet -->
+    <string name="equalizer_presets_saved_title">Preset Tersimpan</string>
+    <string name="equalizer_presets_empty">Belum ada preset kustom yang disimpan.</string>
+    <string name="equalizer_presets_cd_unpin">Batal Pin</string>
+    <string name="equalizer_presets_cd_pin">Pin</string>
+    <string name="equalizer_presets_cd_rename">Ubah nama</string>
+    <string name="equalizer_presets_cd_delete">Hapus</string>
+
+    <!-- SavePresetDialog -->
+    <string name="equalizer_presets_save_custom_title">Simpan preset kustom</string>
+    <string name="equalizer_presets_save_custom_body">Masukkan nama untuk preset equalizer kustom.</string>
+    <string name="equalizer_preset_name_placeholder">Nama preset</string>
+    <string name="equalizer_presets_rename_title">Ubah nama preset</string>
+
+    <!-- ReorderPresetsSheet -->
+    <string name="equalizer_manage_presets_title">Kelola preset</string>
+    <string name="equalizer_presets_drag_hint">Tarik untuk mengurutkan ulang • Ketuk ikon mata untuk menampilkan atau menyembunyikan</string>
+    <string name="equalizer_cd_reorder">Urutkan ulang</string>
+    <string name="equalizer_reset_presets_title">Reset preset</string>
+    <string name="equalizer_reset_presets_message">Ini akan memulihkan urutan dan visibilitas preset default. Lanjutkan?</string>
+    <string name="equalizer_cd_reset_presets_default">Reset ke default</string>
+    <string name="equalizer_cd_visible">Terlihat</string>
+    <string name="equalizer_cd_hidden">Tersembunyi</string>
+</resources>

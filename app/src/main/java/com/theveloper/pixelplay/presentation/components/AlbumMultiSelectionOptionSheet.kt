@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.QueueMusic
+import androidx.compose.material.icons.automirrored.rounded.PlaylistAdd
 import androidx.compose.material.icons.automirrored.rounded.QueueMusic
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material3.ButtonDefaults
@@ -42,9 +43,13 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.sp
 import coil.size.Size
 import com.theveloper.pixelplay.R
 import com.theveloper.pixelplay.data.model.Album
+import com.theveloper.pixelplay.presentation.components.subcomps.AutoSizingTextToFill
+import com.theveloper.pixelplay.presentation.components.subcomps.TightWrapText
 import com.theveloper.pixelplay.ui.theme.GoogleSansRounded
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
@@ -55,7 +60,8 @@ fun AlbumMultiSelectionOptionSheet(
     onDismiss: () -> Unit,
     onPlay: () -> Unit,
     onPlayNext: () -> Unit,
-    onAddToQueue: () -> Unit
+    onAddToQueue: () -> Unit,
+    onAddToPlaylist: () -> Unit
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
@@ -71,69 +77,101 @@ fun AlbumMultiSelectionOptionSheet(
         ) {
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(78.dp),
+                    .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 StackedAlbumCovers(
                     albums = selectedAlbums.take(4)
                 )
 
-                Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(10.dp))
 
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(2.dp)
-                ) {
-                    Text(
-                        text = stringResource(R.string.presentation_batch_g_album_sel_count, selectedAlbums.size),
+                Column {
+                    AutoSizingTextToFill(
+                        text = stringResource(R.string.multi_selection_albums_count_upper, selectedAlbums.size),
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold,
-                        fontFamily = GoogleSansRounded
+                        fontFamily = GoogleSansRounded,
+                        minFontSize = 16.sp,
+                        maxFontSizeLimit = 24.sp,
+                        maxLines = 2,
                     )
+                    Spacer(Modifier.height(4.dp))
                     Text(
-                        text = stringResource(R.string.presentation_batch_g_album_sel_selected),
+                        text = stringResource(R.string.multi_selection_albums_selected),
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        fontFamily = GoogleSansRounded
+                        fontFamily = GoogleSansRounded,
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1,
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = stringResource(R.string.presentation_batch_g_album_sel_queue_hint),
+                text = stringResource(R.string.multi_selection_albums_queue_hint),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Text(
-                text = stringResource(R.string.presentation_batch_g_album_sel_limit, maxSelection),
+                text = stringResource(R.string.multi_selection_albums_selected_limit, maxSelection),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            AlbumSelectionActionButton(
-                onClick = {
-                    onPlay()
-                    onDismiss()
-                },
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .heightIn(min = 66.dp),
-                colors = ButtonDefaults.filledTonalButtonColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                ),
-                icon = {
-                    Icon(
-                        imageVector = Icons.Rounded.PlayArrow,
-                        contentDescription = "Play selected albums"
-                    )
-                },
-                text = "Play"
-            )
+                    .height(IntrinsicSize.Min),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                AlbumSelectionActionButton(
+                    onClick = {
+                        onPlay()
+                        onDismiss()
+                    },
+                    modifier = Modifier
+                        .weight(0.5f)
+                        .fillMaxHeight(),
+                    colors = ButtonDefaults.filledTonalButtonColors(
+                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                        contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                    ),
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Rounded.PlayArrow,
+                            contentDescription = stringResource(R.string.song_info_cd_play_all)
+                        )
+                    },
+                    text = stringResource(R.string.song_info_action_play),
+                )
+
+                AlbumSelectionActionButton(
+                    onClick = {
+                        onAddToPlaylist()
+                        onDismiss()
+                    },
+                    modifier = Modifier
+                        .weight(0.5f)
+                        .fillMaxHeight(),
+                    colors = ButtonDefaults.filledTonalButtonColors(
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                        contentColor = MaterialTheme.colorScheme.onSecondaryContainer
+                    ),
+                    icon = {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Rounded.PlaylistAdd,
+                            contentDescription = stringResource(R.string.song_info_cd_add_to_playlist)
+                        )
+                    },
+                    text = stringResource(R.string.common_playlist)
+                )
+            }
 
             Spacer(modifier = Modifier.height(10.dp))
 
@@ -159,10 +197,10 @@ fun AlbumMultiSelectionOptionSheet(
                     icon = {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.QueueMusic,
-                            contentDescription = "Play selected albums next"
+                            contentDescription = stringResource(R.string.song_info_cd_queue_next)
                         )
                     },
-                    text = "Next"
+                    text = stringResource(R.string.song_info_action_queue_next)
                 )
 
                 AlbumSelectionActionButton(
@@ -180,10 +218,10 @@ fun AlbumMultiSelectionOptionSheet(
                     icon = {
                         Icon(
                             imageVector = Icons.AutoMirrored.Rounded.QueueMusic,
-                            contentDescription = "Add selected albums to queue"
+                            contentDescription = stringResource(R.string.song_info_cd_add_to_queue)
                         )
                     },
-                    text = "Add to Queue"
+                    text = stringResource(R.string.song_info_action_add_to_queue)
                 )
             }
 
@@ -203,15 +241,18 @@ private fun AlbumSelectionActionButton(
     FilledTonalButton(
         onClick = onClick,
         modifier = modifier.heightIn(min = 66.dp),
-        contentPadding = PaddingValues(horizontal = 16.dp),
+        contentPadding = PaddingValues(horizontal = 10.dp),
         colors = colors,
         shape = CircleShape
     ) {
         icon()
-        Spacer(modifier = Modifier.width(10.dp))
-        Text(
+        Spacer(modifier = Modifier.width(6.dp))
+        TightWrapText(
             text = text,
-            style = MaterialTheme.typography.titleMedium
+            modifier = Modifier.padding(end = 4.dp),
+            overflow = TextOverflow.Ellipsis,
+            maxLines = 2,
+            lineHeight = 20.sp,
         )
     }
 }

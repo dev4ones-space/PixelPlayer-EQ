@@ -120,7 +120,7 @@ import androidx.compose.ui.input.pointer.util.VelocityTracker
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.platform.LocalContext
+
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalView
@@ -152,6 +152,7 @@ import com.theveloper.pixelplay.presentation.viewmodel.SettingsViewModel
 import com.theveloper.pixelplay.presentation.utils.LocalAppHapticsConfig
 import com.theveloper.pixelplay.presentation.utils.performAppCompatHapticFeedback
 import com.theveloper.pixelplay.ui.theme.GoogleSansRounded
+import com.theveloper.pixelplay.ui.theme.LocalShowScrollbar
 import racra.compose.smooth_corner_rect_library.AbsoluteSmoothCornerShape
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
@@ -180,6 +181,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.layout.onGloballyPositioned
 import com.theveloper.pixelplay.presentation.components.scoped.QueueItemDismissGestureHandler
 import androidx.compose.ui.unit.IntOffset
@@ -246,15 +248,21 @@ fun QueueBottomSheet(
     onQueueDragStart: () -> Unit,
     onQueueDrag: (Float) -> Unit,
     onQueueRelease: (Float, Float) -> Unit,
+    predictiveBackProgress: Animatable<Float, androidx.compose.animation.core.AnimationVector1D>,
+    predictiveBackSwipeEdge: androidx.compose.runtime.State<Int?>,
+    queueSheetOffset: Animatable<Float, androidx.compose.animation.core.AnimationVector1D>,
     modifier: Modifier = Modifier,
     tonalElevation: Dp = 10.dp,
     shape: RoundedCornerShape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),
 ) {
     val colors = MaterialTheme.colorScheme
-    val context = LocalContext.current
     var showTimerOptions by rememberSaveable { mutableStateOf(false) }
     var showClearQueueDialog by remember { mutableStateOf(false) }
     var isFabExpanded by rememberSaveable { mutableStateOf(false) }
+    // Hoist resource strings at composition time so they react to locale changes
+    // and can be safely captured in onClick lambdas.
+    val queueNamedSuffixTemplate = stringResource(R.string.queue_save_playlist_named)
+    val queueCurrentLabel = stringResource(R.string.queue_save_playlist_current)
 
     LaunchedEffect(isVisible) {
         if (!isVisible) {
@@ -325,14 +333,6 @@ fun QueueBottomSheet(
     val displaySongsSignature = remember(displaySongs, queueIndexOffset) {
         (queueIndexOffset * 31) + System.identityHashCode(displaySongs)
     }
-    val activeKeys = reorderPreviewKeys
-        ?: committedDisplayKeys.takeIf { it.size == displaySongCount }
-    val activeSongSource = reorderPreviewBaseQueue ?: queue
-    fun activeQueueIndexAt(index: Int): Int =
-        reorderPreviewOrder?.getOrNull(index) ?: (queueIndexOffset + index)
-
-    fun activeKeyAt(index: Int): Long =
-        activeKeys?.getOrNull(index) ?: (queueIndexOffset + index).toLong()
 
     // --- REORDER STATE ---
     var lastMovedFrom by remember { mutableStateOf<Int?>(null) }
@@ -340,24 +340,52 @@ fun QueueBottomSheet(
     var reorderHandleInUse by remember { mutableStateOf(false) }
     val updatedReorderHandleInUse by rememberUpdatedState(reorderHandleInUse)
 
-    val shouldMapActiveKeys = reorderHandleInUse || reorderPreviewOrder != null
-    val activeKeyToLocalIndex = remember(
-        activeKeys,
-        displaySongCount,
-        queueIndexOffset,
-        shouldMapActiveKeys
-    ) {
-        if (!shouldMapActiveKeys) {
-            emptyMap()
-        } else {
-            HashMap<Long, Int>(displaySongCount).apply {
+    val reorderableState = rememberReorderableLazyListState(
+        lazyListState = listState,
+        onMove = { from, to ->
+            if (reorderPreviewOrder == null) {
+                reorderPreviewBaseQueue = queue
+            }
+            val currentOrder = reorderPreviewOrder
+                ?: List(displaySongCount) { queueIndexOffset + it }
+            val currentKeys = reorderPreviewKeys
+                ?: committedDisplayKeys.takeIf { it.size == displaySongCount }
+                ?: List(displaySongCount) { (queueIndexOffset + it).toLong() }
+
+            val keyToLocalIndex = HashMap<Long, Int>(displaySongCount).apply {
                 for (index in 0 until displaySongCount) {
-                    val stableKey = activeKeys?.getOrNull(index) ?: (queueIndexOffset + index).toLong()
+                    val stableKey = currentKeys.getOrNull(index) ?: (queueIndexOffset + index).toLong()
                     put(stableKey, index)
                 }
             }
-        }
+
+            fun resolveKeyToIndex(key: Any?): Int? {
+                val stableKey = key as? Long ?: return null
+                keyToLocalIndex[stableKey]?.let { return it }
+                val defaultIndex = (stableKey - queueIndexOffset).toInt()
+                return defaultIndex.takeIf { it in 0 until displaySongCount }
+            }
+
+            val fromLocalIndex = resolveKeyToIndex(from.key) ?: return@rememberReorderableLazyListState
+            val toLocalIndex = resolveKeyToIndex(to.key) ?: return@rememberReorderableLazyListState
+            if (fromLocalIndex == toLocalIndex) return@rememberReorderableLazyListState
+
+            reorderPreviewOrder = currentOrder.toMutableList().apply {
+                add(toLocalIndex, removeAt(fromLocalIndex))
+            }
+            reorderPreviewKeys = currentKeys.toMutableList().apply {
+                add(toLocalIndex, removeAt(fromLocalIndex))
+            }
+            if (lastMovedFrom == null) {
+                lastMovedFrom = fromLocalIndex
+            }
+            lastMovedTo = toLocalIndex
+        },
+    )
+    val isReordering by remember {
+        derivedStateOf { reorderableState.isAnyItemDragging }
     }
+    val updatedIsReordering by rememberUpdatedState(isReordering)
 
     fun remapCommittedKeysForDisplay(newSongs: List<Song>) {
         // Fast path: common queue-skip case where display list is just a suffix of previous display list.
@@ -408,8 +436,9 @@ fun QueueBottomSheet(
     }
 
     // Reset local reorder preview only when the queue truly changes to something new.
-    LaunchedEffect(displaySongsSignature, queueIndexOffset) {
+    if (reorderPreviewQueueSignature != displaySongsSignature) {
         val expectedIds = pendingReorderExpectedIds
+        var isProcessed = false
 
         if (expectedIds != null) {
             val currentDisplayIds = displaySongs.map { it.id }
@@ -427,74 +456,31 @@ fun QueueBottomSheet(
                 pendingReorderGraceUpdates = 0
                 remapCommittedKeysForDisplay(displaySongs)
                 reorderPreviewQueueSignature = displaySongsSignature
-                return@LaunchedEffect
-            }
-
-            if (reorderPreviewOrder != null && pendingReorderGraceUpdates > 0) {
+                isProcessed = true
+            } else if (reorderPreviewOrder != null && pendingReorderGraceUpdates > 0) {
                 pendingReorderGraceUpdates -= 1
                 reorderPreviewQueueSignature = displaySongsSignature
-                return@LaunchedEffect
+                isProcessed = true
+            } else {
+                pendingReorderExpectedIds = null
+                pendingReorderGraceUpdates = 0
+                reorderPreviewOrder = null
+                reorderPreviewKeys = null
+                reorderPreviewBaseQueue = null
             }
-
-            pendingReorderExpectedIds = null
-            pendingReorderGraceUpdates = 0
-            reorderPreviewOrder = null
-            reorderPreviewKeys = null
-            reorderPreviewBaseQueue = null
         }
 
-        if (reorderPreviewQueueSignature != null && reorderPreviewQueueSignature != displaySongsSignature) {
-            // Queue data changed from external source - safe to clear preview
-            reorderPreviewOrder = null
-            reorderPreviewKeys = null
-            reorderPreviewBaseQueue = null
+        if (!isProcessed) {
+            if (reorderPreviewQueueSignature != null) {
+                // Queue data changed from external source - safe to clear preview
+                reorderPreviewOrder = null
+                reorderPreviewKeys = null
+                reorderPreviewBaseQueue = null
+            }
+            remapCommittedKeysForDisplay(displaySongs)
+            reorderPreviewQueueSignature = displaySongsSignature
         }
-        remapCommittedKeysForDisplay(displaySongs)
-        reorderPreviewQueueSignature = displaySongsSignature
     }
-
-    fun mapKeyToLocalIndex(key: Any?, keyToLocalIndex: Map<Long, Int>): Int? {
-        val stableKey = key as? Long ?: return null
-        keyToLocalIndex[stableKey]?.let { return it }
-        activeKeys?.let { keys ->
-            return keys.indexOf(stableKey).takeIf { it >= 0 }
-        }
-        val defaultIndex = (stableKey - queueIndexOffset).toInt()
-        return defaultIndex.takeIf { it in 0 until displaySongCount }
-    }
-
-    val reorderableState = rememberReorderableLazyListState(
-        lazyListState = listState,
-        onMove = { from, to ->
-            if (reorderPreviewOrder == null) {
-                reorderPreviewBaseQueue = queue
-            }
-            val currentOrder = reorderPreviewOrder
-                ?: List(displaySongCount) { queueIndexOffset + it }
-            val currentKeys = reorderPreviewKeys
-                ?: List(displaySongCount) { activeKeyAt(it) }
-
-            val fromLocalIndex = mapKeyToLocalIndex(from.key, activeKeyToLocalIndex) ?: return@rememberReorderableLazyListState
-            val toLocalIndex = mapKeyToLocalIndex(to.key, activeKeyToLocalIndex) ?: return@rememberReorderableLazyListState
-            if (fromLocalIndex == toLocalIndex) return@rememberReorderableLazyListState
-
-            reorderPreviewOrder = currentOrder.toMutableList().apply {
-                add(toLocalIndex, removeAt(fromLocalIndex))
-            }
-            reorderPreviewKeys = currentKeys.toMutableList().apply {
-                add(toLocalIndex, removeAt(fromLocalIndex))
-            }
-            if (lastMovedFrom == null) {
-                lastMovedFrom = fromLocalIndex
-            }
-            lastMovedTo = toLocalIndex
-        },
-    )
-    val isReordering by remember {
-        derivedStateOf { reorderableState.isAnyItemDragging }
-    }
-    val updatedIsReordering by rememberUpdatedState(isReordering)
-    // ----------------------
 
     // Only jump to current song when the actual current song changes (e.g. track skip).
     // This prevents annoying jumps when adding/removing other items in the queue.
@@ -531,44 +517,61 @@ fun QueueBottomSheet(
     val updatedOnQueueDrag by rememberUpdatedState(onQueueDrag)
     val updatedOnQueueRelease by rememberUpdatedState(onQueueRelease)
 
-    LaunchedEffect(reorderableState.isAnyItemDragging) {
-        if (!reorderableState.isAnyItemDragging) {
-            val fromIndex = lastMovedFrom
-            val toIndex = lastMovedTo
+    val isAnyItemDragging = reorderableState.isAnyItemDragging
+    var wasDragging by remember { mutableStateOf(false) }
 
-            lastMovedFrom = null
-            lastMovedTo = null
+    if (wasDragging && !isAnyItemDragging) {
+        wasDragging = false
+        val fromIndex = lastMovedFrom
+        val toIndex = lastMovedTo
 
-            if (fromIndex != null && toIndex != null) {
-                // Convert display indices to queue indices by adding the offset
-                val fromQueueIndex = fromIndex + queueIndexOffset
-                val toQueueIndex = toIndex + queueIndexOffset
+        lastMovedFrom = null
+        lastMovedTo = null
 
-                val fromWithinQueue = fromQueueIndex in queue.indices
-                val toWithinQueue = toQueueIndex in queue.indices
+        if (fromIndex != null && toIndex != null) {
+            // Convert display indices to queue indices by adding the offset
+            val fromQueueIndex = fromIndex + queueIndexOffset
+            val toQueueIndex = toIndex + queueIndexOffset
 
-                if (fromWithinQueue && toWithinQueue && fromQueueIndex != toQueueIndex) {
-                    val previewBase = reorderPreviewBaseQueue ?: queue
-                    val expectedIds = reorderPreviewOrder
-                        ?.mapNotNull { previewBase.getOrNull(it)?.id }
-                        ?.takeIf { it.size == displaySongCount }
-                    pendingReorderExpectedIds = expectedIds
-                    pendingReorderGraceUpdates = if (expectedIds != null) 6 else 0
-                    // Keep reorderPreviewOrder alive so items don't snap back
-                    // while we wait for the new queue data to propagate.
-                    onReorder(fromQueueIndex, toQueueIndex)
-                    return@LaunchedEffect
-                }
+            val fromWithinQueue = fromQueueIndex in queue.indices
+            val toWithinQueue = toQueueIndex in queue.indices
+
+            if (fromWithinQueue && toWithinQueue && fromQueueIndex != toQueueIndex) {
+                val previewBase = reorderPreviewBaseQueue ?: queue
+                val expectedIds = reorderPreviewOrder
+                    ?.mapNotNull { previewBase.getOrNull(it)?.id }
+                    ?.takeIf { it.size == displaySongCount }
+                pendingReorderExpectedIds = expectedIds
+                pendingReorderGraceUpdates = if (expectedIds != null) 6 else 0
+                // Keep reorderPreviewOrder alive so items don't snap back
+                // while we wait for the new queue data to propagate.
+                onReorder(fromQueueIndex, toQueueIndex)
+            } else {
+                reorderPreviewOrder = null
+                reorderPreviewKeys = null
+                reorderPreviewBaseQueue = null
+                pendingReorderExpectedIds = null
+                pendingReorderGraceUpdates = 0
             }
-
-            // Only clear preview if no valid reorder was dispatched
+        } else {
             reorderPreviewOrder = null
             reorderPreviewKeys = null
             reorderPreviewBaseQueue = null
             pendingReorderExpectedIds = null
             pendingReorderGraceUpdates = 0
         }
+    } else if (isAnyItemDragging) {
+        wasDragging = true
     }
+
+    val activeKeys = reorderPreviewKeys
+        ?: committedDisplayKeys.takeIf { it.size == displaySongCount }
+    val activeSongSource = reorderPreviewBaseQueue ?: queue
+    fun activeQueueIndexAt(index: Int): Int =
+        reorderPreviewOrder?.getOrNull(index) ?: (queueIndexOffset + index)
+
+    fun activeKeyAt(index: Int): Long =
+        activeKeys?.getOrNull(index) ?: (queueIndexOffset + index).toLong()
 
     val useLightweightQueueListShape by remember {
         derivedStateOf {
@@ -608,12 +611,16 @@ fun QueueBottomSheet(
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
                 if (updatedIsReordering || updatedReorderHandleInUse) return Offset.Zero
 
-                if (draggingSheetFromList && available.y < 0f) {
-                    finalizeListDrag()
-                    return Offset.Zero
-                }
-
                 if (draggingSheetFromList) {
+                    // While dragging the sheet from the list, keep consuming vertical
+                    // movement in BOTH directions so an upward drag can pull the sheet
+                    // back up and cancel the gesture (like a normal bottom sheet).
+                    // Only once the sheet is fully expanded again do we release control
+                    // back to the list so it can scroll its contents.
+                    if (available.y < 0f && queueSheetOffset.value <= 0.5f) {
+                        finalizeListDrag()
+                        return Offset.Zero
+                    }
                     listDragAccumulated += available.y
                     updatedOnQueueDrag(available.y)
                     return available
@@ -707,7 +714,43 @@ fun QueueBottomSheet(
         }
 
     Surface(
-        modifier = modifier,
+        modifier = modifier
+            .graphicsLayer {
+                val p = predictiveBackProgress.value
+                val offsetVal = queueSheetOffset.value
+                val y = offsetVal.roundToInt()
+                
+                if (p > 0f) {
+                    val scale = 1f - (p * 0.1f)
+                    scaleX = scale
+                    scaleY = scale
+                    translationY = p * 80.dp.toPx()
+                    
+                    transformOrigin = androidx.compose.ui.graphics.TransformOrigin(
+                        pivotFractionX = 0.5f,
+                        pivotFractionY = 1.0f
+                    )
+                    
+                    val cornerRadius = androidx.compose.ui.unit.lerp(28.dp, 48.dp, p)
+                    clip = true
+                    this.shape = RoundedCornerShape(topStart = cornerRadius, topEnd = cornerRadius)
+                } else if (y < 0) {
+                    val h = size.height
+                    if (h > 0f) {
+                        scaleY = (h - y) / h
+                        scaleX = 1f
+                        translationY = 0f
+                        transformOrigin = androidx.compose.ui.graphics.TransformOrigin(
+                            pivotFractionX = 0.5f,
+                            pivotFractionY = 1.0f
+                        )
+                    }
+                } else {
+                    scaleX = 1f
+                    scaleY = 1f
+                    translationY = 0f
+                }
+            },
         shape = shape,
         tonalElevation = tonalElevation,
         color = colors.surfaceContainer,
@@ -753,7 +796,7 @@ fun QueueBottomSheet(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            stringResource(R.string.presentation_batch_e_queue_empty),
+                            stringResource(R.string.queue_empty_label),
                             color = colors.onSurface
                         )
                     }
@@ -783,7 +826,7 @@ fun QueueBottomSheet(
                             verticalArrangement = Arrangement.spacedBy(8.dp),
                             contentPadding = PaddingValues(
                                 start = 0.dp,
-                                end = if (listState.canScrollForward || listState.canScrollBackward) 26.dp else 0.dp,
+                                end = if (LocalShowScrollbar.current && (listState.canScrollForward || listState.canScrollBackward)) 26.dp else 0.dp,
                                 bottom = MiniPlayerHeight + WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding() + 32.dp
                             )
                         ) {
@@ -877,7 +920,7 @@ fun QueueBottomSheet(
                                             ) {
                                                 Icon(
                                                     imageVector = Icons.Rounded.DragIndicator,
-                                                    contentDescription = stringResource(R.string.presentation_batch_b_reorder_song),
+                                                    contentDescription = stringResource(R.string.queue_cd_reorder_song),
                                                     tint = MaterialTheme.colorScheme.onSurfaceVariant
                                                 )
                                             }
@@ -957,7 +1000,7 @@ fun QueueBottomSheet(
                     ) {
                         Icon(
                             imageVector = Icons.Rounded.MoreHoriz,
-                            contentDescription = stringResource(R.string.presentation_batch_e_cd_queue_actions),
+                            contentDescription = stringResource(R.string.queue_cd_more_action),
                         )
                     }
                 }
@@ -1012,7 +1055,7 @@ fun QueueBottomSheet(
                         ) {
                             if (currentSongDisplayIndex >= 0 && currentSongDisplayIndex < displaySongCount) {
                                 QueueToolbarMenuButton(
-                                    text = stringResource(R.string.presentation_batch_e_action_locate_current_song),
+                                    text = stringResource(R.string.queue_action_locate_current_song),
                                     icon = Icons.Rounded.MyLocation,
                                     containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                                     contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
@@ -1030,7 +1073,7 @@ fun QueueBottomSheet(
                                 )
                             }
                             QueueToolbarMenuButton(
-                                text = stringResource(R.string.presentation_batch_e_action_clear_queue),
+                                text = stringResource(R.string.queue_action_clear_queue),
                                 icon = Icons.Filled.ClearAll,
                                 containerColor = MaterialTheme.colorScheme.errorContainer,
                                 contentColor = MaterialTheme.colorScheme.onErrorContainer,
@@ -1040,20 +1083,16 @@ fun QueueBottomSheet(
                                 }
                             )
                             QueueToolbarMenuButton(
-                                text = stringResource(R.string.presentation_batch_e_action_save_as_playlist),
+                                text = stringResource(R.string.queue_action_save_as_playlist),
                                 icon = Icons.Filled.LibraryAdd,
                                 containerColor = MaterialTheme.colorScheme.primaryContainer,
                                 contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
                                 onClick = {
                                     isFabExpanded = false
-                                    val res = context.resources
                                     val defaultName = if (currentQueueSourceName.isNotBlank()) {
-                                        res.getString(
-                                            R.string.presentation_batch_e_queue_named_suffix,
-                                            currentQueueSourceName
-                                        )
+                                        queueNamedSuffixTemplate.format(currentQueueSourceName)
                                     } else {
-                                        res.getString(R.string.presentation_batch_e_queue_current)
+                                        queueCurrentLabel
                                     }
                                     onRequestSaveAsPlaylist(
                                         queue,
@@ -1113,7 +1152,7 @@ fun QueueBottomSheet(
                         )
                         Spacer(Modifier.width(4.dp))
                         Text(
-                            text = stringResource(R.string.presentation_batch_e_removed),
+                            text = stringResource(R.string.queue_song_removed),
                             style = MaterialTheme.typography.bodyMedium,
                             color = colors.inverseOnSurface.copy(alpha = 0.7f),
                         )
@@ -1121,7 +1160,7 @@ fun QueueBottomSheet(
                             onClick = { viewModel.undoRemoveSongFromQueue() }
                         ) {
                             Text(
-                                text = stringResource(R.string.action_undo),
+                                text = stringResource(R.string.common_undo),
                                 color = colors.inversePrimary,
                                 fontWeight = FontWeight.Bold
                             )
@@ -1150,8 +1189,8 @@ fun QueueBottomSheet(
         if (showClearQueueDialog) {
             AlertDialog(
                 onDismissRequest = { showClearQueueDialog = false },
-                title = { Text(stringResource(R.string.presentation_batch_e_clear_queue_dialog_title)) },
-                text = { Text(stringResource(R.string.presentation_batch_e_clear_queue_dialog_message)) },
+                title = { Text(stringResource(R.string.queue_dialog_clear_queue_title)) },
+                text = { Text(stringResource(R.string.queue_dialog_clear_queue_message)) },
                 confirmButton = {
                     TextButton(
                         onClick = {
@@ -1159,14 +1198,14 @@ fun QueueBottomSheet(
                             showClearQueueDialog = false
                         }
                     ) {
-                        Text(stringResource(R.string.presentation_batch_b_clear), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        Text(stringResource(R.string.common_clear), maxLines = 1, overflow = TextOverflow.Ellipsis)
                     }
                 },
                 dismissButton = {
                     TextButton(
                         onClick = { showClearQueueDialog = false }
                     ) {
-                        Text(stringResource(R.string.cancel), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        Text(stringResource(R.string.common_cancel), maxLines = 1, overflow = TextOverflow.Ellipsis)
                     }
                 }
             )
@@ -1300,7 +1339,7 @@ private fun QueueHeader(
                     )
                     onLocateCurrentSong()
                 },
-                text = stringResource(R.string.presentation_batch_e_next_up),
+                text = stringResource(R.string.queue_next_up_label),
                 style = MaterialTheme.typography.headlineLarge.copy(
                     fontFamily = GoogleSansRounded,
                     fontWeight = FontWeight.SemiBold
@@ -1309,9 +1348,9 @@ private fun QueueHeader(
             )
             Text(
                 text = when {
-                    queueCount <= 0 -> stringResource(R.string.presentation_batch_e_queue_subtitle_empty)
+                    queueCount <= 0 -> stringResource(R.string.queue_tracks_empty)
                     else -> pluralStringResource(
-                        R.plurals.presentation_batch_e_queue_tracks_lined_up,
+                        R.plurals.queue_tracks_lined_up,
                         queueCount,
                         queueCount
                     )
@@ -1352,7 +1391,7 @@ private fun QueueSourceBadge(
                 tint = colors.onSurfaceVariant
             )
             Text(
-                text = queueSourceName.ifBlank { stringResource(R.string.presentation_batch_e_queue_source_fallback) },
+                text = queueSourceName.ifBlank { stringResource(R.string.queue_source_fallback_label) },
                 style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Medium),
                 color = colors.onSurfaceVariant,
                 overflow = TextOverflow.Ellipsis,
@@ -1408,7 +1447,7 @@ private fun QueueControlsToolbar(
             ) {
                 Icon(
                     imageVector = Icons.Rounded.Shuffle,
-                    contentDescription = stringResource(R.string.presentation_batch_e_cd_toggle_shuffle),
+                    contentDescription = stringResource(R.string.queue_cd_toggle_shuffle_action),
                 )
             }
             Spacer(modifier = Modifier.width(12.dp))
@@ -1423,7 +1462,7 @@ private fun QueueControlsToolbar(
                 }
                 Icon(
                     imageVector = repeatIcon,
-                    contentDescription = stringResource(R.string.presentation_batch_e_cd_toggle_repeat),
+                    contentDescription = stringResource(R.string.queue_cd_toggle_repeat_action),
                 )
             }
             Spacer(modifier = Modifier.width(12.dp))
@@ -1434,7 +1473,7 @@ private fun QueueControlsToolbar(
             ) {
                 Icon(
                     imageVector = Icons.Rounded.Timer,
-                    contentDescription = stringResource(R.string.presentation_batch_e_cd_sleep_timer),
+                    contentDescription = stringResource(R.string.queue_cd_sleep_timer_action),
                 )
             }
         }
@@ -1513,7 +1552,7 @@ fun SaveQueueAsPlaylistSheet(
                             title = {
                                 Text(
                                     modifier = Modifier.padding(start = 4.dp),
-                                    text = stringResource(R.string.presentation_batch_e_save_as_playlist_sheet_title),
+                                    text = stringResource(R.string.queue_save_as_playlist_sheet_title),
                                     style = MaterialTheme.typography.headlineMedium,
                                     fontFamily = GoogleSansRounded,
                                     fontWeight = FontWeight.SemiBold,
@@ -1530,7 +1569,7 @@ fun SaveQueueAsPlaylistSheet(
                                         contentColor = MaterialTheme.colorScheme.onSurface
                                     )
                                 ) {
-                                    Icon(Icons.Rounded.Close, contentDescription = stringResource(R.string.cd_close))
+                                    Icon(Icons.Rounded.Close, contentDescription = stringResource(R.string.common_close))
                                 }
                             },
                             actions = {
@@ -1578,9 +1617,9 @@ fun SaveQueueAsPlaylistSheet(
                                         )
                                         Text(
                                             text = if (allSelected) {
-                                                stringResource(R.string.presentation_batch_e_deselect_all)
+                                                stringResource(R.string.queue_save_as_playlist_deselect_all)
                                             } else {
-                                                stringResource(R.string.presentation_batch_b_select_all)
+                                                stringResource(R.string.common_select_all)
                                             },
                                             style = MaterialTheme.typography.labelLarge,
                                             fontWeight = FontWeight.Bold
@@ -1603,7 +1642,7 @@ fun SaveQueueAsPlaylistSheet(
                             OutlinedTextField(
                                 value = playlistName,
                                 onValueChange = { playlistName = it },
-                                label = { Text(stringResource(R.string.presentation_batch_e_playlist_name_label)) },
+                                label = { Text(stringResource(R.string.queue_save_as_playlist_name_label)) },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .focusRequester(focusRequester),
@@ -1621,7 +1660,7 @@ fun SaveQueueAsPlaylistSheet(
                             OutlinedTextField(
                                 value = searchQuery,
                                 onValueChange = { searchQuery = it },
-                                placeholder = { Text(stringResource(R.string.presentation_batch_e_search_songs_to_include_placeholder)) },
+                                placeholder = { Text(stringResource(R.string.queue_save_as_playlist_search_placeholder)) },
                                 leadingIcon = {
                                     Icon(
                                         Icons.Rounded.Search,
@@ -1633,7 +1672,7 @@ fun SaveQueueAsPlaylistSheet(
                                         IconButton(onClick = { searchQuery = "" }) {
                                             Icon(
                                                 Icons.Filled.Clear,
-                                                contentDescription = stringResource(R.string.cd_clear_search)
+                                                contentDescription = stringResource(R.string.common_clear_search)
                                             )
                                         }
                                     }
@@ -1684,7 +1723,7 @@ fun SaveQueueAsPlaylistSheet(
                                 ) {
                                     Text(
                                         text = pluralStringResource(
-                                            R.plurals.presentation_batch_e_n_songs_selected,
+                                            R.plurals.queue_save_as_playlist_n_songs_selected,
                                             selectedSongIds.count { it.value },
                                             selectedSongIds.count { it.value }
                                         ),
@@ -1694,11 +1733,11 @@ fun SaveQueueAsPlaylistSheet(
                                     Text(
                                         text = if (playlistName.text.isNotBlank()) {
                                             stringResource(
-                                                R.string.presentation_batch_e_save_as_format,
+                                                R.string.queue_save_as_playlist_format,
                                                 playlistName.text
                                             )
                                         } else {
-                                            stringResource(R.string.presentation_batch_e_enter_playlist_name)
+                                            stringResource(R.string.queue_save_as_playlist_name_placeholder)
                                         },
                                         style = MaterialTheme.typography.bodySmall,
                                         maxLines = 1,
@@ -1736,7 +1775,7 @@ fun SaveQueueAsPlaylistSheet(
                                         modifier = Modifier.size(18.dp)
                                     )
                                     Spacer(Modifier.width(8.dp))
-                                    Text(stringResource(R.string.action_save))
+                                    Text(stringResource(R.string.common_save))
                                 }
                             }
                         }
@@ -1772,7 +1811,7 @@ fun SaveQueueAsPlaylistSheet(
                                 )
                                 Text(
                                     text = stringResource(
-                                        R.string.presentation_batch_e_no_songs_match_query,
+                                        R.string.queue_save_as_playlist_search_no_match,
                                         searchQuery
                                     ),
                                     style = MaterialTheme.typography.bodyLarge,
@@ -1951,7 +1990,7 @@ fun QueuePlaylistSongItem(
             ) {
                 Icon(
                     painter = painterResource(R.drawable.rounded_close_24),
-                    contentDescription = stringResource(R.string.presentation_batch_e_cd_dismiss_song),
+                    contentDescription = stringResource(R.string.queue_cd_dismiss_song),
                     modifier = Modifier
                         .padding(end = 16.dp)
                         .graphicsLayer {
@@ -2020,7 +2059,7 @@ fun QueuePlaylistSongItem(
                     SmartImage(
                         model = song.albumArtUriString,
                         shape = albumShape,
-                        contentDescription = stringResource(R.string.cd_album_art_for_title, song.title),
+                        contentDescription = stringResource(R.string.common_album_art_for_title, song.title),
                         modifier = Modifier
                             .size(42.dp)
                             .clip(albumShape),
@@ -2076,7 +2115,7 @@ fun QueuePlaylistSongItem(
                             Icon(
                                 imageVector = Icons.Rounded.MoreVert,
                                 contentDescription = stringResource(
-                                    R.string.presentation_batch_e_more_options_for_song,
+                                    R.string.queue_more_options_for_song,
                                     song.title
                                 ),
                                 modifier = Modifier.size(24.dp)
@@ -2099,7 +2138,7 @@ fun QueuePlaylistSongItem(
                             Icon(
                                 modifier = Modifier.size(18.dp),
                                 painter = painterResource(R.drawable.rounded_close_24),
-                                contentDescription = stringResource(R.string.presentation_batch_e_cd_remove_from_playlist),
+                                contentDescription = stringResource(R.string.queue_cd_remove_from_playlist),
                             )
                         }
                     }

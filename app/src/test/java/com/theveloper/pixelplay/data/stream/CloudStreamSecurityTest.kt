@@ -70,6 +70,40 @@ class CloudStreamSecurityTest {
     }
 
     @Test
+    fun `isLocalOrPrivateHost accepts local network hosts`() {
+        assertTrue(CloudStreamSecurity.isLocalOrPrivateHost("localhost"))
+        assertTrue(CloudStreamSecurity.isLocalOrPrivateHost("127.0.0.1"))
+        assertTrue(CloudStreamSecurity.isLocalOrPrivateHost("192.168.1.20"))
+        assertTrue(CloudStreamSecurity.isLocalOrPrivateHost("10.0.0.5"))
+        assertTrue(CloudStreamSecurity.isLocalOrPrivateHost("172.20.0.3"))
+        // Carrier-grade NAT (Tailscale and similar VPNs)
+        assertTrue(CloudStreamSecurity.isLocalOrPrivateHost("100.101.102.103"))
+        // Single-label LAN hostnames
+        assertTrue(CloudStreamSecurity.isLocalOrPrivateHost("mynas"))
+        // Local-only DNS suffixes
+        assertTrue(CloudStreamSecurity.isLocalOrPrivateHost("nas.local"))
+        assertTrue(CloudStreamSecurity.isLocalOrPrivateHost("nas.lan"))
+        assertTrue(CloudStreamSecurity.isLocalOrPrivateHost("nas.home"))
+        assertTrue(CloudStreamSecurity.isLocalOrPrivateHost("nas.internal"))
+        assertTrue(CloudStreamSecurity.isLocalOrPrivateHost("nas.home.arpa"))
+        // IPv6 loopback, unique-local, link-local
+        assertTrue(CloudStreamSecurity.isLocalOrPrivateHost("::1"))
+        assertTrue(CloudStreamSecurity.isLocalOrPrivateHost("[::1]"))
+        assertTrue(CloudStreamSecurity.isLocalOrPrivateHost("fd00::1"))
+        assertTrue(CloudStreamSecurity.isLocalOrPrivateHost("fe80::abcd"))
+    }
+
+    @Test
+    fun `isLocalOrPrivateHost rejects public hosts`() {
+        assertFalse(CloudStreamSecurity.isLocalOrPrivateHost("music.example.com"))
+        assertFalse(CloudStreamSecurity.isLocalOrPrivateHost("8.8.8.8"))
+        assertFalse(CloudStreamSecurity.isLocalOrPrivateHost("100.32.1.2"))
+        assertFalse(CloudStreamSecurity.isLocalOrPrivateHost("2001:db8::1"))
+        assertFalse(CloudStreamSecurity.isLocalOrPrivateHost("notlocal.example.org"))
+        assertFalse(CloudStreamSecurity.isLocalOrPrivateHost(""))
+    }
+
+    @Test
     fun `isSupportedAudioContentType only accepts audio-safe types`() {
         assertTrue(CloudStreamSecurity.isSupportedAudioContentType("audio/mpeg"))
         assertTrue(CloudStreamSecurity.isSupportedAudioContentType("application/octet-stream"))

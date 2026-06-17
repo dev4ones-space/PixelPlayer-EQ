@@ -68,7 +68,9 @@ import com.theveloper.pixelplay.data.worker.SyncProgress
 import com.theveloper.pixelplay.presentation.viewmodel.LyricsRefreshProgress
 import com.theveloper.pixelplay.ui.theme.GoogleSansRounded
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.unit.sp
 import androidx.core.view.HapticFeedbackConstantsCompat
+import com.theveloper.pixelplay.presentation.components.subcomps.TightWrapText
 import com.theveloper.pixelplay.presentation.utils.LocalAppHapticsConfig
 import com.theveloper.pixelplay.presentation.utils.performAppCompatHapticFeedback
 
@@ -340,7 +342,7 @@ fun ThemeSelectorItem(
                                 if (isSelected) {
                                     Icon(
                                         imageVector = Icons.Rounded.Check,
-                                        contentDescription = stringResource(R.string.presentation_batch_f_cd_selected),
+                                        contentDescription = stringResource(R.string.common_selected),
                                         tint = contentColor
                                     )
                                 }
@@ -447,12 +449,12 @@ fun RefreshLibraryItem(
                         verticalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
                     Text(
-                            text = stringResource(R.string.presentation_batch_f_refresh_library_title),
+                            text = stringResource(R.string.settings_refresh_library_title),
                             style = MaterialTheme.typography.titleMedium,
                             color = MaterialTheme.colorScheme.onSurface
                     )
                     Text(
-                            text = stringResource(R.string.presentation_batch_f_refresh_library_subtitle),
+                            text = stringResource(R.string.settings_refresh_library_subtitle),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -478,7 +480,12 @@ fun RefreshLibraryItem(
                         modifier = Modifier.size(18.dp)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text(stringResource(R.string.presentation_batch_f_full_rescan))
+                    TightWrapText(
+                        text = stringResource(R.string.settings_action_full_rescan),
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 2,
+                        lineHeight = 22.sp,
+                    )
                 }
             }
              
@@ -505,7 +512,12 @@ fun RefreshLibraryItem(
                         modifier = Modifier.size(18.dp)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text(stringResource(R.string.presentation_batch_f_rebuild_database))
+                    TightWrapText(
+                        text = stringResource(R.string.settings_action_rebuild_database),
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 2,
+                        lineHeight = 22.sp,
+                    )
                 }
             }
 
@@ -520,7 +532,7 @@ fun RefreshLibraryItem(
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
                             text = stringResource(
-                                R.string.presentation_batch_f_sync_progress_detailed,
+                                R.string.settings_sync_progress_detailed,
                                 phaseLabel,
                                 (syncProgress.progress * 100).toInt(),
                                 syncProgress.currentCount,
@@ -534,7 +546,7 @@ fun RefreshLibraryItem(
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
                             text = stringResource(
-                                R.string.presentation_batch_f_sync_progress_indeterminate,
+                                R.string.settings_sync_progres_indeterminate,
                                 phaseLabel
                             ),
                             style = MaterialTheme.typography.labelMedium,
@@ -550,100 +562,21 @@ fun RefreshLibraryItem(
 private fun syncPhaseLabel(phase: SyncProgress.SyncPhase): String =
         stringResource(
                 when (phase) {
-                    SyncProgress.SyncPhase.IDLE -> R.string.presentation_batch_f_sync_phase_preparing
+                    SyncProgress.SyncPhase.IDLE -> R.string.settings_sync_phase_preparing
                     SyncProgress.SyncPhase.FETCHING_MEDIASTORE ->
-                            R.string.presentation_batch_f_sync_phase_reading_mediastore
+                            R.string.settings_sync_phase_reading_mediastore
                     SyncProgress.SyncPhase.PROCESSING_FILES ->
-                            R.string.presentation_batch_f_sync_phase_processing_tracks
+                            R.string.settings_sync_phase_reading_processing_tracks
                     SyncProgress.SyncPhase.SAVING_TO_DATABASE ->
-                            R.string.presentation_batch_f_sync_phase_saving_db
-                    SyncProgress.SyncPhase.SCANNING_LRC -> R.string.presentation_batch_f_sync_phase_scanning_lrc
+                            R.string.settings_sync_phase_saving_db
+                    SyncProgress.SyncPhase.SCANNING_LRC -> R.string.settings_sync_phase_scanning_lrc
                     SyncProgress.SyncPhase.CLEANING_CACHE ->
-                            R.string.presentation_batch_f_sync_phase_cleaning_cache
+                            R.string.settings_sync_phase_cleaning_cache
                     SyncProgress.SyncPhase.SYNCING_CLOUD ->
-                            R.string.presentation_batch_f_sync_phase_syncing_cloud
-                    SyncProgress.SyncPhase.COMPLETING -> R.string.presentation_batch_f_sync_phase_completing
+                            R.string.settings_sync_phase_syncing_cloud
+                    SyncProgress.SyncPhase.COMPLETING -> R.string.settings_sync_phase_completing
                 }
         )
-
-@Composable
-fun RefreshLyricsItem(
-        isRefreshing: Boolean,
-        progress: LyricsRefreshProgress,
-        onRefresh: () -> Unit
-) {
-    Surface(
-            color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f),
-            modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(10.dp))
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth()
-            ) {
-                Box(
-                        modifier = Modifier.padding(end = 16.dp).size(24.dp),
-                        contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                            painter = painterResource(id = R.drawable.rounded_lyrics_24),
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.secondary
-                    )
-                }
-
-                Column(
-                        modifier = Modifier.weight(1f).padding(end = 8.dp),
-                        verticalArrangement = Arrangement.spacedBy(6.dp)
-                ) {
-                    Text(
-                            text = stringResource(R.string.presentation_batch_f_refresh_lyrics_title),
-                            style = MaterialTheme.typography.titleMedium,
-                            color = MaterialTheme.colorScheme.onSurface
-                    )
-                    Text(
-                            text = stringResource(R.string.presentation_batch_f_refresh_lyrics_subtitle),
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-
-                FilledIconButton(
-                        onClick = onRefresh,
-                        enabled = !isRefreshing,
-                        colors =
-                                IconButtonDefaults.filledIconButtonColors(
-                                        containerColor = MaterialTheme.colorScheme.primaryContainer
-                                )
-                ) {
-                    Icon(
-                            imageVector = Icons.Outlined.Sync,
-                            contentDescription = stringResource(R.string.presentation_batch_f_cd_refresh_lyrics),
-                            tint = MaterialTheme.colorScheme.onPrimaryContainer
-                    )
-                }
-            }
-
-            if (isRefreshing && progress.hasProgress) {
-                Spacer(modifier = Modifier.height(12.dp))
-                LinearProgressIndicator(
-                        progress = { progress.progress },
-                        modifier = Modifier.fillMaxWidth()
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                        text = stringResource(
-                            R.string.presentation_batch_f_refresh_lyrics_processing,
-                            progress.currentCount,
-                            progress.totalSongs
-                        ),
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-        }
-    }
-}
 
 @Composable
 fun ActionSettingsItem(
@@ -753,7 +686,7 @@ fun AiApiKeyItem(
                 value = localApiKey,
                 onValueChange = { localApiKey = it },
                 modifier = Modifier.fillMaxWidth(),
-                placeholder = { Text(stringResource(R.string.presentation_batch_f_enter_api_key)) },
+                placeholder = { Text(stringResource(R.string.settings_enter_api_key_placeholder)) },
                 singleLine = true,
                 visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation()
             )
@@ -770,11 +703,11 @@ fun AiApiKeyItem(
                     },
                     enabled = hasChanges
                 ) {
-                    Text(stringResource(R.string.presentation_batch_f_save), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Text(stringResource(R.string.common_save), maxLines = 1, overflow = TextOverflow.Ellipsis)
                 }
                 if (showSaved) {
                     Text(
-                        text = stringResource(R.string.presentation_batch_f_saved),
+                        text = stringResource(R.string.common_saved),
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight.Bold
@@ -799,18 +732,18 @@ fun AiSystemPromptItem(
     val isDefault = systemPrompt == defaultPrompt
     var showSaved by remember { mutableStateOf(false) }
     val presets = listOf(
-        stringResource(R.string.presentation_batch_f_ai_preset_professional_curator_name) to
-            stringResource(R.string.presentation_batch_f_ai_preset_professional_curator_prompt),
-        stringResource(R.string.presentation_batch_f_ai_preset_creative_maverick_name) to
-            stringResource(R.string.presentation_batch_f_ai_preset_creative_maverick_prompt),
-        stringResource(R.string.presentation_batch_f_ai_preset_strict_librarian_name) to
-            stringResource(R.string.presentation_batch_f_ai_preset_strict_librarian_prompt),
-        stringResource(R.string.presentation_batch_f_ai_preset_atmospheric_guide_name) to
-            stringResource(R.string.presentation_batch_f_ai_preset_atmospheric_guide_prompt),
-        stringResource(R.string.presentation_batch_f_ai_preset_sonic_enthusiast_name) to
-            stringResource(R.string.presentation_batch_f_ai_preset_sonic_enthusiast_prompt),
-        stringResource(R.string.presentation_batch_f_ai_preset_energy_catalyst_name) to
-            stringResource(R.string.presentation_batch_f_ai_preset_energy_catalyst_prompt)
+        stringResource(R.string.settings_preset_professional_curator_name) to
+            stringResource(R.string.settings_preset_professional_curator_prompt),
+        stringResource(R.string.settings_preset_creative_maverick_name) to
+            stringResource(R.string.settings_preset_creative_maverick_prompt),
+        stringResource(R.string.settings_preset_strict_librarian_name) to
+            stringResource(R.string.settings_preset_strict_librarian_prompt),
+        stringResource(R.string.settings_preset_atmospheric_guide_name) to
+            stringResource(R.string.settings_preset_atmospheric_guide_prompt),
+        stringResource(R.string.settings_preset_sonic_enthusiast_name) to
+            stringResource(R.string.settings_preset_sonic_enthusiast_prompt),
+        stringResource(R.string.settings_preset_energy_catalyst_name) to
+            stringResource(R.string.settings_preset_energy_catalyst_prompt)
     )
 
     LaunchedEffect(showSaved) {
@@ -837,7 +770,7 @@ fun AiSystemPromptItem(
             )
             Spacer(modifier = Modifier.height(12.dp))
             Text(
-                text = stringResource(R.string.presentation_batch_f_preset_prompts),
+                text = stringResource(R.string.settings_preset_prompts),
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.onSurface
             )
@@ -862,7 +795,7 @@ fun AiSystemPromptItem(
                 value = localPrompt,
                 onValueChange = { localPrompt = it },
                 modifier = Modifier.fillMaxWidth().heightIn(min = 100.dp, max = 200.dp),
-                placeholder = { Text(stringResource(R.string.presentation_batch_f_enter_system_prompt_placeholder)) },
+                placeholder = { Text(stringResource(R.string.settings_system_prompt_placeholder)) },
                 minLines = 3,
                 maxLines = 6
             )
@@ -879,18 +812,18 @@ fun AiSystemPromptItem(
                     },
                     enabled = hasChanges
                 ) {
-                    Text(stringResource(R.string.presentation_batch_f_save), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Text(stringResource(R.string.common_save), maxLines = 1, overflow = TextOverflow.Ellipsis)
                 }
                 if (!isDefault) {
                     OutlinedButton(onClick = {
                         onReset()
                     }) {
-                        Text(stringResource(R.string.presentation_batch_f_reset), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        Text(stringResource(R.string.common_reset), maxLines = 1, overflow = TextOverflow.Ellipsis)
                     }
                 }
                 if (showSaved) {
                     Text(
-                        text = stringResource(R.string.presentation_batch_f_saved),
+                        text = stringResource(R.string.common_saved),
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight.Bold
